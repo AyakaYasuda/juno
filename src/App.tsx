@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AdminEventCreate from './views/pages/AdminEventCreate';
-import AdminHome from './views/pages/AdminHome';
-import AdminLogin from './views/pages/AdminLogin';
-import AdminRegister from './views/pages/AdminRegister';
+import AdminEventCreate from 'views/pages/Admin/AdminEventCreate';
+import AdminHome from 'views/pages/Admin/AdminHome';
+import AdminLogin from 'views/pages/Admin/AdminLogin';
+import AdminRegister from 'views/pages/Admin/AdminRegister';
+import GuestInvitation from 'views/pages/Guest/GuestInvitation';
 
 const App = () => {
   return (
@@ -13,6 +14,9 @@ const App = () => {
         <Route path="register" element={<AdminRegister />} />
         <Route path="login" element={<AdminLogin />} />
         <Route path="create" element={<AdminEventCreate />} />
+      </Routes>
+      <Routes>
+        <Route path="guest" element={<GuestInvitation />} />
       </Routes>
     </BrowserRouter>
   );
