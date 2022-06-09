@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../atomic/atoms/Button';
-import Card from '../atomic/atoms/Card';
+import Button from '../atoms/Button';
+import Card from '../atoms/Card';
 
 type Props = {
   ctaText: string;

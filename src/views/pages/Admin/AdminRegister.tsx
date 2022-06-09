@@ -1,6 +1,6 @@
 import React from 'react';
-import TopLayout from 'views/components/templates/TopLayout';
-import Form from 'views/components/molecules/Form';
+import TopLayout from 'views/components/atomic/templates/TopLayout';
+import Form from 'views/components/atomic/molecules/Form';
 
 function AdminRegister() {
   return (

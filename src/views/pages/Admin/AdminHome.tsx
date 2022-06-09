@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import Button from 'views/components/atoms/Button';
-import TopLayout from 'views/components/templates/TopLayout';
+import Button from 'views/components/atomic/atoms/Button';
+import TopLayout from 'views/components/atomic/templates/TopLayout';
 
 function AdminHome() {
   return (
