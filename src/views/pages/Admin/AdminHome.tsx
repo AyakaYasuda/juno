@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import Button from '../components/atoms/Button';
-import TopLayout from '../components/templates/TopLayout';
+import Button from 'views/components/atoms/Button';
+import TopLayout from 'views/components/templates/TopLayout';
 
 function AdminHome() {
   return (
@@ -14,12 +14,12 @@ function AdminHome() {
       <ul className="w-3/5 my-0 mx-auto">
         <li className="mb-6">
           <Button bgColor="bg-White-default" txtColor="text-Pink-default">
-            <Link to="/register">Get Started</Link>
+            <Link to="/admin/register">Get Started</Link>
           </Button>
         </li>
         <li>
           <Button bgColor="bg-White-default" txtColor="text-Pink-default">
-            <Link to="/login">Log In</Link>
+            <Link to="/admin/login">Log In</Link>
           </Button>
         </li>
       </ul>

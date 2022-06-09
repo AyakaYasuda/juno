@@ -1,6 +1,6 @@
 import React from 'react';
-import TopLayout from '../components/templates/TopLayout';
-import Form from '../components/modules/Form';
+import TopLayout from 'views/components/templates/TopLayout';
+import Form from 'views/components/molecules/Form';
 
 function AdminRegister() {
   return (
@@ -9,7 +9,7 @@ function AdminRegister() {
       <Form
         ctaText="Start Creating Invitations"
         linkText="You already have an account?"
-        params="login"
+        params="/admin/login"
       >
         <label>First Name</label>
         <input type="text" />

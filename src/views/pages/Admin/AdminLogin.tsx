@@ -1,6 +1,6 @@
 import React from 'react';
-import Form from '../components/modules/Form';
-import TopLayout from '../components/templates/TopLayout';
+import Form from 'views/components/molecules/Form';
+import TopLayout from 'views/components/templates/TopLayout';
 
 function AdminLogin() {
   return (
@@ -9,7 +9,7 @@ function AdminLogin() {
       <Form
         ctaText="Log In"
         linkText="You don’t have an account yet?"
-        params="register"
+        params="/admin/register"
       >
         <label className="pt-8">Email</label>
         <input type="email" className="mb-16" />

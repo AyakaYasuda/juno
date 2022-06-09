@@ -1,18 +1,18 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AdminEventCreate from './views/pages/AdminEventCreate';
-import AdminHome from './views/pages/AdminHome';
-import AdminLogin from './views/pages/AdminLogin';
-import AdminRegister from './views/pages/AdminRegister';
+import AdminEventCreate from './views/pages/Admin/AdminEventCreate';
+import AdminHome from './views/pages/Admin/AdminHome';
+import AdminLogin from './views/pages/Admin/AdminLogin';
+import AdminRegister from './views/pages/Admin/AdminRegister';
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="admin" element={<AdminHome />} />
-        <Route path="register" element={<AdminRegister />} />
-        <Route path="login" element={<AdminLogin />} />
-        <Route path="create" element={<AdminEventCreate />} />
+        <Route path="/admin" element={<AdminHome />} />
+        <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/create" element={<AdminEventCreate />} />
       </Routes>
     </BrowserRouter>
   );

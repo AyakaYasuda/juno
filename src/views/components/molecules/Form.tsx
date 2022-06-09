@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '../atoms/Button';
 import Card from '../atoms/Card';
 
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Form: React.FC<Props> = ({ children, ctaText, linkText, params }) => {
-  const navigate = useNavigate();
+  console.log(params);
   return (
     <Card>
       <div className="w-full md:w-4/5 mx-auto pt-4">
@@ -29,7 +29,7 @@ const Form: React.FC<Props> = ({ children, ctaText, linkText, params }) => {
             </Button>
           </li>
           <li className="text-Pink-default">
-            <button onClick={() => navigate(params)}>{linkText}</button>
+            <Link to={params}>{linkText}</Link>
           </li>
         </ul>
       </div>

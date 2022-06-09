@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../components/modules/Navbar';
+import Navbar from 'views/components/molecules/Navbar';
 
 function AdminEventCreate() {
   return (
