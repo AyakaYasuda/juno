@@ -24,7 +24,7 @@ const Form: React.FC<Props> = ({ children, ctaText, linkText, params }) => {
         </form>
         <ul>
           <li className="mb-4 w-3/4 mx-auto">
-            <Button bgColor="bg-Pink-default" txtColor="text-White-default">
+            <Button styleButton="bg-Pink-default text-White-default">
               {ctaText}
             </Button>
           </li>

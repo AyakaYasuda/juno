@@ -13,12 +13,12 @@ function AdminHome() {
       </div>
       <ul className="w-3/5 my-0 mx-auto">
         <li className="mb-6">
-          <Button bgColor="bg-White-default" txtColor="text-Pink-default">
+          <Button styleButton="bg-White-default text-Pink-default">
             <Link to="/admin/register">Get Started</Link>
           </Button>
         </li>
         <li>
-          <Button bgColor="bg-White-default" txtColor="text-Pink-default">
+          <Button styleButton="bg-White-default ext-Pink-default">
             <Link to="/admin/login">Log In</Link>
           </Button>
         </li>
