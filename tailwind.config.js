@@ -16,6 +16,7 @@ module.exports = {
         },
         Green: {
           default: '#99C698',
+          dark: '#406939',
         },
       },
       fontFamily: {

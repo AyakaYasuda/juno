@@ -18,10 +18,14 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
         alt="flower"
         className="w-widthMedium absolute top-0 right-0"
       />
-      <div className="w-4/5 h-4/5 bg-white flex justify-center items-center rounded-2xl">
-        <div className=" w-3/5 h-3/5 justify-between flex">
-          <CardWeddingInfo />
-          <FormAttendance />
+      <div className="w-4/5 h-4/5 bg-white FlexCenter rounded-2xl">
+        <div className=" w-4/5 h-4/6 flex gap-4">
+          <div className="w-1/2">
+            <CardWeddingInfo />
+          </div>
+          <div className="w-1/2">
+            <FormAttendance />
+          </div>
         </div>
       </div>
 
