@@ -7,7 +7,7 @@ type GuestBaseLayoutProps = {
 
 const GuestBaseLayout: React.FC<GuestBaseLayoutProps> = ({ children }) => {
   return (
-    <div className="h-screen w-full md:bg-gradient-to-t from-Green-default to-White-darker">
+    <div className="h-screen w-full md:bg-gradient-to-t from-Green-default to-White-darker flex justify-center items-center">
       {children}
       <Copyright
         classContainer="fixed left-0 bottom-0 text-center w-full"

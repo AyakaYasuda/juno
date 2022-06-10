@@ -7,11 +7,7 @@ type GuestInvitationLayoutProps = {
   // children: React.ReactNode;
 };
 
-const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = (
-  {
-    // children,
-  }
-) => {
+const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
   return (
     <GuestBaseLayout>
       <img
@@ -19,8 +15,11 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = (
         alt="flower"
         className="w-widthMedium absolute top-0 right-0"
       />
+      <div className="w-11/12 h-4/5 bg-white justify-center rounded-2xl">
+        Hello
+      </div>
+
       <img src={Img2} alt="flower" className="w-80 absolute bottom-0 left-0" />
-      {/* {children} */}
     </GuestBaseLayout>
   );
 };
