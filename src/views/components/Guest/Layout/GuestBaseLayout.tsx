@@ -2,7 +2,7 @@ import React from 'react';
 import Copyright from 'views/components/atomic/atoms/Copyright';
 
 type GuestBaseLayoutProps = {
-  children?: JSX.Element | string;
+  children: React.ReactNode;
 };
 
 const GuestBaseLayout: React.FC<GuestBaseLayoutProps> = ({ children }) => {

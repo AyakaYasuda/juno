@@ -22,6 +22,9 @@ module.exports = {
         allura: ['Allura', 'cursive'],
         lato: ['Lato', 'sans-serif'],
       },
+      spacing: {
+        widthMedium: '37%',
+      },
     },
   },
   plugins: [],

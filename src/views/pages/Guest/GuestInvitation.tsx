@@ -1,8 +1,8 @@
 import React from 'react';
-import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
+import GuestInvitationLayout from 'views/components/Guest/Layout/GuestInvitationLayout';
 
 const GuestInvitation = () => {
-  return <GuestBaseLayout>Hello How are you?</GuestBaseLayout>;
+  return <GuestInvitationLayout />;
 };
 
 export default GuestInvitation;
