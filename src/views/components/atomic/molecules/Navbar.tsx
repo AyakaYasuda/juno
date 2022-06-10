@@ -9,7 +9,9 @@ function Navbar() {
           Juno
         </Link>
         <ul className="flex">
-          <li className="mr-4 Hover">Events</li>
+          <li className="mr-4 Hover">
+            <Link to="/admin/event">Events</Link>
+          </li>
           <li className="Hover">Logout</li>
         </ul>
       </nav>
