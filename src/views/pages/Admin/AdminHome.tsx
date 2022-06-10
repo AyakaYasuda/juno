@@ -18,7 +18,7 @@ function AdminHome() {
           </Button>
         </li>
         <li>
-          <Button styleButton="bg-White-default ext-Pink-default">
+          <Button styleButton="bg-White-default text-Pink-default">
             <Link to="/admin/login">Log In</Link>
           </Button>
         </li>
