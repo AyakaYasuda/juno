@@ -7,7 +7,7 @@ type Props = {
 
 const Button: React.FC<Props> = ({ children, styleButton }) => {
   return (
-    <button className={`rounded-3xl py-3 px-6 w-full ${styleButton}`}>
+    <button className={`rounded-3xl py-2 px-4 w-full ${styleButton}`}>
       {children}
     </button>
   );

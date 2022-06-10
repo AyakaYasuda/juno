@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import Modal from 'views/components/atomic/molecules/Modal';
 import Button from '../../components/atomic/atoms/Button';
 import Navbar from '../../components/atomic/molecules/Navbar';
 
 const AdminEventManage = () => {
   const [showInfoStyle, setShowInfoStyle] = useState('w-full');
   const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const showInfoHandler = () => {
     setShowInfoStyle('block w-full');
@@ -16,9 +18,14 @@ const AdminEventManage = () => {
     setShowInfoStyle('hidden');
   };
 
+  const showModalHandler = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <>
       <Navbar />
+      {showModal && <Modal closeHandler={showModalHandler} />}
       <section className="w-full h-screen FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default relative">
         <ul className="pt-16 flex flex-row justify-center gap-14 mb-6 md:hidden">
           <li onClick={showInfoHandler} className="HoverUnderLine">
@@ -80,79 +87,10 @@ const AdminEventManage = () => {
                 <Button styleButton="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
                   PRESENT
                 </Button>
-                <button className="text-Pink-dark basis-1/5">
-                  Show Detail
-                </button>
-              </li>
-              <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                <span className="basis-3/5">Monica Geller</span>
-                <Button styleButton="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
-                  PRESENT
-                </Button>
-                <button className="text-Pink-dark basis-1/5">
-                  Show Detail
-                </button>
-              </li>
-              <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                <span className="basis-3/5">Monica Geller</span>
-                <Button styleButton="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
-                  PRESENT
-                </Button>
-                <button className="text-Pink-dark basis-1/5">
-                  Show Detail
-                </button>
-              </li>
-              <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                <span className="basis-3/5">Monica Geller</span>
-                <Button styleButton="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
-                  PRESENT
-                </Button>
-                <button className="text-Pink-dark basis-1/5">
-                  Show Detail
-                </button>
-              </li>
-              <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                <span className="basis-3/5">Monica Geller</span>
-                <Button styleButton="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
-                  PRESENT
-                </Button>
-                <button className="text-Pink-dark basis-1/5">
-                  Show Detail
-                </button>
-              </li>
-              <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                <span className="basis-3/5">Monica Geller</span>
-                <Button styleButton="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
-                  PRESENT
-                </Button>
-                <button className="text-Pink-dark basis-1/5">
-                  Show Detail
-                </button>
-              </li>
-              <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                <span className="basis-3/5">Monica Geller</span>
-                <Button styleButton="basis-1/5 border-2 border-Green-default text-Green-default drop-shadow-md mr-2">
-                  ABSENT
-                </Button>
-                <button className="text-Pink-dark basis-1/5">
-                  Show Detail
-                </button>
-              </li>
-              <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                <span className="basis-3/5">Monica Geller</span>
-                <Button styleButton="basis-1/5 border-2 border-Green-default text-Green-default drop-shadow-md mr-2">
-                  ABSENT
-                </Button>
-                <button className="text-Pink-dark basis-1/5">
-                  Show Detail
-                </button>
-              </li>
-              <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                <span className="basis-3/5">Monica Geller</span>
-                <Button styleButton="basis-1/5 border-2 border-Green-default text-Green-default drop-shadow-md mr-2">
-                  ABSENT
-                </Button>
-                <button className="text-Pink-dark basis-1/5">
+                <button
+                  onClick={showModalHandler}
+                  className="text-Pink-dark basis-1/5"
+                >
                   Show Detail
                 </button>
               </li>
