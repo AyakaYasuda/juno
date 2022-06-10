@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/admin/event" element={<AdminEventManage />} />
       </Routes>
       <Routes>
-        <Route path="guest" element={<GuestInvitation />} />
+        <Route path="/guests/invitation" element={<GuestInvitation />} />
       </Routes>
     </BrowserRouter>
   );

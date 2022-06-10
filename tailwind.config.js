@@ -7,6 +7,7 @@ module.exports = {
           lighter: '#FBFBFB',
           default: '#F5F5F5',
           dark: '#FDFBFB',
+          darker: '#DEECDD',
         },
         Pink: {
           lighter: '#F2DAB9',
