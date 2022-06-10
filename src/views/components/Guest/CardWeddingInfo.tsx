@@ -1,7 +1,7 @@
 import React from 'react';
 
 const WeddingInfoCard = () => {
-  return <div>WeddingInfoCard</div>;
+  return <div className="flex">WeddingInfoCard</div>;
 };
 
 export default WeddingInfoCard;

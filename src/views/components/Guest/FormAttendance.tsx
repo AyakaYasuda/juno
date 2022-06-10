@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AttendForm = () => {
-  return <div>AttendForm</div>;
+  return <div className="flex">AttendForm</div>;
 };
 
 export default AttendForm;
