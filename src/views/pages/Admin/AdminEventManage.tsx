@@ -3,16 +3,16 @@ import Button from '../../components/atomic/atoms/Button';
 import Navbar from '../../components/atomic/molecules/Navbar';
 
 const AdminEventManage = () => {
-  const [showInfoStyle, setShowInfoStyle] = useState('');
-  const [showGuestsStyle, setShowGuestsStyle] = useState('');
+  const [showInfoStyle, setShowInfoStyle] = useState('w-full');
+  const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
 
   const showInfoHandler = () => {
-    setShowInfoStyle('block');
+    setShowInfoStyle('block w-full');
     setShowGuestsStyle('hidden');
   };
 
   const showGuestsHandler = () => {
-    setShowGuestsStyle('block');
+    setShowGuestsStyle('block w-full');
     setShowInfoStyle('hidden');
   };
 
@@ -29,7 +29,7 @@ const AdminEventManage = () => {
           </li>
         </ul>
         <div className="w-4/5 h-3/4 flex flex-row gap-14 text-white">
-          <div className={`${showInfoStyle} w-full md:block md:basis-1/2`}>
+          <div className={`${showInfoStyle} md:block md:basis-1/2`}>
             <h2 className="hidden md:block mb-2">Event info</h2>
             <form>
               <div className="flex flex-col  mb-8 md:mb-4">
@@ -72,7 +72,7 @@ const AdminEventManage = () => {
               </ul>
             </form>
           </div>
-          <div className={`${showGuestsStyle} w-full md:block md:basis-1/2`}>
+          <div className={`${showGuestsStyle} md:block md:basis-1/2`}>
             <h2 className="hidden md:block mb-2">Guests list</h2>
             <ul className="overflow-y-scroll h-4/5">
               <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
