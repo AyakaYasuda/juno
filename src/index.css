@@ -24,9 +24,6 @@
   label {
     @apply text-Pink-default font-light;
   }
-  input {
-    @apply mb-4 border-b-2 border-Pink-default bg-inherit;
-  }
 }
 
 @layer components {
@@ -40,9 +37,15 @@
     @apply flex justify-center;
   }
   .NavBase {
-    @apply h-16 min-w-full flex items-center justify-between px-8 fixed top-0 left-0 z-30 backdrop-blur;
+    @apply h-16 min-w-full flex items-center justify-between px-8 fixed top-0 left-0 z-30 backdrop-blur bg-white bg-opacity-10;
   }
   .Hover {
     @apply transform hover:-translate-y-1 duration-300;
+  }
+  .InputDark {
+    @apply bg-Pink-lighter bg-opacity-50 text-Pink-default p-2 border-none rounded-md mb-4;
+  }
+  .InputBorder {
+    @apply mb-4 border-b-2 border-Pink-default bg-inherit;
   }
 }

@@ -12,13 +12,13 @@ function AdminRegister() {
         params="/admin/login"
       >
         <label>First Name</label>
-        <input type="text" />
+        <input type="text" className="InputBorder" />
         <label>Last Name</label>
-        <input type="text" />
+        <input type="text" className="InputBorder" />
         <label>Email</label>
-        <input type="email" />
+        <input type="email" className="InputBorder" />
         <label>Password</label>
-        <input type="password" />
+        <input type="password" className="InputBorder" />
       </Form>
     </TopLayout>
   );

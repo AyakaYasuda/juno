@@ -1,14 +1,13 @@
 import React from 'react';
 
 type Props = {
-  bgColor: string;
-  txtColor: string;
+  styleButton: string;
   children?: React.ReactNode;
 };
 
-const Button: React.FC<Props> = ({ children, bgColor, txtColor }) => {
+const Button: React.FC<Props> = ({ children, styleButton }) => {
   return (
-    <button className={`rounded-3xl py-3 px-6 w-full ${bgColor} ${txtColor}`}>
+    <button className={`rounded-3xl py-3 px-6 w-full ${styleButton}`}>
       {children}
     </button>
   );

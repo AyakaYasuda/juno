@@ -12,9 +12,9 @@ function AdminLogin() {
         params="/admin/register"
       >
         <label className="pt-8">Email</label>
-        <input type="email" className="mb-16" />
+        <input type="email" className="InputBorder mb-16" />
         <label>Password</label>
-        <input type="password" className="mb-20" />
+        <input type="password" className="InputBorder mb-20" />
       </Form>
     </TopLayout>
   );
