@@ -21,9 +21,6 @@
   small {
     @apply text-xs text-Pink-dark;
   }
-  label {
-    @apply text-Pink-default font-light;
-  }
 }
 
 @layer components {
@@ -44,6 +41,9 @@
   }
   .InputDark {
     @apply bg-Pink-lighter bg-opacity-50 text-Pink-default p-2 border-none rounded-md mb-4;
+  }
+  .InputLighter {
+    @apply bg-White-lighter text-Pink-default bg-opacity-80 border-none drop-shadow-lg p-2 rounded-xl;
   }
   .InputBorder {
     @apply mb-4 border-b-2 border-Pink-default bg-inherit;

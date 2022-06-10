@@ -31,7 +31,7 @@ const EventLayout: React.FC<Props> = ({
   return (
     <>
       <Navbar />
-      <section className="w-full py-28 md:py-0 FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default md:h-screen relative">
+      <section className="w-full py-28 md:py-0 FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default md:h-screen relative text-Pink-default">
         <h2 className="mb-2">{title}</h2>
         <div className="w-4/5">
           <Card>

@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       colors: {
         White: {
+          lighter: '#FBFBFB',
           default: '#F5F5F5',
           dark: '#FDFBFB',
         },
