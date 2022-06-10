@@ -11,13 +11,13 @@ function AdminRegister() {
         linkText="You already have an account?"
         params="/admin/login"
       >
-        <label>First Name</label>
+        <label className="text-Pink-default">First Name</label>
         <input type="text" className="InputBorder" />
-        <label>Last Name</label>
+        <label className="text-Pink-default">Last Name</label>
         <input type="text" className="InputBorder" />
-        <label>Email</label>
+        <label className="text-Pink-default">Email</label>
         <input type="email" className="InputBorder" />
-        <label>Password</label>
+        <label className="text-Pink-default">Password</label>
         <input type="password" className="InputBorder" />
       </Form>
     </TopLayout>
