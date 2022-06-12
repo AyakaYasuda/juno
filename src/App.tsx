@@ -9,6 +9,7 @@ import AdminRegister from 'views/pages/Admin/AdminRegister';
 import GuestInvitation from 'views/pages/Guest/GuestInvitation';
 import GuestLogin from 'views/pages/Guest/GuestLogin';
 import GuestMyPage from 'views/pages/Guest/GuestMyPage';
+import GuestEdit from 'views/pages/Guest/GuestEdit';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/guests/invitation" element={<GuestInvitation />} />
         <Route path="/guests/login" element={<GuestLogin />} />
         <Route path="/guests/myPage" element={<GuestMyPage />} />
+        <Route path="/guests/edit" element={<GuestEdit />} />
       </Routes>
     </BrowserRouter>
   );

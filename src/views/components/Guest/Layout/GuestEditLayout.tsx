@@ -4,7 +4,7 @@ import Title from 'views/components/atomic/atoms/Title';
 import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo/index';
 import FormAttendance from 'views/components/Guest/FormAttendance';
 
-const GuestMyPageLayout = () => {
+const GuestEditLayout = () => {
   return (
     <GuestBaseLayout>
       <div className="flex flex-col w-screen h-full md:h-screen mb-8">
@@ -27,7 +27,7 @@ const GuestMyPageLayout = () => {
               sectionTitleColor="text-white"
               sectionTitle="Your Reply"
               classInput="InputLight"
-              textButton="Edit your reply"
+              textButton="Update your reply"
               styleButton="buttonWhite"
               spacing="md:w-11/12"
             />
@@ -38,4 +38,4 @@ const GuestMyPageLayout = () => {
   );
 };
 
-export default GuestMyPageLayout;
+export default GuestEditLayout;
