@@ -5,12 +5,26 @@ import Checker from 'views/components/atomic/atoms/Checker';
 import Desc from 'views/components/atomic/atoms/Desc';
 import ButtonFlexible from 'views/components/atomic/atoms/ButtonFlexible';
 
-const FormAttendance = () => {
+type FormAttendanceProps = {
+  classInput: string;
+  sectionTitle: string;
+  sectionTitleColor: string;
+  textButton: string;
+  styleButton: string;
+};
+
+const FormAttendance: React.FC<FormAttendanceProps> = ({
+  classInput,
+  sectionTitle,
+  sectionTitleColor,
+  textButton,
+  styleButton,
+}) => {
   return (
     <div>
       <div className="flex flex-col md:items-start">
-        <Title classTitle="mb-4" textColor="text-Yellow-dark">
-          RSVP
+        <Title classTitle="my-4" textColor={sectionTitleColor}>
+          {sectionTitle}
         </Title>
         <div className="FlexCenter flex-col md:flex-row md:gap-6">
           <Input
@@ -18,7 +32,7 @@ const FormAttendance = () => {
             inputName="First Name"
             valueInput=""
             containerInput=""
-            classInput="InputDark"
+            classInput={classInput}
             labelColor="text-Yellow-dark"
           />
           <Input
@@ -26,7 +40,7 @@ const FormAttendance = () => {
             inputName="Last Name"
             valueInput=""
             containerInput=""
-            classInput="InputDark"
+            classInput={classInput}
             labelColor="text-Yellow-dark"
           />
         </div>
@@ -49,14 +63,14 @@ const FormAttendance = () => {
         <div className="flex flex-col items-center md:items-start">
           <Desc
             containerDesc="w-3/5 md:w-full"
-            classDesc="InputDark"
+            classDesc={classInput}
             labelName="Message"
             nameDesc="Message"
             rowsDesc={3}
           />
           <Desc
             containerDesc="w-3/5 md:w-full"
-            classDesc="InputDark"
+            classDesc={classInput}
             labelName="If you have food allergy"
             nameDesc="allergy"
             rowsDesc={2}
@@ -68,7 +82,7 @@ const FormAttendance = () => {
             inputName="Email"
             valueInput=""
             containerInput="flex-col"
-            classInput="InputDark"
+            classInput={classInput}
             labelColor="text-Yellow-dark"
           />
           <Input
@@ -76,14 +90,14 @@ const FormAttendance = () => {
             inputName="Password"
             valueInput=""
             containerInput="flex-col"
-            classInput="InputDark"
+            classInput={classInput}
             labelColor="text-Yellow-dark"
           />
         </div>
       </div>
       <div className="flex justify-center md:w-extraLarge">
-        <ButtonFlexible styleButton="bg-Green-default text-white w-2/5">
-          Reply
+        <ButtonFlexible styleButton={`${styleButton} w-2/5`}>
+          {textButton}
         </ButtonFlexible>
       </div>
     </div>
