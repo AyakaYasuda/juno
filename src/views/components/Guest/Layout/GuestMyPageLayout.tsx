@@ -14,18 +14,25 @@ const GuestMyPageLayout = () => {
           </Title>
           <button className="text-Yellow-dark">Logout</button>
         </div>
-        <Title classTitle="" textColor="text-white">
-          Event Info
-        </Title>
-        <CardWeddingInfo spacing="mx-4 p-4" />
+        <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col items-center">
+            <Title classTitle="" textColor="text-white">
+              Event Info
+            </Title>
+            <CardWeddingInfo spacing="mx-4 p-4 md:w-3/4 md:p-10" />
+          </div>
 
-        <FormAttendance
-          sectionTitleColor="text-white"
-          sectionTitle="Your Reply"
-          classInput="InputLight"
-          textButton="Edit your reply"
-          styleButton="buttonWhite text-white"
-        />
+          <div className="w-full flexCenter">
+            <FormAttendance
+              sectionTitleColor="text-white"
+              sectionTitle="Your Reply"
+              classInput="InputLight"
+              textButton="Edit your reply"
+              styleButton="buttonWhite"
+              spacing="md:w-full"
+            />
+          </div>
+        </div>
       </div>
     </GuestBaseLayout>
   );

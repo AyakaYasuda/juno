@@ -11,6 +11,7 @@ type FormAttendanceProps = {
   sectionTitleColor: string;
   textButton: string;
   styleButton: string;
+  spacing: string;
 };
 
 const FormAttendance: React.FC<FormAttendanceProps> = ({
@@ -19,6 +20,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   sectionTitleColor,
   textButton,
   styleButton,
+  spacing,
 }) => {
   return (
     <div>
@@ -95,7 +97,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
           />
         </div>
       </div>
-      <div className="flex justify-center md:w-extraLarge">
+      <div className={`flex justify-center ${spacing} `}>
         <ButtonFlexible styleButton={`${styleButton} w-2/5`}>
           {textButton}
         </ButtonFlexible>

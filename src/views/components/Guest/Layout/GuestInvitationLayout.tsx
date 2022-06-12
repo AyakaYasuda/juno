@@ -31,6 +31,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 classInput="InputDark"
                 textButton="Reply"
                 styleButton="bg-Green-default text-white"
+                spacing="md:w-extraLarge"
               />
             </div>
           </div>
