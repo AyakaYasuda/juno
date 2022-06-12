@@ -18,13 +18,17 @@ module.exports = {
           default: '#99C698',
           dark: '#406939',
         },
+        Yellow: {
+          dark: '#C19B51',
+        },
       },
       fontFamily: {
         allura: ['Allura', 'cursive'],
         lato: ['Lato', 'sans-serif'],
       },
       spacing: {
-        widthMedium: '37%',
+        medium: '37%',
+        extraLarge: '87%',
       },
     },
   },

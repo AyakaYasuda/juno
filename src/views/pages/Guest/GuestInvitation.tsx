@@ -1,4 +1,3 @@
-import React from 'react';
 import GuestInvitationLayout from 'views/components/Guest/Layout/GuestInvitationLayout';
 
 const GuestInvitation = () => {
