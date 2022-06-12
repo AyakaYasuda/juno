@@ -15,14 +15,15 @@ const GuestTopLayout = () => {
         src={ImageTop}
         alt="Guest Top"
       />
-      <div className="absolute inset-16 md:inset-4 text-center md:text-left">
+      <div className="absolute inset-16 md:inset-32 text-center md:text-left">
         <Logo />
-        <h3 className="text-white">Guests Log In</h3>
-        <div className="flex flex-col justify-between h-1/2 mt-4">
+
+        <div className="flex flex-col mt-4 gap-8">
+          <h3 className="text-white">Guests Log In</h3>
           <Input
             containerInput="flex flex-col items-start"
             valueInput=""
-            classInput="bg-transparent border-b border-White-light w-full"
+            classInput="bg-transparent border-b border-White-light w-full md:w-2/5"
             labelName="Email"
             inputName="Email"
             labelColor="text-White-light"
@@ -30,12 +31,12 @@ const GuestTopLayout = () => {
           <Input
             containerInput="flex flex-col items-start"
             valueInput=""
-            classInput="bg-transparent border-b border-White-light w-full"
+            classInput="bg-transparent border-b border-White-light w-full md:w-2/5"
             labelName="Password"
             inputName="Password"
             labelColor="text-White-light"
           />
-          <div className="FlexJustify">
+          <div className="FlexJustify md:flex md:justify-start">
             <ButtonFlexible styleButton="bg-Green-default text-white w-2/5">
               Login
             </ButtonFlexible>
