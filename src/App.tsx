@@ -7,6 +7,7 @@ import AdminHome from 'views/pages/Admin/AdminHome';
 import AdminLogin from 'views/pages/Admin/AdminLogin';
 import AdminRegister from 'views/pages/Admin/AdminRegister';
 import GuestInvitation from 'views/pages/Guest/GuestInvitation';
+import GuestLogin from 'views/pages/Guest/GuestLogin';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
       </Routes>
       <Routes>
         <Route path="/guests/invitation" element={<GuestInvitation />} />
+        <Route path="/guests/login" element={<GuestLogin />} />
       </Routes>
     </BrowserRouter>
   );

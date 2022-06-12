@@ -9,7 +9,7 @@ const FormAttendance = () => {
   return (
     <div>
       <div className="flex flex-col md:items-start">
-        <Title classTitle="mb-4" classColor="text-Yellow-dark">
+        <Title classTitle="mb-4" textColor="text-Yellow-dark">
           RSVP
         </Title>
         <div className="FlexCenter flex-col md:flex-row md:gap-6">
@@ -19,6 +19,7 @@ const FormAttendance = () => {
             valueInput=""
             containerInput=""
             classInput="InputDark"
+            labelColor="text-Yellow-dark"
           />
           <Input
             labelName="Last Name"
@@ -26,6 +27,7 @@ const FormAttendance = () => {
             valueInput=""
             containerInput=""
             classInput="InputDark"
+            labelColor="text-Yellow-dark"
           />
         </div>
         <div className="FlexJustify flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
@@ -67,6 +69,7 @@ const FormAttendance = () => {
             valueInput=""
             containerInput="flex-col"
             classInput="InputDark"
+            labelColor="text-Yellow-dark"
           />
           <Input
             labelName="Password"
@@ -74,6 +77,7 @@ const FormAttendance = () => {
             valueInput=""
             containerInput="flex-col"
             classInput="InputDark"
+            labelColor="text-Yellow-dark"
           />
         </div>
       </div>
