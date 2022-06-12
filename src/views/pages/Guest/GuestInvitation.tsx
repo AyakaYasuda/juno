@@ -1,7 +1,7 @@
-import React from 'react';
+import GuestInvitationLayout from 'views/components/Guest/Layout/GuestInvitationLayout';
 
 const GuestInvitation = () => {
-  return <div className="text-3xl font-bold underline">GuestInvitation</div>;
+  return <GuestInvitationLayout />;
 };
 
 export default GuestInvitation;

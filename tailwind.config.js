@@ -7,6 +7,7 @@ module.exports = {
           lighter: '#FBFBFB',
           default: '#F5F5F5',
           dark: '#FDFBFB',
+          darker: '#DEECDD',
         },
         Pink: {
           lighter: '#F2DAB9',
@@ -15,11 +16,19 @@ module.exports = {
         },
         Green: {
           default: '#99C698',
+          dark: '#406939',
+        },
+        Yellow: {
+          dark: '#C19B51',
         },
       },
       fontFamily: {
         allura: ['Allura', 'cursive'],
         lato: ['Lato', 'sans-serif'],
+      },
+      spacing: {
+        medium: '37%',
+        extraLarge: '87%',
       },
     },
   },
