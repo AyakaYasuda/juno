@@ -1,0 +1,405 @@
+swagger: '2.0'
+info:
+  description: "This is Juno's open api specification."
+  version: '1.0.0'
+  title: 'Swagger Juno'
+host: 'juno.swagger.io'
+basePath: '/v2'
+tags:
+  - name: 'user'
+  - name: 'event'
+  - name: 'guest'
+
+schemes:
+  - 'https'
+  - 'http'
+paths:
+  /user/login:
+    post:
+      tags:
+        - 'user'
+      summary: 'Logs a user into the system'
+      description: 'This endpoint is for user to log into the system.'
+      operationId: 'loginUser'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Created user object'
+          required: true
+          schema:
+            $ref: '#/definitions/UserLoginRequest'
+      responses:
+        '200':
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/UserLoginResponse'
+        '400':
+          description: 'Invalid request'
+        '404':
+          description: 'User not found'
+  /user/signup:
+    post:
+      tags:
+        - 'user'
+      summary: 'Creates a new user'
+      description: 'This endpoint is for user to sign up in the system.'
+      operationId: 'createUser'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Created user object'
+          required: true
+          schema:
+            $ref: '#/definitions/UserSignupRequest'
+      responses:
+        '200':
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/UserSignupResponse'
+        '400':
+          description: 'Invalid request'
+        '500':
+          description: 'Internal server error'
+  /user/{userId}:
+    get:
+      tags:
+        - 'user'
+      summary: 'Gets user metadata by userId'
+      description: 'This endpoint is to get user metadata by userId'
+      operationId: 'getUserById'
+      produces:
+        - 'application/json'
+      parameters:
+        - name: 'userId'
+          in: 'path'
+          type: 'string'
+          required: true
+      responses:
+        '200':
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/UserMetadata'
+        '400':
+          description: 'Invalid request'
+        '404':
+          description: 'User not found'
+  /user/{userId}/edit:
+    patch:
+      tags:
+        - 'user'
+      summary: 'Updates user metadata by userId'
+      description: 'This endpoint is for user to update user metadata by userId'
+      operationId: 'updateUserById'
+      produces:
+        - 'application/json'
+      parameters:
+        - name: 'userId'
+          in: 'path'
+          type: 'string'
+          required: true
+        - name: 'body'
+          in: 'body'
+          description: 'User object consists of fields subjected to updating'
+          required: true
+          schema:
+            $ref: '#/definitions/UserUpdateRequest'
+      responses:
+        '204':
+          description: 'Successfully updated the event'
+          schema:
+            $ref: '#/definitions/UserMetadata'
+        '400':
+          description: 'Invalid request'
+        '500':
+          description: 'Internal server error'
+  /event:
+    post:
+      tags:
+        - 'event'
+      summary: 'Creates a new event'
+      description: 'This endpoint is for user to create a new event.'
+      operationId: 'createEvent'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Created event object'
+          required: true
+          schema:
+            $ref: '#/definitions/EventMetadata'
+      responses:
+        '200':
+          description: 'Successful operation'
+        '400':
+          description: 'Invalid request'
+        '500':
+          description: 'Internal server error'
+  /event/{userId}:
+    get:
+      tags:
+        - 'event'
+      summary: 'Gets event metadata by userId'
+      description: 'This endpoint is to get event metadata by userId'
+      operationId: 'getEventByUserId'
+      produces:
+        - 'application/json'
+      parameters:
+        - name: 'userId'
+          in: 'path'
+          type: 'string'
+          required: true
+      responses:
+        '204':
+          description: 'Successfully created the event'
+          schema:
+            $ref: '#/definitions/EventMetadata'
+        '400':
+          description: 'Invalid request'
+        '404':
+          description: 'Event not found'
+  /event/{eventId}/edit:
+    patch:
+      tags:
+        - 'event'
+      summary: 'Updates event metadata by eventId'
+      description: 'This endpoint is for user to update event metadata by eventId'
+      operationId: 'updateEventByEventId'
+      produces:
+        - 'application/json'
+      parameters:
+        - name: 'eventId'
+          in: 'path'
+          type: 'string'
+          required: true
+        - name: 'body'
+          in: 'body'
+          description: 'Event object consists of fields subjected to updating'
+          required: true
+          schema:
+            $ref: '#/definitions/EventUpdateRequest'
+      responses:
+        '204':
+          description: 'Successfully updated the event'
+          schema:
+            $ref: '#/definitions/EventMetadata'
+        '400':
+          description: 'Invalid request'
+        '500':
+          description: 'Internal server error'
+  /event/{eventId}/user:
+    get:
+      tags:
+        - 'guest'
+      summary: 'Gets guest users who belong to the event by userId'
+      description: 'This endpoint is to get an array of guest users who belong to  the event'
+      operationId: 'getGuestsByEventId'
+      produces:
+        - 'application/json'
+      parameters:
+        - name: 'eventId'
+          in: 'path'
+          type: 'string'
+          required: true
+      responses:
+        '200':
+          description: 'Successfull operation'
+          schema:
+            $ref: '#/definitions/UsersArray'
+        '400':
+          description: 'Invalid request'
+        '404':
+          description: 'Guests not found'
+  /event/user/{userId}:
+    get:
+      tags:
+        - 'guest'
+      summary: 'Gets a single guest user by userId'
+      description: 'This endpoint is to get a single guest user by userId'
+      operationId: 'getGuestByUserId'
+      produces:
+        - 'application/json'
+      parameters:
+        - name: 'userId'
+          in: 'path'
+          type: 'string'
+          required: true
+      responses:
+        '200':
+          description: 'Successfull operation'
+          schema:
+            $ref: '#/definitions/UserMetadata'
+        '400':
+          description: 'Invalid request'
+        '404':
+          description: 'User not found'
+
+securityDefinitions:
+  api_key:
+    type: 'apiKey'
+    name: 'api_key'
+    in: 'header'
+
+definitions:
+  UserLoginRequest:
+    type: 'object'
+    properties:
+      email:
+        type: 'string'
+        example: 'ayaka@test.com'
+      password:
+        type: 'string'
+        example: 'password'
+  UserLoginResponse:
+    type: 'object'
+    properties:
+      userId:
+        type: 'string'
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+        description: 'A unique user id'
+  UserSignupRequest:
+    type: 'object'
+    properties:
+      firstName:
+        type: 'string'
+        example: 'ayaka'
+        description: 'It should be all lowercase'
+      lastName:
+        type: 'string'
+        example: 'yasuda'
+        description: 'It should be all lowercase'
+      email:
+        type: 'string'
+        example: 'ayaka@test.com'
+      password:
+        type: 'string'
+        example: 'password'
+  UserSignupResponse:
+    type: 'object'
+    properties:
+      userId:
+        type: 'string'
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+        description: 'A unique user id'
+  UserId:
+    type: 'string'
+    format: uuid
+    example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+    description: 'A unique user id'
+  EventId:
+    type: 'string'
+    format: uuid
+    example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+    description: 'A unique event id'
+  UserMetadata:
+    type: 'object'
+    properties:
+      PK:
+        type: 'string'
+        example: 'user'
+      SK:
+        type: 'string'
+        example: 'user#5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+      firstName:
+        type: 'string'
+        example: 'Ayaka'
+      lastName:
+        type: 'string'
+        example: 'Yasuda'
+      email:
+        type: 'string'
+        example: 'ayaka@test.com'
+      password:
+        type: 'string'
+        example: 'password'
+      isAdmin:
+        type: 'boolean'
+        example: true
+      message:
+        type: 'string'
+        description: 'A message the guest will send to the host as he/she submits the invitation'
+        example: 'Congrats!'
+      allergy:
+        type: 'string'
+        example: 'shrimps, oysters'
+      isAttending:
+        type: 'boolean'
+        example: 'true'
+  UserUpdateRequest:
+    type: 'object'
+    properties:
+      isAttending:
+        type: 'boolean'
+        example: false
+  EventMetadata:
+    type: 'object'
+    properties:
+      PK:
+        type: 'string'
+        example: 'event'
+      SK:
+        type: 'string'
+        example: 'event#5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+      bride:
+        type: 'string'
+        example: 'Rachel Greene'
+      groom:
+        type: 'string'
+        example: 'Ross Geller'
+      dateWedding:
+        type: 'string'
+        example: '2022/06/10'
+      startingTimeWedding:
+        type: 'string'
+        example: '11:00'
+      endingTimeWedding:
+        type: 'string'
+        example: '12:00'
+      dateWeddingReception:
+        type: 'string'
+        example: '2022/06/10'
+      startingTimeReception:
+        type: 'string'
+        example: '13:00'
+      endingTimeReception:
+        type: 'string'
+        example: '16:00'
+      address:
+        type: 'string'
+        example: 'WOODLAND FOREST INN 12458 redwood drive anywhere city, CA'
+      message:
+        type: 'string'
+        description: 'A message the host will add to the invitation.'
+        example: 'Welcome to our wedding party'
+      isEditable:
+        type: 'boolean'
+        example: true
+  EventUpdateRequest:
+    type: 'object'
+    properties:
+      dateWedding:
+        type: 'string'
+        example: '2022/07/12'
+      startingTimeWedding:
+        type: 'string'
+        example: '10:00'
+      endingTimeWedding:
+        type: 'string'
+        example: '11:00'
+      dateWeddingReception:
+        type: 'string'
+        example: '2022/07/12'
+      startingTimeReception:
+        type: 'string'
+        example: '12:00'
+      endingTimeReception:
+        type: 'string'
+        example: '15:00'
+  UsersArray:
+    type: 'array'
+    items:
+      $ref: '#/definitions/UserMetadata'
