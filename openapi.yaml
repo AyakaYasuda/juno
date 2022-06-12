@@ -110,8 +110,6 @@ paths:
       responses:
         '204':
           description: 'Successfully updated the event'
-          schema:
-            $ref: '#/definitions/UserMetadata'
         '400':
           description: 'Invalid request'
         '500':
@@ -185,8 +183,6 @@ paths:
       responses:
         '204':
           description: 'Successfully updated the event'
-          schema:
-            $ref: '#/definitions/EventMetadata'
         '400':
           description: 'Invalid request'
         '500':
