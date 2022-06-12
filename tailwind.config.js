@@ -4,6 +4,7 @@ module.exports = {
     extend: {
       colors: {
         White: {
+          light: '#F1FFF0',
           lighter: '#FBFBFB',
           default: '#F5F5F5',
           dark: '#FDFBFB',
@@ -29,6 +30,9 @@ module.exports = {
       spacing: {
         medium: '37%',
         extraLarge: '87%',
+      },
+      backgroundImage: {
+        'guest-top': "url('./views/images/guest-top.png')",
       },
     },
   },

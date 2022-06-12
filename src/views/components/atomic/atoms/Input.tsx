@@ -5,6 +5,7 @@ type InputProps = {
   valueInput: string;
   classInput: string;
   labelName: string;
+  labelColor: string;
   inputName: string;
 };
 
@@ -13,11 +14,12 @@ const Input: React.FC<InputProps> = ({
   valueInput,
   classInput,
   labelName,
+  labelColor,
   inputName,
 }) => {
   return (
     <div className={`flex flex-col ${containerInput}`}>
-      <label className="mb-1 text-Yellow-dark">{labelName}</label>
+      <label className={`mb-1 ${labelColor}`}>{labelName}</label>
       <input
         type="text"
         name={inputName}

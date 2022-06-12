@@ -9,10 +9,7 @@ const GuestBaseLayout: React.FC<GuestBaseLayoutProps> = ({ children }) => {
   return (
     <div className="h-full lg:h-screen w-full bg-gradient-to-t from-Green-default to-White-darker flex justify-center items-center">
       {children}
-      <Copyright
-        classContainer="fixed left-0 bottom-0 text-center w-full"
-        classText="text-Pink-dark text-xs"
-      />
+      <Copyright textColor="text-Pink-dark" />
     </div>
   );
 };
