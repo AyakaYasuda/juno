@@ -58,7 +58,13 @@
   .InputLighter {
     @apply p-1 rounded-3xl bg-White-lighter text-Pink-default bg-opacity-80 border-none drop-shadow-lg md:p-2 md:rounded-xl;
   }
+  .InputLight {
+    @apply bg-white text-Pink-default p-2 border-none rounded-md mb-3;
+  }
   .InputBorder {
     @apply mb-4 border-b-2 border-Pink-default bg-inherit;
+  }
+  .buttonWhite {
+    @apply rounded-3xl bg-transparent text-white bg-opacity-80 border drop-shadow-lg md:p-2 md:rounded-xl;
   }
 }

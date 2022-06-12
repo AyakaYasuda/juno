@@ -8,6 +8,7 @@ import AdminLogin from 'views/pages/Admin/AdminLogin';
 import AdminRegister from 'views/pages/Admin/AdminRegister';
 import GuestInvitation from 'views/pages/Guest/GuestInvitation';
 import GuestLogin from 'views/pages/Guest/GuestLogin';
+import GuestMyPage from 'views/pages/Guest/GuestMyPage';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
       <Routes>
         <Route path="/guests/invitation" element={<GuestInvitation />} />
         <Route path="/guests/login" element={<GuestLogin />} />
+        <Route path="/guests/myPage" element={<GuestMyPage />} />
       </Routes>
     </BrowserRouter>
   );

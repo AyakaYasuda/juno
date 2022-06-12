@@ -11,7 +11,6 @@ const GuestTopLayout = () => {
     <div className="w-full h-screen relative">
       <img
         className="w-full h-full object-cover"
-        // className="w-full h-full bg-guest-top"
         src={ImageTop}
         alt="Guest Top"
       />
