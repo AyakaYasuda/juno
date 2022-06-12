@@ -16,14 +16,14 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
       <img
         src={ImgFlower1}
         alt="flower"
-        className="w-medium absolute top-0 right-0"
+        className="w-medium fixed top-0 right-0"
       />
-      <div className="md:w-4/5 md:h-4/5 bg-white FlexCenter rounded-2xl">
-        <div className=" md:w-11/12 md:h-5/6 flex gap-8">
-          <div className="md:w-1/2">
+      <div className="w-5/6 lg:w-4/5 my-6 h-4/5 bg-white FlexCenter rounded-2xl">
+        <div className=" w-11/12 h-5/6 my-6 flex flex-col items-center lg:flex-row gap-8">
+          <div className="lg:w-1/2">
             <CardWeddingInfo />
           </div>
-          <div className="md:w-1/2">
+          <div className="lg:w-1/2">
             <FormAttendance />
           </div>
         </div>
@@ -32,7 +32,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
       <img
         src={ImgFlower2}
         alt="flower"
-        className="w-80 absolute bottom-0 left-0"
+        className="w-1/4 fixed bottom-0 left-0"
       />
     </GuestBaseLayout>
   );

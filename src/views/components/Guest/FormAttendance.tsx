@@ -8,11 +8,11 @@ import ButtonFlexible from 'views/components/atomic/atoms/ButtonFlexible';
 const FormAttendance = () => {
   return (
     <div>
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col md:items-start">
         <Title classTitle="mb-4" classColor="text-Yellow-dark">
           RSVP
         </Title>
-        <div className="flex gap-6">
+        <div className="FlexCenter flex-col md:flex-row md:gap-6">
           <Input
             labelName="First Name"
             inputName="First Name"
@@ -28,7 +28,7 @@ const FormAttendance = () => {
             classInput="InputDark"
           />
         </div>
-        <div className="flex justify-center w-96 gap-8">
+        <div className="FlexJustify flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
           <Checker
             labelChecker="accepts with pleasure"
             valueChecker=""
@@ -44,23 +44,23 @@ const FormAttendance = () => {
             typeChecker="checkbox"
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center md:items-start">
           <Desc
-            containerDesc=""
+            containerDesc="w-3/5 md:w-full"
             classDesc="InputDark"
             labelName="Message"
             nameDesc="Message"
             rowsDesc={3}
           />
           <Desc
-            containerDesc=""
+            containerDesc="w-3/5 md:w-full"
             classDesc="InputDark"
             labelName="If you have food allergy"
             nameDesc="allergy"
             rowsDesc={2}
           />
         </div>
-        <div className="flex gap-6">
+        <div className="FlexCenter flex-col md:flex-row md:gap-6">
           <Input
             labelName="Email"
             inputName="Email"
@@ -77,7 +77,7 @@ const FormAttendance = () => {
           />
         </div>
       </div>
-      <div className="flex justify-center w-extraLarge">
+      <div className="flex justify-center md:w-extraLarge">
         <ButtonFlexible styleButton="bg-Green-default text-white w-2/5">
           Reply
         </ButtonFlexible>
