@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
-import { formatJSONResponse } from '@libs/api-gateway';
+import { formatJSONResponse, HttpError, handleError } from '@libs/api-gateway';
 import { v4 } from 'uuid';
 import * as yup from 'yup';
 import bcrypt from 'bcryptjs';
@@ -8,7 +8,8 @@ import { AWS } from '@serverless/typescript';
 
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const userEventTable = 'user-event';
+const USER_EVENT_TABLE = 'user-event';
+const PK_EMAIL_GSI = 'PK-email-index';
 
 const userSchema = yup.object().shape({
   firstName: yup.string().required(),
@@ -27,37 +28,6 @@ interface IUser {
   password: string;
   isAdmin: boolean;
 }
-
-// error handling
-class HttpError extends Error {
-  constructor(public statusCode: number, message: string) {
-    super(message);
-    this.statusCode = statusCode;
-  }
-}
-
-const handleError = (e: Error) => {
-  if (e instanceof yup.ValidationError) {
-    return formatJSONResponse(400, {
-      message: e.errors,
-    });
-  }
-
-  if (e instanceof SyntaxError) {
-    return formatJSONResponse(400, {
-      message: `invalid request body format : "${e.message}"`,
-    });
-  }
-
-  if (e instanceof HttpError) {
-    console.log(e.message);
-    return formatJSONResponse(500, {
-      message: e.message,
-    });
-  }
-
-  throw e;
-};
 
 export const createUser = async (
   event: APIGatewayProxyEvent
@@ -91,7 +61,7 @@ export const createUser = async (
     }
 
     const params = {
-      TableName: userEventTable,
+      TableName: USER_EVENT_TABLE,
       Item: user,
     };
 
@@ -109,8 +79,8 @@ const getUserByEmail = async (
   email: string
 ): Promise<APIGatewayProxyResultV2> => {
   const params = {
-    TableName: userEventTable,
-    IndexName: 'PK-email-index',
+    TableName: USER_EVENT_TABLE,
+    IndexName: PK_EMAIL_GSI,
     KeyConditionExpression: '#PK = :PK and #email = :email', // 条件を指定
     ExpressionAttributeNames: {
       '#PK': 'PK',

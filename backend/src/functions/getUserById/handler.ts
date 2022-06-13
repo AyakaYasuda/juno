@@ -1,36 +1,16 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
-import { formatJSONResponse } from '@libs/api-gateway';
+import { formatJSONResponse, HttpError, handleError } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const USER_EVENT_TABLE = 'user-event';
 
-// error handling
-class HttpError extends Error {
-  constructor(public statusCode: number, message: string) {
-    super(message);
-    this.statusCode = statusCode;
-  }
-}
-
-const handleError = (e: Error) => {
-  if (e instanceof HttpError) {
-    return formatJSONResponse(e.statusCode, {
-      message: e.message,
-    });
-  }
-
-  throw e;
-};
-
 const getUserById = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResultV2> => {
   try {
     const id = event.pathParameters.userId;
-    console.log(id);
-
     const params = {
       TableName: USER_EVENT_TABLE,
       Key: {
@@ -40,6 +20,10 @@ const getUserById = async (
     };
 
     const userResponseData = await dynamodb.get(params).promise();
+
+    if (Object.keys({ userResponseData }).length === 0) {
+      throw new HttpError(404, 'User not found');
+    }
 
     return formatJSONResponse(200, userResponseData.Item);
   } catch (err) {

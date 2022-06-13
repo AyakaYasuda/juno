@@ -4,6 +4,7 @@ import type {
   Handler,
 } from 'aws-lambda';
 import type { FromSchema } from 'json-schema-to-ts';
+import * as yup from 'yup';
 
 type ValidatedAPIGatewayProxyEvent<S> = Omit<APIGatewayProxyEvent, 'body'> & {
   body: FromSchema<S>;
@@ -27,3 +28,32 @@ export const formatJSONResponse = (
   };
 };
 
+// error handling
+export class HttpError extends Error {
+  constructor(public statusCode: number, message: string) {
+    super(message);
+    this.statusCode = statusCode;
+  }
+}
+
+export const handleError = (e: Error) => {
+  if (e instanceof yup.ValidationError) {
+    return formatJSONResponse(400, {
+      message: e.errors,
+    });
+  }
+
+  if (e instanceof SyntaxError) {
+    return formatJSONResponse(400, {
+      message: `invalid request body format : "${e.message}"`,
+    });
+  }
+
+  if (e instanceof HttpError) {
+    return formatJSONResponse(e.statusCode, {
+      message: e.message,
+    });
+  }
+
+  throw e;
+};
