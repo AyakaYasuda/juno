@@ -8,12 +8,13 @@ const USER_EVENT_TABLE = 'user-event';
 
 // error handling
 class HttpError extends Error {
-  constructor(public statusCode: number, body: Record<string, unknown> = {}) {
-    super(JSON.stringify(body));
+  constructor(public statusCode: number, message: string) {
+    super(message);
+    this.statusCode = statusCode;
   }
 }
 
-const handleError = (e: unknown) => {
+const handleError = (e: Error) => {
   if (e instanceof HttpError) {
     return formatJSONResponse(e.statusCode, {
       message: e.message,
