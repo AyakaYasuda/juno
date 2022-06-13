@@ -114,7 +114,7 @@ paths:
           description: 'Invalid request'
         '500':
           description: 'Internal server error'
-  /event:
+  /event/:userId:
     post:
       tags:
         - 'event'
