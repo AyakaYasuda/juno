@@ -56,6 +56,7 @@ export const createUser = async (
       isAdmin,
     };
 
+    // FIXME : look up the correct type for existingUser
     const existingUser: AWS.DynamoDB.Query = await getUserByEmail(user.email);
     if (existingUser.Items.length > 0) {
       throw new HttpError(500, 'User already exists');
