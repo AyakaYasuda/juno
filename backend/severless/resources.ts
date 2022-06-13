@@ -32,7 +32,7 @@ export default {
       ],
       LocalSecondaryIndexes: [
         {
-          IndexName: 'email-index',
+          IndexName: 'PK-email-index',
           KeySchema: [
             {
               KeyType: 'HASH',

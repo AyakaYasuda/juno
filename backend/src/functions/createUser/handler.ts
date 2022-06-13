@@ -9,7 +9,7 @@ import { AWS } from '@serverless/typescript';
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const USER_EVENT_TABLE = 'user-event';
-const PK_EMAIL_GSI = 'PK-email-index';
+const PK_EMAIL_LSI = 'PK-email-index';
 
 const userSchema = yup.object().shape({
   firstName: yup.string().required(),
@@ -77,7 +77,7 @@ export const createUser = async (
     await dynamodb.put(params).promise();
 
     return formatJSONResponse(200, {
-      body: user.SK,
+      userId: user.SK,
     });
   } catch (err) {
     return handleError(err);
@@ -89,7 +89,7 @@ const getUserByEmail = async (
 ): Promise<APIGatewayProxyResultV2> => {
   const params = {
     TableName: USER_EVENT_TABLE,
-    IndexName: PK_EMAIL_GSI,
+    IndexName: PK_EMAIL_LSI,
     KeyConditionExpression: '#PK = :PK and #email = :email', // 条件を指定
     ExpressionAttributeNames: {
       '#PK': 'PK',
