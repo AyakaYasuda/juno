@@ -334,12 +334,6 @@ definitions:
   EventMetadata:
     type: 'object'
     properties:
-      PK:
-        type: 'string'
-        example: 'event'
-      SK:
-        type: 'string'
-        example: 'event#5fccdd92-14fd-473e-8e55-db93eb96ccd2'
       bride:
         type: 'string'
         example: 'Rachel Greene'
