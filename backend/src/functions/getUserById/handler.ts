@@ -1,33 +1,10 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from "aws-lambda";
-import { middyfy } from "@libs/lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
+import { formatJSONResponse } from '@libs/api-gateway';
+import { middyfy } from '@libs/lambda';
 
-const AWS = require("aws-sdk")
+const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const USER_EVENT_TABLE = "user-event";
-
-let response: IResponse;
-
-/*
-============== common modules ==============
-*/
-interface IResponse {
-  statusCode: number;
-  headers: {
-    [key: string]: string;
-  };
-  body: string;
-}
-
-export const buildResponse = (statusCode: number, body: any) => {
-  return {
-    statusCode,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  };
-};
+const USER_EVENT_TABLE = 'user-event';
 
 // error handling
 class HttpError extends Error {
@@ -38,21 +15,14 @@ class HttpError extends Error {
 
 const handleError = (e: unknown) => {
   if (e instanceof HttpError) {
-    response = buildResponse(
-      e.statusCode,
-      JSON.stringify({
-        errors: e.message,
-      })
-    );
-    return response;
+    return formatJSONResponse(e.statusCode, {
+      message: e.message,
+    });
   }
 
   throw e;
 };
 
-/*
-============================================
-*/
 const getUserById = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResultV2> => {
@@ -63,17 +33,16 @@ const getUserById = async (
     const params = {
       TableName: USER_EVENT_TABLE,
       Key: {
-        PK: "user",
+        PK: 'user',
         SK: id,
       },
     };
 
     const userResponseData = await dynamodb.get(params).promise();
 
-    response = buildResponse(200, userResponseData.Item);
-    return response;
+    return formatJSONResponse(200, userResponseData.Item);
   } catch (err) {
-    handleError(err);
+    return handleError(err);
   }
 };
 

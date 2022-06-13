@@ -1,10 +1,10 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
+import { formatJSONResponse } from '@libs/api-gateway';
 import { v4 } from 'uuid';
 import * as yup from 'yup';
 import bcrypt from 'bcryptjs';
 import { middyfy } from '@libs/lambda';
 import { AWS } from '@serverless/typescript';
-import { formatJSONResponse } from '@libs/api-gateway';
 
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -27,10 +27,6 @@ interface IUser {
   password: string;
   isAdmin: boolean;
 }
-
-/*
-============== common modules ==============
-*/
 
 // error handling
 class HttpError extends Error {
@@ -62,10 +58,6 @@ const handleError = (e: Error) => {
 
   throw e;
 };
-
-/*
-  ============================================
-  */
 
 export const createUser = async (
   event: APIGatewayProxyEvent
