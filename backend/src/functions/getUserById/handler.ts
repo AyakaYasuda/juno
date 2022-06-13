@@ -1,11 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from "aws-lambda";
-import AWS from 'aws-sdk';
 import { middyfy } from "@libs/lambda";
 
-AWS.config.update({
-  region: 'us-east-1',
-});
-
+const AWS = require("aws-sdk")
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const USER_EVENT_TABLE = "user-event";
 
