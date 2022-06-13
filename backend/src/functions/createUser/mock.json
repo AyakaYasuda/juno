@@ -1,8 +1,5 @@
 {
   "headers": {
     "Content-Type": "application/json"
-  },
-  "pathParameters": {
-    "userId": "123"
   }
 }

@@ -1,12 +1,13 @@
 import type { AWS } from '@serverless/typescript';
 
 import getUserById from '@functions/getUserById';
+import createUser from '@functions/createUser';
 
 import dynamoConfigs from './severless/resources';
 import iam from './severless/iam';
 
 const serverlessConfiguration: AWS = {
-  service: 'sample',
+  service: 'juno',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild'],
   provider: {
@@ -30,6 +31,7 @@ const serverlessConfiguration: AWS = {
   // import the function via paths
   functions: {
     getUserById,
+    createUser,
   },
   package: { individually: true },
   custom: {

@@ -1,26 +1,18 @@
 export default [
   {
-    Effect: "Allow",
+    Effect: 'Allow',
     // Allow operations
-    Action: ["dynamodb:PutItem", "dynamodb:GetItem"],
+    Action: ['dynamodb:PutItem', 'dynamodb:GetItem', 'dynamodb:Query'],
     // Allow resources
     Resource:
-      "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/usersTable",
+      'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/user-event',
   },
   {
-    Effect: "Allow",
+    Effect: 'Allow',
     // Allow operations
-    Action: ["dynamodb:PutItem", "dynamodb:GetItem"],
+    Action: ['dynamodb:Query'],
     // Allow resources
     Resource:
-      "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/itemsTable",
-  },
-  {
-    Effect: "Allow",
-    // Allow operations
-    Action: ["dynamodb:PutItem", "dynamodb:GetItem"],
-    // Allow resources
-    Resource:
-      "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/user-event",
+      'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/user-event/index/PK-email-index',
   },
 ];
