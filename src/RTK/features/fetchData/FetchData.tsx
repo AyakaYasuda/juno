@@ -24,7 +24,7 @@ export function FetchData() {
       <div>
         <button onClick={handleFetch}>Fetch and Set data redux toolkit</button>
       </div>
-      <div>{data.name}</div>
+      <div>{data.allergy}</div>
     </div>
   );
 }
