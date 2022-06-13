@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import getUserById from '@functions/getUserById';
 import createUser from '@functions/createUser';
+import getEventByUserId from '@functions/getEventByUserId';
 
 import dynamoConfigs from './severless/resources';
 import iam from './severless/iam';
@@ -14,7 +15,7 @@ const serverlessConfiguration: AWS = {
     apiName: 'juno',
     name: 'aws',
     runtime: 'nodejs14.x',
-    region: 'us-east-1',
+    region: 'ca-central-1',
     profile: 'juno',
     stage: 'prod',
     apiGateway: {
@@ -32,6 +33,7 @@ const serverlessConfiguration: AWS = {
   functions: {
     getUserById,
     createUser,
+    getEventByUserId,
   },
   package: { individually: true },
   custom: {
