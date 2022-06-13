@@ -25,7 +25,7 @@ const App = () => {
       <Routes>
         <Route path="/guests/invitation" element={<GuestInvitation />} />
         <Route path="/guests/login" element={<GuestLogin />} />
-        <Route path="/guests/myPage" element={<GuestMyPage />} />
+        <Route path="/guests/mypage" element={<GuestMyPage />} />
         <Route path="/guests/edit" element={<GuestEdit />} />
       </Routes>
     </BrowserRouter>

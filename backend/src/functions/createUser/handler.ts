@@ -7,6 +7,7 @@ import { middyfy } from '@libs/lambda';
 import { AWS } from '@serverless/typescript';
 
 const AWS = require('aws-sdk');
+// import AWS from 'aws-sdk';
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const USER_EVENT_TABLE = 'user-event';
 const PK_EMAIL_LSI = 'PK-email-index';

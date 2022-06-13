@@ -5,6 +5,7 @@ import Input from 'views/components/atomic/atoms/Input';
 import ImageTop from 'views/images/guest-top.png';
 import Copyright from 'views/components/atomic/atoms/Copyright';
 import ButtonFlexible from 'views/components/atomic/atoms/ButtonFlexible';
+import { FetchData } from 'RTK/features/fetchData/FetchData';
 
 const GuestTopLayout = () => {
   return (
@@ -16,6 +17,7 @@ const GuestTopLayout = () => {
       />
       <div className="absolute inset-16 md:inset-32 text-center md:text-left">
         <Logo />
+        <FetchData />
 
         <div className="flex flex-col mt-4 gap-8">
           <h3 className="text-white">Guests Log In</h3>
