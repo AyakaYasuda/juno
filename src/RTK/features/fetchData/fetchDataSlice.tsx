@@ -41,7 +41,9 @@ export const fetchData = () => {
     dispatch(loading());
     try {
       const result = await axios.get(
-        'https://jsonplaceholder.typicode.com/users/1'
+        // 'https://jsonplaceholder.typicode.com/users/1'
+
+        'https://qwrtoswfm8.execute-api.us-east-1.amazonaws.com/prod/user/9b83b40a-9927-4360-ae07-732ae5ef2bd8'
       );
       const user = await result.data;
       dispatch(success(user));
