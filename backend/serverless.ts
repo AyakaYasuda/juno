@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import getUserById from '@functions/getUserById';
 import createUser from '@functions/createUser';
+import loginUser from '@functions/loginUser';
 
 import dynamoConfigs from './severless/resources';
 import iam from './severless/iam';
@@ -32,6 +33,7 @@ const serverlessConfiguration: AWS = {
   functions: {
     getUserById,
     createUser,
+    loginUser,
   },
   package: { individually: true },
   custom: {
