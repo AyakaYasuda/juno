@@ -14,7 +14,7 @@ const GuestMyPageLayout = () => {
           </Title>
           <button className="text-Yellow-dark">Logout</button>
         </div>
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row md:justify-center md:items-center md:h-screen">
           <div className="flex flex-col items-center">
             <Title classTitle="" textColor="text-white">
               Event Info
@@ -22,7 +22,7 @@ const GuestMyPageLayout = () => {
             <CardWeddingInfo spacing="mx-4 p-4 md:w-3/4 md:p-10" />
           </div>
 
-          <div className="w-full flexCenter">
+          <div className="w-full ">
             <FormAttendance
               sectionTitleColor="text-white"
               sectionTitle="Your Reply"
