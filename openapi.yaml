@@ -103,7 +103,7 @@ paths:
           required: true
         - name: 'body'
           in: 'body'
-          description: 'User object consists of fields subjected to updating'
+          description: 'User object that consists of fields subjected to updating'
           required: true
           schema:
             $ref: '#/definitions/UserUpdateRequest'
