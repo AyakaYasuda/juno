@@ -67,6 +67,7 @@ export const getUserById = async (
     const params = {
       TableName: userEventTable,
       Key: {
+        PK: "user",
         SK: id,
       },
     };
