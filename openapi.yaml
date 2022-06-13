@@ -365,9 +365,6 @@ definitions:
         type: 'string'
         description: 'A message the host will add to the invitation.'
         example: 'Welcome to our wedding party'
-      isEditable:
-        type: 'boolean'
-        example: true
   EventUpdateRequest:
     type: 'object'
     properties:
