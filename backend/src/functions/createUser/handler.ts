@@ -9,7 +9,7 @@ import { AWS } from '@serverless/typescript';
 const AWS = require('aws-sdk');
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const USER_EVENT_TABLE = 'user-event';
-const PK_EMAIL_GSI = 'PK-email-index';
+const PK_EMAIL_LSI = 'PK-email-index';
 
 const userSchema = yup.object().shape({
   firstName: yup.string().required(),
@@ -17,6 +17,8 @@ const userSchema = yup.object().shape({
   email: yup.string().required(),
   password: yup.string().required(),
   isAdmin: yup.boolean().required(),
+  message: yup.string(),
+  allergy: yup.string(),
 });
 
 interface IUser {
@@ -27,6 +29,8 @@ interface IUser {
   email: string;
   password: string;
   isAdmin: boolean;
+  message: string;
+  allergy: string;
 }
 
 export const createUser = async (
@@ -43,6 +47,8 @@ export const createUser = async (
     const email = reqBody.email;
     const password = reqBody.password;
     const isAdmin = reqBody.isAdmin;
+    const message = reqBody.message;
+    const allergy = reqBody.allergy;
 
     const encryptedPW = bcrypt.hashSync(password.trim(), 10);
     const user: IUser = {
@@ -53,6 +59,8 @@ export const createUser = async (
       email,
       password: encryptedPW,
       isAdmin,
+      message,
+      allergy,
     };
 
     // FIXME : look up the correct type for existingUser
@@ -69,7 +77,7 @@ export const createUser = async (
     await dynamodb.put(params).promise();
 
     return formatJSONResponse(200, {
-      body: user.password,
+      userId: user.SK,
     });
   } catch (err) {
     return handleError(err);
@@ -81,7 +89,7 @@ const getUserByEmail = async (
 ): Promise<APIGatewayProxyResultV2> => {
   const params = {
     TableName: USER_EVENT_TABLE,
-    IndexName: PK_EMAIL_GSI,
+    IndexName: PK_EMAIL_LSI,
     KeyConditionExpression: '#PK = :PK and #email = :email', // 条件を指定
     ExpressionAttributeNames: {
       '#PK': 'PK',
