@@ -155,7 +155,7 @@ paths:
         '204':
           description: 'Successfully created the event'
           schema:
-            $ref: '#/definitions/EventMetadata'
+            $ref: '#/definitions/GetEventMetadata'
         '400':
           description: 'Invalid request'
         '404':
@@ -365,6 +365,45 @@ definitions:
         type: 'string'
         description: 'A message the host will add to the invitation.'
         example: 'Welcome to our wedding party'
+  GetEventMetadata:
+    type: 'object'
+    properties:
+      SK:
+        type: 'string'
+        example: event#1
+      bride:
+        type: 'string'
+        example: 'Rachel Greene'
+      groom:
+        type: 'string'
+        example: 'Ross Geller'
+      dateWedding:
+        type: 'string'
+        example: '2022/06/10'
+      startingTimeWedding:
+        type: 'string'
+        example: '11:00'
+      endingTimeWedding:
+        type: 'string'
+        example: '12:00'
+      dateWeddingReception:
+        type: 'string'
+        example: '2022/06/10'
+      startingTimeReception:
+        type: 'string'
+        example: '13:00'
+      endingTimeReception:
+        type: 'string'
+        example: '16:00'
+      address:
+        type: 'string'
+        example: 'WOODLAND FOREST INN 12458 redwood drive anywhere city, CA'
+      message:
+        type: 'string'
+        description: 'A message the host will add to the invitation.'
+        example: 'Welcome to our wedding party'
+      idEditable:
+        type: 'boolean'
   EventUpdateRequest:
     type: 'object'
     properties:
