@@ -5,9 +5,11 @@ import { middyfy } from '@libs/lambda';
 import EventValidator from '@libs/validator/event.validator';
 import EventModel from '@libs/model/event.model';
 import { CreateEventReqBody } from '@libs/requests/CreateEventReqBody';
+import UserModel from '@libs/model/user.model';
 
 const eventValidator = new EventValidator();
 const eventModel = new EventModel();
+const userModel = new UserModel();
 
 export const createEvent = async (
   event: APIGatewayProxyEvent
@@ -18,9 +20,8 @@ export const createEvent = async (
 
     await eventValidator.validateEventReqBody(reqBody);
 
-    // FIXME: error if user not exist
-    // await eventModel.errorIfUserNotExist(userId, 'User not found!');
-
+    // check data exists
+    await userModel.errorIfUserNotExist(userId, 'User not found!');
     await eventModel.errorIfEventIdDataExist(
       userId,
       'User already has an event!'

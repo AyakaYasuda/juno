@@ -1,6 +1,6 @@
 import { tableNames } from '@libs/tableNames';
-import { IEvent } from './event.type';
-import { IEventUserIsAttending } from './eventUserIsAttending.type';
+import { IEvent } from '../model/event.type';
+import { IEventUserIsAttending } from '../model/eventUserIsAttending.type';
 
 export type IFetchEventIdParams = {
   TableName: tableNames.USER_EVENT;

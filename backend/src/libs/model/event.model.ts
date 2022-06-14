@@ -7,7 +7,7 @@ import {
   getFetchEventIdParams,
   ICreateEventParams,
   IFetchEventParams,
-} from './params';
+} from '../params/event.params';
 import { v4 } from 'uuid';
 import { IEventUserIsAttending } from './eventUserIsAttending.type';
 import DbModel from './dbModel';
