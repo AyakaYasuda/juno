@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import getUserById from '@functions/getUserById';
 import createUser from '@functions/createUser';
+import getEventByUserId from '@functions/getEventByUserId';
 import createEvent from '@functions/createEvent';
 import loginUser from '@functions/loginUser';
 import getGuestsByEventId from '@functions/getGuestsByEventId';
@@ -36,6 +37,7 @@ const serverlessConfiguration: AWS = {
   functions: {
     getUserById,
     createUser,
+    getEventByUserId,
     createEvent,
     loginUser,
     getGuestsByEventId,
