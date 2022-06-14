@@ -5,8 +5,8 @@ export default {
   events: [
     {
       http: {
-        method: 'post',
-        path: '/event/new/{userId}',
+        method: 'get',
+        path: 'event/guests/{eventId}',
       },
     },
   ],

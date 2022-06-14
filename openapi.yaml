@@ -87,7 +87,7 @@ paths:
           description: 'Invalid request'
         '404':
           description: 'User not found'
-  /user/{userId}/edit:
+  /user/edit/{userId}:
     patch:
       tags:
         - 'user'
@@ -114,7 +114,7 @@ paths:
           description: 'Invalid request'
         '500':
           description: 'Internal server error'
-  /event/:userId:
+  /event/new/{userId}:
     post:
       tags:
         - 'event'
@@ -124,6 +124,10 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'userId'
+          in: 'path'
+          type: 'string'
+          required: true
         - in: 'body'
           name: 'body'
           description: 'Created event object'
@@ -160,7 +164,7 @@ paths:
           description: 'Invalid request'
         '404':
           description: 'Event not found'
-  /event/{eventId}/edit:
+  /event/edit/{eventId}:
     patch:
       tags:
         - 'event'
@@ -187,7 +191,7 @@ paths:
           description: 'Invalid request'
         '500':
           description: 'Internal server error'
-  /event/{eventId}/user:
+  /event/guests/{eventId}:
     get:
       tags:
         - 'guests'

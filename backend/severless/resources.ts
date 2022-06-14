@@ -30,6 +30,28 @@ export default {
           AttributeName: 'SK',
         },
       ],
+      GlobalSecondaryIndexes: [
+        {
+          IndexName: 'eventId-userId-index',
+          KeySchema: [
+            {
+              KeyType: 'HASH',
+              AttributeName: 'SK',
+            },
+            {
+              KeyType: 'RANGE',
+              AttributeName: 'PK',
+            },
+          ],
+          Projection: {
+            ProjectionType: 'ALL',
+          },
+          ProvisionedThroughput: {
+            ReadCapacityUnits: 5,
+            WriteCapacityUnits: 5,
+          },
+        },
+      ],
       LocalSecondaryIndexes: [
         {
           IndexName: 'PK-email-index',

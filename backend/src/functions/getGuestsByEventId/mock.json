@@ -1,0 +1,8 @@
+{
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "pathParameters": {
+    "eventId": "123"
+  }
+}
