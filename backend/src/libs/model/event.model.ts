@@ -108,12 +108,9 @@ class EventModel extends DbModel {
   }
 
   public async createEventUserIsAttending(eventId: string, userId: string) {
-    console.log('createEventUserIsAttending eventId', eventId);
-    console.log('createEventUserIsAttending userId', userId);
-
     const eventUserIsAttendingData: IEventUserIsAttending = {
-      PK: eventId,
-      SK: userId,
+      PK: userId,
+      SK: eventId,
     };
 
     const EventUserIsAttendingParams = {
