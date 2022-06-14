@@ -9,7 +9,6 @@ const AWS = require('aws-sdk');
 // import AWS from 'aws-sdk';
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const USER_EVENT_TABLE = 'user-event';
-const PK_EMAIL_LSI = 'PK-email-index';
 
 const eventSchema = yup.object().shape({
   bride: yup.string().required(),
@@ -100,23 +99,19 @@ export const createUser = async (
   }
 };
 
+// FIXME: same code in getEventByUserId. create model class.
 const getEventByUserId = async (
   userId: string
 ): Promise<APIGatewayProxyResultV2> => {
-  const params = {
+  // 1. fetch eventId by userId
+  const fetchEventIdParams = {
     TableName: USER_EVENT_TABLE,
-    IndexName: PK_EMAIL_LSI,
-    KeyConditionExpression: '#PK = :PK and #email = :email', // 条件を指定
-    ExpressionAttributeNames: {
-      '#PK': 'PK',
-      '#email': 'email',
-    },
-    ExpressionAttributeValues: {
-      ':PK': 'user',
-      ':email': email,
+    Key: {
+      PK: userId,
     },
   };
-  return await dynamodb.query(params).promise();
+
+  return await dynamodb.get(fetchEventIdParams).promise();
 };
 
 export const main = middyfy(createUser);
