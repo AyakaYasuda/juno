@@ -164,7 +164,7 @@ paths:
           description: 'Invalid request'
         '404':
           description: 'Event not found'
-  /event/edit/{eventId}:
+  /event/{eventId}/edit:
     patch:
       tags:
         - 'event'
