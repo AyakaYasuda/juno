@@ -6,7 +6,7 @@ export default {
     {
       http: {
         method: 'post',
-        path: 'user/signup',
+        path: '/event/{userId}',
       },
     },
   ],

@@ -1,5 +1,5 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
-import { formatJSONResponse, HttpError, handleError } from '@libs/api-gateway';
+import { formatJSONResponse, handleError, HttpError } from '@libs/api-gateway';
 import { v4 } from 'uuid';
 import * as yup from 'yup';
 import { middyfy } from '@libs/lambda';
@@ -46,6 +46,8 @@ export const createUser = async (
     const userId = event.pathParameters.userId;
     const reqBody = JSON.parse(event.body);
 
+    console.log('createUser userId', userId);
+
     // FIXME : the reference sample was false
     await eventSchema.validate(reqBody, { abortEarly: true });
 
@@ -90,7 +92,21 @@ export const createUser = async (
       Item: eventData,
     };
 
+    // create event
     await dynamodb.put(params).promise();
+
+    const eventRelationData = {
+      PK: userId,
+      SK: eventData.SK,
+    };
+
+    const relationParams = {
+      TableName: USER_EVENT_TABLE,
+      Item: eventRelationData,
+    };
+
+    // create event-user
+    await dynamodb.put(relationParams).promise();
 
     return formatJSONResponse(200, {
       eventId: eventData.SK,
@@ -107,12 +123,17 @@ const getEventByUserId = async (
   // 1. fetch eventId by userId
   const fetchEventIdParams = {
     TableName: USER_EVENT_TABLE,
-    Key: {
-      PK: userId,
+    KeyConditionExpression: 'PK = :PK',
+    ExpressionAttributeValues: {
+      ':PK': userId,
     },
   };
+  console.log('getEventByUserId userId', userId);
 
-  return await dynamodb.get(fetchEventIdParams).promise();
+  const result = await dynamodb.query(fetchEventIdParams).promise();
+  console.log('getEventByUserId result', result);
+
+  return result;
 };
 
 export const main = middyfy(createUser);
