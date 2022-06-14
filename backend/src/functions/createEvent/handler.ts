@@ -84,6 +84,7 @@ export const createUser = async (
       throw new HttpError(500, 'User already has an event!');
     }
 
+    // FIXME: add type to params
     const params = {
       TableName: USER_EVENT_TABLE,
       Item: eventData,
@@ -92,7 +93,7 @@ export const createUser = async (
     await dynamodb.put(params).promise();
 
     return formatJSONResponse(200, {
-      userId: user.SK,
+      eventId: eventData.SK,
     });
   } catch (err) {
     return handleError(err);
