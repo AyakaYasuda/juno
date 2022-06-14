@@ -67,7 +67,7 @@ const getGuestsByEventId = async (
         .promise();
 
       if (Object.keys(guestResponseData).length === 0) {
-        throw new HttpError(404, 'Guest who has the provided userId not found');
+        throw new HttpError(404, 'Guest who has the provided userId is not found');
       }
 
       usersArray.push(guestResponseData.Item);
