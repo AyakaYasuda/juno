@@ -191,7 +191,7 @@ paths:
           description: 'Invalid request'
         '404':
           description: 'Event not found'
-  /event/{eventId}/edit:
+  /event/edit/{eventId}:
     patch:
       tags:
         - 'event'
@@ -286,6 +286,15 @@ definitions:
       password:
         type: 'string'
         example: 'password'
+      isAdmin:
+        type: boolean
+        example: true
+      message:
+        type: 'string'
+        example: ''
+      allergy:
+        type: 'string'
+        example: ''
   UserSignupResponse:
     type: 'object'
     properties:
@@ -445,8 +454,8 @@ definitions:
     type: 'object'
     properties:
       userId:
-        type: "string"
-        example: "5fccdd92-14fd-473e-8e55-db93eb96ccd2"
+        type: 'string'
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
       isAttending:
         type: boolean
         example: true
