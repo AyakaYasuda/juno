@@ -11,7 +11,7 @@ class UserModel extends DbModel {
   public async errorIfUserNotExist(
     userId: string,
     userNotExistErrorMessage: string
-  ) {
+  ): Promise<void> {
     const fetchUserParams: IErrorIfUserNotExistParams = {
       TableName: tableNames.USER_EVENT,
       Key: {

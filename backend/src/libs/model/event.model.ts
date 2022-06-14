@@ -2,15 +2,16 @@ import { HttpError } from '@libs/api-gateway';
 import { CreateEventReqBody } from '@libs/requests/CreateEventReqBody';
 import { tableNames } from '@libs/tableNames';
 import { stringifiedJson } from 'aws-sdk/clients/customerprofiles';
-import { IEvent } from './event.type';
+import { IEvent } from '../types/event.type';
 import {
   getFetchEventIdParams,
   ICreateEventParams,
   IFetchEventParams,
 } from '../params/event.params';
 import { v4 } from 'uuid';
-import { IEventUserIsAttending } from './eventUserIsAttending.type';
+
 import DbModel from './dbModel';
+import { IEventUserIsAttending } from '@libs/types/eventUserIsAttending.type';
 
 class EventModel extends DbModel {
   constructor() {
