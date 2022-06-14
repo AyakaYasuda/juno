@@ -1,59 +1,36 @@
 import { HttpError } from '@libs/api-gateway';
+import { CreateEventReqBody } from '@libs/requests/CreateEventReqBody';
 import { tableNames } from '@libs/tableNames';
 import { stringifiedJson } from 'aws-sdk/clients/customerprofiles';
-import IParams, { IFetchEventIdParams, IFetchEventParams } from './params';
+import { IEvent } from '../types/event.type';
+import {
+  getFetchEventIdParams,
+  ICreateEventParams,
+  IFetchEventParams,
+} from '../params/event.params';
+import { v4 } from 'uuid';
 
-const AWS = require('aws-sdk');
+import DbModel from './dbModel';
+import { IEventUserIsAttending } from '@libs/types/eventUserIsAttending.type';
 
-class EventModel {
-  private dynamodb;
+class EventModel extends DbModel {
   constructor() {
-    this.dynamodb = new AWS.DynamoDB.DocumentClient();
+    super();
   }
 
-  private async query(params: IParams) {
-    return await this.dynamodb.query(params).promise();
-  }
-
-  private async get(params: IParams) {
-    return await this.dynamodb.get(params).promise();
-  }
-
-  private async getDataWithQuery(
-    params: IParams,
-    notFoundErrorMessage: string
-  ) {
-    const data = await this.query(params);
-    if (data.Items.length === 0) {
-      throw new HttpError(404, notFoundErrorMessage);
-    }
-    return data;
-  }
-
-  private async getDataWithGet(params: IParams, notFoundErrorMessage: string) {
-    const data = await this.get(params);
-    if (Object.keys(data).length === 0) {
-      throw new HttpError(404, notFoundErrorMessage);
-    }
-    return data;
-  }
-
+  // FIXME: add type to return value, Promise<EventIdData[]>
   public async getEventIdData(
     userId: stringifiedJson,
     notFoundErrorMessage: string
   ) {
-    const fetchEventIdParams: IFetchEventIdParams = {
-      TableName: tableNames.USER_EVENT,
-      KeyConditionExpression: 'PK = :PK',
-      ExpressionAttributeValues: {
-        ':PK': userId,
-      },
-    };
+    const fetchEventIdParams = getFetchEventIdParams(userId);
+    const data = await this.query(fetchEventIdParams);
 
-    return await this.getDataWithQuery(
-      fetchEventIdParams,
-      notFoundErrorMessage
-    );
+    if (data.Items.length === 0) {
+      throw new HttpError(404, notFoundErrorMessage);
+    }
+
+    return data;
   }
 
   public async getEventData(eventId: string, notFoundErrorMessage: string) {
@@ -66,7 +43,82 @@ class EventModel {
       ProjectionExpression: `startingTimeReception,startingTimeWedding,message,address,dateWeddingReception,endingTimeReception,isEditable,groom,bride,dateWedding,endingTimeWedding,SK`,
     };
 
-    return await this.getDataWithGet(fetchEventParams, notFoundErrorMessage);
+    const data = await this.get(fetchEventParams);
+
+    if (Object.keys(data).length === 0) {
+      throw new HttpError(404, notFoundErrorMessage);
+    }
+
+    return data;
+  }
+
+  public async errorIfEventIdDataExist(
+    userId: string,
+    eventExistErrorMessage: string
+  ) {
+    const fetchEventIdParams = getFetchEventIdParams(userId);
+
+    const existingEvent = await this.query(fetchEventIdParams);
+
+    if (existingEvent.Items.length > 0) {
+      throw new HttpError(500, eventExistErrorMessage);
+    }
+  }
+
+  public async createEvent(reqBody: CreateEventReqBody): Promise<string> {
+    const {
+      bride,
+      groom,
+      dateWedding,
+      startingTimeWedding,
+      endingTimeWedding,
+      dateWeddingReception,
+      startingTimeReception,
+      endingTimeReception,
+      address,
+      message,
+    } = reqBody;
+
+    const eventId = v4();
+
+    const eventData: IEvent = {
+      PK: 'event',
+      SK: eventId,
+      bride,
+      groom,
+      dateWedding,
+      startingTimeWedding,
+      endingTimeWedding,
+      dateWeddingReception,
+      startingTimeReception,
+      endingTimeReception,
+      address,
+      message,
+      isEditable: true,
+    };
+
+    const createEventParams: ICreateEventParams = {
+      TableName: tableNames.USER_EVENT,
+      Item: eventData,
+    };
+
+    await this.put(createEventParams);
+
+    return eventId;
+  }
+
+  public async createEventUserIsAttending(eventId: string, userId: string) {
+    const eventUserIsAttendingData: IEventUserIsAttending = {
+      PK: userId,
+      SK: eventId,
+    };
+
+    const EventUserIsAttendingParams = {
+      TableName: tableNames.USER_EVENT,
+      Item: eventUserIsAttendingData,
+    };
+
+    await this.put(EventUserIsAttendingParams);
   }
 }
 
