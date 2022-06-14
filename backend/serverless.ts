@@ -17,7 +17,7 @@ const serverlessConfiguration: AWS = {
     apiName: 'juno',
     name: 'aws',
     runtime: 'nodejs14.x',
-    region: 'ca-central-1',
+    region: 'us-east-1',
     profile: 'juno',
     stage: 'prod',
     apiGateway: {
