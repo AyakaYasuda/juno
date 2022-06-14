@@ -40,12 +40,11 @@ const loginUser = async (
     }
 
     const existingUser: AWS.DynamoDB.Query = await getUserByEmail(email);
-    console.log(existingUser);
     if (existingUser.Items.length === 0) {
       throw new HttpError(403, 'User does not exist');
     }
 
-    if (!bcrypt.compareSync(password, existingUser.password)) {
+    if (!bcrypt.compareSync(password, existingUser.Items[0].password)) {
       return formatJSONResponse(403, {
         message: 'Password is incorrect',
       });

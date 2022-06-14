@@ -10,7 +10,7 @@ import iam from './severless/iam';
 const serverlessConfiguration: AWS = {
   service: 'juno',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-esbuild', 'serverless-dotenv-plugin'],
   provider: {
     apiName: 'juno',
     name: 'aws',
