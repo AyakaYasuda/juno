@@ -315,7 +315,7 @@ definitions:
         example: 'user'
       SK:
         type: 'string'
-        example: 'user#5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
       firstName:
         type: 'string'
         example: 'Ayaka'
@@ -444,6 +444,9 @@ definitions:
   UserRSVPResponse:
     type: 'object'
     properties:
+      userId:
+        type: "string"
+        example: "5fccdd92-14fd-473e-8e55-db93eb96ccd2"
       isAttending:
         type: boolean
         example: true
