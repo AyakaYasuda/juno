@@ -13,6 +13,11 @@ import { IEventUserIsAttending } from './eventUserIsAttending.type';
 import DbModel from './dbModel';
 
 class EventModel extends DbModel {
+  constructor() {
+    super();
+  }
+
+  // FIXME: add type to return value, Promise<EventIdData[]>
   public async getEventIdData(
     userId: stringifiedJson,
     notFoundErrorMessage: string
@@ -46,7 +51,10 @@ class EventModel extends DbModel {
     return data;
   }
 
-  public async errorIfEventIdDataExist(userId: string, eventExistErrorMessage) {
+  public async errorIfEventIdDataExist(
+    userId: string,
+    eventExistErrorMessage: string
+  ) {
     const fetchEventIdParams = getFetchEventIdParams(userId);
 
     const existingEvent = await this.query(fetchEventIdParams);
@@ -56,7 +64,7 @@ class EventModel extends DbModel {
     }
   }
 
-  public async createEvent(reqBody: CreateEventReqBody) {
+  public async createEvent(reqBody: CreateEventReqBody): Promise<string> {
     const {
       bride,
       groom,
@@ -70,9 +78,11 @@ class EventModel extends DbModel {
       message,
     } = reqBody;
 
+    const eventId = v4();
+
     const eventData: IEvent = {
       PK: 'event',
-      SK: v4(),
+      SK: eventId,
       bride,
       groom,
       dateWedding,
@@ -91,13 +101,18 @@ class EventModel extends DbModel {
       Item: eventData,
     };
 
-    return await this.put(createEventParams);
+    await this.put(createEventParams);
+
+    return eventId;
   }
 
-  public async createEventUserIsAttending(userId: string, eventId: string) {
+  public async createEventUserIsAttending(eventId: string, userId: string) {
+    console.log('createEventUserIsAttending eventId', eventId);
+    console.log('createEventUserIsAttending userId', userId);
+
     const eventUserIsAttendingData: IEventUserIsAttending = {
-      PK: userId,
-      SK: eventId,
+      PK: eventId,
+      SK: userId,
     };
 
     const EventUserIsAttendingParams = {

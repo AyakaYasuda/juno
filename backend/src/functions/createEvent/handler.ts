@@ -27,7 +27,7 @@ export const createEvent = async (
     );
 
     // create event
-    const { eventId } = await eventModel.createEvent(reqBody);
+    const eventId = await eventModel.createEvent(reqBody);
 
     // create eventUserIsAttending
     await eventModel.createEventUserIsAttending(eventId, userId);
