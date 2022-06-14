@@ -14,6 +14,7 @@ export type IFetchEventParams = {
     PK: 'event';
     SK: string;
   };
+  ProjectionExpression: string;
 };
 
 type IParams = IFetchEventIdParams | IFetchEventParams;
