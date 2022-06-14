@@ -10,6 +10,7 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.109.0",
     "@middy/core": "^2.5.7",
     "@middy/http-json-body-parser": "^2.5.7",
     "aws-sdk": "^2.1152.0",
