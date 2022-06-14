@@ -6,7 +6,7 @@ export default {
     {
       http: {
         method: 'get',
-        path: 'event/{eventId}/user',
+        path: 'event/guests/{eventId}',
       },
     },
   ],
