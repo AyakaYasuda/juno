@@ -10,10 +10,12 @@
     "node": ">=14.15.0"
   },
   "dependencies": {
-    "@middy/core": "^2.5.3",
-    "@middy/http-json-body-parser": "^2.5.3",
+    "@aws-sdk/client-dynamodb": "^3.109.0",
+    "@middy/core": "^2.5.7",
+    "@middy/http-json-body-parser": "^2.5.7",
     "aws-sdk": "^2.1152.0",
     "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"
   },
@@ -24,6 +26,7 @@
     "esbuild": "^0.14.11",
     "json-schema-to-ts": "^1.5.0",
     "serverless": "^3.0.0",
+    "serverless-dotenv-plugin": "^4.0.1",
     "serverless-esbuild": "^1.23.3",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",

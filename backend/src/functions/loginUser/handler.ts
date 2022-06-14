@@ -1,40 +1,27 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
 import { formatJSONResponse, HttpError, handleError } from '@libs/api-gateway';
-import { v4 } from 'uuid';
+import jwt from 'jsonwebtoken';
 import * as yup from 'yup';
 import bcrypt from 'bcryptjs';
 import { middyfy } from '@libs/lambda';
 import { AWS } from '@serverless/typescript';
 
 const AWS = require('aws-sdk');
-// import AWS from 'aws-sdk';
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 const USER_EVENT_TABLE = 'user-event';
 const PK_EMAIL_LSI = 'PK-email-index';
 
 const userSchema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
   email: yup.string().required(),
   password: yup.string().required(),
-  isAdmin: yup.boolean().required(),
-  message: yup.string(),
-  allergy: yup.string(),
 });
 
-interface IUser {
-  PK: string;
-  SK: string;
-  firstName: string;
-  lastName: string;
+interface ILoginUserInfo {
   email: string;
   password: string;
-  isAdmin: boolean;
-  message: string;
-  allergy: string;
 }
 
-export const createUser = async (
+const loginUser = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResultV2> => {
   try {
@@ -43,42 +30,36 @@ export const createUser = async (
     // FIXME : the reference sample was false
     await userSchema.validate(reqBody, { abortEarly: true });
 
-    const firstName = reqBody.firstName;
-    const lastName = reqBody.lastName;
     const email = reqBody.email;
     const password = reqBody.password;
-    const isAdmin = reqBody.isAdmin;
-    const message = reqBody.message;
-    const allergy = reqBody.allergy;
 
-    const encryptedPW = bcrypt.hashSync(password.trim(), 10);
-    const user: IUser = {
-      PK: 'user',
-      SK: v4(),
-      firstName,
-      lastName,
-      email,
-      password: encryptedPW,
-      isAdmin,
-      message,
-      allergy,
-    };
-
-    // FIXME : look up the correct type for existingUser
-    const existingUser: AWS.DynamoDB.Query = await getUserByEmail(user.email);
-    if (existingUser.Items.length > 0) {
-      throw new HttpError(500, 'User already exists');
+    if (!email || !password) {
+      return formatJSONResponse(401, {
+        message: 'Username and password are required',
+      });
     }
 
-    const params = {
-      TableName: USER_EVENT_TABLE,
-      Item: user,
+    const existingUser: AWS.DynamoDB.Query = await getUserByEmail(email);
+    if (existingUser.Items.length === 0) {
+      throw new HttpError(403, 'User does not exist');
+    }
+
+    if (!bcrypt.compareSync(password, existingUser.Items[0].password)) {
+      return formatJSONResponse(403, {
+        message: 'Password is incorrect',
+      });
+    }
+
+    const loginUserInfo: ILoginUserInfo = {
+      email,
+      password,
     };
 
-    await dynamodb.put(params).promise();
+    const token = generateToken(loginUserInfo);
 
     return formatJSONResponse(200, {
-      userId: user.SK,
+      user: loginUserInfo,
+      token,
     });
   } catch (err) {
     return handleError(err);
@@ -91,7 +72,7 @@ const getUserByEmail = async (
   const params = {
     TableName: USER_EVENT_TABLE,
     IndexName: PK_EMAIL_LSI,
-    KeyConditionExpression: '#PK = :PK and #email = :email', // 条件を指定
+    KeyConditionExpression: '#PK = :PK and #email = :email',
     ExpressionAttributeNames: {
       '#PK': 'PK',
       '#email': 'email',
@@ -104,4 +85,14 @@ const getUserByEmail = async (
   return await dynamodb.query(params).promise();
 };
 
-export const main = middyfy(createUser);
+const generateToken = (loginUserInfo: ILoginUserInfo) => {
+  if (!loginUserInfo) {
+    return null;
+  }
+
+  return jwt.sign(loginUserInfo, process.env.JWT_SECRET, {
+    expiresIn: '1h',
+  });
+};
+
+export const main = middyfy(loginUser);
