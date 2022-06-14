@@ -7,6 +7,7 @@ import createEvent from '@functions/createEvent';
 import loginUser from '@functions/loginUser';
 import getGuestsByEventId from '@functions/getGuestsByEventId';
 import updateUserById from '@functions/updateUserById';
+import createGuestResponse from '@functions/createGuestResponse';
 import updateEvent from '@functions/updateEvent';
 
 import dynamoConfigs from './severless/resources';
@@ -43,6 +44,7 @@ const serverlessConfiguration: AWS = {
     loginUser,
     getGuestsByEventId,
     updateUserById,
+    createGuestResponse,
     updateEvent,
   },
   package: { individually: true },
