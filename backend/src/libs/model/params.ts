@@ -1,4 +1,6 @@
 import { tableNames } from '@libs/tableNames';
+import { IEvent } from './event.type';
+import { IEventUserIsAttending } from './eventUserIsAttending.type';
 
 export type IFetchEventIdParams = {
   TableName: tableNames.USER_EVENT;
@@ -17,6 +19,28 @@ export type IFetchEventParams = {
   ProjectionExpression: string;
 };
 
-type IParams = IFetchEventIdParams | IFetchEventParams;
+export type ICreateEventParams = {
+  TableName: tableNames.USER_EVENT;
+  Item: IEvent;
+};
 
-export default IParams;
+export type IEventUserIsAttendingParams = {
+  TableName: tableNames.USER_EVENT;
+  Item: IEventUserIsAttending;
+};
+
+type IEventParams =
+  | IFetchEventIdParams
+  | IFetchEventParams
+  | ICreateEventParams
+  | IEventUserIsAttendingParams;
+
+export const getFetchEventIdParams = (userId: string): IFetchEventIdParams => ({
+  TableName: tableNames.USER_EVENT,
+  KeyConditionExpression: 'PK = :PK',
+  ExpressionAttributeValues: {
+    ':PK': userId,
+  },
+});
+
+export default IEventParams;
