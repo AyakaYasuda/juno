@@ -12,22 +12,28 @@ const getEventByUserId = async (
 ): Promise<APIGatewayProxyResultV2> => {
   try {
     const userId = event.pathParameters.userId;
+    console.log('getEventByUserId', userId);
 
     // 1. fetch eventId by userId
     const fetchEventIdParams = {
       TableName: USER_EVENT_TABLE,
-      Key: {
-        PK: userId,
+      KeyConditionExpression: 'PK = :PK',
+      ExpressionAttributeValues: {
+        ':PK': userId,
       },
     };
 
-    const eventIdData = await dynamodb.get(fetchEventIdParams).promise();
-    if (Object.keys(eventIdData).length === 0) {
+    const eventIdData = await dynamodb.query(fetchEventIdParams).promise();
+    if (eventIdData.Items.length === 0) {
       throw new HttpError(404, 'EventId Data not found');
     }
+    console.log('eventIdData', eventIdData);
 
     // 2. fetch event by eventId
-    const { SK: eventId } = eventIdData.Item;
+    const { SK: eventId } = eventIdData.Items[0];
+
+    console.log('eventId', eventId);
+
     const fetchEventParams = {
       TableName: USER_EVENT_TABLE,
       Key: {
@@ -39,8 +45,38 @@ const getEventByUserId = async (
     if (Object.keys(eventData).length === 0) {
       throw new HttpError(404, 'EventId Data not found');
     }
+    console.log('eventData', eventData);
+    const {
+      startingTimeReception,
+      startingTimeWedding,
+      message,
+      address,
+      dateWeddingReception,
+      endingTimeReception,
+      isEditable,
+      groom,
+      bride,
+      dateWedding,
+      endingTimeWedding,
+      SK,
+    } = eventData.Item;
 
-    return formatJSONResponse(200, eventData.Item);
+    const responseData = {
+      startingTimeReception,
+      startingTimeWedding,
+      message,
+      address,
+      dateWeddingReception,
+      endingTimeReception,
+      isEditable,
+      groom,
+      bride,
+      dateWedding,
+      endingTimeWedding,
+      SK,
+    };
+
+    return formatJSONResponse(200, responseData);
   } catch (err) {
     return handleError(err);
   }
