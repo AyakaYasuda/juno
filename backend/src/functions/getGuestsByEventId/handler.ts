@@ -7,6 +7,18 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 const USER_EVENT_TABLE = 'user-event';
 const EVENT_USER_GSI = 'eventId-userId-index';
 
+interface IUser {
+  PK: string;
+  SK: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+  message: string;
+  allergy: string;
+}
+
 const getGuestsByEventId = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResultV2> => {
@@ -25,14 +37,46 @@ const getGuestsByEventId = async (
       },
     };
 
-    const guestsResponseData = await dynamodb.query(params).promise();
-    console.log(guestsResponseData);
+    const responseData = await dynamodb.query(params).promise();
 
-    if (guestsResponseData.Items.length === 0) {
+    if (responseData.Items.length === 0) {
       throw new HttpError(404, 'Guests not found');
     }
 
-    return formatJSONResponse(200, guestsResponseData.Items);
+    // 1) iterate the array of responseData.Items and take only PK values
+    let userIdArray: Array<{ userId: string }> = [];
+    for (const obj of responseData.Items) {
+      if (obj.PK && obj.PK !== 'event') {
+        userIdArray.push(obj.PK);
+      }
+    }
+
+    // 2) create a new array of user metadata (obj)
+    let usersArray: Array<IUser> = [];
+    for (const userId of userIdArray) {
+      const fetchGuestDataParams = {
+        TableName: USER_EVENT_TABLE,
+        Key: {
+          PK: 'user',
+          SK: userId,
+        },
+      };
+
+      const guestResponseData = await dynamodb
+        .get(fetchGuestDataParams)
+        .promise();
+
+      if (Object.keys(guestResponseData).length === 0) {
+        throw new HttpError(404, 'Guest who has the provided userId not found');
+      }
+
+      usersArray.push(guestResponseData.Item);
+    }
+
+    // 3) pick up the user who is NOT admin and create an array of guests
+    const guestsArray = usersArray.filter((user) => user.isAdmin === false);
+
+    return formatJSONResponse(200, { guests: guestsArray });
   } catch (err) {
     return handleError(err);
   }
