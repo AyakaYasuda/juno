@@ -3,13 +3,13 @@ import { formatJSONResponse, handleError } from '@libs/api-gateway';
 
 import { middyfy } from '@libs/lambda';
 import EventValidator from '@libs/validator/event.validator';
-import EventModel from '@libs/model/event.model';
 import { CreateEventReqBody } from '@libs/requests/CreateEventReqBody';
-import UserModel from '@libs/model/user.model';
+import EventServices from '@libs/services/event.services';
+import UserServices from '@libs/services/user.services';
 
 const eventValidator = new EventValidator();
-const eventModel = new EventModel();
-const userModel = new UserModel();
+const eventServices = new EventServices();
+const userServices = new UserServices();
 
 export const createEvent = async (
   event: APIGatewayProxyEvent
@@ -21,17 +21,17 @@ export const createEvent = async (
     await eventValidator.validateEventCreateReqBody(reqBody);
 
     // check data exists
-    await userModel.errorIfUserNotExist(userId, 'User not found!');
-    await eventModel.errorIfEventIdDataExist(
+    await userServices.errorIfUserNotExist(userId, 'User not found!');
+    await eventServices.errorIfEventIdDataExist(
       userId,
       'User already has an event!'
     );
 
     // create event
-    const eventId = await eventModel.createEvent(reqBody);
+    const eventId = await eventServices.createEvent(reqBody);
 
     // create eventUserIsAttending
-    await eventModel.createEventUserIsAttending(eventId, userId);
+    await eventServices.createEventUserIsAttending(eventId, userId);
 
     return formatJSONResponse(200, {
       eventId,

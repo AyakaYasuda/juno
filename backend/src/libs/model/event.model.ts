@@ -1,14 +1,11 @@
 import { HttpError } from '@libs/api-gateway';
-import { CreateEventReqBody } from '@libs/requests/CreateEventReqBody';
 import { tableNames } from '@libs/tableNames';
-import { stringifiedJson } from 'aws-sdk/clients/customerprofiles';
 import { IEvent } from '../types/event.type';
 import {
   getFetchEventIdParams,
   ICreateEventParams,
   IFetchEventParams,
 } from '../params/event.params';
-import { v4 } from 'uuid';
 
 import DbModel from './dbModel';
 import { IEventUserIsAttending } from '@libs/types/eventUserIsAttending.type';
@@ -23,16 +20,9 @@ class EventModel extends DbModel {
   }
 
   // FIXME: add type to return value, Promise<EventIdData[]>
-  public async getEventIdData(
-    userId: stringifiedJson,
-    notFoundErrorMessage: string
-  ) {
+  public async getEventIdData(userId: string) {
     const fetchEventIdParams = getFetchEventIdParams(userId);
     const data = await this.query(fetchEventIdParams);
-
-    if (data.Items.length === 0) {
-      throw new HttpError(404, notFoundErrorMessage);
-    }
 
     return data;
   }
@@ -69,46 +59,13 @@ class EventModel extends DbModel {
     }
   }
 
-  public async createEvent(reqBody: CreateEventReqBody): Promise<string> {
-    const {
-      bride,
-      groom,
-      dateWedding,
-      startingTimeWedding,
-      endingTimeWedding,
-      dateWeddingReception,
-      startingTimeReception,
-      endingTimeReception,
-      address,
-      message,
-    } = reqBody;
-
-    const eventId = v4();
-
-    const eventData: IEvent = {
-      PK: 'event',
-      SK: eventId,
-      bride,
-      groom,
-      dateWedding,
-      startingTimeWedding,
-      endingTimeWedding,
-      dateWeddingReception,
-      startingTimeReception,
-      endingTimeReception,
-      address,
-      message,
-      isEditable: true,
-    };
-
+  public async createEvent(eventData: IEvent): Promise<void> {
     const createEventParams: ICreateEventParams = {
       TableName: tableNames.USER_EVENT,
       Item: eventData,
     };
 
     await this.put(createEventParams);
-
-    return eventId;
   }
 
   public async createEventUserIsAttending(eventId: string, userId: string) {

@@ -3,6 +3,7 @@ import { formatJSONResponse, handleError } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
 import EventModel from '@libs/model/event.model';
+import EventServices from '@libs/services/event.services';
 
 const getEventByUserId = async (
   event: APIGatewayProxyEvent
@@ -10,9 +11,10 @@ const getEventByUserId = async (
   try {
     const userId = event.pathParameters.userId;
     const eventModel = new EventModel();
+    const eventServices = new EventServices();
 
     // 1. fetch eventId by userId
-    const eventIdData = await eventModel.getEventIdData(
+    const eventIdData = await eventServices.getEventIdData(
       userId,
       'EventId Data not found'
     );
