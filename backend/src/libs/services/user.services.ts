@@ -11,7 +11,7 @@ class UserServices {
     userId: string,
     userNotExistErrorMessage: string
   ): Promise<void> {
-    const data = this.userModel.errorIfUserNotExist(userId);
+    const data = await this.userModel.getUserByUserId(userId);
 
     if (Object.keys(data).length === 0) {
       throw new HttpError(404, userNotExistErrorMessage);

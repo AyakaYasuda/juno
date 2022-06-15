@@ -7,7 +7,8 @@ class UserModel extends DbModel {
     super();
   }
 
-  public async errorIfUserNotExist(userId: string): Promise<void> {
+  // FIXME: add type to return value
+  public async getUserByUserId(userId: string): Promise<any> {
     const fetchUserParams: IErrorIfUserNotExistParams = {
       TableName: tableNames.USER_EVENT,
       Key: {
