@@ -1,3 +1,4 @@
+import { HttpError } from '@libs/api-gateway';
 import { IErrorIfUserNotExistParams } from '@libs/params/user.params';
 import { tableNames } from '@libs/tableNames';
 import { IUser } from '@libs/types/user.type';
@@ -74,6 +75,24 @@ class UserModel extends DbModel {
         ':email': email,
       },
     };
+    return await this.query(params);
+  }
+
+  public async getGuestsByEventId(eventId: string) {
+    const EVENT_USER_GSI = 'eventId-userId-index';
+
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      IndexName: EVENT_USER_GSI,
+      KeyConditionExpression: '#SK = :SK',
+      ExpressionAttributeNames: {
+        '#SK': 'SK',
+      },
+      ExpressionAttributeValues: {
+        ':SK': eventId,
+      },
+    };
+
     return await this.query(params);
   }
 }

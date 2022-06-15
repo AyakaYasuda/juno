@@ -1,4 +1,4 @@
-import { CreateEventReqBody } from '@libs/requests/CreateEventReqBody';
+import { CreateEventReqBody } from '@libs/types/createEventReqBody.type';
 import { UpdateEventReqBody } from '@libs/requests/UpdateEventReqBody';
 import * as yup from 'yup';
 
