@@ -35,7 +35,7 @@ type verifyResult = { verified: boolean; message: string };
 
 // authentication
 const verify = (token: string): verifyResult => {
-  return jwt.verify(token, process.env.JWT_SECRET, (error: Error, response) => {
+  return jwt.verify(token, process.env.JWT_SECRET, (error: Error) => {
     if (error) {
       return {
         verified: false,
@@ -43,7 +43,6 @@ const verify = (token: string): verifyResult => {
       };
     }
 
-    console.log(response);
     return { verified: true, message: 'Verified' };
   });
 };
