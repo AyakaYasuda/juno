@@ -1,6 +1,7 @@
-import React, { useState, SyntheticEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { signupAction } from 'RTK/features/auth/authSliceThunk';
 
 import ImgFlower1 from 'views/images/invitation-flower1.png';
 import ImgFlower2 from 'views/images/invitation-flower2.png';
@@ -15,20 +16,31 @@ type GuestInvitationLayoutProps = {
 
 const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [allergy, setAllergy] = useState('');
+  const [formState, setFormState] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    message: '',
+    allergy: '',
+  });
 
-  const submitHandler = async (e: SyntheticEvent) => {
+  const { firstName, lastName, email, password, message, allergy } = formState;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    console.log(e.target.value);
+  };
+
+  const dispatch = useAppDispatch();
+  const loadingStatus = useAppSelector((state) => state.auth.status);
+
+  const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-        JSON.stringify({
+      const result = await dispatch(
+        signupAction({
           firstName,
           lastName,
           email,
@@ -38,10 +50,16 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
           isAdmin: false,
         })
       );
-      console.log(response);
-      console.log('submitted');
-      navigate('/guests/login');
-      return response;
+      // signup success
+      if (signupAction.fulfilled.match(result)) {
+        alert('signup successfuly!');
+        navigate('/guests/login');
+      }
+
+      // signup failed
+      if (signupAction.rejected.match(result)) {
+        alert('signup failed...');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -93,12 +111,12 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 email={email}
                 password={password}
                 submitHandler={submitHandler}
-                onChangeFirstName={(e) => setFirstName(e.target.value)}
-                onChangeLastName={(e) => setLastName(e.target.value)}
-                onChangeEmail={(e) => setEmail(e.target.value)}
-                onChangePassword={(e) => setPassword(e.target.value)}
-                onChangeMessage={(e) => setMessage(e.target.value)}
-                onChangeAllergy={(e) => setAllergy(e.target.value)}
+                onChangeFirstName={handleChange}
+                onChangeLastName={handleChange}
+                onChangeEmail={handleChange}
+                onChangePassword={handleChange}
+                onChangeMessage={handleChange}
+                onChangeAllergy={handleChange}
               />
             </div>
           </div>
