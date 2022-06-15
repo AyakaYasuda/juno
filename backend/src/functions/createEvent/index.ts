@@ -7,6 +7,7 @@ export default {
       http: {
         method: 'post',
         path: 'event/new/{userId}',
+        cors: true
       },
     },
   ],
