@@ -1,6 +1,6 @@
 import IAllParams from '@libs/params/params';
 
-const AWS = require('aws-sdk');
+import * as AWS from 'aws-sdk';
 
 class DbModel {
   protected dynamodb;
