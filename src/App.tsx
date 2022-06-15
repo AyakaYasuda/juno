@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import AdminEventCreate from 'views/pages/Admin/AdminEventCreate';
-import AdminEventEdit from 'views/pages/Admin/AdminEventEdit';
+// import AdminEventEdit from 'views/pages/Admin/AdminEventEdit';
 import AdminEventManage from 'views/pages/Admin/AdminEventManage';
 import AdminHome from 'views/pages/Admin/AdminHome';
 import AdminLogin from 'views/pages/Admin/AdminLogin';
@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/create" element={<AdminEventCreate />} />
-        <Route path="/admin/edit" element={<AdminEventEdit />} />
+        {/* <Route path="/admin/edit" element={<AdminEventEdit />} /> */}
         <Route path="/admin/event" element={<AdminEventManage />} />
       </Routes>
       <Routes>

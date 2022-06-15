@@ -1,23 +1,62 @@
-import React, { useState, SyntheticEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { signupAction } from 'features/auth/authThunkSlice';
+
 import TopLayout from 'views/components/atomic/templates/TopLayout';
 import Form from 'views/components/atomic/molecules/Form';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 
 function AdminRegister() {
   const navigate = useNavigate();
-  const [firstName, setFirstNamne] = useState('');
-  const [lastName, setLastNamne] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formState, setFormState] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
 
-  const submitHandler = async (e: SyntheticEvent) => {
+  const { firstName, lastName, email, password } = formState;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const dispatch = useAppDispatch();
+  const loadingStatus = useAppSelector((state) => state.auth.status);
+
+  // const [firstName, setFirstNamne] = useState('');
+  // const [lastName, setLastNamne] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+
+  const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
+    const result = await dispatch(
+      signupAction({
+        firstName,
+        lastName,
+        email,
+        password,
+        isAdmin: true,
+      })
+    );
+
+    // signup success
+    if (signupAction.fulfilled.match(result)) {
+      alert('signup successfuly!');
+      navigate('/admin/login');
+    }
+
+    // signup failed
+    if (signupAction.rejected.match(result)) {
+      alert('signup failed...');
+    }
 
     // interact with the backend using fetch
     // await fetch(
     //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-    //   {
+    // {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json' },
     //     body: JSON.stringify({
@@ -32,22 +71,20 @@ function AdminRegister() {
     //   }
     // );
 
-    await axios.post(
-      'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-      JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        isAdmin: true,
-        messsage: '',
-        allergy: '',
-      })
-    );
+    // await axios.post(
+    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
+    //   JSON.stringify({
+    //     firstName,
+    //     lastName,
+    //     email,
+    //     password,
+    //     isAdmin: true,
+    //     messsage: '',
+    //     allergy: '',
+    //   })
+    // );
 
-    navigate('/admin/login');
-
-    console.log('submitted!');
+    // navigate('/admin/login');
   };
 
   return (
@@ -62,29 +99,33 @@ function AdminRegister() {
         <label className="text-Pink-default">First Name</label>
         <input
           type="text"
+          name="firstName"
           value={firstName}
-          onChange={(e) => setFirstNamne(e.target.value)}
+          onChange={handleChange}
           className="InputBorder"
         />
         <label className="text-Pink-default">Last Name</label>
         <input
           type="text"
+          name="lastName"
           value={lastName}
-          onChange={(e) => setLastNamne(e.target.value)}
+          onChange={handleChange}
           className="InputBorder"
         />
         <label className="text-Pink-default">Email</label>
         <input
           type="email"
+          name="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
           className="InputBorder"
         />
         <label className="text-Pink-default">Password</label>
         <input
           type="password"
+          name="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
           className="InputBorder"
         />
       </Form>
