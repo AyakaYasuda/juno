@@ -59,6 +59,16 @@ class EventServices {
     return data;
   }
 
+  public async getEventData(eventId: string, notFoundErrorMessage: string) {
+    const data = await this.eventModel.getEventData(eventId);
+
+    if (Object.keys(data).length === 0) {
+      throw new HttpError(404, notFoundErrorMessage);
+    }
+
+    return data;
+  }
+
   public async errorIfEventIdDataExist(
     userId: string,
     eventExistErrorMessage: string

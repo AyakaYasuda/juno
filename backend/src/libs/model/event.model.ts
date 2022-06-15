@@ -27,7 +27,7 @@ class EventModel extends DbModel {
     return data;
   }
 
-  public async getEventData(eventId: string, notFoundErrorMessage: string) {
+  public async getEventData(eventId: string) {
     const fetchEventParams: IFetchEventParams = {
       TableName: tableNames.USER_EVENT,
       Key: {
@@ -38,10 +38,6 @@ class EventModel extends DbModel {
     };
 
     const data = await this.get(fetchEventParams);
-
-    if (Object.keys(data).length === 0) {
-      throw new HttpError(404, notFoundErrorMessage);
-    }
 
     return data;
   }
