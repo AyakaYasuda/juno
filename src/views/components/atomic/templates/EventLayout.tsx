@@ -1,33 +1,65 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import Button from '../atoms/Button';
 import Navbar from '../molecules/Navbar';
 import Card from '../atoms/Card';
+import { useNavigate } from 'react-router';
+import axios from 'axios';
 
 type Props = {
   title: string;
-  bride_name: string;
-  groom_name: string;
-  date_ceremony: number | string;
-  time_ceremony: number | string;
-  date_reception: number | string;
-  time_reception: number | string;
+  bride: string;
+  groom: string;
+  dateWedding: string;
+  startingTimeWedding: string;
+  endingTimeWedding: string;
+  dateWeddingReception: string;
+  startingTimeReception: string;
+  endingTimeReception: string;
   address: string;
   message: string;
+  setFormState: any;
   ctaTxt: string;
 };
 
 const EventLayout: React.FC<Props> = ({
   title,
-  bride_name,
-  groom_name,
-  date_ceremony,
-  time_ceremony,
-  date_reception,
-  time_reception,
+  bride,
+  groom,
+  dateWedding,
+  startingTimeWedding,
+  endingTimeWedding,
+  dateWeddingReception,
+  startingTimeReception,
+  endingTimeReception,
   address,
   message,
+  setFormState,
   ctaTxt,
 }) => {
+  const navigate = useNavigate();
+
+  const submitHandler = async (e: any) => {
+    e.preventDefault();
+
+    await axios.post(
+      'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/login',
+      JSON.stringify({
+        bride,
+        groom,
+        dateWedding,
+        startingTimeWedding,
+        endingTimeWedding,
+        dateWeddingReception,
+        startingTimeReception,
+        endingTimeReception,
+        address,
+        message,
+      })
+    );
+
+    navigate(`/admin/event`);
+  };
+
   return (
     <>
       <Navbar />
@@ -35,40 +67,95 @@ const EventLayout: React.FC<Props> = ({
         <h2 className="mb-2">{title}</h2>
         <div className="w-4/5">
           <Card>
-            <form className="flex flex-col md:flex-row p-4 md:gap-6">
+            <form
+              onSubmit={submitHandler}
+              className="flex flex-col md:flex-row p-4 md:gap-6"
+            >
               <div className="md:basis-1/2 flex flex-col">
                 <label className="mb-1">Bride name</label>
-                <input type="text" value={bride_name} className="InputDark" />
+                <input
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="text"
+                  value={bride}
+                  className="InputDark"
+                />
                 <label>Groom name</label>
-                <input type="text" value={groom_name} className="InputDark" />
+                <input
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="text"
+                  value={groom}
+                  className="InputDark"
+                />
                 <label>Date and Time of Wedding Ceremony</label>
                 <input
-                  type="date"
-                  value={date_ceremony}
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="text"
+                  value={dateWedding}
                   className="InputDark"
                 />
                 <input
-                  type="time"
-                  value={time_ceremony}
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="text"
+                  value={startingTimeWedding}
+                  className="InputDark"
+                />
+                <input
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="text"
+                  value={endingTimeWedding}
                   className="InputDark"
                 />
                 <label>Date and Time of Wedding Reception</label>
                 <input
-                  type="date"
-                  value={date_reception}
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="text"
+                  value={dateWeddingReception}
                   className="InputDark"
                 />
                 <input
-                  type="time"
-                  value={time_reception}
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="text"
+                  value={startingTimeReception}
+                  className="InputDark"
+                />
+                <input
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="text"
+                  value={endingTimeReception}
                   className="InputDark"
                 />
               </div>
               <div className="md:basis-1/2 flex flex-col">
                 <label className="mb-1">Address</label>
-                <input type="address" value={address} className="InputDark" />
+                <input
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
+                  type="address"
+                  value={address}
+                  className="InputDark"
+                />
                 <label>Message</label>
                 <input
+                  onChange={(e) => {
+                    setFormState(e.target.value);
+                  }}
                   type="textarea"
                   value={message}
                   className="InputDark h-48 mb-8"
