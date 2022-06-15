@@ -133,7 +133,10 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
           </div>
         </div>
         <div className={`flex justify-center ${spacing} `}>
-          <ButtonFlexible styleButton={`${styleButton} w-2/5`}>
+          <ButtonFlexible
+            typeButton="submit"
+            styleButton={`${styleButton} w-2/5`}
+          >
             {textButton}
           </ButtonFlexible>
         </div>

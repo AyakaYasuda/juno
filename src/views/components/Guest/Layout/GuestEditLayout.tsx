@@ -43,9 +43,9 @@ const GuestEditLayout = () => {
         lastName,
         email,
         password,
-        isAdmin: false,
         message,
         allergy,
+        isAdmin: false,
       })
     );
   };

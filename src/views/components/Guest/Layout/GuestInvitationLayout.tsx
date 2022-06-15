@@ -25,41 +25,45 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
   const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault();
 
-    // interact with the backend using fetch
-    // await fetch(
-    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-    //   {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       password,
-    //       isAdmin: true,
-    //       messsage: '',
-    //       allergy: '',
-    //     }),
-    //   }
-    // );
-
-    await axios.post(
-      'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-      JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        message,
-        allergy,
-        isAdmin: true,
-      })
-    );
-
-    navigate('/guests/login');
-
-    console.log('submitted!');
+    try {
+      const response = await axios.post(
+        'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
+        JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          message,
+          allergy,
+          isAdmin: false,
+        })
+      );
+      console.log(response);
+      console.log('submitted');
+      navigate('/guests/login');
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  //   await axios.post(
+  //     'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
+  //     JSON.stringify({
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       password,
+  //       message,
+  //       allergy,
+  //       isAdmin: false,
+  //     })
+  //   );
+
+  //   navigate('/guests/login');
+
+  //   console.log('submitted!');
+  // };
 
   return (
     <GuestBaseLayout>

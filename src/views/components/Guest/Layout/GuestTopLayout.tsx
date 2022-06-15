@@ -76,7 +76,10 @@ const GuestTopLayout = () => {
             onChangeHandler={(e) => setPassword(e.target.value)}
           />
           <div className="FlexJustify md:flex md:justify-start">
-            <ButtonFlexible styleButton="bg-Green-default text-white w-2/5">
+            <ButtonFlexible
+              typeButton="submit"
+              styleButton="bg-Green-default text-white w-2/5"
+            >
               Login
             </ButtonFlexible>
           </div>

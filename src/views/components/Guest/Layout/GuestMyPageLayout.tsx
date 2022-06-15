@@ -37,18 +37,25 @@ const GuestMyPageLayout = () => {
     //   }
     // );
 
-    await axios.post(
-      'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-      JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        message,
-        allergy,
-        isAdmin: false,
-      })
-    );
+    try {
+      const response = await axios.post(
+        'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
+        JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          message,
+          allergy,
+          isAdmin: false,
+        })
+      );
+      console.log(response);
+      navigate('/guests/login');
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
