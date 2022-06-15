@@ -17,6 +17,18 @@ class UserServices {
       throw new HttpError(404, userNotExistErrorMessage);
     }
   }
+
+  public async createGuestAttendanceData(
+    userId: string,
+    eventId: string,
+    isAttending: boolean
+  ) {
+    await this.userModel.createGuestAttendanceData(
+      userId,
+      eventId,
+      isAttending
+    );
+  }
 }
 
 export default UserServices;

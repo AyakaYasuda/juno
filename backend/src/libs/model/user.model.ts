@@ -21,6 +21,28 @@ class UserModel extends DbModel {
 
     return data;
   }
+
+  // FIXME: change to createUser?
+  public async createGuestAttendanceData(
+    userId: string,
+    eventId: string,
+    isAttending: boolean
+  ) {
+    const guestResponse = {
+      PK: userId,
+      SK: eventId,
+      isAttending: isAttending,
+    };
+
+    console.log('guestResponse', guestResponse);
+
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      Item: guestResponse,
+    };
+
+    await this.put(params);
+  }
 }
 
 export default UserModel;

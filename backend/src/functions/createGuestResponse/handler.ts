@@ -1,11 +1,8 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
 import { formatJSONResponse, handleError } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import { AWS } from '@serverless/typescript';
-
-const AWS = require('aws-sdk');
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const USER_EVENT_TABLE = 'user-event';
+import UserValidator from '@libs/validator/user.validator';
+import UserServices from '@libs/services/user.services';
 
 export const createGuestResponse = async (
   event: APIGatewayProxyEvent
@@ -13,28 +10,16 @@ export const createGuestResponse = async (
   try {
     const eventId = event.pathParameters.eventId;
     const reqBody = JSON.parse(event.body);
+    const { userId, isAttending } = reqBody;
 
-    const userId = reqBody.userId;
-    const isAttending = reqBody.isAttending;
+    console.log('userId', userId);
+    console.log('isAttending', isAttending);
 
-    if (!userId || !isAttending) {
-      return formatJSONResponse(400, {
-        message: 'Invalid request',
-      });
-    }
+    const userServices = new UserServices();
 
-    const guestResponse = {
-      PK: userId,
-      SK: eventId,
-      isAttending: isAttending,
-    };
+    UserValidator.validateCreateGuestResponseParams(userId, isAttending);
 
-    const params = {
-      TableName: USER_EVENT_TABLE,
-      Item: guestResponse,
-    };
-
-    await dynamodb.put(params).promise();
+    await userServices.createGuestAttendanceData(userId, eventId, isAttending);
 
     return formatJSONResponse(204, {
       message: 'Successfully sent the response',
