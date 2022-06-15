@@ -12,7 +12,19 @@ type FormAttendanceProps = {
   textButton: string;
   styleButton: string;
   spacing: string;
-  onSubmit: any;
+  firstName: string;
+  lastName: string;
+  message: string;
+  allergy: string;
+  email: string;
+  password: string;
+  submitHandler: (params: any) => any;
+  onChangeFirstName: (params: any) => any;
+  onChangeLastName: (params: any) => any;
+  onChangeEmail: (params: any) => any;
+  onChangePassword: (params: any) => any;
+  onChangeMessage: (params: any) => any;
+  onChangeAllergy: (params: any) => any;
 };
 
 const FormAttendance: React.FC<FormAttendanceProps> = ({
@@ -22,11 +34,23 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   textButton,
   styleButton,
   spacing,
-  onSubmit,
+  firstName,
+  lastName,
+  message,
+  allergy,
+  email,
+  password,
+  submitHandler,
+  onChangeFirstName,
+  onChangeLastName,
+  onChangeEmail,
+  onChangePassword,
+  onChangeMessage,
+  onChangeAllergy,
 }) => {
   return (
     <div>
-      <form onSubmit={onSubmit}>
+      <form action="/guest" method="post" onSubmit={submitHandler}>
         <div className="flex flex-col md:items-start">
           <Title classTitle="my-4" textColor={sectionTitleColor}>
             {sectionTitle}
@@ -35,18 +59,20 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
             <Input
               labelName="First Name"
               inputName="First Name"
-              valueInput=""
+              valueInput={firstName}
               containerInput=""
               classInput={classInput}
               labelColor="text-Yellow-dark"
+              onChangeHandler={onChangeFirstName}
             />
             <Input
               labelName="Last Name"
               inputName="Last Name"
-              valueInput=""
+              valueInput={lastName}
               containerInput=""
               classInput={classInput}
               labelColor="text-Yellow-dark"
+              onChangeHandler={onChangeLastName}
             />
           </div>
           <div className="FlexJustify flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
@@ -72,31 +98,37 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               labelName="Message"
               nameDesc="Message"
               rowsDesc={3}
+              valueDesc={message}
+              onChangeHandler={onChangeMessage}
             />
             <Desc
               containerDesc="w-3/5 md:w-full"
               classDesc={classInput}
               labelName="If you have food allergy"
               nameDesc="allergy"
+              valueDesc={allergy}
               rowsDesc={2}
+              onChangeHandler={onChangeAllergy}
             />
           </div>
           <div className="FlexCenter flex-col md:flex-row md:gap-6">
             <Input
               labelName="Email"
               inputName="Email"
-              valueInput=""
+              valueInput={email}
               containerInput="flex-col"
               classInput={classInput}
               labelColor="text-Yellow-dark"
+              onChangeHandler={onChangeEmail}
             />
             <Input
               labelName="Password"
               inputName="Password"
-              valueInput=""
+              valueInput={password}
               containerInput="flex-col"
               classInput={classInput}
               labelColor="text-Yellow-dark"
+              onChangeHandler={onChangePassword}
             />
           </div>
         </div>

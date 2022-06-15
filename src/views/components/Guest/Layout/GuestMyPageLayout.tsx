@@ -1,10 +1,56 @@
-import React from 'react';
+import React, { useState, SyntheticEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import Title from 'views/components/atomic/atoms/Title';
 import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo/index';
 import FormAttendance from 'views/components/Guest/FormAttendance';
 
 const GuestMyPageLayout = () => {
+  const navigate = useNavigate();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [allergy, setAllergy] = useState('');
+
+  const submitHandler = async (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    // interact with the backend using fetch
+    // await fetch(
+    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
+    //   {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({
+    //       firstName,
+    //       lastName,
+    //       email,
+    //       password,
+    //       isAdmin: true,
+    //       messsage: '',
+    //       allergy: '',
+    //     }),
+    //   }
+    // );
+
+    await axios.post(
+      'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
+      JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+        message,
+        allergy,
+        isAdmin: false,
+      })
+    );
+  };
+
   return (
     <GuestBaseLayout>
       <div className="flex flex-col w-screen h-full md:h-screen mb-8">
@@ -30,6 +76,19 @@ const GuestMyPageLayout = () => {
               textButton="Edit your reply"
               styleButton="buttonWhite"
               spacing="md:w-11/12"
+              firstName={firstName}
+              lastName={lastName}
+              message={message}
+              allergy={allergy}
+              email={email}
+              password={password}
+              submitHandler={submitHandler}
+              onChangeFirstName={(e) => setFirstName(e.target.value)}
+              onChangeLastName={(e) => setLastName(e.target.value)}
+              onChangeEmail={(e) => setEmail(e.target.value)}
+              onChangePassword={(e) => setPassword(e.target.value)}
+              onChangeMessage={(e) => setMessage(e.target.value)}
+              onChangeAllergy={(e) => setAllergy(e.target.value)}
             />
           </div>
         </div>
