@@ -3,7 +3,7 @@ import { formatJSONResponse, handleError } from '@libs/api-gateway';
 
 import { middyfy } from '@libs/lambda';
 import EventValidator from '@libs/validator/event.validator';
-import { CreateEventReqBody } from '@libs/requests/CreateEventReqBody';
+import { CreateEventReqBody } from '@libs/types/createEventReqBody.type';
 import EventServices from '@libs/services/event.services';
 import UserServices from '@libs/services/user.services';
 

@@ -116,15 +116,6 @@ class UserModel extends DbModel {
     return await this.query(params);
   }
 
-  public async updateUser(userData: any) {
-    const params = {
-      TableName: tableNames.USER_EVENT,
-      Item: userData,
-    };
-
-    await this.put(params);
-  }
-
   public async updateGuestAttendanceData(
     userId: string,
     eventId: string,
@@ -142,6 +133,33 @@ class UserModel extends DbModel {
     };
 
     await this.put(params);
+  }
+
+  public async updateUser(userData: any) {
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      Item: userData,
+    };
+
+    await this.put(params);
+  }
+
+  public async getGuestsByEventId(eventId: string) {
+    const EVENT_USER_GSI = 'eventId-userId-index';
+
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      IndexName: EVENT_USER_GSI,
+      KeyConditionExpression: '#SK = :SK',
+      ExpressionAttributeNames: {
+        '#SK': 'SK',
+      },
+      ExpressionAttributeValues: {
+        ':SK': eventId,
+      },
+    };
+
+    return await this.query(params);
   }
 }
 
