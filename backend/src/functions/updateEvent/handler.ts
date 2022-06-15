@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
 import { formatJSONResponse, handleError } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 import EventValidator from '@libs/validator/event.validator';
-import EventModel from '@libs/model/event.model';
+import EventServices from '@libs/services/event.services';
 
 const updateEvent = async (
   event: APIGatewayProxyEvent
@@ -10,17 +10,17 @@ const updateEvent = async (
   try {
     const eventId = event.pathParameters.eventId;
     const reqBody = JSON.parse(event.body);
-    const eventModel = new EventModel();
 
+    const eventServices = new EventServices();
     const eventValidator = new EventValidator();
     eventValidator.validateEventUpdateReqBody(reqBody);
 
-    const eventData = await eventModel.errorIfEventNotExist(
+    const eventData = await eventServices.errorIfEventNotExist(
       eventId,
       'Event not found'
     );
 
-    await eventModel.updateEvent(eventId, eventData, reqBody);
+    await eventServices.updateEvent(eventId, eventData, reqBody);
 
     return formatJSONResponse(204, {
       message: 'Successfully updated the user',

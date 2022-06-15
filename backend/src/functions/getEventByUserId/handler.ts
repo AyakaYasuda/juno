@@ -1,8 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
 import { formatJSONResponse, handleError } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-
-import EventModel from '@libs/model/event.model';
 import EventServices from '@libs/services/event.services';
 
 const getEventByUserId = async (
@@ -10,7 +8,6 @@ const getEventByUserId = async (
 ): Promise<APIGatewayProxyResultV2> => {
   try {
     const userId = event.pathParameters.userId;
-    const eventModel = new EventModel();
     const eventServices = new EventServices();
 
     // 1. fetch eventId by userId
@@ -21,9 +18,9 @@ const getEventByUserId = async (
 
     // 2. fetch event by eventId
     const { SK: eventId } = eventIdData.Items[0];
-    const eventData = await eventModel.getEventData(
+    const eventData = await eventServices.getEventData(
       eventId,
-      'EventId Data not found'
+      'Event Data not found'
     );
 
     return formatJSONResponse(200, eventData);
