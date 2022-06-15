@@ -24,7 +24,7 @@ function AdminLogin() {
   const dispatch = useAppDispatch();
   const loadingStatus = useAppSelector((state) => state.auth.status);
 
-  const submitHandler = async (e: any) => {
+  const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     // try {

@@ -11,8 +11,16 @@ interface LoginForm {
   password: string;
 }
 
+interface SignupForm {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+}
+
 interface UserState {
-  user: LoginForm | null;
+  user: LoginForm | SignupForm | null;
   userId: string;
 }
 
@@ -38,10 +46,24 @@ export const loginAction = createAsyncThunk(
         `${API_URL}/login`,
         JSON.stringify({ loginData })
       );
-      console.log(result);
       return result.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const signupAction = createAsyncThunk(
+  'signup',
+  async (signupData: SignupForm, thunkAPI) => {
+    try {
+      const result = await axios.post(
+        `${API_URL}/signup`,
+        JSON.stringify({ signupData })
+      );
+      return result.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response);
     }
   }
 );
