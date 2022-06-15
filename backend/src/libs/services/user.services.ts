@@ -3,6 +3,7 @@ import { HttpError } from '@libs/api-gateway';
 import UserModel from '@libs/model/user.model';
 import { ICreateUserReqBody } from '@libs/types/createUserReqBody.type';
 import { IUser } from '@libs/types/user.type';
+import { IUpdateUserReqBody } from '@libs/types/updateUserReqBody.type';
 
 class UserServices {
   private userModel: UserModel;
@@ -42,6 +43,8 @@ class UserServices {
     if (Object.keys(data).length === 0) {
       throw new HttpError(404, userNotExistErrorMessage);
     }
+
+    return data;
   }
 
   public async createGuestAttendanceData(
@@ -62,6 +65,36 @@ class UserServices {
     if (existingUser.Items.length > 0) {
       throw new HttpError(500, 'User already exists');
     }
+  }
+
+  public async updateUser(
+    userId: string,
+    userData: any,
+    reqBody: IUpdateUserReqBody
+  ) {
+    const updatedUserData = {
+      ...userData,
+      ...reqBody,
+      PK: 'user',
+      SK: userId,
+    };
+
+    await this.userModel.updateUser(updatedUserData);
+  }
+
+  public async updateGuestAttendanceData(
+    userId: string,
+    userData: any,
+    reqBody: IUpdateUserReqBody
+  ) {
+    const eventId = userData.eventId;
+    const isAttending = reqBody.isAttending;
+
+    await this.userModel.updateGuestAttendanceData(
+      userId,
+      eventId,
+      isAttending
+    );
   }
 }
 
