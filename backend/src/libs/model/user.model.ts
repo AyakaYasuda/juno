@@ -1,10 +1,21 @@
 import { IErrorIfUserNotExistParams } from '@libs/params/user.params';
 import { tableNames } from '@libs/tableNames';
+import { IUser } from '@libs/types/user.type';
+import { APIGatewayProxyResultV2 } from 'aws-lambda';
 import DbModel from './dbModel';
 
 class UserModel extends DbModel {
   constructor() {
     super();
+  }
+
+  public async createUser(userData: IUser) {
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      Item: userData,
+    };
+
+    await this.put(params);
   }
 
   // FIXME: add type to return value
@@ -42,6 +53,28 @@ class UserModel extends DbModel {
     };
 
     await this.put(params);
+  }
+
+  // FIXME: add type to return value
+  public async getUserByEmail(
+    email: string
+  ): Promise<APIGatewayProxyResultV2<any>> {
+    const PK_EMAIL_LSI = 'PK-email-index';
+
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      IndexName: PK_EMAIL_LSI,
+      KeyConditionExpression: '#PK = :PK and #email = :email', // 条件を指定
+      ExpressionAttributeNames: {
+        '#PK': 'PK',
+        '#email': 'email',
+      },
+      ExpressionAttributeValues: {
+        ':PK': 'user',
+        ':email': email,
+      },
+    };
+    return await this.query(params);
   }
 }
 
