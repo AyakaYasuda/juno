@@ -18,7 +18,7 @@ export const createEvent = async (
     const userId = event.pathParameters.userId;
     const reqBody: CreateEventReqBody = JSON.parse(event.body);
 
-    await eventValidator.validateEventReqBody(reqBody);
+    await eventValidator.validateEventCreateReqBody(reqBody);
 
     // check data exists
     await userModel.errorIfUserNotExist(userId, 'User not found!');
