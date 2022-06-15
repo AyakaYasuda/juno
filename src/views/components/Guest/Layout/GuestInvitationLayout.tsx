@@ -1,8 +1,10 @@
-import React from 'react';
-import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
+import React, { useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from 'RTK/app/hooks';
+
 import ImgFlower1 from 'views/images/invitation-flower1.png';
 import ImgFlower2 from 'views/images/invitation-flower2.png';
 
+import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo';
 import FormAttendance from 'views/components/Guest/FormAttendance';
 
@@ -11,6 +13,8 @@ type GuestInvitationLayoutProps = {
 };
 
 const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
+  const dispatch = useAppDispatch();
+
   return (
     <GuestBaseLayout>
       <div className="flex justify-center md:items-center">

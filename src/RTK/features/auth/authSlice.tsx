@@ -1,25 +1,31 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { SignupState } from 'RTK/features/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IUser } from 'RTK/app/types';
 
-const initialState: SignupState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  isAdmin: false,
-  message: '',
-  allergy: '',
+type AuthState = {
+  user: IUser | null;
+  token: string | null;
 };
 
-export const authSlice = createSlice({
+const initialState: AuthState = {
+  user: null,
+  token: null,
+};
+
+const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // Reducer comes here
-  },
-  extraReducers: {
-    // Extra reducer comes here
+    setCredentials: (
+      state,
+      {
+        payload: { user, token },
+      }: PayloadAction<{ user: IUser; token: string }>
+    ) => {
+      state.user = user;
+      state.token = token;
+    },
   },
 });
 
+export const { setCredentials } = authSlice.actions;
 export default authSlice.reducer;

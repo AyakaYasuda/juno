@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { AppDispatch } from 'RTK/app/store';
-import type { FetchDataState } from 'RTK/features/types';
+import type { FetchDataState } from 'RTK/app/types';
 
 // export type Data = {
 //   firstName: string;
