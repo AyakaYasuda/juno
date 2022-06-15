@@ -29,9 +29,49 @@ class UserModel extends DbModel {
       },
     };
 
-    const data = await this.get(fetchUserParams);
+    const userData = await this.get(fetchUserParams);
+    const guestAttendanceData = await this.getGuestAttendanceData(userId);
+
+    if (
+      Object.keys(userData).length === 0 ||
+      Object.keys(guestAttendanceData).length === 0
+    ) {
+      throw new HttpError(404, 'User not found');
+    }
+
+    let data = {};
+    if (Object.keys(guestAttendanceData).length === 0) {
+      data = {
+        ...userData.Item,
+      };
+    }
+
+    data = {
+      ...userData.Item,
+      userId: userData.Item.SK,
+      eventId: guestAttendanceData.SK,
+      isAttending: guestAttendanceData.isAttending,
+    };
 
     return data;
+  }
+
+  private async getGuestAttendanceData(userId: string): Promise<any> {
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      KeyConditionExpression: '#PK = :PK',
+      ExpressionAttributeNames: {
+        '#PK': 'PK',
+      },
+      ExpressionAttributeValues: {
+        ':PK': userId,
+      },
+      ProjectionExpression: 'SK, isAttending',
+    };
+
+    const guestAttendanceData = await this.query(params);
+
+    return guestAttendanceData.Items[0];
   }
 
   // FIXME: change to createUser?
@@ -40,17 +80,15 @@ class UserModel extends DbModel {
     eventId: string,
     isAttending: boolean
   ) {
-    const guestResponse = {
+    const guestAttendanceData = {
       PK: userId,
       SK: eventId,
       isAttending: isAttending,
     };
 
-    console.log('guestResponse', guestResponse);
-
     const params = {
       TableName: tableNames.USER_EVENT,
-      Item: guestResponse,
+      Item: guestAttendanceData,
     };
 
     await this.put(params);
@@ -76,6 +114,34 @@ class UserModel extends DbModel {
       },
     };
     return await this.query(params);
+  }
+
+  public async updateGuestAttendanceData(
+    userId: string,
+    eventId: string,
+    isAttending: boolean
+  ) {
+    const guestAttendanceData = {
+      PK: userId,
+      SK: eventId,
+      isAttending: isAttending,
+    };
+
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      Item: guestAttendanceData,
+    };
+
+    await this.put(params);
+  }
+
+  public async updateUser(userData: any) {
+    const params = {
+      TableName: tableNames.USER_EVENT,
+      Item: userData,
+    };
+
+    await this.put(params);
   }
 
   public async getGuestsByEventId(eventId: string) {

@@ -3,7 +3,7 @@ import { HttpError } from '@libs/api-gateway';
 import UserModel from '@libs/model/user.model';
 import { ICreateUserReqBody } from '@libs/types/createUserReqBody.type';
 import { IUser } from '@libs/types/user.type';
-import { tableNames } from '@libs/tableNames';
+import { IUpdateUserReqBody } from '@libs/types/updateUserReqBody.type';
 
 class UserServices {
   private userModel: UserModel;
@@ -37,12 +37,15 @@ class UserServices {
   public async errorIfUserNotExist(
     userId: string,
     userNotExistErrorMessage: string
-  ): Promise<void> {
+  ) {
     const data = await this.userModel.getUserByUserId(userId);
 
+    console.log('data', data);
     if (Object.keys(data).length === 0) {
       throw new HttpError(404, userNotExistErrorMessage);
     }
+
+    return data;
   }
 
   public async createGuestAttendanceData(
@@ -129,6 +132,36 @@ class UserServices {
 
   private getGuestsFromUsersList(usersList: IUser[]) {
     return usersList.filter((user) => user.isAdmin === false);
+  }
+
+  public async updateGuestAttendanceData(
+    userId: string,
+    userData: any,
+    reqBody: IUpdateUserReqBody
+  ) {
+    const eventId = userData.eventId;
+    const isAttending = reqBody.isAttending;
+
+    await this.userModel.updateGuestAttendanceData(
+      userId,
+      eventId,
+      isAttending
+    );
+  }
+
+  public async updateUser(
+    userId: string,
+    userData: any,
+    reqBody: IUpdateUserReqBody
+  ) {
+    const updatedUserData = {
+      ...userData,
+      ...reqBody,
+      PK: 'user',
+      SK: userId,
+    };
+
+    await this.userModel.updateUser(updatedUserData);
   }
 }
 

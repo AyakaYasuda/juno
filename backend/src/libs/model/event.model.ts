@@ -37,7 +37,7 @@ class EventModel extends DbModel {
 
     const data = await this.get(fetchEventParams);
 
-    return data;
+    return data.Item;
   }
 
   public async errorIfEventIdDataExist(

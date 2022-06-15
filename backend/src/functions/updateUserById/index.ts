@@ -8,6 +8,7 @@ export default {
       http: {
         method: 'patch',
         path: 'user/edit/{userId}',
+        cors: true
       },
     },
   ],

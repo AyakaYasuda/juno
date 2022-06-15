@@ -8,6 +8,7 @@ export default {
       http: {
         method: 'post',
         path: 'verify',
+        cors: true,
       },
     },
   ],
