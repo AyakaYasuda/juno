@@ -1,39 +1,31 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { signupAction } from 'features/auth/authThunkSlice';
+import { useAppDispatch } from 'app/hooks';
+import { signup } from 'features/auth/authThunkSlice';
 
 import TopLayout from 'views/components/atomic/templates/TopLayout';
 import Form from 'views/components/atomic/molecules/Form';
-// import axios from 'axios';
 
 function AdminRegister() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [formState, setFormState] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
   });
-
   const { firstName, lastName, email, password } = formState;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const dispatch = useAppDispatch();
-  const loadingStatus = useAppSelector((state) => state.auth.status);
-
-  // const [firstName, setFirstNamne] = useState('');
-  // const [lastName, setLastNamne] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const result = await dispatch(
-      signupAction({
+      signup({
         firstName,
         lastName,
         email,
@@ -42,49 +34,18 @@ function AdminRegister() {
       })
     );
 
+    console.log(result);
+
     // signup success
-    if (signupAction.fulfilled.match(result)) {
+    if (signup.fulfilled.match(result)) {
       alert('signup successfuly!');
       navigate('/admin/login');
     }
 
     // signup failed
-    if (signupAction.rejected.match(result)) {
+    if (signup.rejected.match(result)) {
       alert('signup failed...');
     }
-
-    // interact with the backend using fetch
-    // await fetch(
-    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-    // {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       password,
-    //       isAdmin: true,
-    //       messsage: '',
-    //       allergy: '',
-    //     }),
-    //   }
-    // );
-
-    // await axios.post(
-    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-    //   JSON.stringify({
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     password,
-    //     isAdmin: true,
-    //     messsage: '',
-    //     allergy: '',
-    //   })
-    // );
-
-    // navigate('/admin/login');
   };
 
   return (

@@ -1,5 +1,5 @@
 // try to use createAsyncThunk
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const API_URL =
@@ -36,7 +36,7 @@ const initialState: AuthState = {
 };
 
 //create action
-export const loginAction = createAsyncThunk(
+export const login = createAsyncThunk(
   //1st Arg: type
   'login',
   //2nd Arg: payloadCreator
@@ -44,7 +44,7 @@ export const loginAction = createAsyncThunk(
     try {
       const result = await axios.post(
         `${API_URL}/login`,
-        JSON.stringify({ loginData })
+        JSON.stringify(loginData)
       );
       return result.data;
     } catch (error: any) {
@@ -53,13 +53,13 @@ export const loginAction = createAsyncThunk(
   }
 );
 
-export const signupAction = createAsyncThunk(
+export const signup = createAsyncThunk(
   'signup',
   async (signupData: SignupForm, thunkAPI) => {
     try {
       const result = await axios.post(
         `${API_URL}/signup`,
-        JSON.stringify({ signupData })
+        JSON.stringify(signupData)
       );
       return result.data;
     } catch (error: any) {
@@ -72,21 +72,20 @@ export const signupAction = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(loginAction.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(
-        loginAction.fulfilled,
-        (state, action: PayloadAction<UserState>) => {
-          state.status = 'pending';
-          state.user = action.payload;
-        }
-      )
-      .addCase(loginAction.rejected, (state) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.status = 'pending';
+        state.user = action.payload;
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        state.status = 'pending';
+        state.user = action.payload;
       });
   },
 });

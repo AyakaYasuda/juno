@@ -1,67 +1,40 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { loginAction } from 'features/auth/authThunkSlice';
-// import { setCredentials } from '../../../features/auth/authSlice';
-// import { useLoginMutation } from 'app/services/authApi';
-// import { ILoginReq } from 'app/services/types';
+import { useAppDispatch } from 'app/hooks';
+import { login } from 'features/auth/authThunkSlice';
 
 import Form from 'views/components/atomic/molecules/Form';
 import TopLayout from 'views/components/atomic/templates/TopLayout';
-// import axios from 'axios';
 
 function AdminLogin() {
-  // const [login] = useLoginMutation();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [formState, setFormState] = useState({
     email: '',
     password: '',
   });
   const { email, password } = formState;
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-
-  const dispatch = useAppDispatch();
-  const loadingStatus = useAppSelector((state) => state.auth.status);
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    // try {
-    //   // const user = await login(formState).unwrap();
-    //   // dispatch(setCredentials(user));
-    //   const res = await axios.get(
-    //     'https://jsonplaceholder.typicode.com/todos/10'
-    //   );
-    //   console.log('res', res);
-    //   navigate('/admin/create');
-    // } catch (error) {
-    //   console.error(error);
-    // }
-
-    // await axios.post(
-    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/login',
-    //   JSON.stringify({
-    //     email,
-    //     password,
-    //   })
-    // );
-
     const result = await dispatch(
-      loginAction({
+      login({
         email,
         password,
       })
     );
-
     // login success
-    if (loginAction.fulfilled.match(result)) {
+    if (login.fulfilled.match(result)) {
       alert('login successfuly!');
       navigate('/admin/create');
     }
-
     // login failed
-    if (loginAction.rejected.match(result)) {
+    if (login.rejected.match(result)) {
       alert('login failed...');
     }
   };
