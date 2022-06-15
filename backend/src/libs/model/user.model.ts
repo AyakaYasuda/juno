@@ -1,3 +1,4 @@
+import { HttpError } from '@libs/api-gateway';
 import { IErrorIfUserNotExistParams } from '@libs/params/user.params';
 import { tableNames } from '@libs/tableNames';
 import { IUser } from '@libs/types/user.type';
@@ -30,6 +31,13 @@ class UserModel extends DbModel {
 
     const userData = await this.get(fetchUserParams);
     const guestAttendanceData = await this.getGuestAttendanceData(userId);
+
+    if (
+      Object.keys(userData).length === 0 ||
+      Object.keys(guestAttendanceData).length === 0
+    ) {
+      throw new HttpError(404, 'User not found');
+    }
 
     let data = {};
     if (Object.keys(guestAttendanceData).length === 0) {

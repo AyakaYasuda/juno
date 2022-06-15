@@ -4,6 +4,7 @@ import UserModel from '@libs/model/user.model';
 import { ICreateUserReqBody } from '@libs/types/createUserReqBody.type';
 import { IUser } from '@libs/types/user.type';
 import { IUpdateUserReqBody } from '@libs/types/updateUserReqBody.type';
+import { formatJSONResponse } from '@libs/api-gateway';
 
 class UserServices {
   private userModel: UserModel;
@@ -37,9 +38,10 @@ class UserServices {
   public async errorIfUserNotExist(
     userId: string,
     userNotExistErrorMessage: string
-  ): Promise<void> {
+  ) {
     const data = await this.userModel.getUserByUserId(userId);
 
+    console.log('data', data);
     if (Object.keys(data).length === 0) {
       throw new HttpError(404, userNotExistErrorMessage);
     }
