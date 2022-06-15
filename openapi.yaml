@@ -11,7 +11,33 @@ tags:
   - name: 'user'
   - name: 'event'
   - name: 'guests'
+  - name: 'authentication'
 paths:
+  /verify:
+    post:
+      tags:
+        - 'authentication'
+      summary: 'Checks if the token is verified'
+      description: 'This endpoint is to check if the token is verified'
+      operationId: 'verifyToken'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Token'
+          required: true
+          schema:
+            $ref: '#/definitions/TokenRequest'
+      responses:
+        '200':
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/TokenResponse'
+        '400':
+          description: 'Invalid request'
+        '404':
+          description: 'User not found'
   /user/login:
     post:
       tags:
@@ -104,7 +130,7 @@ paths:
           description: "User's response to the invitation"
           required: true
           schema:
-            $ref: '#/definitions/UserRSVPResponse'
+            $ref: '#/definitions/UserRsvpResponse'
       responses:
         '204':
           description: 'Successfully sent the response'
@@ -191,7 +217,7 @@ paths:
           description: 'Invalid request'
         '404':
           description: 'Event not found'
-  /event/{eventId}/edit:
+  /event/edit/{eventId}:
     patch:
       tags:
         - 'event'
@@ -286,6 +312,15 @@ definitions:
       password:
         type: 'string'
         example: 'password'
+      isAdmin:
+        type: 'boolean'
+        example: true
+      message:
+        type: 'string'
+        example: ''
+      allergy:
+        type: 'string'
+        example: ''
   UserSignupResponse:
     type: 'object'
     properties:
@@ -441,16 +476,31 @@ definitions:
       endingTimeReception:
         type: 'string'
         example: '15:00'
-  UserRSVPResponse:
+  UserRsvpResponse:
     type: 'object'
     properties:
       userId:
-        type: "string"
-        example: "5fccdd92-14fd-473e-8e55-db93eb96ccd2"
+        type: 'string'
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
       isAttending:
-        type: boolean
+        type: 'boolean'
         example: true
   UsersArray:
     type: 'array'
     items:
       $ref: '#/definitions/UserMetadata'
+  TokenRequest:
+    type: 'object'
+    properties:
+      token:
+        type: 'string'
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5YWthQHRlc3QuY29tIiwicGFzc3dvcmQiOiJheWFrYXlhc3VkYSIsImlhdCI6MTY1NTI0Nzk4NywiZXhwIjoxNjU1MjUxNTg3fQ.CBXJ_90n0F6SJuzlhqf48A1cl-keuCsAUx9uj61iCqE'
+  TokenResponse:
+    type: 'object'
+    properties:
+      verified:
+        type: 'boolean'
+        example: false
+      message:
+        type: 'string'
+        example: 'Invalid token'

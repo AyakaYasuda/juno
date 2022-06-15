@@ -5,6 +5,7 @@ import type {
 } from 'aws-lambda';
 import type { FromSchema } from 'json-schema-to-ts';
 import * as yup from 'yup';
+import jwt from 'jsonwebtoken';
 
 type ValidatedAPIGatewayProxyEvent<S> = Omit<APIGatewayProxyEvent, 'body'> & {
   body: FromSchema<S>;
