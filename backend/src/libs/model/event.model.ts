@@ -9,23 +9,24 @@ import {
 
 import DbModel from './dbModel';
 import { IEventUserIsAttending } from '@libs/types/eventUserIsAttending.type';
+import { EventIdData } from '@libs/types/eventIdData.type';
 
-// FIXME: move validator to service class
-// model class should focus only on CRUD
 class EventModel extends DbModel {
   constructor() {
     super();
   }
 
   // FIXME: add type to return value, Promise<EventIdData[]>
-  public async getEventIdData(userId: string) {
+  public async getEventIdData(
+    userId: string
+  ): Promise<{ Items: EventIdData[] }> {
     const fetchEventIdParams = getFetchEventIdParams(userId);
     const data = await this.query(fetchEventIdParams);
 
     return data;
   }
 
-  public async getEventData(eventId: string) {
+  public async getEventData(eventId: string): Promise<IEvent> {
     const fetchEventParams: IFetchEventParams = {
       TableName: tableNames.USER_EVENT,
       Key: {
@@ -43,7 +44,7 @@ class EventModel extends DbModel {
   public async errorIfEventIdDataExist(
     userId: string,
     eventExistErrorMessage: string
-  ) {
+  ): Promise<void> {
     const fetchEventIdParams = getFetchEventIdParams(userId);
 
     const existingEvent = await this.query(fetchEventIdParams);
@@ -62,7 +63,10 @@ class EventModel extends DbModel {
     await this.put(createEventParams);
   }
 
-  public async createEventUserIsAttending(eventId: string, userId: string) {
+  public async createEventUserIsAttending(
+    eventId: string,
+    userId: string
+  ): Promise<void> {
     const eventUserIsAttendingData: IEventUserIsAttending = {
       PK: userId,
       SK: eventId,
@@ -76,7 +80,7 @@ class EventModel extends DbModel {
     await this.put(EventUserIsAttendingParams);
   }
 
-  public async updateEvent(eventData: any) {
+  public async updateEvent(eventData: any): Promise<void> {
     const params = {
       TableName: tableNames.USER_EVENT,
       Item: eventData,

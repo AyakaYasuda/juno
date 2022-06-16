@@ -10,7 +10,7 @@ class UserModel extends DbModel {
     super();
   }
 
-  public async createUser(userData: IUser) {
+  public async createUser(userData: IUser): Promise<any> {
     const params = {
       TableName: tableNames.USER_EVENT,
       Item: userData,
@@ -19,8 +19,7 @@ class UserModel extends DbModel {
     await this.put(params);
   }
 
-  // FIXME: add type to return value
-  public async getUserByUserId(userId: string): Promise<any> {
+  public async getUserByUserId(userId: string): Promise<IUser> {
     const fetchUserParams: IErrorIfUserNotExistParams = {
       TableName: tableNames.USER_EVENT,
       Key: {
@@ -30,8 +29,12 @@ class UserModel extends DbModel {
     };
 
     const userData = await this.get(fetchUserParams);
+
+    // FIXME: move logic to service class
+    // model class should focus pure data connection
     const guestAttendanceData = await this.getGuestAttendanceData(userId);
 
+    // FIXME: move logic to service class
     if (
       Object.keys(userData).length === 0 ||
       Object.keys(guestAttendanceData).length === 0
@@ -39,7 +42,8 @@ class UserModel extends DbModel {
       throw new HttpError(404, 'User not found');
     }
 
-    let data = {};
+    let data: IUser;
+
     if (Object.keys(guestAttendanceData).length === 0) {
       data = {
         ...userData.Item,

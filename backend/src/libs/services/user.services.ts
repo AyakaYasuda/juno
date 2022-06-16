@@ -124,7 +124,7 @@ class UserServices {
         );
       }
 
-      usersList.push(guestResponseData.Item);
+      usersList.push(guestResponseData);
     }
 
     return usersList;

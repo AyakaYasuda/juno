@@ -17,13 +17,13 @@ const getEventByUserId = async (
     );
 
     // 2. fetch event by eventId
-    const { SK: eventId } = eventIdData.Items[0];
+    const { SK: eventId } = eventIdData;
     const eventData = await eventServices.getEventData(
       eventId,
       'Event Data not found'
     );
 
-    return formatJSONResponse(200, eventData);
+    return formatJSONResponse(200, eventData as any);
   } catch (err) {
     return handleError(err);
   }

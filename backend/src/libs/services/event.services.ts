@@ -1,6 +1,7 @@
 import { HttpError } from '@libs/api-gateway';
 import { CreateEventReqBody } from '@libs/types/createEventReqBody.type';
 import { IEvent } from '@libs/types/event.type';
+import { EventIdData } from '@libs/types/eventIdData.type';
 import { UpdateEventReqBody } from '@libs/types/updateEventReqBody.type';
 import { APIGatewayProxyResultV2 } from 'aws-lambda';
 import { v4 } from 'uuid';
@@ -51,17 +52,23 @@ class EventServices {
     return eventId;
   }
 
-  public async getEventIdData(userId: string, notFoundErrorMessage: string) {
+  public async getEventIdData(
+    userId: string,
+    notFoundErrorMessage: string
+  ): Promise<EventIdData> {
     const data = await this.eventModel.getEventIdData(userId);
 
     if (data.Items.length === 0) {
       throw new HttpError(404, notFoundErrorMessage);
     }
 
-    return data;
+    return data[0];
   }
 
-  public async getEventData(eventId: string, notFoundErrorMessage: string) {
+  public async getEventData(
+    eventId: string,
+    notFoundErrorMessage: string
+  ): Promise<IEvent> {
     const data = await this.eventModel.getEventData(eventId);
 
     if (Object.keys(data).length === 0) {
@@ -111,7 +118,7 @@ class EventServices {
       throw new HttpError(404, eventNotExistErrorMessage);
     }
 
-    return eventResponseData.Item;
+    return eventResponseData;
   }
 }
 
