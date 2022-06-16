@@ -1,6 +1,5 @@
-import React, { useState, useEffect, SyntheticEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { getUser } from 'features/user/userThunkSlice';
@@ -14,7 +13,7 @@ const GuestMyPageLayout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const DAMMY_USERID = '61c71824-2445-4127-965c-aa8f5ae4fabe';
+  const DAMMY_USERID = '7eb75973-ba72-4841-b388-08a8f611501a';
 
   useEffect(() => {
     dispatch(getUser(DAMMY_USERID));
@@ -29,6 +28,10 @@ const GuestMyPageLayout = () => {
     allergy,
     isAttending,
   } = useAppSelector((state) => state.user.user);
+
+  const handleOnClick = () => {
+    navigate('/guests/edit');
+  };
 
   return (
     <GuestBaseLayout>
@@ -53,8 +56,10 @@ const GuestMyPageLayout = () => {
               sectionTitle="Your Reply"
               classInput="InputDisabled"
               textButton="Edit your reply"
+              textButtonCancel=""
               styleButton="buttonWhite"
-              spacing="md:w-11/12"
+              styleButtonCancel="hidden"
+              spacing="md:w-large"
               firstName={firstName}
               lastName={lastName}
               message={message}
@@ -64,6 +69,8 @@ const GuestMyPageLayout = () => {
               disabledInput={true}
               disabledDesc={false}
               submitHandler={() => null}
+              typeButton="button"
+              onClickButton={handleOnClick}
               onChangeFirstName={() => null}
               onChangeLastName={() => null}
               onChangeEmail={() => null}

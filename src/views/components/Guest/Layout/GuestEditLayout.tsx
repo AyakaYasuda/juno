@@ -14,33 +14,39 @@ const GuestEditLayout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [formState, setFormState] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    message: '',
-    allergy: '',
-  });
+  const DAMMY_USERID = '61c71824-2445-4127-965c-aa8f5ae4fabe';
 
-  const { firstName, lastName, email, password, message, allergy } = formState;
+  useEffect(() => {
+    dispatch(getUser(DAMMY_USERID));
+  }, []);
 
-  const submitHandler = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    message,
+    allergy,
+    isAttending,
+  } = useAppSelector((state) => state.user.user);
 
-    await axios.post(
-      'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-      JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        message,
-        allergy,
-        isAdmin: false,
-      })
-    );
+  // const [formState, setFormState] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   email: '',
+  //   password: '',
+  //   message: '',
+  //   allergy: '',
+  // });
+
+  // const { firstName, lastName, email, password, message, allergy } = formState;
+
+  const handleOnClick = () => {
+    navigate('/guests/edit');
   };
+
+  const submitHandler = () => {};
+
   return (
     <GuestBaseLayout>
       <div className="flex flex-col w-screen h-full md:h-screen mb-8">
@@ -50,7 +56,7 @@ const GuestEditLayout = () => {
           </Title>
           <button className="text-Yellow-dark">Logout</button>
         </div>
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row md:justify-center md:items-center md:h-screen">
           <div className="flex flex-col items-center">
             <Title classTitle="" textColor="text-white">
               Event Info
@@ -58,14 +64,16 @@ const GuestEditLayout = () => {
             <CardWeddingInfo spacing="mx-4 p-4 md:w-3/4 md:p-10" />
           </div>
 
-          <div className="w-full flexCenter">
+          <div className="w-full">
             <FormAttendance
               sectionTitleColor="text-white"
               sectionTitle="Your Reply"
               classInput="InputLight"
               textButton="Update your reply"
+              textButtonCancel="Cancel"
               styleButton="buttonWhite"
-              spacing="md:w-11/12"
+              styleButtonCancel="buttonWhite"
+              spacing="md:w-3/5"
               firstName={firstName}
               lastName={lastName}
               message={message}
@@ -74,7 +82,9 @@ const GuestEditLayout = () => {
               password={password}
               disabledInput={false}
               disabledDesc={false}
+              onClickButton={() => console.log('edit')}
               submitHandler={submitHandler}
+              typeButton="submit"
               onChangeFirstName={() => null}
               onChangeLastName={() => null}
               onChangeEmail={() => null}

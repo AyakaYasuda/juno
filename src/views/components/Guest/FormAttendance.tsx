@@ -10,7 +10,10 @@ type FormAttendanceProps = {
   sectionTitle: string;
   sectionTitleColor: string;
   textButton: string;
+  textButtonCancel: string;
   styleButton: string;
+  styleButtonCancel: string;
+  typeButton: 'button' | 'submit' | 'reset';
   spacing: string;
   firstName: string;
   lastName: string;
@@ -21,6 +24,7 @@ type FormAttendanceProps = {
   disabledInput: boolean;
   disabledDesc: boolean;
   submitHandler: (params: any) => any;
+  onClickButton: (params: any) => any;
   onChangeFirstName: (params: any) => any;
   onChangeLastName: (params: any) => any;
   onChangeEmail: (params: any) => any;
@@ -34,7 +38,10 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   sectionTitle,
   sectionTitleColor,
   textButton,
+  textButtonCancel,
   styleButton,
+  styleButtonCancel,
+  typeButton,
   spacing,
   firstName,
   lastName,
@@ -44,6 +51,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   password,
   disabledInput,
   submitHandler,
+  onClickButton,
   onChangeFirstName,
   onChangeLastName,
   onChangeEmail,
@@ -142,12 +150,20 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
             />
           </div>
         </div>
-        <div className={`flex justify-center ${spacing} `}>
+        <div className={`flex justify-center ${spacing} gap-12 `}>
           <ButtonFlexible
-            typeButton="submit"
-            styleButton={`${styleButton} w-2/5`}
+            typeButton={typeButton}
+            onClickButton={onClickButton}
+            styleButton={styleButton}
           >
             {textButton}
+          </ButtonFlexible>
+          <ButtonFlexible
+            typeButton={typeButton}
+            onClickButton={onClickButton}
+            styleButton={styleButtonCancel}
+          >
+            {textButtonCancel}
           </ButtonFlexible>
         </div>
       </form>

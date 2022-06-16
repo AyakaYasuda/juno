@@ -86,6 +86,7 @@ const GuestTopLayout = () => {
             <div className="FlexJustify md:flex md:justify-start md: mt-6">
               <ButtonFlexible
                 typeButton="submit"
+                onClickButton={() => null}
                 styleButton="bg-Green-default text-white w-2/5"
               >
                 Login
