@@ -1,7 +1,7 @@
 import { HttpError } from '@libs/api-gateway';
 import { CreateEventReqBody } from '@libs/types/createEventReqBody.type';
-import { UpdateEventReqBody } from '@libs/requests/UpdateEventReqBody';
 import { IEvent } from '@libs/types/event.type';
+import { UpdateEventReqBody } from '@libs/types/updateEventReqBody.type';
 import { APIGatewayProxyResultV2 } from 'aws-lambda';
 import { v4 } from 'uuid';
 import EventModel from '../model/event.model';
