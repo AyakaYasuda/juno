@@ -30,33 +30,10 @@ class UserModel extends DbModel {
     };
 
     const userData = await this.get(fetchUserParams);
-    const guestAttendanceData = await this.getGuestAttendanceData(userId);
-
-    if (
-      Object.keys(userData).length === 0 ||
-      Object.keys(guestAttendanceData).length === 0
-    ) {
-      throw new HttpError(404, 'User not found');
-    }
-
-    let data = {};
-    if (Object.keys(guestAttendanceData).length === 0) {
-      data = {
-        ...userData.Item,
-      };
-    }
-
-    data = {
-      ...userData.Item,
-      userId: userData.Item.SK,
-      eventId: guestAttendanceData.SK,
-      isAttending: guestAttendanceData.isAttending,
-    };
-
-    return data;
+    return userData.Item;
   }
 
-  private async getGuestAttendanceData(userId: string): Promise<any> {
+  public async getGuestAttendanceData(userId: string): Promise<any> {
     const params = {
       TableName: tableNames.USER_EVENT,
       KeyConditionExpression: '#PK = :PK',
@@ -70,8 +47,8 @@ class UserModel extends DbModel {
     };
 
     const guestAttendanceData = await this.query(params);
-
-    return guestAttendanceData.Items[0];
+   
+    return guestAttendanceData;
   }
 
   // FIXME: change to createUser?

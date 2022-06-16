@@ -38,9 +38,30 @@ class UserServices {
     userId: string,
     userNotExistErrorMessage: string
   ) {
-    const data = await this.userModel.getUserByUserId(userId);
+    const userData = await this.userModel.getUserByUserId(userId);
 
-    console.log('data', data);
+    const guestAttendanceData = await this.userModel.getGuestAttendanceData(
+      userId
+    );
+
+    if (Object.keys(userData).length === 0) {
+      throw new HttpError(404, 'User not found');
+    }
+
+    let data = {};
+    if (guestAttendanceData.Items.length === 0) {
+      data = {
+        ...userData,
+      };
+    }
+
+    data = {
+      ...userData,
+      userId: userData.SK,
+      eventId: guestAttendanceData.SK,
+      isAttending: guestAttendanceData.isAttending,
+    };
+
     if (Object.keys(data).length === 0) {
       throw new HttpError(404, userNotExistErrorMessage);
     }
