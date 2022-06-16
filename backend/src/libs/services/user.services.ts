@@ -4,7 +4,6 @@ import UserModel from '@libs/model/user.model';
 import { ICreateUserReqBody } from '@libs/types/createUserReqBody.type';
 import { IUser } from '@libs/types/user.type';
 import { IUpdateUserReqBody } from '@libs/types/updateUserReqBody.type';
-import { formatJSONResponse } from '@libs/api-gateway';
 
 class UserServices {
   private userModel: UserModel;
@@ -66,6 +65,22 @@ class UserServices {
 
     if (existingUser.Items.length > 0) {
       throw new HttpError(500, 'User already exists');
+    }
+  }
+
+  public async errorIfUserNotExistByEmail(email: string) {
+    const existingUser = await this.userModel.getUserByEmail(email);
+
+    if (existingUser.Items.length === 0) {
+      throw new HttpError(500, 'User does not exist');
+    }
+
+    return existingUser.Items[0];
+  }
+
+  public async verifyPassword(inputPW: string, existingPW: string) {
+    if (!bcrypt.compareSync(inputPW, existingPW)) {
+      throw new HttpError(403, 'Password is incorrect');
     }
   }
 
