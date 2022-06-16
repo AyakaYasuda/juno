@@ -7,6 +7,7 @@ type InputProps = {
   labelName: string;
   labelColor: string;
   inputName: string;
+  onChangeHandler: (params: any) => any;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -16,6 +17,7 @@ const Input: React.FC<InputProps> = ({
   labelName,
   labelColor,
   inputName,
+  onChangeHandler,
 }) => {
   return (
     <div className={`flex flex-col ${containerInput}`}>
@@ -24,6 +26,7 @@ const Input: React.FC<InputProps> = ({
         type="text"
         name={inputName}
         value={valueInput}
+        onChange={onChangeHandler}
         className={classInput}
       />
     </div>

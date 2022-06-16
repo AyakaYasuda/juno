@@ -28,7 +28,7 @@ module.exports = {
         lato: ['Lato', 'sans-serif'],
       },
       spacing: {
-        medium: '37%',
+        medium: '27%',
         extraLarge: '87%',
       },
       backgroundImage: {

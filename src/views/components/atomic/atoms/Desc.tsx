@@ -6,7 +6,8 @@ type DescProps = {
   labelName: string;
   nameDesc: string;
   rowsDesc: number | undefined;
-  // children: React.ReactNode | string;
+  valueDesc: string;
+  onChangeHandler: (params: any) => any;
 };
 
 const Desc: React.FC<DescProps> = ({
@@ -15,14 +16,20 @@ const Desc: React.FC<DescProps> = ({
   labelName,
   nameDesc,
   rowsDesc,
-  // children,
+  valueDesc,
+  onChangeHandler,
 }) => {
   return (
     <div className={`flex flex-col ${containerDesc}`}>
       <label className="mb-1 text-Yellow-dark">{labelName}</label>
-      <textarea name={nameDesc} className={classDesc} rows={rowsDesc} cols={45}>
-        {/* {children} */}
-      </textarea>
+      <textarea
+        onChange={onChangeHandler}
+        name={nameDesc}
+        className={classDesc}
+        rows={rowsDesc}
+        cols={45}
+        value={valueDesc}
+      />
     </div>
   );
 };

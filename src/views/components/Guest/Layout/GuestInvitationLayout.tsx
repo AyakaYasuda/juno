@@ -1,8 +1,12 @@
-import React from 'react';
-import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
+import { useState, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'app/hooks';
+import { signup } from 'RTK/features/auth/authSliceThunk';
+
 import ImgFlower1 from 'views/images/invitation-flower1.png';
 import ImgFlower2 from 'views/images/invitation-flower2.png';
 
+import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo';
 import FormAttendance from 'views/components/Guest/FormAttendance';
 
@@ -11,6 +15,72 @@ type GuestInvitationLayoutProps = {
 };
 
 const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const [formState, setFormState] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    message: '',
+    allergy: '',
+  });
+
+  const { firstName, lastName, email, password, message, allergy } = formState;
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const submitHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    try {
+      const result = await dispatch(
+        signup({
+          firstName,
+          lastName,
+          email,
+          password,
+          message,
+          allergy,
+          isAdmin: false,
+        })
+      );
+      // signup success
+      if (signup.fulfilled.match(result)) {
+        alert('signup successfuly!');
+        navigate('/guests/login');
+      }
+
+      // signup failed
+      if (signup.rejected.match(result)) {
+        alert('signup failed...');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //   await axios.post(
+  //     'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
+  //     JSON.stringify({
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       password,
+  //       message,
+  //       allergy,
+  //       isAdmin: false,
+  //     })
+  //   );
+
+  //   navigate('/guests/login');
+
+  //   console.log('submitted!');
+  // };
+
   return (
     <GuestBaseLayout>
       <div className="flex justify-center md:items-center">
@@ -32,6 +102,19 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 textButton="Reply"
                 styleButton="bg-Green-default text-white"
                 spacing="md:w-extraLarge"
+                firstName={firstName}
+                lastName={lastName}
+                message={message}
+                allergy={allergy}
+                email={email}
+                password={password}
+                submitHandler={submitHandler}
+                onChangeFirstName={handleChange}
+                onChangeLastName={handleChange}
+                onChangeEmail={handleChange}
+                onChangePassword={handleChange}
+                onChangeMessage={handleChange}
+                onChangeAllergy={handleChange}
               />
             </div>
           </div>

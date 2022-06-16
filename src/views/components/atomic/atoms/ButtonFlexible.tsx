@@ -3,11 +3,15 @@ import React from 'react';
 type Props = {
   styleButton: string;
   children?: React.ReactNode;
+  typeButton: 'submit' | 'reset' | 'button';
 };
 
-const Button: React.FC<Props> = ({ children, styleButton }) => {
+const Button: React.FC<Props> = ({ children, styleButton, typeButton }) => {
   return (
-    <button className={`rounded-3xl py-2 px-6 ${styleButton}`}>
+    <button
+      type={typeButton}
+      className={`rounded-3xl py-2 px-6 ${styleButton}`}
+    >
       {children}
     </button>
   );
