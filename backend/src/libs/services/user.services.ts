@@ -129,7 +129,6 @@ class UserServices {
 
     // 3) pick up the user who is NOT admin and create an array of guests
     const guestsArray = this.getGuestsFromUsersList(usersList);
-    console.log('getGuestsByEventId guestsArray', guestsArray);
 
     return guestsArray;
   }
@@ -150,8 +149,6 @@ class UserServices {
     let usersList: Array<IUser> = [];
     for (const userId of userIdList) {
       const guestResponseData = await this.userModel.getUserByUserId(userId);
-
-      console.log('getGuestsByEventId guestResponseData', guestResponseData);
 
       if (Object.keys(guestResponseData).length === 0) {
         throw new HttpError(

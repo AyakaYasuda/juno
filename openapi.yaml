@@ -354,6 +354,9 @@ definitions:
       userId:
         type: 'string'
         example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+      eventId:
+        type: 'string'
+        example: '4640391b-06a0-48ad-9295-30258b757b05'
       firstName:
         type: 'string'
         example: 'Ayaka'
