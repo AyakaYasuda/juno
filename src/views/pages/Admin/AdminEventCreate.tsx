@@ -55,12 +55,13 @@ function AdminEventCreate() {
         message,
       })
     );
-    console.log(result);
 
     // evenetCreate success
     if (eventCreate.fulfilled.match(result)) {
       alert('eventCreate successfuly!');
-      navigate('/admin/event');
+
+      //FIXME: test
+      // navigate('/admin/event');
     }
     // evenetCreate failed
     if (eventCreate.rejected.match(result)) {

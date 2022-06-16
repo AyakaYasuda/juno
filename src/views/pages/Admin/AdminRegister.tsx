@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { signup } from 'features/user/userThunkSlice';
 
 import TopLayout from 'views/components/atomic/templates/TopLayout';
@@ -17,6 +17,8 @@ function AdminRegister() {
     password: '',
   });
   const { firstName, lastName, email, password } = formState;
+
+  const userId = useAppSelector((state) => state.user);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));

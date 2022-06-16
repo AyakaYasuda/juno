@@ -19,31 +19,15 @@ interface EventForm {
   message: string;
 }
 export interface EventState {
-  event:
-    | {
-        SK: string;
-        bride: string;
-        groom: string;
-        dateWedding: string;
-        startingTimeWedding: string;
-        endingTimeWedding: string;
-        dateWeddingReception: string;
-        startingTimeReception: string;
-        endingTimeReception: string;
-        address: string;
-        message: string;
-        isEditable: boolean;
-      }
-    //FIXME: fix type
-    | any;
-  status: 'pending' | 'loading' | 'failed';
+  event: EventForm | any;
+  status: 'loading' | 'success' | 'failed';
 }
 
 // initialize
 const initialState: EventState = {
   //FIXME: event initial value
-  event: {},
-  status: 'pending',
+  event: null,
+  status: 'loading',
 };
 
 //create action
@@ -66,11 +50,12 @@ export const eventCreate = createAsyncThunk(
 //GET
 export const eventGet = createAsyncThunk(
   'event/get',
-  async (userId: string, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
       // FIXME: fix type
-      const result = await axios.get(`${API_URL}/${userId}`);
-      return result.data;
+      const { userId } = (getState() as any).user;
+      await axios.get(`${API_URL}/${userId}`);
+      return;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
@@ -106,16 +91,20 @@ export const eventSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(eventCreate.pending, (state, action) => {
+        //not done to create yet
+        state.status = 'loading';
+      })
       .addCase(eventCreate.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = 'success';
         state.event = action.payload;
       })
       .addCase(eventGet.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = 'success';
         state.event = action.payload;
       })
       .addCase(eventEdit.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = 'success';
         state.event = action.payload;
       });
   },
