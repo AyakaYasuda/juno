@@ -68,7 +68,7 @@ export const eventEdit = createAsyncThunk(
   'event/edit',
   async (eventData: EventForm, { rejectWithValue }) => {
     try {
-      const result = await axios.put(
+      const result = await axios.patch(
         `${API_URL}/event/${DAMMY_USERID}`,
         JSON.stringify(eventData)
       );

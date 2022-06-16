@@ -49,7 +49,7 @@ export const editUser = createAsyncThunk(
   'edit',
   async (userData: UserState, { rejectWithValue }) => {
     try {
-      const result = await axios.post(
+      const result = await axios.patch(
         `${API_URL}/${userData.userId}/edit`,
         userData
       );
