@@ -38,7 +38,25 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
     isAttending,
   } = formState;
 
+  console.log('formState', formState);
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('handleChange');
+    console.log('e.target.name', e.target.name);
+    console.log('e.target.value', e.target.value);
+
+    if (e.target.value === 'true') {
+      return setFormState((prev) => ({
+        ...prev,
+        [e.target.name]: true,
+      }));
+    } else if (e.target.value === 'false') {
+      return setFormState((prev) => ({
+        ...prev,
+        [e.target.name]: false,
+      }));
+    }
+
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -106,6 +124,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 disabledDesc={false}
                 submitHandler={submitHandler}
                 typeButton="submit"
+                isAttending={isAttending}
                 onClickButton={() => null}
                 onChangeFirstName={handleChange}
                 onChangeLastName={handleChange}
@@ -113,6 +132,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 onChangePassword={handleChange}
                 onChangeMessage={handleChange}
                 onChangeAllergy={handleChange}
+                onInputChange={handleChange}
               />
             </div>
           </div>

@@ -21,6 +21,7 @@ type FormAttendanceProps = {
   allergy: string;
   email: string;
   password: string;
+  isAttending: boolean;
   disabledInput: boolean;
   disabledDesc: boolean;
   submitHandler: (params: any) => any;
@@ -31,6 +32,7 @@ type FormAttendanceProps = {
   onChangePassword: (params: any) => any;
   onChangeMessage: (params: any) => any;
   onChangeAllergy: (params: any) => any;
+  onInputChange: (params: any) => any;
 };
 
 const FormAttendance: React.FC<FormAttendanceProps> = ({
@@ -49,6 +51,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   allergy,
   email,
   password,
+  isAttending,
   disabledInput,
   submitHandler,
   onClickButton,
@@ -59,6 +62,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   onChangeMessage,
   onChangeAllergy,
   disabledDesc,
+  onInputChange,
 }) => {
   return (
     <div>
@@ -92,17 +96,23 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
           <div className="FlexJustify flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
             <Checker
               labelChecker="accepts with pleasure"
-              valueChecker=""
+              valueChecker={true}
               containerChecker="gap-1 items-center"
-              classChecker=""
-              typeChecker="checkbox"
+              classChecker="hidden mr-1"
+              typeChecker="radio"
+              name="isAttending"
+              onChange={onInputChange}
+              isChecked={isAttending}
             />
             <Checker
               labelChecker="declines with regret"
-              valueChecker=""
+              valueChecker={false}
               containerChecker="gap-1 items-center"
-              classChecker=""
-              typeChecker="checkbox"
+              classChecker="hidden mr-1"
+              typeChecker="radio"
+              name="isAttending"
+              onChange={onInputChange}
+              isChecked={!isAttending}
             />
           </div>
           <div className="flex flex-col items-center md:items-start">

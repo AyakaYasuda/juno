@@ -66,15 +66,19 @@ const GuestMyPageLayout = () => {
               password={password}
               disabledInput={true}
               disabledDesc={false}
-              submitHandler={() => null}
               typeButton="button"
+              isAttending={isAttending}
               onClickButton={handleOnClick}
+              // FIXME: change handlers to optional
+              // reason: no handler for show data page
+              submitHandler={() => null}
               onChangeFirstName={() => null}
               onChangeLastName={() => null}
               onChangeEmail={() => null}
               onChangePassword={() => null}
               onChangeMessage={() => null}
               onChangeAllergy={() => null}
+              onInputChange={() => null}
             />
           </div>
         </div>
