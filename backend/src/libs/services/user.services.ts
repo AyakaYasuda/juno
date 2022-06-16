@@ -122,14 +122,13 @@ class UserServices {
   public async getGuests(guestsData: any) {
     // 1) iterate the array of responseData.Items and take only PK values
     const userIdArray = this.getUserIdList(guestsData);
-    console.log('getGuestsByEventId userIdArray', userIdArray);
 
     // 2) create a new array of user metadata (obj)
     const usersList = await this.getUsers(userIdArray);
+    console.log('getGuestsByEventId usersList', usersList);
 
     // 3) pick up the user who is NOT admin and create an array of guests
     const guestsArray = this.getGuestsFromUsersList(usersList);
-    console.log('getGuestsByEventId usersList', usersList);
     console.log('getGuestsByEventId guestsArray', guestsArray);
 
     return guestsArray;
@@ -161,7 +160,7 @@ class UserServices {
         );
       }
 
-      usersList.push(guestResponseData.Item);
+      usersList.push(guestResponseData);
     }
 
     return usersList;
