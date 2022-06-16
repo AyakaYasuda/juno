@@ -68,6 +68,22 @@ class UserServices {
     }
   }
 
+  public async errorIfUserNotExistByEmail(email: string) {
+    const existingUser = await this.userModel.getUserByEmail(email);
+
+    if (existingUser.Items.length === 0) {
+      throw new HttpError(500, 'User does not exist');
+    }
+
+    return existingUser.Items[0];
+  }
+
+  public async verifyPassword(inputPW: string, existingPW: string) {
+    if (!bcrypt.compareSync(inputPW, existingPW)) {
+      throw new HttpError(403, 'Password is incorrect');
+    }
+  }
+
   public async errorIfGuestsNotFound(
     eventId: string,
     guestsNotFoundErrorMessage: string

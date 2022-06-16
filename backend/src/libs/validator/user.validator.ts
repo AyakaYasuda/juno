@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { formatJSONResponse } from '@libs/api-gateway';
 import { ICreateUserReqBody } from '@libs/types/createUserReqBody.type';
 import { IUpdateUserReqBody } from '@libs/types/updateUserReqBody.type';
+import { ILoginUserReqBody } from '@libs/types/loginUserReqBody.type';
 
 class UserValidator {
   public static validateCreateGuestResponseParams(
@@ -41,6 +42,16 @@ class UserValidator {
       message: yup.string(),
       allergy: yup.string(),
       isAttending: yup.boolean(),
+    });
+
+    // FIXME : the reference sample was false
+    await userSchema.validate(reqBody, { abortEarly: true });
+  }
+
+  public static async validateLoginUserReqBody(reqBody: ILoginUserReqBody) {
+    const userSchema = yup.object().shape({
+      email: yup.string(),
+      password: yup.string(),
     });
 
     // FIXME : the reference sample was false

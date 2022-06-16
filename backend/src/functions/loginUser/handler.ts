@@ -1,25 +1,9 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
-import { formatJSONResponse, HttpError, handleError } from '@libs/api-gateway';
-import jwt from 'jsonwebtoken';
-import * as yup from 'yup';
-import bcrypt from 'bcryptjs';
+import { formatJSONResponse, handleError } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import { AWS } from '@serverless/typescript';
-
-const AWS = require('aws-sdk');
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const USER_EVENT_TABLE = 'user-event';
-const PK_EMAIL_LSI = 'PK-email-index';
-
-const userSchema = yup.object().shape({
-  email: yup.string().required(),
-  password: yup.string().required(),
-});
-
-interface ILoginUserInfo {
-  email: string;
-  password: string;
-}
+import UserServices from '@libs/services/user.services';
+import UserValidator from '@libs/validator/user.validator';
+import AuthServices from '@libs/services/auth.services';
 
 const loginUser = async (
   event: APIGatewayProxyEvent
@@ -27,72 +11,26 @@ const loginUser = async (
   try {
     const reqBody = JSON.parse(event.body);
 
-    // FIXME : the reference sample was false
-    await userSchema.validate(reqBody, { abortEarly: true });
+    const userServices = new UserServices();
+    const authServices = new AuthServices();
 
-    const email = reqBody.email;
-    const password = reqBody.password;
+    await UserValidator.validateLoginUserReqBody(reqBody);
 
-    if (!email || !password) {
-      return formatJSONResponse(401, {
-        message: 'Username and password are required',
-      });
-    }
+    const { email, password } = reqBody;
 
-    const existingUser: AWS.DynamoDB.Query = await getUserByEmail(email);
-    if (existingUser.Items.length === 0) {
-      throw new HttpError(403, 'User does not exist');
-    }
+    const existingUser = await userServices.errorIfUserNotExistByEmail(email);
 
-    if (!bcrypt.compareSync(password, existingUser.Items[0].password)) {
-      return formatJSONResponse(403, {
-        message: 'Password is incorrect',
-      });
-    }
+    await userServices.verifyPassword(password, existingUser.password);
 
-    const loginUserInfo: ILoginUserInfo = {
-      email,
-      password,
-    };
-
-    const token = generateToken(loginUserInfo);
+    const token = await authServices.generateToken(email, password);
 
     return formatJSONResponse(200, {
-      user: loginUserInfo,
+      user: { email, password },
       token,
     });
   } catch (err) {
     return handleError(err);
   }
-};
-
-const getUserByEmail = async (
-  email: string
-): Promise<APIGatewayProxyResultV2> => {
-  const params = {
-    TableName: USER_EVENT_TABLE,
-    IndexName: PK_EMAIL_LSI,
-    KeyConditionExpression: '#PK = :PK and #email = :email',
-    ExpressionAttributeNames: {
-      '#PK': 'PK',
-      '#email': 'email',
-    },
-    ExpressionAttributeValues: {
-      ':PK': 'user',
-      ':email': email,
-    },
-  };
-  return await dynamodb.query(params).promise();
-};
-
-const generateToken = (loginUserInfo: ILoginUserInfo) => {
-  if (!loginUserInfo) {
-    return null;
-  }
-
-  return jwt.sign(loginUserInfo, process.env.JWT_SECRET, {
-    expiresIn: '1h',
-  });
 };
 
 export const main = middyfy(loginUser);
