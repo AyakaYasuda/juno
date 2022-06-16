@@ -125,7 +125,6 @@ class UserServices {
 
     // 2) create a new array of user metadata (obj)
     const usersList = await this.getUsers(userIdArray);
-    console.log('getGuestsByEventId usersList', usersList);
 
     // 3) pick up the user who is NOT admin and create an array of guests
     const guestsArray = this.getGuestsFromUsersList(usersList);
