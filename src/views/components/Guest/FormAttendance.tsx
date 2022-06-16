@@ -18,6 +18,7 @@ type FormAttendanceProps = {
   allergy: string;
   email: string;
   password: string;
+  isAttend: boolean;
   submitHandler: (params: any) => any;
   onChangeFirstName: (params: any) => any;
   onChangeLastName: (params: any) => any;
@@ -25,6 +26,7 @@ type FormAttendanceProps = {
   onChangePassword: (params: any) => any;
   onChangeMessage: (params: any) => any;
   onChangeAllergy: (params: any) => any;
+  onInputChange: (params: any) => any;
 };
 
 const FormAttendance: React.FC<FormAttendanceProps> = ({
@@ -47,6 +49,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   onChangePassword,
   onChangeMessage,
   onChangeAllergy,
+  onInputChange,
 }) => {
   return (
     <div>
@@ -78,17 +81,21 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
           <div className="FlexJustify flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
             <Checker
               labelChecker="accepts with pleasure"
-              valueChecker=""
+              valueChecker={true}
               containerChecker="gap-1 items-center"
               classChecker=""
-              typeChecker="checkbox"
+              typeChecker="radio"
+              name="isAttend"
+              onChange={onInputChange}
             />
             <Checker
               labelChecker="declines with regret"
-              valueChecker=""
+              valueChecker={false}
               containerChecker="gap-1 items-center"
               classChecker=""
-              typeChecker="checkbox"
+              typeChecker="radio"
+              name="isAttend"
+              onChange={onInputChange}
             />
           </div>
           <div className="flex flex-col items-center md:items-start">

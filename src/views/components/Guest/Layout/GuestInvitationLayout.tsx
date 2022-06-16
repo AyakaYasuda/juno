@@ -26,11 +26,33 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
     password: '',
     message: '',
     allergy: '',
+    isAttend: false,
   });
 
-  const { firstName, lastName, email, password, message, allergy } = formState;
+  const { firstName, lastName, email, password, message, allergy, isAttend } =
+    formState;
 
+  console.log('formState', formState);
+
+  // FIXME: move logic to form?
+  // FIXME: change logic for radio-box
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log('handleChange');
+    console.log('e.target.name', e.target.name);
+    console.log('e.target.value', e.target.value);
+
+    if (e.target.value === 'true') {
+      return setFormState((prev) => ({
+        ...prev,
+        [e.target.name]: true,
+      }));
+    } else if (e.target.value === 'false') {
+      return setFormState((prev) => ({
+        ...prev,
+        [e.target.name]: false,
+      }));
+    }
+
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
@@ -91,7 +113,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
           className="w-medium fixed top-0 right-0"
         />
         <div className="w-5/6 lg:w-4/5 my-8 md:h-4/5 bg-white FlexCenter rounded-2xl">
-          <div className=" w-11/12 md:h-5/6 my-6 flex flex-col md:items-center lg:flex-row gap-8">
+          <div className="w-11/12 md:h-5/6 my-6 flex flex-col md:items-center lg:flex-row gap-8">
             <div className="lg:w-1/2">
               <CardWeddingInfo spacing="" />
             </div>
@@ -109,6 +131,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 allergy={allergy}
                 email={email}
                 password={password}
+                isAttend={isAttend}
                 submitHandler={submitHandler}
                 onChangeFirstName={handleChange}
                 onChangeLastName={handleChange}
@@ -116,6 +139,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 onChangePassword={handleChange}
                 onChangeMessage={handleChange}
                 onChangeAllergy={handleChange}
+                onInputChange={handleChange}
               />
             </div>
           </div>

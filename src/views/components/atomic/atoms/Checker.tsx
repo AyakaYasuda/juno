@@ -2,10 +2,13 @@ import React from 'react';
 
 type CheckerProps = {
   containerChecker: string;
-  valueChecker: string;
+  valueChecker: boolean;
   classChecker: string;
   typeChecker: string;
   labelChecker: string;
+  name: string;
+  // FIXME: add type
+  onChange: any;
 };
 
 const Checker: React.FC<CheckerProps> = ({
@@ -14,11 +17,21 @@ const Checker: React.FC<CheckerProps> = ({
   classChecker,
   typeChecker,
   labelChecker,
+  name,
+  onChange,
 }) => {
   return (
     <div className={`flex ${containerChecker}`}>
-      <input type={typeChecker} value={valueChecker} className={classChecker} />
-      <label className="mb-1 text-Yellow-dark">{labelChecker}</label>
+      <label className="mb-1 text-Yellow-dark">
+        <input
+          type={typeChecker}
+          value={valueChecker as any}
+          className={classChecker}
+          name={name}
+          onChange={onChange}
+        />
+        {labelChecker}
+      </label>
     </div>
   );
 };

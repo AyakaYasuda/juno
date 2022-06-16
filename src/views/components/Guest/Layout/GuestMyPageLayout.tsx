@@ -15,6 +15,7 @@ const GuestMyPageLayout = () => {
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [allergy, setAllergy] = useState('');
+  const [isAttendance, setIsAttendance] = useState(false);
 
   const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -89,6 +90,7 @@ const GuestMyPageLayout = () => {
               allergy={allergy}
               email={email}
               password={password}
+              isAttend={isAttendance}
               submitHandler={submitHandler}
               onChangeFirstName={(e) => setFirstName(e.target.value)}
               onChangeLastName={(e) => setLastName(e.target.value)}
@@ -96,6 +98,13 @@ const GuestMyPageLayout = () => {
               onChangePassword={(e) => setPassword(e.target.value)}
               onChangeMessage={(e) => setMessage(e.target.value)}
               onChangeAllergy={(e) => setAllergy(e.target.value)}
+              onInputChange={(e) => {
+                console.log('GuestMyPageLayout');
+
+                console.log(e.target.value);
+
+                setIsAttendance(e.target.value);
+              }}
             />
           </div>
         </div>
