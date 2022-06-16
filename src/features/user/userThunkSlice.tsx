@@ -18,6 +18,17 @@ interface SignupForm {
   password: string;
   isAdmin: boolean;
 }
+
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+  message: string;
+  allergy: string;
+  isAttending: boolean;
+}
 export interface UserState {
   user:
     | {
@@ -111,7 +122,7 @@ export const editUser = createAsyncThunk(
   }
 );
 
-// //create slice
+//create slice
 export const userSlice = createSlice({
   name: 'user',
   initialState,

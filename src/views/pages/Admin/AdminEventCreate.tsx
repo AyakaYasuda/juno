@@ -59,9 +59,7 @@ function AdminEventCreate() {
     // evenetCreate success
     if (eventCreate.fulfilled.match(result)) {
       alert('eventCreate successfuly!');
-
-      //FIXME: test
-      // navigate('/admin/event');
+      navigate('/admin/event');
     }
     // evenetCreate failed
     if (eventCreate.rejected.match(result)) {
