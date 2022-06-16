@@ -1,6 +1,6 @@
 import React from 'react';
-import { fetchData } from 'RTK/features/fetchData/fetchDataSlice';
-import { useAppSelector, useAppDispatch } from 'RTK/app/hooks';
+import { fetchData } from 'OLD_RTK/features/fetchData/fetchDataSlice';
+import { useAppSelector, useAppDispatch } from 'OLD_RTK/app/hooks';
 
 export function FetchData() {
   const dispatch = useAppDispatch();

@@ -5,7 +5,7 @@ import Input from 'views/components/atomic/atoms/Input';
 import ImageTop from 'views/images/guest-top.png';
 import Copyright from 'views/components/atomic/atoms/Copyright';
 import ButtonFlexible from 'views/components/atomic/atoms/ButtonFlexible';
-import { FetchData } from 'RTK/features/fetchData/FetchData';
+import { FetchData } from 'OLD_RTK/features/fetchData/FetchData';
 
 const GuestTopLayout = () => {
   return (

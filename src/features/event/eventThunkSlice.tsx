@@ -5,9 +5,6 @@ import axios from 'axios';
 const API_URL =
   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/event';
 
-//hoge test
-const DAMMY_USERID = '67014c86-88b1-46f4-abc8-72a0e1db9656';
-
 // type definition
 interface EventForm {
   bride: string;
@@ -22,13 +19,30 @@ interface EventForm {
   message: string;
 }
 export interface EventState {
-  event: EventForm | null;
+  event:
+    | {
+        SK: string;
+        bride: string;
+        groom: string;
+        dateWedding: string;
+        startingTimeWedding: string;
+        endingTimeWedding: string;
+        dateWeddingReception: string;
+        startingTimeReception: string;
+        endingTimeReception: string;
+        address: string;
+        message: string;
+        isEditable: boolean;
+      }
+    //FIXME: fix type
+    | any;
   status: 'pending' | 'loading' | 'failed';
 }
 
 // initialize
 const initialState: EventState = {
-  event: null,
+  //FIXME: event initial value
+  event: {},
   status: 'pending',
 };
 
@@ -36,14 +50,13 @@ const initialState: EventState = {
 //CREATE
 export const eventCreate = createAsyncThunk(
   'event/create',
-  async (eventData: EventForm, { rejectWithValue }) => {
+  async (eventData: EventForm, { getState, rejectWithValue }) => {
     try {
-      const result = await axios.post(
-        `${API_URL}/event/${DAMMY_USERID}`,
-        JSON.stringify(eventData)
-      );
-      console.log(eventData);
-      return result.data;
+      // FIXME: fix type
+      const { userId } = (getState() as any).user;
+      await axios.post(`${API_URL}/new/${userId}`, JSON.stringify(eventData));
+
+      return;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
@@ -53,9 +66,10 @@ export const eventCreate = createAsyncThunk(
 //GET
 export const eventGet = createAsyncThunk(
   'event/get',
-  async (eventData: EventForm, { rejectWithValue }) => {
+  async (userId: string, { rejectWithValue }) => {
     try {
-      const result = await axios.get(`${API_URL}/event/${DAMMY_USERID}`);
+      // FIXME: fix type
+      const result = await axios.get(`${API_URL}/${userId}`);
       return result.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -66,10 +80,12 @@ export const eventGet = createAsyncThunk(
 //EDIT
 export const eventEdit = createAsyncThunk(
   'event/edit',
-  async (eventData: EventForm, { rejectWithValue }) => {
+  async (eventData: EventForm, { getState, rejectWithValue }) => {
     try {
+      // FIXME: fix type
+      const { userId } = (getState() as any).user;
       const result = await axios.patch(
-        `${API_URL}/event/${DAMMY_USERID}`,
+        `${API_URL}/edit/${userId}`,
         JSON.stringify(eventData)
       );
       return result.data;

@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'views/components/atomic/molecules/Modal';
 import Button from '../../components/atomic/atoms/Button';
 import Navbar from '../../components/atomic/molecules/Navbar';
+import { Link } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { eventGet } from 'features/event/eventThunkSlice';
+
+//hoge test
+const DAMMY_USERID = '67014c86-88b1-46f4-abc8-72a0e1db9656';
 
 const AdminEventManage = () => {
   const [showInfoStyle, setShowInfoStyle] = useState('w-full');
@@ -21,6 +28,15 @@ const AdminEventManage = () => {
   const showModalHandler = () => {
     setShowModal(!showModal);
   };
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(eventGet(DAMMY_USERID));
+  }, []);
+
+  const { SK, bride, groom, dateWedding, dateWeddingReception, message } =
+    useAppSelector((state) => state.event.event);
 
   return (
     <>
@@ -42,28 +58,52 @@ const AdminEventManage = () => {
               <div className="flex flex-col  mb-8 md:mb-4">
                 <label className="flex flex-row justify-between items-center mb-3">
                   <span className="basis-1/4">Event URL</span>
-                  <input type="url" className="InputLighter basis-3/4" />
+                  <input
+                    type="url"
+                    value={SK}
+                    className="InputLighter basis-3/4"
+                  />
                 </label>
                 <label className="flex flex-row justify-between items-center mb-3">
-                  <span className="basis-1/4">Bright</span>
-                  <input type="text" className="InputLighter basis-3/4" />
+                  <span className="basis-1/4">Bride</span>
+                  <input
+                    type="text"
+                    value={bride}
+                    className="InputLighter basis-3/4"
+                  />
                 </label>
                 <label className="flex flex-row justify-between items-center">
                   <span className="basis-1/4">Groom</span>
-                  <input type="text" className="InputLighter basis-3/4" />
+                  <input
+                    type="text"
+                    value={groom}
+                    className="InputLighter basis-3/4"
+                  />
                 </label>
               </div>
               <div className="flex flex-col mb-8 md:mb-4">
                 <label className="mb-1">
                   Date and Time of Wedding Ceremony
                 </label>
-                <input type="text" className="InputLighter mb-2" />
+                <input
+                  type="text"
+                  value={dateWedding}
+                  className="InputLighter mb-2"
+                />
                 <label className="mb-1">
                   Date and Time of Wedding Reception
                 </label>
-                <input type="text" className="InputLighter mb-2" />
+                <input
+                  type="text"
+                  value={dateWeddingReception}
+                  className="InputLighter mb-2"
+                />
                 <label className="mb-1">Message</label>
-                <input type="textarea" className="InputLighter mb-2 h-28" />
+                <input
+                  type="textarea"
+                  value={message}
+                  className="InputLighter mb-2 h-28"
+                />
               </div>
               <ul className="w-4/5 mx-auto md:flex md:gap-4">
                 <li className="hidden md:block md:basis-1/2">
@@ -73,7 +113,7 @@ const AdminEventManage = () => {
                 </li>
                 <li className="md:basis-1/2">
                   <Button styleButton="border-2 border-White-default">
-                    Edit event info
+                    <Link to="/admin/edit">Edit event info</Link>
                   </Button>
                 </li>
               </ul>
@@ -82,6 +122,7 @@ const AdminEventManage = () => {
           <div className={`${showGuestsStyle} md:block md:basis-1/2`}>
             <h2 className="hidden md:block mb-2">Guests list</h2>
             <ul className="overflow-y-scroll h-4/5">
+              {/* {FIXME: use map fetching guests data} */}
               <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
                 <span className="basis-3/5">Monica Geller</span>
                 <Button styleButton="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">

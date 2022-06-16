@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'app/hooks';
-import { signup } from 'features/auth/authThunkSlice';
+import { signup } from 'features/user/userThunkSlice';
 
 import TopLayout from 'views/components/atomic/templates/TopLayout';
 import Form from 'views/components/atomic/molecules/Form';
