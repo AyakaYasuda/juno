@@ -1,9 +1,8 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResultV2 } from 'aws-lambda';
 import { formatJSONResponse, HttpError, handleError } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
-import jwt from 'jsonwebtoken';
+import AuthServices from '@libs/services/auth.services';
 
-const AWS = require('aws-sdk');
 
 const verifyToken = async (
   event: APIGatewayProxyEvent
@@ -11,13 +10,16 @@ const verifyToken = async (
   try {
     const reqBody = JSON.parse(event.body);
 
-    const token = reqBody.token;
+    const authServices = new AuthServices();
+
+    const { token } = reqBody;
 
     if (!token) {
       throw new HttpError(400, 'Invalid request');
     }
 
-    const verification = verify(token);
+    const verification = await authServices.verifyToken(token);
+
     if (!verification.verified) {
       return formatJSONResponse(401, verification);
     }
@@ -29,22 +31,6 @@ const verifyToken = async (
   } catch (err) {
     return handleError(err);
   }
-};
-
-type verifyResult = { verified: boolean; message: string };
-
-// authentication
-const verify = (token: string): verifyResult => {
-  return jwt.verify(token, process.env.JWT_SECRET, (error: Error) => {
-    if (error) {
-      return {
-        verified: false,
-        message: 'Invalid token',
-      };
-    }
-
-    return { verified: true, message: 'Verified' };
-  });
 };
 
 export const main = middyfy(verifyToken);
