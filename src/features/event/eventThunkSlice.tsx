@@ -19,31 +19,18 @@ interface EventForm {
   message: string;
 }
 export interface EventState {
-  event:
-    | {
-        SK: string;
-        bride: string;
-        groom: string;
-        dateWedding: string;
-        startingTimeWedding: string;
-        endingTimeWedding: string;
-        dateWeddingReception: string;
-        startingTimeReception: string;
-        endingTimeReception: string;
-        address: string;
-        message: string;
-        isEditable: boolean;
-      }
-    //FIXME: fix type
-    | any;
-  status: 'pending' | 'loading' | 'failed';
+  event: EventForm | any;
+  //FIXME: fix type
+  guests: any;
+  status: 'loading' | 'success' | 'failed';
 }
 
 // initialize
 const initialState: EventState = {
   //FIXME: event initial value
-  event: {},
-  status: 'pending',
+  event: null,
+  guests: [],
+  status: 'loading',
 };
 
 //create action
@@ -55,7 +42,6 @@ export const eventCreate = createAsyncThunk(
       // FIXME: fix type
       const { userId } = (getState() as any).user;
       await axios.post(`${API_URL}/new/${userId}`, JSON.stringify(eventData));
-
       return;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -66,10 +52,30 @@ export const eventCreate = createAsyncThunk(
 //GET
 export const eventGet = createAsyncThunk(
   'event/get',
-  async (userId: string, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
       // FIXME: fix type
+      const { userId } = (getState() as any).user;
       const result = await axios.get(`${API_URL}/${userId}`);
+      return result.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const guestsGet = createAsyncThunk(
+  'guests/get',
+  async (_, { getState, rejectWithValue }) => {
+    try {
+      console.log('run');
+
+      // FIXME: fix type
+      const { SK } = (getState() as any).event.event;
+
+      console.log('eventId', SK);
+
+      const result = await axios.get(`${API_URL}/guests/${SK}`);
       return result.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -106,16 +112,23 @@ export const eventSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(eventCreate.pending, (state, action) => {
+        state.status = 'loading';
+      })
       .addCase(eventCreate.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = 'success';
         state.event = action.payload;
       })
       .addCase(eventGet.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = 'success';
         state.event = action.payload;
       })
+      .addCase(guestsGet.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.guests = action.payload;
+      })
       .addCase(eventEdit.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = 'success';
         state.event = action.payload;
       });
   },

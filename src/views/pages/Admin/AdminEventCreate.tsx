@@ -55,7 +55,6 @@ function AdminEventCreate() {
         message,
       })
     );
-    console.log(result);
 
     // evenetCreate success
     if (eventCreate.fulfilled.match(result)) {

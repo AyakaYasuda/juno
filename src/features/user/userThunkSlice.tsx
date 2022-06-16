@@ -18,13 +18,23 @@ interface SignupForm {
   password: string;
   isAdmin: boolean;
 }
+
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  message: string;
+  allergy: string;
+  isAttending: boolean;
+  isAdmin: boolean;
+}
 interface SignupFormGuest {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  message: string;
   allergy: string;
+  isAttending: boolean;
+  message: string;
   isAdmin: boolean;
 }
 export interface UserState {
@@ -55,16 +65,14 @@ export interface AuthState {
 const initialState: UserState = {
   user: [],
   //FIXME: fix hard code
-  userId: '3570abe1-e402-451d-9377-30c72e52e68c',
+  userId: '',
   status: 'pending',
 };
 
 //create async payload callback function
 //LOGIN
 export const login = createAsyncThunk(
-  //1st Arg: type
   'login',
-  //2nd Arg: payloadCreator
   async (loginData: LoginForm, { rejectWithValue }) => {
     try {
       const result = await axios.post(
@@ -111,8 +119,9 @@ export const signupGuest = createAsyncThunk(
 //GET
 export const getUser = createAsyncThunk(
   'get',
-  async (userId: string, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
+      const { userId } = (getState() as any).user;
       const result = await axios.get(`${API_URL}/${userId}`);
       return result.data;
     } catch (error: any) {
@@ -137,7 +146,7 @@ export const editUser = createAsyncThunk(
   }
 );
 
-// //create slice
+//create slice
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -151,11 +160,11 @@ export const userSlice = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.status = 'pending';
-        state.user = action.payload;
+        state.userId = action.payload.userId;
       })
       .addCase(signup.fulfilled, (state, action) => {
         state.status = 'pending';
-        state.user = action.payload;
+        state.userId = action.payload.userId;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.status = 'pending';
