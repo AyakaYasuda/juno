@@ -39,6 +39,8 @@ export interface UserState {
         allergy: string;
         isAttending: boolean;
       }[]
+    //FIXME: fix type
+    | any
     | null;
   userId: string;
   status: 'pending' | 'loading' | 'failed';

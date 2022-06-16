@@ -1,7 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'app/hooks';
-// import { signup } from 'RTK/features/auth/authSliceThunk';
 import { signupGuest } from 'features/user/userThunkSlice';
 
 import ImgFlower1 from 'views/images/invitation-flower1.png';

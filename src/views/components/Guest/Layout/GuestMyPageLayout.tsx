@@ -1,6 +1,9 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { getUser } from 'features/user/userThunkSlice';
 
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import Title from 'views/components/atomic/atoms/Title';
@@ -9,54 +12,38 @@ import FormAttendance from 'views/components/Guest/FormAttendance';
 
 const GuestMyPageLayout = () => {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [allergy, setAllergy] = useState('');
+  const dispatch = useAppDispatch();
 
-  const submitHandler = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  // const [formState, setFormState] = useState({
+  //   firstName: '',
+  //   lastName: '',
+  //   email: '',
+  //   password: '',
+  //   message: '',
+  //   allergy: '',
+  // });
 
-    // interact with the backend using fetch
-    // await fetch(
-    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-    //   {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       password,
-    //       isAdmin: true,
-    //       messsage: '',
-    //       allergy: '',
-    //     }),
-    //   }
-    // );
+  // const { firstName, lastName, email, password, message, allergy } = formState;
 
-    try {
-      const response = await axios.post(
-        'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-        JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-          message,
-          allergy,
-          isAdmin: false,
-        })
-      );
-      console.log(response);
-      navigate('/guests/login');
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const DAMMY_USERID = '61c71824-2445-4127-965c-aa8f5ae4fabe';
+
+  // const handleSetUser = () => {
+  //   // setFormState
+  // };
+
+  useEffect(() => {
+    dispatch(getUser(DAMMY_USERID));
+  }, []);
+
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    message,
+    allergy,
+    isAttending,
+  } = useAppSelector((state) => state.user.user);
 
   return (
     <GuestBaseLayout>
@@ -89,13 +76,13 @@ const GuestMyPageLayout = () => {
               allergy={allergy}
               email={email}
               password={password}
-              submitHandler={submitHandler}
-              onChangeFirstName={(e) => setFirstName(e.target.value)}
-              onChangeLastName={(e) => setLastName(e.target.value)}
-              onChangeEmail={(e) => setEmail(e.target.value)}
-              onChangePassword={(e) => setPassword(e.target.value)}
-              onChangeMessage={(e) => setMessage(e.target.value)}
-              onChangeAllergy={(e) => setAllergy(e.target.value)}
+              submitHandler={() => null}
+              onChangeFirstName={() => null}
+              onChangeLastName={() => null}
+              onChangeEmail={() => null}
+              onChangePassword={() => null}
+              onChangeMessage={() => null}
+              onChangeAllergy={() => null}
             />
           </div>
         </div>

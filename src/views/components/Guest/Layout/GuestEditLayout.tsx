@@ -1,6 +1,9 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { getUser } from 'features/user/userThunkSlice';
 
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import Title from 'views/components/atomic/atoms/Title';
@@ -9,32 +12,21 @@ import FormAttendance from 'views/components/Guest/FormAttendance';
 
 const GuestEditLayout = () => {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [allergy, setAllergy] = useState('');
+  const dispatch = useAppDispatch();
+
+  const [formState, setFormState] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    message: '',
+    allergy: '',
+  });
+
+  const { firstName, lastName, email, password, message, allergy } = formState;
+
   const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault();
-
-    // interact with the backend using fetch
-    // await fetch(
-    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-    //   {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       password,
-    //       isAdmin: true,
-    //       messsage: '',
-    //       allergy: '',
-    //     }),
-    //   }
-    // );
 
     await axios.post(
       'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
@@ -81,12 +73,12 @@ const GuestEditLayout = () => {
               email={email}
               password={password}
               submitHandler={submitHandler}
-              onChangeFirstName={(e) => setFirstName(e.target.value)}
-              onChangeLastName={(e) => setLastName(e.target.value)}
-              onChangeEmail={(e) => setEmail(e.target.value)}
-              onChangePassword={(e) => setPassword(e.target.value)}
-              onChangeMessage={(e) => setMessage(e.target.value)}
-              onChangeAllergy={(e) => setAllergy(e.target.value)}
+              onChangeFirstName={() => null}
+              onChangeLastName={() => null}
+              onChangeEmail={() => null}
+              onChangePassword={() => null}
+              onChangeMessage={() => null}
+              onChangeAllergy={() => null}
             />
           </div>
         </div>
