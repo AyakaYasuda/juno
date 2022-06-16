@@ -1,5 +1,5 @@
-import { CreateEventReqBody } from '@libs/requests/CreateEventReqBody';
-import { UpdateEventReqBody } from '@libs/requests/UpdateEventReqBody';
+import { CreateEventReqBody } from '@libs/types/createEventReqBody.type';
+import { UpdateEventReqBody } from '@libs/types/updateEventReqBody.type';
 import * as yup from 'yup';
 
 class EventValidator {
