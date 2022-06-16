@@ -10,7 +10,10 @@ type FormAttendanceProps = {
   sectionTitle: string;
   sectionTitleColor: string;
   textButton: string;
+  textButtonCancel: string;
   styleButton: string;
+  styleButtonCancel: string;
+  typeButton: 'button' | 'submit' | 'reset';
   spacing: string;
   firstName: string;
   lastName: string;
@@ -18,7 +21,10 @@ type FormAttendanceProps = {
   allergy: string;
   email: string;
   password: string;
+  disabledInput: boolean;
+  disabledDesc: boolean;
   submitHandler: (params: any) => any;
+  onClickButton: (params: any) => any;
   onChangeFirstName: (params: any) => any;
   onChangeLastName: (params: any) => any;
   onChangeEmail: (params: any) => any;
@@ -32,7 +38,10 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   sectionTitle,
   sectionTitleColor,
   textButton,
+  textButtonCancel,
   styleButton,
+  styleButtonCancel,
+  typeButton,
   spacing,
   firstName,
   lastName,
@@ -40,13 +49,16 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   allergy,
   email,
   password,
+  disabledInput,
   submitHandler,
+  onClickButton,
   onChangeFirstName,
   onChangeLastName,
   onChangeEmail,
   onChangePassword,
   onChangeMessage,
   onChangeAllergy,
+  disabledDesc,
 }) => {
   return (
     <div>
@@ -63,6 +75,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               containerInput=""
               classInput={classInput}
               labelColor="text-Yellow-dark"
+              disabledInput={disabledInput}
               onChangeHandler={onChangeFirstName}
             />
             <Input
@@ -72,6 +85,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               containerInput=""
               classInput={classInput}
               labelColor="text-Yellow-dark"
+              disabledInput={disabledInput}
               onChangeHandler={onChangeLastName}
             />
           </div>
@@ -99,6 +113,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               nameDesc="message"
               rowsDesc={3}
               valueDesc={message}
+              disabledDesc={disabledDesc}
               onChangeHandler={onChangeMessage}
             />
             <Desc
@@ -108,6 +123,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               nameDesc="allergy"
               valueDesc={allergy}
               rowsDesc={2}
+              disabledDesc={disabledDesc}
               onChangeHandler={onChangeAllergy}
             />
           </div>
@@ -119,6 +135,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               containerInput="flex-col"
               classInput={classInput}
               labelColor="text-Yellow-dark"
+              disabledInput={disabledInput}
               onChangeHandler={onChangeEmail}
             />
             <Input
@@ -128,16 +145,25 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               containerInput="flex-col"
               classInput={classInput}
               labelColor="text-Yellow-dark"
+              disabledInput={disabledInput}
               onChangeHandler={onChangePassword}
             />
           </div>
         </div>
-        <div className={`flex justify-center ${spacing} `}>
+        <div className={`flex justify-center ${spacing} gap-12 `}>
           <ButtonFlexible
-            typeButton="submit"
-            styleButton={`${styleButton} w-2/5`}
+            typeButton={typeButton}
+            onClickButton={onClickButton}
+            styleButton={styleButton}
           >
             {textButton}
+          </ButtonFlexible>
+          <ButtonFlexible
+            typeButton={typeButton}
+            onClickButton={onClickButton}
+            styleButton={styleButtonCancel}
+          >
+            {textButtonCancel}
           </ButtonFlexible>
         </div>
       </form>

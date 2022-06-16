@@ -1,7 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'app/hooks';
-// import { signup } from 'RTK/features/auth/authSliceThunk';
 import { signupGuest } from 'features/user/userThunkSlice';
 
 import ImgFlower1 from 'views/images/invitation-flower1.png';
@@ -64,24 +63,6 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
     }
   };
 
-  //   await axios.post(
-  //     'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-  //     JSON.stringify({
-  //       firstName,
-  //       lastName,
-  //       email,
-  //       password,
-  //       message,
-  //       allergy,
-  //       isAdmin: false,
-  //     })
-  //   );
-
-  //   navigate('/guests/login');
-
-  //   console.log('submitted!');
-  // };
-
   return (
     <GuestBaseLayout>
       <div className="flex justify-center md:items-center">
@@ -101,7 +82,9 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 sectionTitleColor="text-Yellow-dark"
                 classInput="InputDark"
                 textButton="Reply"
+                textButtonCancel=""
                 styleButton="bg-Green-default text-white"
+                styleButtonCancel="hidden"
                 spacing="md:w-extraLarge"
                 firstName={firstName}
                 lastName={lastName}
@@ -109,7 +92,11 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 allergy={allergy}
                 email={email}
                 password={password}
+                disabledInput={false}
+                disabledDesc={false}
                 submitHandler={submitHandler}
+                typeButton="submit"
+                onClickButton={() => null}
                 onChangeFirstName={handleChange}
                 onChangeLastName={handleChange}
                 onChangeEmail={handleChange}

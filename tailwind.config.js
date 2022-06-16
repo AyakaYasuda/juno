@@ -29,6 +29,7 @@ module.exports = {
       },
       spacing: {
         medium: '27%',
+        large: '70%',
         extraLarge: '87%',
       },
       backgroundImage: {
