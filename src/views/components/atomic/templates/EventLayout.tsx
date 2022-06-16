@@ -1,9 +1,7 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import Button from '../atoms/Button';
 import Navbar from '../molecules/Navbar';
 import Card from '../atoms/Card';
-import { useNavigate } from 'react-router';
-import axios from 'axios';
 
 type Props = {
   title: string;
@@ -17,7 +15,8 @@ type Props = {
   endingTimeReception: string;
   address: string;
   message: string;
-  setFormState: any;
+  handleChange: any;
+  submitHandler: any;
   ctaTxt: string;
 };
 
@@ -33,33 +32,10 @@ const EventLayout: React.FC<Props> = ({
   endingTimeReception,
   address,
   message,
-  setFormState,
+  handleChange,
+  submitHandler,
   ctaTxt,
 }) => {
-  const navigate = useNavigate();
-
-  const submitHandler = async (e: any) => {
-    e.preventDefault();
-
-    await axios.post(
-      'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/login',
-      JSON.stringify({
-        bride,
-        groom,
-        dateWedding,
-        startingTimeWedding,
-        endingTimeWedding,
-        dateWeddingReception,
-        startingTimeReception,
-        endingTimeReception,
-        address,
-        message,
-      })
-    );
-
-    navigate(`/admin/event`);
-  };
-
   return (
     <>
       <Navbar />
@@ -74,90 +50,96 @@ const EventLayout: React.FC<Props> = ({
               <div className="md:basis-1/2 flex flex-col">
                 <label className="mb-1">Bride name</label>
                 <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
                   type="text"
+                  name="bride"
                   value={bride}
+                  onChange={handleChange}
                   className="InputDark"
                 />
                 <label>Groom name</label>
                 <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
                   type="text"
+                  name="groom"
                   value={groom}
+                  onChange={handleChange}
                   className="InputDark"
                 />
                 <label>Date and Time of Wedding Ceremony</label>
                 <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
-                  type="text"
+                  type="date"
+                  name="dateWedding"
                   value={dateWedding}
+                  onChange={handleChange}
                   className="InputDark"
                 />
-                <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
-                  type="text"
-                  value={startingTimeWedding}
-                  className="InputDark"
-                />
-                <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
-                  type="text"
-                  value={endingTimeWedding}
-                  className="InputDark"
-                />
+                <ul className="flex flex-row gap-6">
+                  <li className="basis-1/2">
+                    <span>Start</span>
+                    <input
+                      type="time"
+                      name="startingTimeWedding"
+                      value={startingTimeWedding}
+                      onChange={handleChange}
+                      className="InputDark w-full"
+                    />
+                  </li>
+                  <li className="basis-1/2">
+                    <span>End</span>
+                    <input
+                      type="time"
+                      name="endingTimeWedding"
+                      value={endingTimeWedding}
+                      onChange={handleChange}
+                      className="InputDark w-full"
+                    />
+                  </li>
+                </ul>
                 <label>Date and Time of Wedding Reception</label>
                 <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
-                  type="text"
+                  type="date"
+                  name="dateWeddingReception"
                   value={dateWeddingReception}
+                  onChange={handleChange}
                   className="InputDark"
                 />
-                <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
-                  type="text"
-                  value={startingTimeReception}
-                  className="InputDark"
-                />
-                <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
-                  type="text"
-                  value={endingTimeReception}
-                  className="InputDark"
-                />
+                <ul className="flex flex-row gap-6">
+                  <li className="basis-1/2">
+                    <span>Start</span>
+                    <input
+                      type="time"
+                      name="startingTimeReception"
+                      value={startingTimeReception}
+                      onChange={handleChange}
+                      className="InputDark w-full"
+                    />
+                  </li>
+                  <li className="basis-1/2">
+                    <span>End</span>
+                    <input
+                      type="time"
+                      name="endingTimeReception"
+                      value={endingTimeReception}
+                      onChange={handleChange}
+                      className="InputDark w-full"
+                    />
+                  </li>
+                </ul>
               </div>
               <div className="md:basis-1/2 flex flex-col">
                 <label className="mb-1">Address</label>
                 <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
                   type="address"
+                  name="address"
                   value={address}
+                  onChange={handleChange}
                   className="InputDark"
                 />
                 <label>Message</label>
                 <input
-                  onChange={(e) => {
-                    setFormState(e.target.value);
-                  }}
                   type="textarea"
+                  name="message"
                   value={message}
+                  onChange={handleChange}
                   className="InputDark h-48 mb-8"
                 />
                 <ul className="w-10/12 mx-auto md:flex">

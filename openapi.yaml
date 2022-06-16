@@ -1,19 +1,43 @@
 swagger: '2.0'
 info:
-  description: "This is Juno's open api specification."
+  description: "This is Juno's serverless API list"
   version: '1.0.0'
   title: 'Swagger Juno'
-host: 'juno.swagger.io'
-basePath: '/v2'
+host: z8feue8naf.execute-api.us-east-1.amazonaws.com
+basePath: /prod
+schemes:
+  - 'https'
 tags:
   - name: 'user'
   - name: 'event'
   - name: 'guests'
-
-schemes:
-  - 'https'
-  - 'http'
+  - name: 'authentication'
 paths:
+  /verify:
+    post:
+      tags:
+        - 'authentication'
+      summary: 'Checks if the token is verified'
+      description: 'This endpoint is to check if the token is verified'
+      operationId: 'verifyToken'
+      produces:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Token'
+          required: true
+          schema:
+            $ref: '#/definitions/TokenRequest'
+      responses:
+        '200':
+          description: 'Successful operation'
+          schema:
+            $ref: '#/definitions/TokenResponse'
+        '400':
+          description: 'Invalid request'
+        '404':
+          description: 'User not found'
   /user/login:
     post:
       tags:
@@ -87,7 +111,34 @@ paths:
           description: 'Invalid request'
         '404':
           description: 'User not found'
-  /user/{userId}/edit:
+  /user/event/{eventId}:
+    post:
+      tags:
+        - 'user'
+      summary: "Creates a user's reponse"
+      description: 'This endpoint is for users to create response if he/she is attending or not'
+      operationId: 'createGuestResponse'
+      produces:
+        - 'application/json'
+      parameters:
+        - name: 'eventId'
+          in: 'path'
+          type: 'string'
+          required: true
+        - name: 'body'
+          in: 'body'
+          description: "User's response to the invitation"
+          required: true
+          schema:
+            $ref: '#/definitions/UserRsvpResponse'
+      responses:
+        '204':
+          description: 'Successfully sent the response'
+        '400':
+          description: 'Invalid request'
+        '404':
+          description: 'User not found'
+  /user/edit/{userId}:
     patch:
       tags:
         - 'user'
@@ -114,7 +165,7 @@ paths:
           description: 'Invalid request'
         '500':
           description: 'Internal server error'
-  /event/:userId:
+  /event/new/{userId}:
     post:
       tags:
         - 'event'
@@ -124,6 +175,10 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'userId'
+          in: 'path'
+          type: 'string'
+          required: true
         - in: 'body'
           name: 'body'
           description: 'Created event object'
@@ -132,7 +187,9 @@ paths:
             $ref: '#/definitions/EventMetadata'
       responses:
         '200':
-          description: 'Successful operation'
+          description: 'Successfull operation'
+          schema:
+            $ref: '#/definitions/EventId'
         '400':
           description: 'Invalid request'
         '500':
@@ -160,7 +217,7 @@ paths:
           description: 'Invalid request'
         '404':
           description: 'Event not found'
-  /event/{eventId}/edit:
+  /event/edit/{eventId}:
     patch:
       tags:
         - 'event'
@@ -187,7 +244,7 @@ paths:
           description: 'Invalid request'
         '500':
           description: 'Internal server error'
-  /event/{eventId}/user:
+  /event/guests/{eventId}:
     get:
       tags:
         - 'guests'
@@ -255,6 +312,15 @@ definitions:
       password:
         type: 'string'
         example: 'password'
+      isAdmin:
+        type: 'boolean'
+        example: true
+      message:
+        type: 'string'
+        example: ''
+      allergy:
+        type: 'string'
+        example: ''
   UserSignupResponse:
     type: 'object'
     properties:
@@ -263,15 +329,19 @@ definitions:
         example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
         description: 'A unique user id'
   UserId:
-    type: 'string'
-    format: uuid
-    example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+    type: 'object'
     description: 'A unique user id'
+    properties:
+      userId:
+        format: uuid
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
   EventId:
-    type: 'string'
-    format: uuid
-    example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+    type: 'object'
     description: 'A unique event id'
+    properties:
+      eventId:
+        format: uuid
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
   UserMetadata:
     type: 'object'
     properties:
@@ -280,7 +350,7 @@ definitions:
         example: 'user'
       SK:
         type: 'string'
-        example: 'user#5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
       firstName:
         type: 'string'
         example: 'Ayaka'
@@ -406,7 +476,31 @@ definitions:
       endingTimeReception:
         type: 'string'
         example: '15:00'
+  UserRsvpResponse:
+    type: 'object'
+    properties:
+      userId:
+        type: 'string'
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+      isAttending:
+        type: 'boolean'
+        example: true
   UsersArray:
     type: 'array'
     items:
       $ref: '#/definitions/UserMetadata'
+  TokenRequest:
+    type: 'object'
+    properties:
+      token:
+        type: 'string'
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImF5YWthQHRlc3QuY29tIiwicGFzc3dvcmQiOiJheWFrYXlhc3VkYSIsImlhdCI6MTY1NTI0Nzk4NywiZXhwIjoxNjU1MjUxNTg3fQ.CBXJ_90n0F6SJuzlhqf48A1cl-keuCsAUx9uj61iCqE'
+  TokenResponse:
+    type: 'object'
+    properties:
+      verified:
+        type: 'boolean'
+        example: false
+      message:
+        type: 'string'
+        example: 'Invalid token'

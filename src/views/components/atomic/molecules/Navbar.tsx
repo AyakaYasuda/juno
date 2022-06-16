@@ -1,16 +1,7 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
-  const logoutHandler = async (e: SyntheticEvent) => {
-    e.preventDefault();
-
-    await fetch('', {
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-    });
-  };
-
   return (
     <header>
       <nav className="NavBase text-Pink-default">
@@ -19,9 +10,7 @@ function Navbar() {
         </Link>
         <ul className="flex">
           <li className="mr-4 Hover">
-            <Link to="/admin/event" onClick={logoutHandler}>
-              Events
-            </Link>
+            <Link to="/admin/event">Events</Link>
           </li>
           <li className="Hover">Logout</li>
         </ul>
