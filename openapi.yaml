@@ -351,6 +351,12 @@ definitions:
       SK:
         type: 'string'
         example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+      userId:
+        type: 'string'
+        example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
+      eventId:
+        type: 'string'
+        example: '4640391b-06a0-48ad-9295-30258b757b05'
       firstName:
         type: 'string'
         example: 'Ayaka'
@@ -362,7 +368,7 @@ definitions:
         example: 'ayaka@test.com'
       password:
         type: 'string'
-        example: 'password'
+        example: '$2a$10$.OZMOC34gSYxAVZDzUzGc.Yb3WfsVJ4eKv..2mNhuNAwwOWU4Uu4S'
       isAdmin:
         type: 'boolean'
         example: true
@@ -421,7 +427,7 @@ definitions:
     properties:
       SK:
         type: 'string'
-        example: event#1
+        example: '4640391b-06a0-48ad-9295-30258b757b05'
       bride:
         type: 'string'
         example: 'Rachel Greene'
