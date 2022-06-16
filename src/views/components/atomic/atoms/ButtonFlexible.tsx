@@ -4,12 +4,19 @@ type Props = {
   styleButton: string;
   children?: React.ReactNode;
   typeButton: 'submit' | 'reset' | 'button';
+  onClickButton: (params: any) => any;
 };
 
-const Button: React.FC<Props> = ({ children, styleButton, typeButton }) => {
+const ButtonFlexible: React.FC<Props> = ({
+  children,
+  styleButton,
+  typeButton,
+  onClickButton,
+}) => {
   return (
     <button
       type={typeButton}
+      onClick={onClickButton}
       className={`rounded-3xl py-2 px-6 ${styleButton}`}
     >
       {children}
@@ -17,4 +24,4 @@ const Button: React.FC<Props> = ({ children, styleButton, typeButton }) => {
   );
 };
 
-export default Button;
+export default ButtonFlexible;

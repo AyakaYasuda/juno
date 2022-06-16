@@ -10,7 +10,6 @@ import GuestInvitation from 'views/pages/Guest/GuestInvitation';
 import GuestLogin from 'views/pages/Guest/GuestLogin';
 import GuestMyPage from 'views/pages/Guest/GuestMyPage';
 import GuestEdit from 'views/pages/Guest/GuestEdit';
-import { FetchData } from 'RTK/features/fetchData/FetchData';
 
 const App = () => {
   return (
@@ -28,7 +27,6 @@ const App = () => {
         <Route path="/guests/login" element={<GuestLogin />} />
         <Route path="/guests/mypage" element={<GuestMyPage />} />
         <Route path="/guests/edit" element={<GuestEdit />} />
-        <Route path="/" element={<FetchData />} />
       </Routes>
     </BrowserRouter>
   );

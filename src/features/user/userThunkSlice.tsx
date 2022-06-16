@@ -22,12 +22,20 @@ interface SignupForm {
 export interface IUser {
   firstName: string;
   lastName: string;
-  email: string;
-  password: string;
-  isAdmin: boolean;
   message: string;
   allergy: string;
   isAttending: boolean;
+  isAdmin: boolean;
+}
+interface SignupFormGuest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  allergy: string;
+  isAttending: boolean;
+  message: string;
+  isAdmin: boolean;
 }
 export interface UserState {
   user:
@@ -41,6 +49,8 @@ export interface UserState {
         allergy: string;
         isAttending: boolean;
       }[]
+    //FIXME: fix type
+    | any
     | null;
   userId: string;
   status: 'pending' | 'loading' | 'failed';
@@ -80,6 +90,20 @@ export const login = createAsyncThunk(
 export const signup = createAsyncThunk(
   'signup',
   async (signupData: SignupForm, thunkAPI) => {
+    try {
+      const result = await axios.post(
+        `${API_URL}/signup`,
+        JSON.stringify(signupData)
+      );
+      return result.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response);
+    }
+  }
+);
+export const signupGuest = createAsyncThunk(
+  'signup',
+  async (signupData: SignupFormGuest, thunkAPI) => {
     try {
       const result = await axios.post(
         `${API_URL}/signup`,

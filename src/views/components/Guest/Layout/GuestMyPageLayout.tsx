@@ -1,6 +1,8 @@
-import React, { useState, SyntheticEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { getUser } from 'features/user/userThunkSlice';
 
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import Title from 'views/components/atomic/atoms/Title';
@@ -9,53 +11,26 @@ import FormAttendance from 'views/components/Guest/FormAttendance';
 
 const GuestMyPageLayout = () => {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [allergy, setAllergy] = useState('');
+  const dispatch = useAppDispatch();
 
-  const submitHandler = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  const DAMMY_USERID = '7eb75973-ba72-4841-b388-08a8f611501a';
 
-    // interact with the backend using fetch
-    // await fetch(
-    //   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-    //   {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       password,
-    //       isAdmin: true,
-    //       messsage: '',
-    //       allergy: '',
-    //     }),
-    //   }
-    // );
+  useEffect(() => {
+    dispatch(getUser(DAMMY_USERID));
+  }, []);
 
-    try {
-      const response = await axios.post(
-        'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user/signup',
-        JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-          message,
-          allergy,
-          isAdmin: false,
-        })
-      );
-      console.log(response);
-      navigate('/guests/login');
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    message,
+    allergy,
+    isAttending,
+  } = useAppSelector((state) => state.user.user);
+
+  const handleOnClick = () => {
+    navigate('/guests/edit');
   };
 
   return (
@@ -79,23 +54,29 @@ const GuestMyPageLayout = () => {
             <FormAttendance
               sectionTitleColor="text-white"
               sectionTitle="Your Reply"
-              classInput="InputLight"
+              classInput="InputDisabled"
               textButton="Edit your reply"
+              textButtonCancel=""
               styleButton="buttonWhite"
-              spacing="md:w-11/12"
+              styleButtonCancel="hidden"
+              spacing="md:w-large"
               firstName={firstName}
               lastName={lastName}
               message={message}
               allergy={allergy}
               email={email}
               password={password}
-              submitHandler={submitHandler}
-              onChangeFirstName={(e) => setFirstName(e.target.value)}
-              onChangeLastName={(e) => setLastName(e.target.value)}
-              onChangeEmail={(e) => setEmail(e.target.value)}
-              onChangePassword={(e) => setPassword(e.target.value)}
-              onChangeMessage={(e) => setMessage(e.target.value)}
-              onChangeAllergy={(e) => setAllergy(e.target.value)}
+              disabledInput={true}
+              disabledDesc={false}
+              submitHandler={() => null}
+              typeButton="button"
+              onClickButton={handleOnClick}
+              onChangeFirstName={() => null}
+              onChangeLastName={() => null}
+              onChangeEmail={() => null}
+              onChangePassword={() => null}
+              onChangeMessage={() => null}
+              onChangeAllergy={() => null}
             />
           </div>
         </div>
