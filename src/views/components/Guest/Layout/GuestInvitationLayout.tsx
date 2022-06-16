@@ -1,7 +1,8 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'app/hooks';
-import { signup } from 'RTK/features/auth/authSliceThunk';
+// import { signup } from 'RTK/features/auth/authSliceThunk';
+import { signupGuest } from 'features/user/userThunkSlice';
 
 import ImgFlower1 from 'views/images/invitation-flower1.png';
 import ImgFlower2 from 'views/images/invitation-flower2.png';
@@ -38,7 +39,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
 
     try {
       const result = await dispatch(
-        signup({
+        signupGuest({
           firstName,
           lastName,
           email,
@@ -49,13 +50,13 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
         })
       );
       // signup success
-      if (signup.fulfilled.match(result)) {
+      if (signupGuest.fulfilled.match(result)) {
         alert('signup successfuly!');
         navigate('/guests/login');
       }
 
       // signup failed
-      if (signup.rejected.match(result)) {
+      if (signupGuest.rejected.match(result)) {
         alert('signup failed...');
       }
     } catch (error) {

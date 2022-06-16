@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'app/hooks';
-import { login } from 'features/auth/authThunkSlice';
+import { login } from 'features/user/userThunkSlice';
 
 import Logo from 'views/components/atomic/atoms/Logo';
 import Input from 'views/components/atomic/atoms/Input';
