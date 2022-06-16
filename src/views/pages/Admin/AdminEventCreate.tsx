@@ -20,7 +20,6 @@ function AdminEventCreate() {
     endingTimeReception: '',
     address: '',
     message: '',
-    userId: '',
   });
 
   const {

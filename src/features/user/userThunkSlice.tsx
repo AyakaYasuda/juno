@@ -6,6 +6,18 @@ const API_URL =
   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user';
 
 // type definition
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
+interface SignupForm {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+}
 export interface UserState {
   user:
     | {
@@ -19,18 +31,58 @@ export interface UserState {
         isAttending: boolean;
       }[]
     | null;
-  userId: string | null;
+  userId: string;
+  status: 'pending' | 'loading' | 'failed';
+}
+
+export interface AuthState {
+  user: UserState | null;
   status: 'pending' | 'loading' | 'failed';
 }
 
 // initialize
 const initialState: UserState = {
   user: [],
-  userId: null,
+  //FIXME: fix hard code
+  userId: '3570abe1-e402-451d-9377-30c72e52e68c',
   status: 'pending',
 };
 
 //create async payload callback function
+//LOGIN
+export const login = createAsyncThunk(
+  //1st Arg: type
+  'login',
+  //2nd Arg: payloadCreator
+  async (loginData: LoginForm, { rejectWithValue }) => {
+    try {
+      const result = await axios.post(
+        `${API_URL}/login`,
+        JSON.stringify(loginData)
+      );
+      return result.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//SIGNUP
+export const signup = createAsyncThunk(
+  'signup',
+  async (signupData: SignupForm, thunkAPI) => {
+    try {
+      const result = await axios.post(
+        `${API_URL}/signup`,
+        JSON.stringify(signupData)
+      );
+      return result.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.response);
+    }
+  }
+);
+
 //GET
 export const getUser = createAsyncThunk(
   'get',
@@ -64,18 +116,29 @@ export const editUser = createAsyncThunk(
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    //FIXME: need test
+    logout(state) {
+      state = initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.pending, (state) => {
-        state.status = 'loading';
+      .addCase(login.fulfilled, (state, action) => {
+        state.status = 'pending';
+        state.user = action.payload;
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        state.status = 'pending';
+        state.user = action.payload;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.status = 'pending';
         state.user = action.payload;
       })
-      .addCase(getUser.rejected, (state) => {
+      .addCase(editUser.fulfilled, (state, action) => {
         state.status = 'pending';
+        state.user = action.payload;
       });
   },
 });
