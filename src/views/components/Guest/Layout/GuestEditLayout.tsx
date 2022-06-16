@@ -84,6 +84,7 @@ const GuestEditLayout = () => {
               password={password}
               disabledInput={false}
               disabledDesc={false}
+              isAttending={isAttending}
               onClickButton={() => console.log('edit')}
               submitHandler={submitHandler}
               typeButton="submit"
@@ -93,6 +94,7 @@ const GuestEditLayout = () => {
               onChangePassword={handleChange}
               onChangeMessage={handleChange}
               onChangeAllergy={handleChange}
+              onInputChange={handleChange}
             />
           </div>
         </div>

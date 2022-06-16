@@ -1,11 +1,16 @@
 import React from 'react';
+import classes from './Checker.module.css';
 
 type CheckerProps = {
   containerChecker: string;
-  valueChecker: string;
+  valueChecker: boolean;
   classChecker: string;
   typeChecker: string;
   labelChecker: string;
+  name: string;
+  // FIXME: add type
+  onChange: any;
+  isChecked: boolean;
 };
 
 const Checker: React.FC<CheckerProps> = ({
@@ -14,11 +19,27 @@ const Checker: React.FC<CheckerProps> = ({
   classChecker,
   typeChecker,
   labelChecker,
+  name,
+  onChange,
+  isChecked,
 }) => {
   return (
+    // FIXME: change to tailwind
     <div className={`flex ${containerChecker}`}>
-      <input type={typeChecker} value={valueChecker} className={classChecker} />
-      <label className="mb-1 text-Yellow-dark">{labelChecker}</label>
+      <label
+        className={`mb-1 pl-2 text-Yellow-dark  ${classes['label']} ${
+          isChecked && classes['checked']
+        }`}
+      >
+        <input
+          type={typeChecker}
+          value={String(valueChecker)}
+          className={classChecker}
+          name={name}
+          onChange={onChange}
+        />
+        {labelChecker}
+      </label>
     </div>
   );
 };
