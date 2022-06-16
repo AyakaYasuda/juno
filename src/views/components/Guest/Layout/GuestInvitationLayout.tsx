@@ -25,9 +25,18 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
     password: '',
     message: '',
     allergy: '',
+    isAttending: false,
   });
 
-  const { firstName, lastName, email, password, message, allergy } = formState;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    message,
+    allergy,
+    isAttending,
+  } = formState;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -45,6 +54,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
           password,
           message,
           allergy,
+          isAttending,
           isAdmin: false,
         })
       );

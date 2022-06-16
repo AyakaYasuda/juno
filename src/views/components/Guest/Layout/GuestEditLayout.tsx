@@ -1,6 +1,5 @@
-import React, { useState, useEffect, SyntheticEvent } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { getUser } from 'features/user/userThunkSlice';
@@ -14,10 +13,8 @@ const GuestEditLayout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const DAMMY_USERID = '61c71824-2445-4127-965c-aa8f5ae4fabe';
-
   useEffect(() => {
-    dispatch(getUser(DAMMY_USERID));
+    dispatch(getUser());
   }, []);
 
   const {

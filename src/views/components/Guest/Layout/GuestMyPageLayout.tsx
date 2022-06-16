@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { getUser } from 'features/user/userThunkSlice';
@@ -13,10 +13,8 @@ const GuestMyPageLayout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const DAMMY_USERID = '7eb75973-ba72-4841-b388-08a8f611501a';
-
   useEffect(() => {
-    dispatch(getUser(DAMMY_USERID));
+    dispatch(getUser());
   }, []);
 
   const {
