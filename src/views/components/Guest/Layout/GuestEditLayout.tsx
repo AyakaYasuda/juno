@@ -72,6 +72,8 @@ const GuestEditLayout = () => {
               allergy={allergy}
               email={email}
               password={password}
+              disabledInput={false}
+              disabledDesc={false}
               submitHandler={submitHandler}
               onChangeFirstName={() => null}
               onChangeLastName={() => null}

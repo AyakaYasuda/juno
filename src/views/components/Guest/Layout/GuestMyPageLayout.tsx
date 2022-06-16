@@ -14,22 +14,7 @@ const GuestMyPageLayout = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  // const [formState, setFormState] = useState({
-  //   firstName: '',
-  //   lastName: '',
-  //   email: '',
-  //   password: '',
-  //   message: '',
-  //   allergy: '',
-  // });
-
-  // const { firstName, lastName, email, password, message, allergy } = formState;
-
   const DAMMY_USERID = '61c71824-2445-4127-965c-aa8f5ae4fabe';
-
-  // const handleSetUser = () => {
-  //   // setFormState
-  // };
 
   useEffect(() => {
     dispatch(getUser(DAMMY_USERID));
@@ -66,7 +51,7 @@ const GuestMyPageLayout = () => {
             <FormAttendance
               sectionTitleColor="text-white"
               sectionTitle="Your Reply"
-              classInput="InputLight"
+              classInput="InputDisabled"
               textButton="Edit your reply"
               styleButton="buttonWhite"
               spacing="md:w-11/12"
@@ -76,6 +61,8 @@ const GuestMyPageLayout = () => {
               allergy={allergy}
               email={email}
               password={password}
+              disabledInput={true}
+              disabledDesc={false}
               submitHandler={() => null}
               onChangeFirstName={() => null}
               onChangeLastName={() => null}

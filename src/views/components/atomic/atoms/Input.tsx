@@ -7,6 +7,7 @@ type InputProps = {
   labelName: string;
   labelColor: string;
   inputName: string;
+  disabledInput: boolean;
   onChangeHandler: (params: any) => any;
 };
 
@@ -17,6 +18,7 @@ const Input: React.FC<InputProps> = ({
   labelName,
   labelColor,
   inputName,
+  disabledInput,
   onChangeHandler,
 }) => {
   return (
@@ -28,6 +30,7 @@ const Input: React.FC<InputProps> = ({
         value={valueInput}
         onChange={onChangeHandler}
         className={classInput}
+        disabled={disabledInput}
       />
     </div>
   );

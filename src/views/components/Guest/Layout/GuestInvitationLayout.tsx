@@ -108,6 +108,8 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 allergy={allergy}
                 email={email}
                 password={password}
+                disabledInput={false}
+                disabledDesc={false}
                 submitHandler={submitHandler}
                 onChangeFirstName={handleChange}
                 onChangeLastName={handleChange}

@@ -7,6 +7,7 @@ type DescProps = {
   nameDesc: string;
   rowsDesc: number | undefined;
   valueDesc: string;
+  disabledDesc: boolean;
   onChangeHandler: (params: any) => any;
 };
 
@@ -17,6 +18,7 @@ const Desc: React.FC<DescProps> = ({
   nameDesc,
   rowsDesc,
   valueDesc,
+  disabledDesc,
   onChangeHandler,
 }) => {
   return (
@@ -29,6 +31,7 @@ const Desc: React.FC<DescProps> = ({
         rows={rowsDesc}
         cols={45}
         value={valueDesc}
+        disabled={disabledDesc}
       />
     </div>
   );

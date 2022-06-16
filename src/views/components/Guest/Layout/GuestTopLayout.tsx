@@ -70,6 +70,7 @@ const GuestTopLayout = () => {
               labelName="Email"
               inputName="email"
               labelColor="text-White-light"
+              disabledInput={false}
               onChangeHandler={handleChange}
             />
             <Input
@@ -79,6 +80,7 @@ const GuestTopLayout = () => {
               labelName="Password"
               inputName="password"
               labelColor="text-White-light"
+              disabledInput={false}
               onChangeHandler={handleChange}
             />
             <div className="FlexJustify md:flex md:justify-start md: mt-6">
