@@ -42,6 +42,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   allergy,
   email,
   password,
+  isAttend,
   submitHandler,
   onChangeFirstName,
   onChangeLastName,
@@ -83,19 +84,21 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               labelChecker="accepts with pleasure"
               valueChecker={true}
               containerChecker="gap-1 items-center"
-              classChecker=""
+              classChecker="hidden mr-1"
               typeChecker="radio"
               name="isAttend"
               onChange={onInputChange}
+              isChecked={isAttend}
             />
             <Checker
               labelChecker="declines with regret"
               valueChecker={false}
               containerChecker="gap-1 items-center"
-              classChecker=""
+              classChecker="hidden mr-1"
               typeChecker="radio"
               name="isAttend"
               onChange={onInputChange}
+              isChecked={!isAttend}
             />
           </div>
           <div className="flex flex-col items-center md:items-start">
