@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { signupAction } from 'RTK/features/auth/authSliceThunk';
+import { useAppDispatch } from 'app/hooks';
+import { signup } from 'RTK/features/auth/authSliceThunk';
 
 import ImgFlower1 from 'views/images/invitation-flower1.png';
 import ImgFlower2 from 'views/images/invitation-flower2.png';
@@ -16,6 +16,8 @@ type GuestInvitationLayoutProps = {
 
 const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const [formState, setFormState] = useState({
     firstName: '',
     lastName: '',
@@ -29,18 +31,14 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    console.log(e.target.value);
   };
-
-  const dispatch = useAppDispatch();
-  const loadingStatus = useAppSelector((state) => state.auth.status);
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     try {
       const result = await dispatch(
-        signupAction({
+        signup({
           firstName,
           lastName,
           email,
@@ -51,13 +49,13 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
         })
       );
       // signup success
-      if (signupAction.fulfilled.match(result)) {
+      if (signup.fulfilled.match(result)) {
         alert('signup successfuly!');
         navigate('/guests/login');
       }
 
       // signup failed
-      if (signupAction.rejected.match(result)) {
+      if (signup.rejected.match(result)) {
         alert('signup failed...');
       }
     } catch (error) {
