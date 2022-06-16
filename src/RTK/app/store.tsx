@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import fetchDataReducer from 'OLD_RTK/features/fetchData/fetchDataSlice';
+import fetchDataReducer from 'RTK/features/fetchData/fetchDataSlice';
 
 export const store = configureStore({
   reducer: {

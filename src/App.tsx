@@ -10,7 +10,7 @@ import GuestInvitation from 'views/pages/Guest/GuestInvitation';
 import GuestLogin from 'views/pages/Guest/GuestLogin';
 import GuestMyPage from 'views/pages/Guest/GuestMyPage';
 import GuestEdit from 'views/pages/Guest/GuestEdit';
-import { FetchData } from 'OLD_RTK/features/fetchData/FetchData';
+import { FetchData } from 'RTK/features/fetchData/FetchData';
 
 const App = () => {
   return (
