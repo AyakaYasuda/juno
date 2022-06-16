@@ -98,13 +98,7 @@ const GuestMyPageLayout = () => {
               onChangePassword={(e) => setPassword(e.target.value)}
               onChangeMessage={(e) => setMessage(e.target.value)}
               onChangeAllergy={(e) => setAllergy(e.target.value)}
-              onInputChange={(e) => {
-                console.log('GuestMyPageLayout');
-
-                console.log(e.target.value);
-
-                setIsAttendance(e.target.value);
-              }}
+              onInputChange={(e) => setIsAttendance(e.target.value)}
             />
           </div>
         </div>
