@@ -31,8 +31,8 @@ const GuestEditLayout = () => {
   } = useAppSelector((state) => state.user.user);
 
   // const [formState, setFormState] = useState({
-  //   firstName: '',
-  //   lastName: '',
+  //   firstName: firstName,
+  //   lastName: lastName,
   //   email: '',
   //   password: '',
   //   message: '',
@@ -40,6 +40,11 @@ const GuestEditLayout = () => {
   // });
 
   // const { firstName, lastName, email, password, message, allergy } = formState;
+
+  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // };
+  const handleChange = () => {};
 
   const handleOnClick = () => {
     navigate('/guests/edit');
@@ -85,12 +90,12 @@ const GuestEditLayout = () => {
               onClickButton={() => console.log('edit')}
               submitHandler={submitHandler}
               typeButton="submit"
-              onChangeFirstName={() => null}
-              onChangeLastName={() => null}
-              onChangeEmail={() => null}
-              onChangePassword={() => null}
-              onChangeMessage={() => null}
-              onChangeAllergy={() => null}
+              onChangeFirstName={handleChange}
+              onChangeLastName={handleChange}
+              onChangeEmail={handleChange}
+              onChangePassword={handleChange}
+              onChangeMessage={handleChange}
+              onChangeAllergy={handleChange}
             />
           </div>
         </div>
