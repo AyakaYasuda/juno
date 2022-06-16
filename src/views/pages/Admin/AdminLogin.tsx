@@ -28,6 +28,8 @@ function AdminLogin() {
         password,
       })
     );
+    console.log(result);
+
     // login success
     if (login.fulfilled.match(result)) {
       alert('login successfuly!');

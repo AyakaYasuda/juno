@@ -1,18 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import authReducer from '../features/auth/authThunkSlice';
 import userReducer from '../features/user/userThunkSlice';
-// import { authApi } from 'app/services/authApi';
-// import authReducer from '../features/auth/authSlice';
+import eventReducer from '../features/event/eventThunkSlice';
 
 export const store = configureStore({
   reducer: {
-    // [authApi.reducerPath]: authApi.reducer,
     auth: authReducer,
     user: userReducer,
+    event: eventReducer,
   },
-  // middleware: (getDefaultMiddleware) => {
-  //   return getDefaultMiddleware().concat(authApi.middleware);
-  // },
 });
 
 export type AppDispatch = typeof store.dispatch;
