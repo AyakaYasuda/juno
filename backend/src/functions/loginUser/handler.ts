@@ -25,7 +25,7 @@ const loginUser = async (
     const token = await authServices.generateToken(email, password);
 
     return formatJSONResponse(200, {
-      user: { email, password },
+      userId: existingUser.SK,
       token,
     });
   } catch (err) {
