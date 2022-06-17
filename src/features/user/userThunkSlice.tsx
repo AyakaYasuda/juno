@@ -4,6 +4,7 @@ import axios from 'axios';
 import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
 
+// FIXME: high
 const API_URL =
   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user';
 
