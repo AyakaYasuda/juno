@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
-function Navbar() {
+type NavbarProps = {
+  bgColor: string;
+  link: JSX.Element;
+};
+
+const Navbar: React.FC<NavbarProps> = ({ bgColor, link }) => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
 
@@ -12,15 +17,12 @@ function Navbar() {
 
   return (
     <header>
-      <nav className="NavBase text-Pink-default">
+      <nav className={`NavBase text-${bgColor}`}>
         <Link to="/admin" className="Hover font-allura text-5xl">
           Juno
         </Link>
         <ul className="flex">
-          <li className="mr-4 Hover">
-            <Link to="/admin/event">Events</Link>
-          </li>
-          {/* FIXME: add logout function related with state from redux */}
+          {link}
           <button onClick={logoutHandler} className="Hover">
             Logout
           </button>
@@ -28,6 +30,6 @@ function Navbar() {
       </nav>
     </header>
   );
-}
+};
 
 export default Navbar;

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import Button from '../atoms/Button';
 import Navbar from '../molecules/Navbar';
 import Card from '../atoms/Card';
@@ -38,7 +40,14 @@ const EventLayout: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <Navbar />
+      <Navbar
+        bgColor="Pink-default"
+        link={
+          <li className="mr-4 Hover">
+            <Link to="/admin/event">Events</Link>
+          </li>
+        }
+      />
       <section className="w-full py-28 md:py-0 FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default md:h-screen relative text-Pink-default">
         <h2 className="mb-2">{title}</h2>
         <div className="w-4/5">
