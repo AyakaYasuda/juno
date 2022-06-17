@@ -35,7 +35,7 @@ const AdminEventManage = () => {
     if (userId) {
       dispatch(getEvent(userId));
     }
-  }, [userId, dispatch]);
+  }, [userId]);
 
   useEffect(() => {
     setIsLoading(false);
