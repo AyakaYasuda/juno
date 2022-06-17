@@ -20,8 +20,3 @@ https://www.figma.com/file/Sb5vgi5eEE9EXVuRleAsXV/Juno-%7C-wedding-invitations-a
 
 https://docs.google.com/spreadsheets/d/13lJVVymEJm4OG1xeolZC-lmpDIPWcIxK6aymxOHCvak/edit?usp=sharing
 
-## Test Data
-- userId
-  - aaabbbccc
-- eventId
-   - aaabbbccc
