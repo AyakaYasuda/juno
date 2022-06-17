@@ -8,4 +8,5 @@ export interface IUser {
   isAdmin: boolean;
   message: string;
   allergy: string;
+  isAttending: boolean;
 }

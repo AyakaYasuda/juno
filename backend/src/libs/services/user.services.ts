@@ -38,6 +38,16 @@ class UserServices {
     userId: string,
     userNotExistErrorMessage: string
   ) {
+    const data = await this.userModel.getUserByUserId(userId);
+
+    if (Object.keys(data).length === 0) {
+      throw new HttpError(404, userNotExistErrorMessage);
+    }
+
+    return data;
+  }
+
+  public async getUserData(userId: string) {
     const userData = await this.userModel.getUserByUserId(userId);
 
     const guestAttendanceData = await this.userModel.getGuestAttendanceData(
@@ -48,7 +58,7 @@ class UserServices {
       throw new HttpError(404, 'User not found');
     }
 
-    let data = {};
+    let data: IUser;
     if (guestAttendanceData.Items.length === 0) {
       data = {
         ...userData,
@@ -58,13 +68,9 @@ class UserServices {
     data = {
       ...userData,
       userId: userData.SK,
-      eventId: guestAttendanceData.SK,
-      isAttending: guestAttendanceData.isAttending,
+      eventId: guestAttendanceData.Items[0].SK,
+      isAttending: guestAttendanceData.Items[0].isAttending,
     };
-
-    if (Object.keys(data).length === 0) {
-      throw new HttpError(404, userNotExistErrorMessage);
-    }
 
     return data;
   }
@@ -93,7 +99,7 @@ class UserServices {
     const existingUser = await this.userModel.getUserByEmail(email);
 
     if (existingUser.Items.length === 0) {
-      throw new HttpError(500, 'User does not exist');
+      throw new HttpError(404, 'User does not exist');
     }
 
     return existingUser.Items[0];
@@ -125,7 +131,6 @@ class UserServices {
 
     // 2) create a new array of user metadata (obj)
     const usersList = await this.getUsers(userIdArray);
-    console.log('getGuestsByEventId usersList', usersList);
 
     // 3) pick up the user who is NOT admin and create an array of guests
     const guestsArray = this.getGuestsFromUsersList(usersList);
@@ -148,7 +153,7 @@ class UserServices {
   private async getUsers(userIdList: string[]) {
     let usersList: Array<IUser> = [];
     for (const userId of userIdList) {
-      const guestResponseData = await this.userModel.getUserByUserId(userId);
+      const guestResponseData = await this.getUserData(userId);
 
       if (Object.keys(guestResponseData).length === 0) {
         throw new HttpError(
