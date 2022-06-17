@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { getEvent, getGuests } from 'features/event/eventThunkSlice';
@@ -35,7 +35,7 @@ const AdminEventManage = () => {
     if (userId) {
       dispatch(getEvent(userId));
     }
-  }, [userId]);
+  }, [userId, dispatch]);
 
   useEffect(() => {
     setIsLoading(false);
@@ -62,7 +62,6 @@ const AdminEventManage = () => {
   const showModalHandler = (userId: string) => {
     setShowModal(true);
     setGuestUserId(userId);
-    console.log('guestUserId', guestUserId);
   };
 
   const closeModalHandler = () => {

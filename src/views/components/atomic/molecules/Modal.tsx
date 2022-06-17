@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { getUser } from 'features/user/userThunkSlice';
 
@@ -14,8 +13,6 @@ type ModalProps = {
 const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
-
-  console.log('user', user);
 
   useEffect(() => {
     if (guestUserId) {

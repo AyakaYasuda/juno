@@ -1,4 +1,4 @@
-import { IEvent, IEventRequest, IEventState } from 'types/EventData.type';
+import { IEventRequest, IEventState } from 'types/EventData.type';
 
 // try to use createAsyncThunk
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
