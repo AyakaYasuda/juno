@@ -1,14 +1,17 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import SessionServices from 'services/session.services';
+
+import { SessionKeys } from 'constants/sessionKeys';
+import { getUser } from 'features/user/userThunkSlice';
+
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
-import Title from 'views/components/atomic/atoms/Title';
 import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo/index';
 import FormAttendance from 'views/components/Guest/FormAttendance';
-import { useEffect } from 'react';
-import { getUser } from 'features/user/userThunkSlice';
-import SessionServices from 'services/session.services';
-import { SessionKeys } from 'constants/sessionKeys';
+import Title from 'views/components/atomic/atoms/Title';
+import Navbar from 'views/components/atomic/molecules/Navbar';
 
 const GuestMyPageLayout = () => {
   const navigate = useNavigate();
@@ -36,15 +39,11 @@ const GuestMyPageLayout = () => {
     }
   }, [dispatch]);
 
+  // Yellow-dark
   return (
     <GuestBaseLayout>
+      <Navbar bgColor="Yellow-dark" link={<></>} redirectPath="/guests/login" />
       <div className="flex flex-col w-screen h-full md:h-screen mb-8">
-        <div className="flex justify-between">
-          <Title classTitle="" textColor="text-Yellow-dark">
-            Juno
-          </Title>
-          <button className="text-Yellow-dark">Logout</button>
-        </div>
         <div className="flex flex-col md:flex-row md:justify-center md:items-center md:h-screen">
           <div className="flex flex-col items-center">
             <Title classTitle="" textColor="text-white">

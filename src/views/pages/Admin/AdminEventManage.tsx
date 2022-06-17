@@ -63,7 +63,15 @@ const AdminEventManage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar
+        bgColor="Pink-default"
+        link={
+          <li className="mr-4 Hover">
+            <Link to="/admin/event">Events</Link>
+          </li>
+        }
+        redirectPath="/admin/login"
+      />
       {showModal && (
         <Modal closeHandler={closeModalHandler} guestUserId={guestUserId} />
       )}

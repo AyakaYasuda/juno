@@ -11,6 +11,10 @@ class SessionServices {
   public static setItem(key: SessionKeys, value: any) {
     localStorage.setItem(key, value);
   }
+
+  public static removeItem(key: SessionKeys) {
+    localStorage.removeItem(key);
+  }
 }
 
 export default SessionServices;
