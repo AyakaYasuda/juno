@@ -1,6 +1,7 @@
 import React from 'react';
 
 type InputProps = {
+  type: string;
   containerInput: string;
   valueInput: string;
   classInput: string;
@@ -12,6 +13,7 @@ type InputProps = {
 };
 
 const Input: React.FC<InputProps> = ({
+  type,
   containerInput,
   valueInput,
   classInput,
@@ -25,7 +27,7 @@ const Input: React.FC<InputProps> = ({
     <div className={`flex flex-col ${containerInput}`}>
       <label className={`mb-1 ${labelColor}`}>{labelName}</label>
       <input
-        type="text"
+        type={type}
         name={inputName}
         value={valueInput}
         onChange={onChangeHandler}

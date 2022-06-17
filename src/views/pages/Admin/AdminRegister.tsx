@@ -18,7 +18,6 @@ const AdminRegister = () => {
   });
   const { firstName, lastName, email, password } = formState;
 
-  const userId = useAppSelector((state) => state.user);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -36,11 +35,9 @@ const AdminRegister = () => {
       })
     );
 
-    console.log(result);
-
     // signup success
     if (signup.fulfilled.match(result)) {
-      alert('signup successfuly!');
+      alert('signup successfully!');
       navigate('/admin/login');
     }
 

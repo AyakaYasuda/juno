@@ -8,7 +8,7 @@ import EventLayout from 'views/components/atomic/templates/EventLayout';
 const AdminEventEdit = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { userId } = useAppSelector((state) => state.user.user);
+  const { SK: userId } = useAppSelector((state) => state.user.user);
   const { event } = useAppSelector((state) => state.event);
 
   const initialFormState = {
