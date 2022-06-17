@@ -1,7 +1,7 @@
 // FIXME: check and search best practice
 // https://stackoverflow.com/questions/42420531/what-is-the-best-way-to-manage-a-users-session-in-react
 
-import { SessionKeys } from 'constants/sessionKeys';
+import { SessionKeys } from '../constants/sessionKeys';
 
 class SessionServices {
   public static getItem(key: SessionKeys) {

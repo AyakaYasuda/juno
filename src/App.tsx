@@ -14,8 +14,22 @@ import GuestInvitation from 'views/pages/Guest/GuestInvitation';
 import GuestLogin from 'views/pages/Guest/GuestLogin';
 import GuestMyPage from 'views/pages/Guest/GuestMyPage';
 import GuestEdit from 'views/pages/Guest/GuestEdit';
+import { useEffect, useState } from 'react';
+import { useAppDispatch } from 'app/hooks';
+import { getUser } from 'features/user/userThunkSlice';
+import SessionServices from 'services/session.services';
+import { SessionKeys } from 'constants/sessionKeys';
 
 const App = () => {
+  const dispatch = useAppDispatch();
+  const [userId] = useState(SessionServices.getItem(SessionKeys.USER_ID));
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(getUser(userId));
+    }
+  }, [dispatch, userId]);
+
   return (
     <Router>
       <Routes>
