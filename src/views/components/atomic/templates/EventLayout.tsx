@@ -16,7 +16,7 @@ type Props = {
   address: string;
   message: string;
   handleChange: any;
-  submitHandler: any;
+  handleSubmit: any;
   ctaTxt: string;
 };
 
@@ -33,7 +33,7 @@ const EventLayout: React.FC<Props> = ({
   address,
   message,
   handleChange,
-  submitHandler,
+  handleSubmit,
   ctaTxt,
 }) => {
   return (
@@ -44,7 +44,7 @@ const EventLayout: React.FC<Props> = ({
         <div className="w-4/5">
           <Card>
             <form
-              onSubmit={submitHandler}
+              onSubmit={handleSubmit}
               className="flex flex-col md:flex-row p-4 md:gap-6"
             >
               <div className="md:basis-1/2 flex flex-col">

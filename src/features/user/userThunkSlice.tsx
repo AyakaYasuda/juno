@@ -34,7 +34,6 @@ const initialState: IUserState = {
     allergy: '',
     isAttending: true,
   },
-  userId: '',
   status: 'pending',
 };
 
@@ -155,15 +154,9 @@ export const userSlice = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.status = 'pending';
-        console.log('login extraReducers action.payload', action.payload);
-
-        // FIXME: add user info to state
-        // state.user = action.payload.user;
-        state.userId = action.payload.userId;
       })
       .addCase(signup.fulfilled, (state, action) => {
         state.status = 'pending';
-        state.userId = action.payload.userId;
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.status = 'pending';

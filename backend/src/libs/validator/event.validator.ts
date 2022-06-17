@@ -27,12 +27,17 @@ class EventValidator {
 
   public validateEventUpdateReqBody(reqBody: UpdateEventReqBody) {
     const eventSchema = yup.object().shape({
-      dateWedding: yup.string().required(),
-      startingTimeWedding: yup.string().required(),
-      endingTimeWedding: yup.string().required(),
-      dateWeddingReception: yup.string().required(),
-      startingTimeReception: yup.string().required(),
-      endingTimeReception: yup.string().required(),
+      bride: yup.string(),
+      groom: yup.string(),
+      dateWedding: yup.string(),
+      startingTimeWedding: yup.string(),
+      endingTimeWedding: yup.string(),
+      dateWeddingReception: yup.string(),
+      startingTimeReception: yup.string(),
+      endingTimeReception: yup.string(),
+      address: yup.string().required(),
+      message: yup.string().required(),
+      isEditable: yup.boolean(),
     });
 
     this.validate(eventSchema, reqBody);
