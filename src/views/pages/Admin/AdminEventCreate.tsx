@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { createEvent } from 'features/event/eventThunkSlice';
 
+import AlreadyHaveEvent from 'views/components/atomic/templates/AlreadyHaveEvent';
 import EventLayout from 'views/components/atomic/templates/EventLayout';
+import Navbar from 'views/components/atomic/molecules/Navbar';
 
 const AdminEventCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { event } = useAppSelector((state) => state.event);
 
   const [formState, setFormState] = useState({
     bride: '',
@@ -67,7 +71,22 @@ const AdminEventCreate = () => {
     }
   };
 
-  return (
+  return event ? (
+    <>
+      <Navbar
+        bgColor="Pink-default"
+        link={
+          <li className="mr-4 Hover">
+            <Link to="/admin/event">Events</Link>
+          </li>
+        }
+        redirectPath="/admin/login"
+      />
+      <section className="w-full py-28 md:py-0 FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default md:h-screen relative text-Pink-default">
+        <AlreadyHaveEvent />
+      </section>
+    </>
+  ) : (
     <EventLayout
       title="Create invitations"
       bride={bride}
@@ -85,6 +104,6 @@ const AdminEventCreate = () => {
       ctaTxt="Create invitations"
     />
   );
-}
+};
 
 export default AdminEventCreate;

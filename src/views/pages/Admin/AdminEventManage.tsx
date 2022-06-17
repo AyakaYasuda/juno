@@ -27,7 +27,7 @@ const AdminEventManage = () => {
     if (userId) {
       dispatch(getEvent(userId));
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     setIsLoading(false);
@@ -76,7 +76,7 @@ const AdminEventManage = () => {
         <Modal closeHandler={closeModalHandler} guestUserId={guestUserId} />
       )}
       <section className="w-full h-screen FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default relative">
-        {isLoading && <div>Loading....</div>}
+        {isLoading && <h3 className="text-Pink-dark">Loading....</h3>}
         {eventData && (
           <>
             <ul className="pt-16 flex flex-row justify-center gap-14 mb-6 md:hidden">
