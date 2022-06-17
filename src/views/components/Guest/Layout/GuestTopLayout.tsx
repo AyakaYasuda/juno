@@ -8,6 +8,8 @@ import Input from 'views/components/atomic/atoms/Input';
 import ImageTop from 'views/images/guest-top.png';
 import Copyright from 'views/components/atomic/atoms/Copyright';
 import ButtonFlexible from 'views/components/atomic/atoms/ButtonFlexible';
+import SessionServices from 'services/session.services';
+import { SessionKeys } from 'constants/sessionKeys';
 
 const GuestTopLayout = () => {
   const navigate = useNavigate();
@@ -32,11 +34,15 @@ const GuestTopLayout = () => {
         password,
       })
     );
-    console.log(result);
+    console.log('login result', result);
 
     // login success
     if (login.fulfilled.match(result)) {
       alert('login successfuly!');
+
+      SessionServices.setItem(SessionKeys.TOKEN, result.payload.token);
+      SessionServices.setItem(SessionKeys.USER_ID, result.payload.userId);
+
       navigate('/guests/mypage');
     }
     // login failed
