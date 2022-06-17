@@ -162,6 +162,9 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
                 onChangeMessage={handleChange}
                 onChangeAllergy={handleChange}
                 onInputChange={handleChange}
+                onClickCancel={() => {
+                  navigate('/guests');
+                }}
               />
             </div>
           </div>

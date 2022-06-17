@@ -1,16 +1,18 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { getUser } from 'features/user/userThunkSlice';
-
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import Title from 'views/components/atomic/atoms/Title';
 import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo/index';
 import FormAttendance from 'views/components/Guest/FormAttendance';
+import { useEffect } from 'react';
+import { getUser } from 'features/user/userThunkSlice';
+import SessionServices from 'services/session.services';
+import { SessionKeys } from 'constants/sessionKeys';
 
 const GuestMyPageLayout = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const {
     firstName,
@@ -25,6 +27,14 @@ const GuestMyPageLayout = () => {
   const handleOnClick = () => {
     navigate('/guests/edit');
   };
+
+  useEffect(() => {
+    const userId = SessionServices.getItem(SessionKeys.USER_ID);
+
+    if (userId) {
+      dispatch(getUser(userId));
+    }
+  }, [dispatch]);
 
   return (
     <GuestBaseLayout>
@@ -74,6 +84,7 @@ const GuestMyPageLayout = () => {
               onChangeMessage={() => null}
               onChangeAllergy={() => null}
               onInputChange={() => null}
+              onClickCancel={() => null}
             />
           </div>
         </div>
