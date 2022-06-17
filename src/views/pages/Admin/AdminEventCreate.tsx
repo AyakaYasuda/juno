@@ -5,7 +5,7 @@ import { createEvent } from 'features/event/eventThunkSlice';
 
 import EventLayout from 'views/components/atomic/templates/EventLayout';
 
-function AdminEventCreate() {
+const AdminEventCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -38,7 +38,7 @@ function AdminEventCreate() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const submitHandler = async (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const result = await dispatch(
@@ -81,7 +81,7 @@ function AdminEventCreate() {
       address={address}
       message={message}
       handleChange={handleChange}
-      submitHandler={submitHandler}
+      handleSubmit={handleSubmit}
       ctaTxt="Create invitations"
     />
   );

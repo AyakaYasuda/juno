@@ -6,7 +6,7 @@ import { signup } from 'features/user/userThunkSlice';
 import TopLayout from 'views/components/atomic/templates/TopLayout';
 import Form from 'views/components/atomic/molecules/Form';
 
-function AdminRegister() {
+const AdminRegister = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -94,6 +94,6 @@ function AdminRegister() {
       </Form>
     </TopLayout>
   );
-}
+};
 
 export default AdminRegister;

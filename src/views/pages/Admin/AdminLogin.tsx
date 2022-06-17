@@ -5,8 +5,10 @@ import { login } from 'features/user/userThunkSlice';
 
 import Form from 'views/components/atomic/molecules/Form';
 import TopLayout from 'views/components/atomic/templates/TopLayout';
+import SessionServices from 'services/session.services';
+import { SessionKeys } from 'constants/sessionKeys';
 
-function AdminLogin() {
+const AdminLogin = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -32,7 +34,9 @@ function AdminLogin() {
 
     // login success
     if (login.fulfilled.match(result)) {
-      alert('login successfuly!');
+      alert('login successfully!');
+      SessionServices.setItem(SessionKeys.TOKEN, result.payload.token);
+      SessionServices.setItem(SessionKeys.USER_ID, result.payload.userId);
       navigate('/admin/create');
     }
     // login failed
@@ -69,6 +73,6 @@ function AdminLogin() {
       </Form>
     </TopLayout>
   );
-}
+};
 
 export default AdminLogin;

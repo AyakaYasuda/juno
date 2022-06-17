@@ -39,7 +39,6 @@ export interface IGuestSignupRequest {
 
 export interface IUserState {
   user: IUser;
-  userId: string;
   status: 'pending' | 'loading' | 'failed';
 }
 

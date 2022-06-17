@@ -29,7 +29,7 @@ export interface IEventRequest {
 }
 
 export interface IEventState {
-  event: any;
+  event: IEvent;
   guests: IUser[] | [];
   status: 'loading' | 'success' | 'failed';
 }

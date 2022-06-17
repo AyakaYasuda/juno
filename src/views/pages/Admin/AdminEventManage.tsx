@@ -14,32 +14,27 @@ const AdminEventManage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [eventData, setEventData] = useState<IEvent | null | undefined>(null);
   const [guestsData, setGuestsData] = useState<IUser[] | null>([]);
-  const [eventId, setEventId] = useState<string>('');
   const [showInfoStyle, setShowInfoStyle] = useState('w-full');
   const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
   const [showModal, setShowModal] = useState<boolean>(false);
 
-  const status = useAppSelector((state) => state.event.status);
-
-  console.log('status', status);
-
+  const { userId } = useAppSelector((state) => state.user.user);
   const { event } = useAppSelector((state) => state.event);
   const { guests } = useAppSelector((state) => state.event);
-  const { SK } = useAppSelector((state) => state.event.event);
 
   useEffect(() => {
-    dispatch(getEvent());
+    if (userId) {
+      dispatch(getEvent(userId));
+    }
   }, []);
 
   useEffect(() => {
     setIsLoading(false);
-    setEventData(event);
-    setEventId(SK);
-  }, [event]);
-
-  useEffect(() => {
-    dispatch(getGuests());
-  }, [eventId]);
+    if (event) {
+      setEventData(event);
+      dispatch(getGuests(event.SK));
+    }
+  }, [event, dispatch]);
 
   useEffect(() => {
     setGuestsData(guests);

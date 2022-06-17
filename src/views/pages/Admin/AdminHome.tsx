@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Button from 'views/components/atomic/atoms/Button';
 import TopLayout from 'views/components/atomic/templates/TopLayout';
 
-function AdminHome() {
+const AdminHome = () => {
   return (
     <TopLayout>
       <div className="mb-48 md:mb-24">
@@ -25,6 +25,6 @@ function AdminHome() {
       </ul>
     </TopLayout>
   );
-}
+};
 
 export default AdminHome;
