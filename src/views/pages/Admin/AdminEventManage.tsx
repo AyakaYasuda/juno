@@ -26,9 +26,9 @@ const AdminEventManage = () => {
   let hostName;
 
   if (process.env.NODE_ENV === 'development') {
-    hostName = process.env.REACT_APP_DEV_HOST_NAME;
+    hostName = process.env.REACT_APP_DEV_API_URL;
   } else if (process.env.NODE_ENV === 'production') {
-    hostName = process.env.REACT_APP_PROD_HOST_NAME;
+    hostName = process.env.REACT_APP_PROD_API_URL;
   }
 
   useEffect(() => {

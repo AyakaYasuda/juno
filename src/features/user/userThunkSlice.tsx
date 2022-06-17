@@ -15,7 +15,7 @@ import { IUpdateUserReqBody } from 'types/IUpdateUserReqBody.type';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
 
-const API_URL = process.env.REACT_APP_API_ENDPOINT + 'user';
+const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
 // initialize
 const initialState: IUserState = {
