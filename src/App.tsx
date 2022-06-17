@@ -41,7 +41,10 @@ const App = () => {
         <Route path="/admin/create" element={<AdminEventCreate />} />
         <Route path="/admin/edit" element={<AdminEventEdit />} />
         <Route path="/admin/event" element={<AdminEventManage />} />
-        <Route path="/guests/invitation/:eventId" element={<GuestInvitation />} />
+        <Route
+          path="/guests/invitation/:eventId"
+          element={<GuestInvitation />}
+        />
         <Route path="/guests/login" element={<GuestLogin />} />
         <Route path="/guests/mypage" element={<GuestMyPage />} />
         <Route path="/guests/edit" element={<GuestEdit />} />

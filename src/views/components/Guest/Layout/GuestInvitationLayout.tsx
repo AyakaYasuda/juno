@@ -1,6 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'app/hooks';
+import { useParams } from 'react-router';
 import {
   createAttendanceData,
   signupGuest,
@@ -17,12 +18,12 @@ type GuestInvitationLayoutProps = {
   // children: React.ReactNode;
 };
 
-// FIXME: eventId come from admin invitation url
-const eventId = 'my-sweet-test-event-id';
-
 const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const params = useParams();
+  const eventId = params.eventId!;
 
   const [formState, setFormState] = useState({
     firstName: '',
@@ -86,34 +87,36 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
       // signup success
       if (signupGuest.fulfilled.match(signUpResult)) {
         console.log('signUp successfully!');
-
-        console.log('signUpResult', signUpResult);
-        const userId = signUpResult.payload.userId;
-
-        const createAttendanceDataResult = await dispatch(
-          createAttendanceData({
-            eventId,
-            attendanceReqBody: { userId, isAttending },
-          })
-        );
-        console.log(createAttendanceDataResult);
-
-        // success
-        if (createAttendanceData.fulfilled.match(signUpResult)) {
-          alert('create attendance data successfully!');
-          navigate('/guests/login');
-        }
-
-        //  failed
-        if (createAttendanceData.rejected.match(signUpResult)) {
-          alert('create attendance data failed...');
-        }
       }
 
       // signUp failed
       if (signupGuest.rejected.match(signUpResult)) {
         alert('signup failed...');
       }
+
+      console.log('signUpResult', signUpResult);
+      const userId = signUpResult.payload.userId;
+
+      const createAttendanceDataResult = await dispatch(
+        createAttendanceData({
+          eventId,
+          attendanceReqBody: { userId, isAttending },
+        })
+      );
+      console.log('createAttendanceDataResult', createAttendanceDataResult);
+
+      // success
+      if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
+        alert('create attendance data successfully!');
+        navigate('/guests/login');
+      }
+
+      //  failed
+      if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
+        alert('create attendance data failed...');
+      }
+
+      console.log('submitHandler end');
     } catch (error) {
       console.log(error);
     }
