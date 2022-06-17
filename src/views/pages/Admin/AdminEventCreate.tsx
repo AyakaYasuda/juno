@@ -56,12 +56,12 @@ const AdminEventCreate = () => {
       })
     );
 
-    // evenetCreate success
+    // createEvent success
     if (createEvent.fulfilled.match(result)) {
-      alert('eventCreate successfuly!');
+      alert('eventCreate successfully!');
       navigate('/admin/event');
     }
-    // evenetCreate failed
+    // createEvent failed
     if (createEvent.rejected.match(result)) {
       alert('eventCreate failed...');
     }

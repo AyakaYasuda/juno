@@ -70,6 +70,7 @@ const GuestTopLayout = () => {
             className="flex flex-col text-left mb-8"
           >
             <Input
+              type="email"
               containerInput="flex flex-col items-start"
               valueInput={email}
               classInput="bg-transparent border-b border-White-light w-full md:w-2/5"
@@ -80,6 +81,7 @@ const GuestTopLayout = () => {
               onChangeHandler={handleChange}
             />
             <Input
+              type="password"
               containerInput="flex flex-col items-start"
               valueInput={password}
               classInput="bg-transparent border-b border-White-light w-full md:w-2/5"

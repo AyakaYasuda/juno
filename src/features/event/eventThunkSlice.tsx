@@ -34,7 +34,7 @@ export const createEvent = createAsyncThunk(
   async (eventData: IEventRequest, { getState, rejectWithValue }) => {
     try {
       // FIXME: fix type
-      const { userId } = (getState() as any).user;
+      const { SK: userId } = (getState() as any).user.user;
       await axios.post(`${API_URL}/new/${userId}`, JSON.stringify(eventData));
       return initialState.event;
     } catch (error: any) {
@@ -61,7 +61,6 @@ export const getGuests = createAsyncThunk(
   async (eventId: string, { rejectWithValue }) => {
     try {
       const result = await axios.get(`${API_URL}/guests/${eventId}`);
-      console.log('slice', result);
       return result.data.guests;
     } catch (error: any) {
       return rejectWithValue(error.response.data);

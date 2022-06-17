@@ -75,6 +75,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
           </Title>
           <div className="FlexCenter flex-col md:flex-row md:gap-6">
             <Input
+              type="text"
               labelName="First Name"
               inputName="firstName"
               valueInput={firstName}
@@ -85,6 +86,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               onChangeHandler={onChangeFirstName}
             />
             <Input
+              type="text"
               labelName="Last Name"
               inputName="lastName"
               valueInput={lastName}
@@ -141,6 +143,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
           </div>
           <div className="FlexCenter flex-col md:flex-row md:gap-6">
             <Input
+              type="email"
               labelName="Email"
               inputName="email"
               valueInput={email}
@@ -151,6 +154,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               onChangeHandler={onChangeEmail}
             />
             <Input
+              type="password"
               labelName="Password"
               inputName="password"
               valueInput={password}

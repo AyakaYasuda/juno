@@ -17,8 +17,9 @@ const AdminEventManage = () => {
   const [showInfoStyle, setShowInfoStyle] = useState('w-full');
   const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [guestUserId, setGuestUserId] = useState<string>('');
 
-  const { userId } = useAppSelector((state) => state.user.user);
+  const { SK: userId } = useAppSelector((state) => state.user.user);
   const { event } = useAppSelector((state) => state.event);
   const { guests } = useAppSelector((state) => state.event);
 
@@ -50,14 +51,22 @@ const AdminEventManage = () => {
     setShowInfoStyle('hidden');
   };
 
-  const showModalHandler = () => {
-    setShowModal(!showModal);
+  const showModalHandler = (userId: string) => {
+    setShowModal(true);
+    setGuestUserId(userId);
+    console.log('guestUserId', guestUserId);
+  };
+
+  const closeModalHandler = () => {
+    setShowModal(false);
   };
 
   return (
     <>
       <Navbar />
-      {showModal && <Modal closeHandler={showModalHandler} />}
+      {showModal && (
+        <Modal closeHandler={closeModalHandler} guestUserId={guestUserId} />
+      )}
       <section className="w-full h-screen FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default relative">
         {isLoading && <div>Loading....</div>}
         {eventData && (
@@ -77,7 +86,7 @@ const AdminEventManage = () => {
                   <div className="flex flex-row justify-between items-center mb-3">
                     <span className="basis-1/4">Event URL</span>
                     <p className="InputLighter basis-3/4 px-2">
-                      {eventData.SK}
+                      {`http://localhost:3000/guests/invitation/${eventData.SK}`}
                     </p>
                   </div>
                   <div className="flex flex-row justify-between items-center mb-3">
@@ -138,7 +147,7 @@ const AdminEventManage = () => {
                             </Button>
                           )}
                           <button
-                            onClick={showModalHandler}
+                            onClick={() => showModalHandler(guest.userId)}
                             className="text-Pink-dark basis-1/5"
                           >
                             Show Detail
