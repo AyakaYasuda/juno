@@ -1,7 +1,10 @@
 // // try to use createAsyncThunk
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
+import { IAttendanceData } from 'types/AttendanceData.type';
 
+// FIXME: high
 const API_URL =
   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user';
 
@@ -118,7 +121,7 @@ export const signupGuest = createAsyncThunk(
 
 //GET
 export const getUser = createAsyncThunk(
-  'get',
+  CreateAsyncThunkActions.GET_USER,
   async (_, { getState, rejectWithValue }) => {
     try {
       const { userId } = (getState() as any).user;
@@ -138,6 +141,21 @@ export const editUser = createAsyncThunk(
       const result = await axios.patch(
         `${API_URL}/${userData.userId}/edit`,
         userData
+      );
+      return result.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const createAttendanceData = createAsyncThunk(
+  CreateAsyncThunkActions.CREATE_ATTENDANCE_DATA,
+  async (attendanceData: IAttendanceData, { rejectWithValue }) => {
+    try {
+      const result = await axios.post(
+        `${API_URL}/event/${attendanceData.eventId}`,
+        JSON.stringify(attendanceData.attendanceReqBody)
       );
       return result.data;
     } catch (error: any) {
@@ -171,6 +189,10 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(editUser.fulfilled, (state, action) => {
+        state.status = 'pending';
+        state.user = action.payload;
+      })
+      .addCase(createAttendanceData.fulfilled, (state, action) => {
         state.status = 'pending';
         state.user = action.payload;
       });
