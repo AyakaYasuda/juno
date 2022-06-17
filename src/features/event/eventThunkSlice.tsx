@@ -4,8 +4,7 @@ import { IEvent, IEventRequest, IEventState } from 'types/EventData.type';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL =
-  'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/event';
+const API_URL = process.env.REACT_APP_API_ENDPOINT + 'event';
 
 // initialize
 const initialState: IEventState = {

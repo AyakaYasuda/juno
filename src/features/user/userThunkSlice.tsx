@@ -5,6 +5,7 @@ import {
   IUserState,
 } from 'types/UserData.type';
 
+
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
@@ -15,8 +16,7 @@ import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
 
 // FIXME: high
-const API_URL =
-  'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user';
+const API_URL = process.env.REACT_APP_API_ENDPOINT + 'user';
 
 // initialize
 const initialState: IUserState = {

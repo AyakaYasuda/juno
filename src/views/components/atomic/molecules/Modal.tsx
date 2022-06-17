@@ -40,7 +40,7 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
                   </label>
                   <input className="InputDark" value={user.firstName} />
                   <label className="basis-1/2 flex flex-col">Last Name</label>
-                  <input className="InputDark" value={user.firstName} />
+                  <input className="InputDark" value={user.lastName} />
                 </li>
                 <li className="md:FlexJustify gap-8 mb-4">
                   <p className="mb-2 md:mb-0 form-check form-check-inline">
@@ -49,6 +49,7 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
                       name="inlineRadioOptions"
                       id="inlineRadio1"
                       className="form-check-input appearance-none h-4 w-4 border border-Pink-default rounded-sm checked:bg-Pink-default focus:outline-none transition duration-200 mt-1 float-left mr-1 cursor-pointer"
+                      checked={user.isAttending}
                     />
                     <label>accepts with pleasure</label>
                   </p>
@@ -58,6 +59,7 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
                       name="inlineRadioOptions"
                       id="inlineRadio1"
                       className="form-check-input appearance-none h-4 w-4 border border-Pink-default rounded-sm checked:bg-Pink-default focus:outline-none transition duration-200 mt-1 float-left mr-1 cursor-pointer"
+                      checked={user.isAttending}
                     />
                     <label>declines with regret</label>
                   </p>
