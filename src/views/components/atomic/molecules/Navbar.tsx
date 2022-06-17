@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import SessionServices from 'services/session.services';
+import { SessionKeys } from 'constants/sessionKeys';
 
 type NavbarProps = {
   bgColor: string;
   link: JSX.Element;
+  redirectPath: string;
 };
 
-const Navbar: React.FC<NavbarProps> = ({ bgColor, link }) => {
+const Navbar: React.FC<NavbarProps> = ({ bgColor, link, redirectPath }) => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
 
   const logoutHandler = () => {
-    setIsLogin(!isLogin);
-    navigate('/admin/login');
+    SessionServices.removeItem(SessionKeys.USER_ID);
+    SessionServices.removeItem(SessionKeys.TOKEN);
+    navigate(redirectPath);
   };
 
   return (

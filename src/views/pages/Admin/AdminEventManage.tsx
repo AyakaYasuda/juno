@@ -70,6 +70,7 @@ const AdminEventManage = () => {
             <Link to="/admin/event">Events</Link>
           </li>
         }
+        redirectPath="/admin/login"
       />
       {showModal && (
         <Modal closeHandler={closeModalHandler} guestUserId={guestUserId} />

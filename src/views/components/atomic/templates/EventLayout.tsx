@@ -47,6 +47,7 @@ const EventLayout: React.FC<Props> = ({
             <Link to="/admin/event">Events</Link>
           </li>
         }
+        redirectPath="/admin/login"
       />
       <section className="w-full py-28 md:py-0 FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default md:h-screen relative text-Pink-default">
         <h2 className="mb-2">{title}</h2>

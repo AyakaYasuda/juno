@@ -42,7 +42,7 @@ const GuestMyPageLayout = () => {
   // Yellow-dark
   return (
     <GuestBaseLayout>
-      <Navbar bgColor="Yellow-dark" link={<></>} />
+      <Navbar bgColor="Yellow-dark" link={<></>} redirectPath="/guests/login" />
       <div className="flex flex-col w-screen h-full md:h-screen mb-8">
         <div className="flex flex-col md:flex-row md:justify-center md:items-center md:h-screen">
           <div className="flex flex-col items-center">
