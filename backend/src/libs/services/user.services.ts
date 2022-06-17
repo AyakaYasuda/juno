@@ -63,14 +63,14 @@ class UserServices {
       data = {
         ...userData,
       };
+    } else {
+      data = {
+        ...userData,
+        userId: userData.SK,
+        eventId: guestAttendanceData.Items[0].SK,
+        isAttending: guestAttendanceData.Items[0].isAttending,
+      };
     }
-
-    data = {
-      ...userData,
-      userId: userData.SK,
-      eventId: guestAttendanceData.Items[0].SK,
-      isAttending: guestAttendanceData.Items[0].isAttending,
-    };
 
     return data;
   }
