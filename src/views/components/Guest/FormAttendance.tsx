@@ -68,17 +68,6 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
 }) => {
   return (
     <div>
-      {/* <h1>Test1</h1>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          console.log('submit');
-        }}
-      >
-        <input value={firstName} onChange={onInputChange} name="firstName" />
-        <button type="submit">Submit</button>
-      </form> */}
-
       <form onSubmit={submitHandler}>
         <div className="flex flex-col md:items-start">
           <Title classTitle="my-4" textColor={sectionTitleColor}>
