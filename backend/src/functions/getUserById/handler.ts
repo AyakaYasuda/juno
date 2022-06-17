@@ -11,10 +11,9 @@ const getUserById = async (
 
     const userServices = new UserServices();
 
-    const userData = await userServices.errorIfUserNotExist(
-      userId,
-      'User not found'
-    );
+    await userServices.errorIfUserNotExist(userId, 'User not found');
+
+    const userData = await userServices.getUserData(userId);
 
     return formatJSONResponse(200, userData);
   } catch (err) {
