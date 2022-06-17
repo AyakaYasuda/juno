@@ -1,4 +1,12 @@
-// // try to use createAsyncThunk
+import {
+  IUser,
+  ILoginRequest,
+  ISignupRequest,
+  IGuestSignupRequest,
+  IUserState,
+  IAuthState,
+} from 'types/UserData.type';
+
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
@@ -8,66 +16,22 @@ import { IAttendanceData } from 'types/AttendanceData.type';
 const API_URL =
   'https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/user';
 
-// type definition
-
-interface LoginForm {
-  email: string;
-  password: string;
-}
-interface SignupForm {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  isAdmin: boolean;
-}
-
-export interface IUser {
-  firstName: string;
-  lastName: string;
-  message: string;
-  allergy: string;
-  isAttending: boolean;
-  isAdmin: boolean;
-}
-interface SignupFormGuest {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  allergy: string;
-  isAttending: boolean;
-  message: string;
-  isAdmin: boolean;
-}
-export interface UserState {
-  user:
-    | {
-        firstName: string;
-        lastName: string;
-        email: string;
-        password: string;
-        isAdmin: boolean;
-        message: string;
-        allergy: string;
-        isAttending: boolean;
-      }[]
-    //FIXME: fix type
-    | any
-    | null;
-  userId: string;
-  status: 'pending' | 'loading' | 'failed';
-}
-
-export interface AuthState {
-  user: UserState | null;
-  status: 'pending' | 'loading' | 'failed';
-}
-
 // initialize
-const initialState: UserState = {
-  user: [],
-  //FIXME: fix hard code
+const initialState: IUserState = {
+  user: {
+    PK: '',
+    SK: '',
+    userId: '',
+    eventId: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    isAdmin: false,
+    message: '',
+    allergy: '',
+    isAttending: true,
+  },
   userId: '',
   status: 'pending',
 };
@@ -76,7 +40,7 @@ const initialState: UserState = {
 //LOGIN
 export const login = createAsyncThunk(
   'login',
-  async (loginData: LoginForm, { rejectWithValue }) => {
+  async (loginData: ILoginRequest, { rejectWithValue }) => {
     try {
       const result = await axios.post(
         `${API_URL}/login`,
@@ -92,7 +56,7 @@ export const login = createAsyncThunk(
 //SIGNUP
 export const signup = createAsyncThunk(
   'signup',
-  async (signupData: SignupForm, thunkAPI) => {
+  async (signupData: ISignupRequest, thunkAPI) => {
     try {
       const result = await axios.post(
         `${API_URL}/signup`,
@@ -104,9 +68,11 @@ export const signup = createAsyncThunk(
     }
   }
 );
+
+//GUEST SIGNUP
 export const signupGuest = createAsyncThunk(
   'signup',
-  async (signupData: SignupFormGuest, thunkAPI) => {
+  async (signupData: IGuestSignupRequest, thunkAPI) => {
     try {
       const result = await axios.post(
         `${API_URL}/signup`,
@@ -135,7 +101,10 @@ export const getUser = createAsyncThunk(
 //PATCH
 export const editUser = createAsyncThunk(
   'edit',
-  async (userData: UserState, { rejectWithValue }) => {
+  async (
+    userData: Record<string, boolean | string> = {},
+    { rejectWithValue }
+  ) => {
     try {
       const result = await axios.patch(
         `${API_URL}/${userData.userId}/edit`,

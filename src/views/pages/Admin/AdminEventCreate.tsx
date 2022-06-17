@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from 'app/hooks';
-import { eventCreate } from 'features/event/eventThunkSlice';
+import { createEvent } from 'features/event/eventThunkSlice';
 
 import EventLayout from 'views/components/atomic/templates/EventLayout';
 
@@ -42,7 +42,7 @@ function AdminEventCreate() {
     e.preventDefault();
 
     const result = await dispatch(
-      eventCreate({
+      createEvent({
         bride,
         groom,
         dateWedding,
@@ -57,12 +57,12 @@ function AdminEventCreate() {
     );
 
     // evenetCreate success
-    if (eventCreate.fulfilled.match(result)) {
+    if (createEvent.fulfilled.match(result)) {
       alert('eventCreate successfuly!');
       navigate('/admin/event');
     }
     // evenetCreate failed
-    if (eventCreate.rejected.match(result)) {
+    if (createEvent.rejected.match(result)) {
       alert('eventCreate failed...');
     }
   };

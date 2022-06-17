@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { eventGet, guestsGet } from 'features/event/eventThunkSlice';
-import { IUser } from 'features/user/userThunkSlice';
+import { getEvent, getGuests } from 'features/event/eventThunkSlice';
+import { IUser } from 'types/UserData.type';
+import { IEvent } from 'types/EventData.type';
 
 import Modal from 'views/components/atomic/molecules/Modal';
 import Button from '../../components/atomic/atoms/Button';
@@ -10,44 +11,39 @@ import Navbar from '../../components/atomic/molecules/Navbar';
 
 const AdminEventManage = () => {
   const dispatch = useAppDispatch();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [eventData, setEventData] = useState<any>(null);
-  const [guestsData, setGuestsData] = useState<IUser[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [eventData, setEventData] = useState<IEvent | null | undefined>(null);
+  const [guestsData, setGuestsData] = useState<IUser[] | null>([]);
   const [eventId, setEventId] = useState<string>('');
+  const [showInfoStyle, setShowInfoStyle] = useState('w-full');
+  const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const status = useAppSelector((state) => state.event.status);
 
   console.log('status', status);
 
   const { event } = useAppSelector((state) => state.event);
-  const { guests } = useAppSelector((state) => state.event.guests);
+  const { guests } = useAppSelector((state) => state.event);
+  const { SK } = useAppSelector((state) => state.event.event);
 
   useEffect(() => {
-    console.log('run');
-    dispatch(eventGet());
+    dispatch(getEvent());
   }, []);
 
   useEffect(() => {
+    setIsLoading(false);
     setEventData(event);
-    setEventId(event?.SK);
+    setEventId(SK);
   }, [event]);
 
   useEffect(() => {
-    console.log('run');
-    dispatch(guestsGet());
+    dispatch(getGuests());
   }, [eventId]);
 
   useEffect(() => {
     setGuestsData(guests);
   }, [guests]);
-
-  console.log('eventData', eventData);
-  console.log('guestsData', guestsData);
-
-  const [showInfoStyle, setShowInfoStyle] = useState('w-full');
-  const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
-  const [showModal, setShowModal] = useState<boolean>(false);
 
   const showInfoHandler = () => {
     setShowInfoStyle('block w-full');
