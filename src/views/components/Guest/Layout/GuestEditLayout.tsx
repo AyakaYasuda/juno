@@ -11,11 +11,6 @@ import FormAttendance from 'views/components/Guest/FormAttendance';
 
 const GuestEditLayout = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
 
   const {
     firstName,

@@ -122,9 +122,8 @@ export const signupGuest = createAsyncThunk(
 //GET
 export const getUser = createAsyncThunk(
   CreateAsyncThunkActions.GET_USER,
-  async (_, { getState, rejectWithValue }) => {
+  async (userId: string, { getState, rejectWithValue }) => {
     try {
-      const { userId } = (getState() as any).user;
       const result = await axios.get(`${API_URL}/${userId}`);
       return result.data;
     } catch (error: any) {
