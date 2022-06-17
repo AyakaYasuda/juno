@@ -33,6 +33,7 @@ type FormAttendanceProps = {
   onChangeMessage: (params: any) => any;
   onChangeAllergy: (params: any) => any;
   onInputChange: (params: any) => any;
+  onClickCancel: (params: any) => any;
 };
 
 const FormAttendance: React.FC<FormAttendanceProps> = ({
@@ -63,10 +64,11 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
   onChangeAllergy,
   disabledDesc,
   onInputChange,
+  onClickCancel,
 }) => {
   return (
     <div>
-      <form action="/guest" method="post" onSubmit={submitHandler}>
+      <form onSubmit={submitHandler}>
         <div className="flex flex-col md:items-start">
           <Title classTitle="my-4" textColor={sectionTitleColor}>
             {sectionTitle}
@@ -162,15 +164,15 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
         </div>
         <div className={`flex justify-center ${spacing} gap-12 `}>
           <ButtonFlexible
-            typeButton={typeButton}
+            typeButton="submit"
             onClickButton={onClickButton}
             styleButton={styleButton}
           >
             {textButton}
           </ButtonFlexible>
           <ButtonFlexible
-            typeButton={typeButton}
-            onClickButton={onClickButton}
+            typeButton="button"
+            onClickButton={onClickCancel}
             styleButton={styleButtonCancel}
           >
             {textButtonCancel}

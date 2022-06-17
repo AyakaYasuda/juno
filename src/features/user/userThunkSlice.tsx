@@ -1,16 +1,18 @@
 import {
-  IUser,
   ILoginRequest,
   ISignupRequest,
   IGuestSignupRequest,
   IUserState,
-  IAuthState,
 } from 'types/UserData.type';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
+import { RootState } from 'app/store';
+import { IUpdateUserReqBody } from 'types/IUpdateUserReqBody.type';
+import SessionServices from 'services/session.services';
+import { SessionKeys } from 'constants/sessionKeys';
 
 // FIXME: high
 const API_URL =
@@ -88,7 +90,7 @@ export const signupGuest = createAsyncThunk(
 //GET
 export const getUser = createAsyncThunk(
   CreateAsyncThunkActions.GET_USER,
-  async (userId: string, { getState, rejectWithValue }) => {
+  async (userId: string, { rejectWithValue }) => {
     try {
       const result = await axios.get(`${API_URL}/${userId}`);
       return result.data;
@@ -102,13 +104,20 @@ export const getUser = createAsyncThunk(
 export const editUser = createAsyncThunk(
   'edit',
   async (
-    userData: Record<string, boolean | string> = {},
-    { rejectWithValue }
+    updateUserReqBody: IUpdateUserReqBody,
+    { rejectWithValue, getState }
   ) => {
+    const userState = (getState() as RootState).user;
+
+    console.log('editUser userState', userState);
+
+    const userId =
+      SessionServices.getItem(SessionKeys.USER_ID) || 'id not found';
+
     try {
       const result = await axios.patch(
-        `${API_URL}/${userData.userId}/edit`,
-        userData
+        `${API_URL}/edit/${userId}`,
+        JSON.stringify(updateUserReqBody)
       );
       return result.data;
     } catch (error: any) {
@@ -161,6 +170,8 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(editUser.fulfilled, (state, action) => {
+        console.log('state.user', state.user);
+
         state.status = 'pending';
         state.user = action.payload;
       })

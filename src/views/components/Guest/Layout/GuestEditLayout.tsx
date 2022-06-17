@@ -1,48 +1,104 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { getUser } from 'features/user/userThunkSlice';
 
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import Title from 'views/components/atomic/atoms/Title';
 import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo/index';
 import FormAttendance from 'views/components/Guest/FormAttendance';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { RootState } from 'app/store';
+import { editUser } from 'features/user/userThunkSlice';
+
+interface FormState {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  message: string;
+  allergy: string;
+  isAttending: boolean;
+}
 
 const GuestEditLayout = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const {
-    firstName,
-    lastName,
-    email,
-    password,
-    message,
-    allergy,
-    isAttending,
-  } = useAppSelector((state) => state.user.user);
+  const userState = useAppSelector((state: RootState) => state.user.user);
 
-  // const [formState, setFormState] = useState({
-  //   firstName: firstName,
-  //   lastName: lastName,
-  //   email: '',
-  //   password: '',
-  //   message: '',
-  //   allergy: '',
-  // });
+  const [formState, setFormState] = useState<FormState>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    message: '',
+    allergy: '',
+    isAttending: false,
+  });
 
-  // const { firstName, lastName, email, password, message, allergy } = formState;
+  const initForm = useCallback(() => {
+    const initialFormState: FormState = {
+      firstName: userState.firstName,
+      lastName: userState.lastName,
+      email: userState.email,
+      password: userState.password,
+      message: userState.message,
+      allergy: userState.allergy,
+      isAttending: userState.isAttending,
+    };
 
-  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  // };
-  const handleChange = () => {};
+    setFormState(initialFormState);
+  }, [setFormState, userState]);
 
-  const handleOnClick = () => {
-    navigate('/guests/edit');
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value =
+      e.target.value === 'true'
+        ? true
+        : e.target.value === 'false'
+        ? false
+        : e.target.value;
+
+    setFormState((prev) => ({ ...prev, [e.target.name]: value }));
   };
 
-  const submitHandler = () => {};
+  const submitHandler = async (e: SubmitEvent) => {
+    console.log('GuestEditLayout submitHandler');
+    e.preventDefault();
+
+    if (formState) {
+      const {
+        firstName,
+        lastName,
+        email,
+        password,
+        message,
+        allergy,
+        isAttending,
+      } = formState;
+
+      await dispatch(
+        editUser({
+          firstName,
+          lastName,
+          email,
+          password,
+          message,
+          allergy,
+          isAttending,
+        })
+      );
+
+      navigate('/guests/mypage');
+    }
+  };
+
+  const onClickCancel = () => {
+    navigate('/guests/mypage');
+  };
+
+  useEffect(() => {
+    initForm();
+  }, [userState, initForm]);
 
   return (
     <GuestBaseLayout>
@@ -71,16 +127,16 @@ const GuestEditLayout = () => {
               styleButton="buttonWhite"
               styleButtonCancel="buttonWhite"
               spacing="md:w-3/5"
-              firstName={firstName}
-              lastName={lastName}
-              message={message}
-              allergy={allergy}
-              email={email}
-              password={password}
+              firstName={formState && formState.firstName}
+              lastName={formState && formState.lastName}
+              message={formState && formState.message}
+              allergy={formState && formState.allergy}
+              email={formState && formState.email}
+              password={formState && formState.password}
               disabledInput={false}
               disabledDesc={false}
-              isAttending={isAttending}
-              onClickButton={() => console.log('edit')}
+              isAttending={formState && formState.isAttending}
+              onClickButton={() => {}}
               submitHandler={submitHandler}
               typeButton="submit"
               onChangeFirstName={handleChange}
@@ -90,6 +146,7 @@ const GuestEditLayout = () => {
               onChangeMessage={handleChange}
               onChangeAllergy={handleChange}
               onInputChange={handleChange}
+              onClickCancel={onClickCancel}
             />
           </div>
         </div>

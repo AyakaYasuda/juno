@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from 'react-router-dom';
+
 import AdminEventCreate from 'views/pages/Admin/AdminEventCreate';
 import AdminEventEdit from 'views/pages/Admin/AdminEventEdit';
 import AdminEventManage from 'views/pages/Admin/AdminEventManage';
@@ -14,7 +16,6 @@ import GuestInvitation from 'views/pages/Guest/GuestInvitation';
 import GuestLogin from 'views/pages/Guest/GuestLogin';
 import GuestMyPage from 'views/pages/Guest/GuestMyPage';
 import GuestEdit from 'views/pages/Guest/GuestEdit';
-import { useEffect, useState } from 'react';
 import { useAppDispatch } from 'app/hooks';
 import { getUser } from 'features/user/userThunkSlice';
 import SessionServices from 'services/session.services';
@@ -40,8 +41,6 @@ const App = () => {
         <Route path="/admin/create" element={<AdminEventCreate />} />
         <Route path="/admin/edit" element={<AdminEventEdit />} />
         <Route path="/admin/event" element={<AdminEventManage />} />
-      </Routes>
-      <Routes>
         <Route path="/guests/invitation" element={<GuestInvitation />} />
         <Route path="/guests/login" element={<GuestLogin />} />
         <Route path="/guests/mypage" element={<GuestMyPage />} />
