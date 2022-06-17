@@ -122,6 +122,9 @@ export const getUser = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const { userId } = (getState() as any).user;
+
+      console.log('getUser createAsyncThunk userId', userId);
+
       const result = await axios.get(`${API_URL}/${userId}`);
       return result.data;
     } catch (error: any) {
@@ -160,6 +163,10 @@ export const userSlice = createSlice({
     builder
       .addCase(login.fulfilled, (state, action) => {
         state.status = 'pending';
+        console.log('login extraReducers action.payload', action.payload);
+
+        // FIXME: add user info to state
+        // state.user = action.payload.user;
         state.userId = action.payload.userId;
       })
       .addCase(signup.fulfilled, (state, action) => {
