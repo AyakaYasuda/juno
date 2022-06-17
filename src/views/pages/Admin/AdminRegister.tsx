@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch } from 'app/hooks';
 import { signup } from 'features/user/userThunkSlice';
 
 import TopLayout from 'views/components/atomic/templates/TopLayout';
