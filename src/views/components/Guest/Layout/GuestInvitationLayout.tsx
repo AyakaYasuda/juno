@@ -1,7 +1,10 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'app/hooks';
-import { signupGuest } from 'features/user/userThunkSlice';
+import {
+  createAttendanceData,
+  signupGuest,
+} from 'features/user/userThunkSlice';
 
 import ImgFlower1 from 'views/images/invitation-flower1.png';
 import ImgFlower2 from 'views/images/invitation-flower2.png';
@@ -13,6 +16,9 @@ import FormAttendance from 'views/components/Guest/FormAttendance';
 type GuestInvitationLayoutProps = {
   // children: React.ReactNode;
 };
+
+// FIXME: eventId come from admin invitation url
+const eventId = 'my-sweet-test-event-id';
 
 const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
   const navigate = useNavigate();
@@ -64,7 +70,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
     e.preventDefault();
 
     try {
-      const result = await dispatch(
+      const signUpResult = await dispatch(
         signupGuest({
           firstName,
           lastName,
@@ -76,14 +82,36 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
           isAdmin: false,
         })
       );
+
       // signup success
-      if (signupGuest.fulfilled.match(result)) {
-        alert('signup successfuly!');
-        navigate('/guests/login');
+      if (signupGuest.fulfilled.match(signUpResult)) {
+        console.log('signUp successfully!');
+
+        console.log('signUpResult', signUpResult);
+        const userId = signUpResult.payload.userId;
+
+        const createAttendanceDataResult = await dispatch(
+          createAttendanceData({
+            eventId,
+            attendanceReqBody: { userId, isAttending },
+          })
+        );
+        console.log(createAttendanceDataResult);
+
+        // success
+        if (createAttendanceData.fulfilled.match(signUpResult)) {
+          alert('create attendance data successfully!');
+          navigate('/guests/login');
+        }
+
+        //  failed
+        if (createAttendanceData.rejected.match(signUpResult)) {
+          alert('create attendance data failed...');
+        }
       }
 
-      // signup failed
-      if (signupGuest.rejected.match(result)) {
+      // signUp failed
+      if (signupGuest.rejected.match(signUpResult)) {
         alert('signup failed...');
       }
     } catch (error) {
@@ -105,6 +133,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
               <CardWeddingInfo spacing="" />
             </div>
             <div className="lg:w-1/2">
+              {/* FIXME: high */}
               <FormAttendance
                 sectionTitle="RSVP"
                 sectionTitleColor="text-Yellow-dark"

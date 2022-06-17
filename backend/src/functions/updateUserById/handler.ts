@@ -14,14 +14,16 @@ const updateUserById = async (
     const userServices = new UserServices();
     UserValidator.validateUpdateUserReqBody(reqBody);
 
-    const userData = await userServices.errorIfUserNotExist(
-      userId,
-      'User not found'
-    );
+    await userServices.errorIfUserNotExist(userId, 'User not found');
+
+    const userData = await userServices.getUserData(userId);
+    console.log('userData', userData);
 
     await userServices.updateUser(userId, userData, reqBody);
 
-    await userServices.updateGuestAttendanceData(userId, userData, reqBody);
+    if (reqBody.isAttending) {
+      await userServices.updateGuestAttendanceData(userId, userData, reqBody);
+    }
 
     return formatJSONResponse(204, {
       message: 'Successfully updated the user',

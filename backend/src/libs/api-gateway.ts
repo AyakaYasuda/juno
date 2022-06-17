@@ -4,6 +4,7 @@ import type {
   Handler,
 } from 'aws-lambda';
 import type { FromSchema } from 'json-schema-to-ts';
+import { IUser } from '@libs/types/user.type';
 import * as yup from 'yup';
 
 type ValidatedAPIGatewayProxyEvent<S> = Omit<APIGatewayProxyEvent, 'body'> & {
@@ -16,7 +17,7 @@ export type ValidatedEventAPIGatewayProxyEvent<S> = Handler<
 
 export const formatJSONResponse = (
   code: number,
-  response: Record<string, unknown>
+  response: Record<string, unknown> | IUser
 ) => {
   return {
     statusCode: code,
