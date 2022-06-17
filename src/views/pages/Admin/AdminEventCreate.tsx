@@ -71,7 +71,8 @@ const AdminEventCreate = () => {
     }
   };
 
-  return event ? (
+  // FIXME : improve the logic
+  return event.SK !== '' ? (
     <>
       <Navbar
         bgColor="Pink-default"
