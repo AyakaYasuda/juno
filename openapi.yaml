@@ -3,8 +3,6 @@ info:
   description: "This is Juno's serverless API list"
   version: '1.0.0'
   title: 'Swagger Juno'
-host: z8feue8naf.execute-api.us-east-1.amazonaws.com
-basePath: /prod
 schemes:
   - 'https'
 tags:
