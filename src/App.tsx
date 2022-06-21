@@ -6,18 +6,18 @@ import {
   Navigate,
 } from 'react-router-dom';
 
-import AdminEventCreate from 'views/pages/Admin/AdminEventCreate';
-import AdminEventEdit from 'views/pages/Admin/AdminEventEdit';
-import AdminEventManage from 'views/pages/Admin/AdminEventManage';
-import AdminHome from 'views/pages/Admin/AdminHome';
-import AdminLogin from 'views/pages/Admin/AdminLogin';
-import AdminRegister from 'views/pages/Admin/AdminRegister';
-import GuestInvitation from 'views/pages/Guest/GuestInvitation';
-import GuestLogin from 'views/pages/Guest/GuestLogin';
-import GuestMyPage from 'views/pages/Guest/GuestMyPage';
-import GuestEdit from 'views/pages/Guest/GuestEdit';
-import { useAppDispatch } from 'app/hooks';
-import { getUser } from 'features/user/userThunkSlice';
+import AdminEventCreate from 'views/pages/admin/AdminEventCreate';
+import AdminEventEdit from 'views/pages/admin/AdminEventEdit';
+import AdminEventManage from 'views/pages/admin/AdminEventManage';
+import AdminHome from 'views/pages/admin/AdminHome';
+import AdminLogin from 'views/pages/admin/AdminLogin';
+import AdminRegister from 'views/pages/admin/AdminRegister';
+import GuestInvitation from 'views/pages/guest/GuestInvitation';
+import GuestLogin from 'views/pages/guest/GuestLogin';
+import GuestMyPage from 'views/pages/guest/GuestMyPage';
+import GuestEdit from 'views/pages/guest/GuestEdit';
+import { useAppDispatch } from 'hooks/hooks';
+import { getUser } from 'redux/userThunkSlice';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
 

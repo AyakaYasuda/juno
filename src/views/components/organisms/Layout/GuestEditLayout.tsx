@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
-import Title from 'views/components/atomic/atoms/Title';
-import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo/index';
+import Title from 'views/components/atoms/Title';
+import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo/index';
 import FormAttendance from 'views/components/Guest/FormAttendance';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
-import { RootState } from 'app/store';
-import { editUser } from 'features/user/userThunkSlice';
+import { RootState } from 'redux/store';
+import { editUser } from 'redux/userThunkSlice';
 
 interface FormState {
   firstName: string;

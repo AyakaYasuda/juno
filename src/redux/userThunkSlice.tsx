@@ -5,12 +5,11 @@ import {
   IUserState,
 } from 'types/UserData.type';
 
-
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
-import { RootState } from 'app/store';
+import { RootState } from 'redux/store';
 import { IUpdateUserReqBody } from 'types/IUpdateUserReqBody.type';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';

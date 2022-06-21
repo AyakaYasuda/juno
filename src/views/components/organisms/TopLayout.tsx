@@ -1,5 +1,6 @@
 import React from 'react';
-import Img from 'views/images/top-image.png';
+// import Img from 'views/images/top-image.png';
+import Img from '../../../../assets/images/top-image.png';
 
 type Props = {
   children?: React.ReactNode;

@@ -1,15 +1,17 @@
 import React, { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from 'app/hooks';
-import { login } from 'features/user/userThunkSlice';
+import { useAppDispatch } from 'hooks/hooks';
+import { login } from 'redux/userThunkSlice';
 
-import Logo from 'views/components/atomic/atoms/Logo';
-import Input from 'views/components/atomic/atoms/Input';
-import ImageTop from 'views/images/guest-top.png';
-import Copyright from 'views/components/atomic/atoms/Copyright';
-import ButtonFlexible from 'views/components/atomic/atoms/ButtonFlexible';
+import Logo from 'views/components/atoms/Logo';
+import Input from 'views/components/atoms/Input';
+import Copyright from 'views/components/atoms/Copyright';
+import ButtonFlexible from 'views/components/atoms/ButtonFlexible';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
+
+// import ImageTop from 'views/images/guest-top.png';
+import ImageTop from '../../../../assets/images/guest-top.png';
 
 const GuestTopLayout = () => {
   const navigate = useNavigate();

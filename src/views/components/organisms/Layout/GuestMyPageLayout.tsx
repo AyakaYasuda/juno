@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 
 import SessionServices from 'services/session.services';
 
 import { SessionKeys } from 'constants/sessionKeys';
-import { getUser } from 'features/user/userThunkSlice';
+import { getUser } from 'redux/userThunkSlice';
 
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
-import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo/index';
+import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo/index';
 import FormAttendance from 'views/components/Guest/FormAttendance';
-import Title from 'views/components/atomic/atoms/Title';
+import Title from 'views/components/atoms/Title';
 import Navbar from 'views/components/atomic/molecules/Navbar';
 
 const GuestMyPageLayout = () => {

@@ -1,4 +1,4 @@
-import Title from 'views/components/atomic/atoms/Title';
+import Title from 'views/components/atoms/Title';
 
 const InfoHeader = () => {
   return (

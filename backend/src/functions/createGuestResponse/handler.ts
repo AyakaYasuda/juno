@@ -10,6 +10,12 @@ export const createGuestResponse = async (
   try {
     const eventId = event.pathParameters.eventId;
     const reqBody = JSON.parse(event.body);
+
+    // const userId = TokenService.getUserId();
+    // 1. success, return userId
+    // 2. error, no token
+    // 3. error, token invalid
+
     const { userId, isAttending } = reqBody;
 
     console.log('userId', userId);

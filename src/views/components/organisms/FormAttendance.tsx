@@ -1,9 +1,9 @@
 import React from 'react';
-import Title from 'views/components/atomic/atoms/Title';
-import Input from 'views/components/atomic/atoms/Input';
-import Checker from 'views/components/atomic/atoms/Checker';
-import Desc from 'views/components/atomic/atoms/Desc';
-import ButtonFlexible from 'views/components/atomic/atoms/ButtonFlexible';
+import Title from 'views/components/atoms/Title';
+import Input from 'views/components/atoms/Input';
+import Checker from 'views/components/atoms/Checker';
+import Desc from 'views/components/atoms/Desc';
+import ButtonFlexible from 'views/components/atoms/ButtonFlexible';
 
 type FormAttendanceProps = {
   classInput: string;

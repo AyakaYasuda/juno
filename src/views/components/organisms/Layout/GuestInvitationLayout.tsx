@@ -1,17 +1,16 @@
 import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch } from 'hooks/hooks';
 import { useParams } from 'react-router';
-import {
-  createAttendanceData,
-  signupGuest,
-} from 'features/user/userThunkSlice';
+import { createAttendanceData, signupGuest } from 'redux/userThunkSlice';
 
-import ImgFlower1 from 'views/images/invitation-flower1.png';
-import ImgFlower2 from 'views/images/invitation-flower2.png';
+// import ImgFlower1 from 'views/images/invitation-flower1.png';
+// import ImgFlower2 from 'views/images/invitation-flower2.png';
+import ImgFlower1 from '../../../../assets/images/invitation-flower1.png';
+import ImgFlower2 from '../../../../assets/images/invitation-flower2.png';
 
 import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
-import CardWeddingInfo from 'views/components/Guest/CardWeddingInfo';
+import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import FormAttendance from 'views/components/Guest/FormAttendance';
 
 type GuestInvitationLayoutProps = {

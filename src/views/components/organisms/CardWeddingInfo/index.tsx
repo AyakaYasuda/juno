@@ -1,6 +1,6 @@
-import InfoHeader from 'views/components/Guest/CardWeddingInfo/InfoHeader';
-import InfoBasic from 'views/components/Guest/CardWeddingInfo/InfoBasic';
-import InfoDetail from 'views/components/Guest/CardWeddingInfo/InfoDetail';
+import InfoHeader from 'views/components/organisms/CardWeddingInfo/InfoHeader';
+import InfoBasic from 'views/components/organisms/CardWeddingInfo/InfoBasic';
+import InfoDetail from 'views/components/organisms/CardWeddingInfo/InfoDetail';
 import DividerSection from 'views/components/Guest/DividerSection';
 
 type CardWeddingProps = {
