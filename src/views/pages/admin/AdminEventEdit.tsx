@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
 import { editEvent, getEvent } from 'redux/eventThunkSlice';
-
-import EventLayout from 'views/components/atomic/templates/EventLayout';
+import EventLayout from 'views/components/organisms/EventLayout';
 
 const AdminEventEdit = () => {
   const dispatch = useAppDispatch();

@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router';
 import { useAppDispatch } from 'hooks/hooks';
 import { login } from 'redux/userThunkSlice';
 
-import Form from 'views/components/atomic/molecules/Form';
-import TopLayout from 'views/components/atomic/templates/TopLayout';
+// import Form from 'views/components/atomic/molecules/Form';
+// import TopLayout from 'views/components/atomic/templates/TopLayout';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
+import TopLayout from 'views/components/organisms/TopLayout';
+import Form from 'views/components/molecules/Form';
 
 const AdminLogin = () => {
   const navigate = useNavigate();

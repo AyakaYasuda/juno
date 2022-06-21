@@ -1,5 +1,5 @@
 import React from 'react';
-import GuestMyPageLayout from 'views/components/Guest/Layout/GuestMyPageLayout';
+import GuestMyPageLayout from 'views/components/organisms/Layout/GuestMyPageLayout';
 
 const GuestMyPage = () => {
   return (

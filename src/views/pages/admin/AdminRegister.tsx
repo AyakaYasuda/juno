@@ -2,9 +2,11 @@ import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/hooks';
 import { signup } from 'redux/userThunkSlice';
+import TopLayout from 'views/components/organisms/TopLayout';
+import Form from 'views/components/molecules/Form';
 
-import TopLayout from 'views/components/atomic/templates/TopLayout';
-import Form from 'views/components/atomic/molecules/Form';
+// import TopLayout from 'views/components/atomic/templates/TopLayout';
+// import Form from 'views/components/atomic/molecules/Form';
 
 const AdminRegister = () => {
   const navigate = useNavigate();

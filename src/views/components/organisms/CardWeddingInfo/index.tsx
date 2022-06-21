@@ -1,7 +1,7 @@
 import InfoHeader from 'views/components/organisms/CardWeddingInfo/InfoHeader';
 import InfoBasic from 'views/components/organisms/CardWeddingInfo/InfoBasic';
 import InfoDetail from 'views/components/organisms/CardWeddingInfo/InfoDetail';
-import DividerSection from 'views/components/Guest/DividerSection';
+import DividerSection from '../DividerSection';
 
 type CardWeddingProps = {
   spacing: string;

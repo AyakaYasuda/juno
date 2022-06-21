@@ -1,5 +1,4 @@
-import React from 'react';
-import GuestEditLayout from 'views/components/Guest/Layout/GuestEditLayout';
+import GuestEditLayout from 'views/components/organisms/Layout/GuestEditLayout';
 
 const GuestEdit = () => {
   return (

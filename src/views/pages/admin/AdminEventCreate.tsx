@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { createEvent } from 'redux/eventThunkSlice';
-
-import AlreadyHaveEvent from 'views/components/atomic/templates/AlreadyHaveEvent';
-import EventLayout from 'views/components/atomic/templates/EventLayout';
-import Navbar from 'views/components/atomic/molecules/Navbar';
+import Navbar from 'views/components/molecules/Navbar';
+import AlreadyHaveEvent from 'views/components/organisms/AlreadyHaveEvent';
+import EventLayout from 'views/components/organisms/EventLayout';
 
 const AdminEventCreate = () => {
   const navigate = useNavigate();

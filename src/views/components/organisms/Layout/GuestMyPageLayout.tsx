@@ -7,11 +7,11 @@ import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
 import { getUser } from 'redux/userThunkSlice';
 
-import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo/index';
-import FormAttendance from 'views/components/Guest/FormAttendance';
 import Title from 'views/components/atoms/Title';
-import Navbar from 'views/components/atomic/molecules/Navbar';
+import GuestBaseLayout from './GuestBaseLayout';
+import Navbar from 'views/components/molecules/Navbar';
+import FormAttendance from '../FormAttendance';
 
 const GuestMyPageLayout = () => {
   const navigate = useNavigate();

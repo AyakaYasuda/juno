@@ -1,5 +1,4 @@
-import React from 'react';
-import GuestTopLayout from 'views/components/Guest/Layout/GuestTopLayout';
+import GuestTopLayout from 'views/components/organisms/Layout/GuestTopLayout';
 
 const GuestLogin = () => {
   return <GuestTopLayout />;

@@ -4,10 +4,9 @@ import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { getEvent, getGuests } from 'redux/eventThunkSlice';
 import { IUser } from 'types/UserData.type';
 import { IEvent } from 'types/EventData.type';
-
-import Modal from 'views/components/atomic/molecules/Modal';
-import Button from '../../components/atoms/Button';
-import Navbar from '../../components/atomic/molecules/Navbar';
+import Navbar from 'views/components/molecules/Navbar';
+import Modal from 'views/components/molecules/Modal';
+import Button from 'views/components/atoms/Button';
 
 const AdminEventManage = () => {
   const dispatch = useAppDispatch();

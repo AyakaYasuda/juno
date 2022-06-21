@@ -2,13 +2,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 
-import GuestBaseLayout from 'views/components/Guest/Layout/GuestBaseLayout';
 import Title from 'views/components/atoms/Title';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo/index';
-import FormAttendance from 'views/components/Guest/FormAttendance';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { RootState } from 'redux/store';
 import { editUser } from 'redux/userThunkSlice';
+import GuestBaseLayout from './GuestBaseLayout';
+import FormAttendance from '../FormAttendance';
 
 interface FormState {
   firstName: string;
