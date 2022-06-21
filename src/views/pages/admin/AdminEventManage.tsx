@@ -22,13 +22,7 @@ const AdminEventManage = () => {
   const { event } = useAppSelector((state) => state.event);
   const { guests } = useAppSelector((state) => state.event);
 
-  let hostName;
-
-  if (process.env.NODE_ENV === 'development') {
-    hostName = process.env.REACT_APP_DEV_API_URL;
-  } else if (process.env.NODE_ENV === 'production') {
-    hostName = process.env.REACT_APP_PROD_API_URL;
-  }
+  const GUEST_PAGE_ROOT_URL = process.env.REACT_APP_GUEST_PAGE_ROOT_URL;
 
   useEffect(() => {
     if (userId) {
@@ -100,7 +94,7 @@ const AdminEventManage = () => {
                   <div className="flex flex-row justify-between items-center mb-3">
                     <span className="basis-1/4">Event URL</span>
                     <p className="InputLighter basis-3/4 px-2">
-                      {`${hostName}/guests/invitation/${eventData.SK}`}
+                      {`${GUEST_PAGE_ROOT_URL}/guests/invitation/${eventData.SK}`}
                     </p>
                   </div>
                   <div className="flex flex-row justify-between items-center mb-3">
