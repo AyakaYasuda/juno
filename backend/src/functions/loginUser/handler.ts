@@ -22,7 +22,7 @@ const loginUser = async (
 
     await userServices.verifyPassword(password, existingUser.password);
 
-    const token = await authServices.generateToken(email, password);
+    const token = await authServices.generateToken(existingUser.SK);
 
     return formatJSONResponse(200, {
       userId: existingUser.SK,

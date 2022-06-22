@@ -7,4 +7,4 @@ export { default as getGuestsByEventId } from './getGuestsByEventId';
 export { default as updateUserById } from './updateUserById';
 export { default as createGuestResponse } from './createGuestResponse';
 export { default as updateEvent } from './updateEvent';
-export { default as verifyToken } from './verifyToken';
+export { default as authorizeToken } from './authorizeToken';

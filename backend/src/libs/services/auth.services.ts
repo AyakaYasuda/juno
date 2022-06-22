@@ -1,14 +1,13 @@
 import jwt from 'jsonwebtoken';
 
 class AuthServices {
-  public async generateToken(email: string, password: string) {
-    if (!email || !password) {
+  public async generateToken(userId: string) {
+    if (!userId) {
       return null;
     }
 
     const loginUserInfo = {
-      email,
-      password,
+      userId,
     };
 
     return jwt.sign(loginUserInfo, process.env.JWT_SECRET, {
@@ -18,14 +17,28 @@ class AuthServices {
 
   public async verifyToken(token: string) {
     return jwt.verify(token, process.env.JWT_SECRET, (error: Error) => {
+      let auth;
       if (error) {
-        return {
-          verified: false,
-          message: 'Invalid token',
-        };
+        auth = 'Deny';
+      } else {
+        auth = 'Allow';
       }
 
-      return { verified: true, message: 'Verified' };
+      const authResponse = {
+        principalId: token,
+        policyDocument: {
+          Version: '2012-10-17',
+          Statement: [
+            {
+              Action: 'execute-api:Invoke',
+              Resource: [process.env.API_RESOURCE],
+              Effect: auth,
+            },
+          ],
+        },
+      };
+
+      return authResponse;
     });
   }
 }

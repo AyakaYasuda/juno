@@ -3,8 +3,7 @@ import { formatJSONResponse, HttpError, handleError } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 import AuthServices from '@libs/services/auth.services';
 
-
-const verifyToken = async (
+const authorizeToken = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResultV2> => {
   try {
@@ -12,25 +11,29 @@ const verifyToken = async (
 
     const authServices = new AuthServices();
 
-    const { token } = reqBody;
+    const { authorizationToken } = reqBody;
 
-    if (!token) {
+    if (!authorizationToken) {
       throw new HttpError(400, 'Invalid request');
     }
 
-    const verification = await authServices.verifyToken(token);
+    const authResponse = await authServices.verifyToken(authorizationToken);
 
-    if (!verification.verified) {
-      return formatJSONResponse(401, verification);
+    if (authResponse.policyDocument.Statement.Effect === 'Deny') {
+      return formatJSONResponse(401, {
+        authorized: false,
+        message: 'Invalid token',
+      });
     }
 
     return formatJSONResponse(200, {
-      ...verification,
-      token: token,
+      ...authResponse,
+      token: authorizationToken,
+      authorized: true,
     });
   } catch (err) {
     return handleError(err);
   }
 };
 
-export const main = middyfy(verifyToken);
+export const main = middyfy(authorizeToken);
