@@ -4,6 +4,7 @@ import { getUser } from 'redux/userThunkSlice';
 
 import { AiOutlineClose } from 'react-icons/ai';
 import Card from '../atoms/Card';
+import Paragraph from '../atoms/Paragraph';
 
 type ModalProps = {
   closeHandler: () => void;
@@ -63,19 +64,14 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
                 </li>
                 <li className="flex flex-col mb-4">
                   <label>Message</label>
-                  <input
-                    className="InputDark"
-                    style={{ height: '100px' }}
-                    value={user.message}
+                  <Paragraph
+                    text={user.message}
+                    customClassName="InputDark h-28"
                   />
                 </li>
                 <li className="flex flex-col mb-4">
                   <label>If you have food allergy</label>
-                  <input
-                    className="InputDark"
-                    style={{ height: '70px' }}
-                    value={user.allergy}
-                  />
+                  <input className="InputDark h-28" value={user.allergy} />
                 </li>
                 <li className="flex flex-col mb-4">
                   <label>Email</label>

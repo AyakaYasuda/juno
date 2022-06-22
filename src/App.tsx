@@ -8,7 +8,7 @@ import {
 
 import AdminEventCreate from 'views/pages/admin/AdminEventCreate';
 import AdminEventEdit from 'views/pages/admin/AdminEventEdit';
-import AdminEventManage from 'views/pages/admin/AdminEventManage';
+import AdminEventDetail from 'views/pages/admin/AdminEventDetail';
 import AdminHome from 'views/pages/admin/AdminHome';
 import AdminLogin from 'views/pages/admin/AdminLogin';
 import AdminRegister from 'views/pages/admin/AdminRegister';
@@ -40,7 +40,7 @@ const App = () => {
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/create" element={<AdminEventCreate />} />
         <Route path="/admin/edit" element={<AdminEventEdit />} />
-        <Route path="/admin/event" element={<AdminEventManage />} />
+        <Route path="/admin/event" element={<AdminEventDetail />} />
         <Route
           path="/guests/invitation/:eventId"
           element={<GuestInvitation />}

@@ -7,8 +7,9 @@ import { IEvent } from 'types/EventData.type';
 import Navbar from 'views/components/molecules/Navbar';
 import Modal from 'views/components/molecules/Modal';
 import Button from 'views/components/atoms/Button';
+import Paragraph from 'views/components/atoms/Paragraph';
 
-const AdminEventManage = () => {
+const AdminEventDetail = () => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [eventData, setEventData] = useState<IEvent | null | undefined>(null);
@@ -79,6 +80,7 @@ const AdminEventManage = () => {
         {isLoading && <h3 className="text-Pink-dark">Loading....</h3>}
         {eventData && (
           <>
+            {/* FIXME: set active state to header, so that user can notice it's button */}
             <ul className="pt-16 flex flex-row justify-center gap-14 mb-6 md:hidden">
               <li onClick={showInfoHandler} className="HoverUnderLine">
                 <h2 className="basis-1/2 text-4xl">Event info</h2>
@@ -90,39 +92,46 @@ const AdminEventManage = () => {
             <div className="w-4/5 h-3/4 flex flex-row gap-14 text-white">
               <div className={`${showInfoStyle} md:block md:basis-1/2`}>
                 <h2 className="hidden md:block mb-2">Event info</h2>
-                <div className="flex flex-col  mb-8 md:mb-4">
+                <div className="flex flex-col mb-8 md:mb-4">
                   <div className="flex flex-row justify-between items-center mb-3">
                     <span className="basis-1/4">Event URL</span>
-                    <p className="InputLighter basis-3/4 px-2">
-                      {`${GUEST_PAGE_ROOT_URL}/guests/invitation/${eventData.SK}`}
-                    </p>
+                    {/* FIXME: create base-style for Paragraph */}
+                    <Paragraph
+                      text={`${GUEST_PAGE_ROOT_URL}/guests/invitation/${eventData.SK}`}
+                      customClassName="InputLighter basis-3/4 px-2"
+                    />
                   </div>
                   <div className="flex flex-row justify-between items-center mb-3">
                     <span className="basis-1/4">Bride</span>
-                    <p className="InputLighter basis-3/4 px-2">
-                      {eventData.bride}
-                    </p>
+                    <Paragraph
+                      text={eventData.bride}
+                      customClassName="InputLighter basis-3/4 px-2"
+                    />
                   </div>
-                  <div className="flex flex-row justify-between items-center">
+                  <div className="flex flex-row justify-between items-center mb-3">
                     <span className="basis-1/4">Groom</span>
-                    <p className="InputLighter basis-3/4 px-2">
-                      {eventData.groom}
-                    </p>
+                    <Paragraph
+                      text={eventData.groom}
+                      customClassName="InputLighter basis-3/4 px-2"
+                    />
                   </div>
                 </div>
                 <div className="flex flex-col mb-8 md:mb-4">
                   <h4 className="mb-1">Date and Time of Wedding Ceremony</h4>
-                  <p className="InputLighter mb-2 px-2">
-                    {eventData.dateWedding}
-                  </p>
+                  <Paragraph
+                    text={eventData.dateWedding}
+                    customClassName={'InputLighter mb-2 px-2'}
+                  />
                   <h4 className="mb-1">Date and Time of Wedding Reception</h4>
-                  <p className="InputLighter mb-2 px-2">
-                    {eventData.dateWeddingReception}
-                  </p>
+                  <Paragraph
+                    text={eventData.dateWeddingReception}
+                    customClassName={'InputLighter mb-2 px-2'}
+                  />
                   <h4 className="mb-1">Message</h4>
-                  <p className="InputLighter mb-2 h-28 px-2">
-                    {eventData.message}
-                  </p>
+                  <Paragraph
+                    text={eventData.message}
+                    customClassName={'InputLighter mb-2 px-2 h-28'}
+                  />
                 </div>
                 <ul className="w-4/5 mx-auto md:flex md:gap-4">
                   <li className="hidden md:block md:basis-1/2">
@@ -177,4 +186,4 @@ const AdminEventManage = () => {
   );
 };
 
-export default AdminEventManage;
+export default AdminEventDetail;
