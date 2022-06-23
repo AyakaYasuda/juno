@@ -17,28 +17,15 @@ class AuthServices {
 
   public async verifyToken(token: string) {
     return jwt.verify(token, process.env.JWT_SECRET, (error: Error) => {
-      let auth;
       if (error) {
-        auth = 'Deny';
-      } else {
-        auth = 'Allow';
+        console.log(error);
+        return {
+          verified: false,
+          message: 'Invalid token',
+        };
       }
 
-      const authResponse = {
-        principalId: token,
-        policyDocument: {
-          Version: '2012-10-17',
-          Statement: [
-            {
-              Action: 'execute-api:Invoke',
-              Resource: [process.env.API_RESOURCE],
-              Effect: auth,
-            },
-          ],
-        },
-      };
-
-      return authResponse;
+      return { verified: true, message: 'Verified' };
     });
   }
 }
