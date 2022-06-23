@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import TempCopyright from 'views/components/atoms/TempCopyright';
 
 // import Button from '../../atoms/Button';
 import Navbar from '../Navbar';
@@ -22,9 +23,7 @@ const AdminPageLayout: React.FC<Props> = ({ children }) => {
           redirectPath="/admin/login"
         />
         {children}
-        <small className="text-center w-full mt-5 mb-5">
-          &copy; Sho, Kyosuke, Fumina, Ayaka 2022 / All Rights Reserved
-        </small>
+        <TempCopyright className="mb-5" />
       </section>
     </>
   );
