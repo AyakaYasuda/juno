@@ -7,7 +7,10 @@ export default {
       http: {
         method: 'get',
         path: 'user/{userId}',
-        cors: true
+        cors: true,
+        authorizer: {
+          name: 'authorizerFunc',
+        },
       },
     },
   ],

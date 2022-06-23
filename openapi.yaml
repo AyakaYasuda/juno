@@ -9,33 +9,7 @@ tags:
   - name: 'user'
   - name: 'event'
   - name: 'guests'
-  - name: 'authentication'
 paths:
-  /verify:
-    post:
-      tags:
-        - 'authentication'
-      summary: 'Checks if the token is verified'
-      description: 'This endpoint is to check if the token is verified'
-      operationId: 'verifyToken'
-      produces:
-        - 'application/json'
-      parameters:
-        - in: 'body'
-          name: 'body'
-          description: 'Token'
-          required: true
-          schema:
-            $ref: '#/definitions/TokenRequest'
-      responses:
-        '200':
-          description: 'Successful operation'
-          schema:
-            $ref: '#/definitions/TokenResponse'
-        '400':
-          description: 'Invalid request'
-        '404':
-          description: 'User not found'
   /user/login:
     post:
       tags:
@@ -96,6 +70,11 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'token'
+          in: 'header'
+          type: 'string'
+          required: true
+          description: "KEY: Authorization VALUE: token"
         - name: 'userId'
           in: 'path'
           type: 'string'
@@ -119,6 +98,11 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'token'
+          in: 'header'
+          type: 'string'
+          required: true
+          description: "KEY: Authorization VALUE: token"
         - name: 'eventId'
           in: 'path'
           type: 'string'
@@ -146,6 +130,11 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'token'
+          in: 'header'
+          type: 'string'
+          required: true
+          description: "KEY: Authorization VALUE: token"
         - name: 'userId'
           in: 'path'
           type: 'string'
@@ -173,6 +162,11 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'token'
+          in: 'header'
+          type: 'string'
+          required: true
+          description: "KEY: Authorization VALUE: token"
         - name: 'userId'
           in: 'path'
           type: 'string'
@@ -202,6 +196,11 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'token'
+          in: 'header'
+          type: 'string'
+          required: true
+          description: "KEY: Authorization VALUE: token"
         - name: 'userId'
           in: 'path'
           type: 'string'
@@ -225,6 +224,11 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'token'
+          in: 'header'
+          type: 'string'
+          required: true
+          description: "KEY: Authorization VALUE: token"
         - name: 'eventId'
           in: 'path'
           type: 'string'
@@ -252,6 +256,11 @@ paths:
       produces:
         - 'application/json'
       parameters:
+        - name: 'token'
+          in: 'header'
+          type: 'string'
+          required: true
+          description: "KEY: Authorization VALUE: token"
         - name: 'eventId'
           in: 'path'
           type: 'string'

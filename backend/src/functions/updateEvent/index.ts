@@ -8,7 +8,10 @@ export default {
       http: {
         method: 'patch',
         path: 'event/edit/{eventId}',
-        cors: true
+        cors: true,
+        authorizer: {
+          name: 'authorizerFunc',
+        },
       },
     },
   ],
