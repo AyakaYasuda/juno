@@ -11,7 +11,7 @@ type Props = {
 const AdminPageLayout: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <section className="w-full py-28 md:py-0 FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default md:h-screen relative text-Pink-default">
+      <section className="w-full pt-20 FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default md:min-h-screen relative text-Pink-default">
         <Navbar
           bgColor="Pink-default"
           link={
@@ -22,7 +22,7 @@ const AdminPageLayout: React.FC<Props> = ({ children }) => {
           redirectPath="/admin/login"
         />
         {children}
-        <small className="absolute bottom-5 text-center w-full">
+        <small className="text-center w-full mt-5 mb-5">
           &copy; Sho, Kyosuke, Fumina, Ayaka 2022 / All Rights Reserved
         </small>
       </section>
