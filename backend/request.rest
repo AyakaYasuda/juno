@@ -1,0 +1,18 @@
+POST https://z8feue8naf.execute-api.us-east-1.amazonaws.com/prod/event/new/21972e91-7e2a-4e0e-a451-5fb3e4e15c6a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyMTk3MmU5MS03ZTJhLTRlMGUtYTQ1MS01ZmIzZTRlMTVjNmEiLCJpYXQiOjE2NTYwMTg0OTEsImV4cCI6MTY1NjAyMjA5MX0.RY3ArgUjTFcnRintT5gqwMwmKelT7uhuMhoFcebL71Y
+Content-Type: application/json
+
+{
+    "bride": "bride test",
+    "groom": "groom test",
+    "dateWedding": "date wedding test",
+    "startingTimeWedding": "startingTimeWedding test",
+    "endingTimeWedding": "endingTimeWedding test",
+    "dateWeddingReception": "dateWeddingReception test",
+    "startingTimeReception": "startingTimeReception test",
+    "endingTimeReception": "endingTimeReception test",
+    "address": "address test",
+    "message": "message test"
+}
+
+### 
