@@ -8,7 +8,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { RootState } from 'redux/store';
 import { editUser } from 'redux/userThunkSlice';
 import GuestBaseLayout from './GuestBaseLayout';
-import FormAttendance from '../FormAttendance';
+import FormAttendance from '../../organisms/FormAttendance';
 
 interface FormState {
   firstName: string;

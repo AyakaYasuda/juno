@@ -70,4 +70,9 @@
   .buttonWhite {
     @apply rounded-3xl bg-transparent text-white bg-opacity-80 border drop-shadow-lg md:p-2 md:rounded-xl;
   }
+
+  /* Button */
+  .BaseButtonStyle {
+    @apply rounded-3xl py-2 px-4 w-full;
+  }
 }

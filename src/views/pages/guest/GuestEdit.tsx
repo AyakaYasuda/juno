@@ -1,4 +1,4 @@
-import GuestEditLayout from 'views/components/organisms/Layout/GuestEditLayout';
+import GuestEditLayout from 'views/components/molecules/Layout/GuestEditLayout';
 
 const GuestEdit = () => {
   return (

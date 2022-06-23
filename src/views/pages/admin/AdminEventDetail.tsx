@@ -135,12 +135,12 @@ const AdminEventDetail = () => {
                 </div>
                 <ul className="w-4/5 mx-auto md:flex md:gap-4">
                   <li className="hidden md:block md:basis-1/2">
-                    <Button styleButton="border-2 border-White-default">
+                    <Button customStyle="border-2 border-White-default">
                       Set uneditable
                     </Button>
                   </li>
                   <li className="md:basis-1/2">
-                    <Button styleButton="border-2 border-White-default">
+                    <Button customStyle="border-2 border-White-default">
                       <Link to="/admin/edit">Edit event info</Link>
                     </Button>
                   </li>
@@ -155,11 +155,11 @@ const AdminEventDetail = () => {
                         <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
                           <span className="basis-3/5">{`${guest.firstName} ${guest.lastName}`}</span>
                           {guest.isAttending ? (
-                            <Button styleButton="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
+                            <Button customStyle="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
                               PRESENT
                             </Button>
                           ) : (
-                            <Button styleButton="basis-1/5 text-Green-default border-2 border-Green-default drop-shadow-md mr-2">
+                            <Button customStyle="basis-1/5 text-Green-default border-2 border-Green-default drop-shadow-md mr-2">
                               ABSENT
                             </Button>
                           )}

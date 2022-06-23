@@ -1,3 +1,5 @@
+// FIXME: delete me
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../atoms/Button';
@@ -30,7 +32,7 @@ const Form: React.FC<Props> = ({
           {children}
           <ul className="w-3/4 mx-auto pt-4">
             <li className="mb-4">
-              <Button styleButton="bg-Pink-default text-White-default">
+              <Button customStyle="bg-Pink-default text-White-default">
                 {ctaText}
               </Button>
             </li>

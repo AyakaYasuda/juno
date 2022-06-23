@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/hooks';
 import { signup } from 'redux/userThunkSlice';
-import TopLayout from 'views/components/organisms/TopLayout';
+import TopLayout from 'views/components/molecules/Layout/AuthPageLayout';
 import Form from 'views/components/molecules/Form';
 
 // import TopLayout from 'views/components/atomic/templates/TopLayout';

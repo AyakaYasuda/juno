@@ -1,4 +1,4 @@
-import GuestInvitationLayout from 'views/components/organisms/Layout/GuestInvitationLayout';
+import GuestInvitationLayout from 'views/components/molecules/Layout/GuestInvitationLayout';
 
 const GuestInvitation = () => {
   return <GuestInvitationLayout />;
