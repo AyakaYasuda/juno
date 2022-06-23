@@ -7,10 +7,15 @@ type GuestBaseLayoutProps = {
 
 const GuestBaseLayout: React.FC<GuestBaseLayoutProps> = ({ children }) => {
   return (
-    <div className="h-full lg:h-screen w-full bg-gradient-to-t from-Green-default to-White-darker flex ">
-      {children}
+    <>
+      {/* FIXME: make flex-flow: column */}
+      <div className="h-full lg:h-screen w-full bg-gradient-to-t from-Green-default to-White-darker flex ">
+        {/* FIXME: add flex-row box to children */}
+        {children}
+      </div>
+      {/* FIXME: delete fixed from copyright */}
       <Copyright textColor="text-Pink-dark" />
-    </div>
+    </>
   );
 };
 
