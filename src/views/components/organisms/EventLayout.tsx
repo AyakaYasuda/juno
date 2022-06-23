@@ -154,12 +154,12 @@ const EventLayout: React.FC<Props> = ({
                 />
                 <ul className="w-10/12 mx-auto md:flex">
                   <li className="mb-4 md:mb-0 md:mr-4 basis-1/2">
-                    <Button styleButton="bg-Pink-default text-White-default">
+                    <Button customStyle="bg-Pink-default text-White-default">
                       {ctaTxt}
                     </Button>
                   </li>
                   <li className="basis-1/2">
-                    <Button styleButton="text-Pink-default border-2 border-Pink-default">
+                    <Button customStyle="text-Pink-default border-2 border-Pink-default">
                       Cancel
                     </Button>
                   </li>

@@ -9,6 +9,7 @@ import SessionServices from 'services/session.services';
 import Button from '../atoms/Button';
 import Card from '../atoms/Card';
 import { Form } from '../atoms/Form';
+import LabeledInput from '../molecules/LabeledInput';
 
 const initialFormState = {
   email: '',
@@ -53,24 +54,26 @@ const AdminLoginForm = () => {
         className="flex flex-col text-left mb-8 w-full md:w-4/5 mx-auto pt-12"
         onSubmit={submitHandler}
       >
-        <label className="text-Pink-default">Email</label>
-        <input
+        <LabeledInput
           type="email"
           name="email"
+          label="Email"
           value={email as string}
           onChange={inputChangeHandler}
-          className="InputBorder mb-16"
+          labelStyle="text-Pink-default"
+          inputStyle="InputBorder mb-16"
         />
-        <label className="text-Pink-default">Password</label>
-        <input
+        <LabeledInput
           type="password"
           name="password"
+          label="Password"
           value={password as string}
           onChange={inputChangeHandler}
-          className="InputBorder mb-20"
+          labelStyle="text-Pink-default"
+          inputStyle="InputBorder mb-20"
         />
         <div className="w-3/4 mx-auto pt-4 text-Pink-default text-center">
-          <Button styleButton="bg-Pink-default text-White-default mb-4">
+          <Button customStyle="bg-Pink-default text-White-default mb-4">
             Log In
           </Button>
           <Link to={'/admin/register'}>You don't have an account yet?</Link>
