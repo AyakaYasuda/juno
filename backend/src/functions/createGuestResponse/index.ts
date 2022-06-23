@@ -7,7 +7,10 @@ export default {
       http: {
         method: 'post',
         path: 'user/event/{eventId}',
-        cors: true
+        cors: true,
+        authorizer: {
+          name: 'authorizerFunc',
+        },
       },
     },
   ],

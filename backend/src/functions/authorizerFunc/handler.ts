@@ -8,7 +8,7 @@ import AuthServices from '@libs/services/auth.services';
 const authorizerFunc = async (
   event: APIGatewayTokenAuthorizerEvent
 ): Promise<APIGatewayAuthorizerResult> => {
-  const token = event.authorizationToken.toLowerCase();
+  const token = event.authorizationToken;
   const methodArn = event.methodArn;
   console.log('token', token);
 
