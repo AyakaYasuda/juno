@@ -1,16 +1,19 @@
 import React from 'react';
-// import Img from 'views/images/top-image.png';
-import Img from '../../../assets/images/top-image.png';
+import topImg from '../../../../assets/images/top-image.png';
 
 type Props = {
   children?: React.ReactNode;
 };
 
-const TopLayout: React.FC<Props> = ({ children }) => {
+const AuthPageLayout: React.FC<Props> = ({ children }) => {
   return (
     <section className="flex sm:relative">
       <div className="w-full h-screen md:w-1/2">
-        <img src={Img} alt="top-img" className="w-full h-full object-cover" />
+        <img
+          src={topImg}
+          alt="top-img"
+          className="w-full h-full object-cover"
+        />
       </div>
       <div className="absolute top-0 left-0 w-full h-screen FlexCenter bg-Pink-default bg-opacity-30 md:bg-gradient-to-b md:from-Pink-lighter md:to-Pink-default md:w-1/2 md:relative">
         <div className="w-3/4 h-4/5 text-center flex flex-col">
@@ -24,4 +27,4 @@ const TopLayout: React.FC<Props> = ({ children }) => {
   );
 };
 
-export default TopLayout;
+export default AuthPageLayout;

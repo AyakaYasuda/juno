@@ -1,4 +1,4 @@
-import GuestTopLayout from 'views/components/organisms/Layout/GuestTopLayout';
+import GuestTopLayout from 'views/components/molecules/Layout/GuestTopLayout';
 
 const GuestLogin = () => {
   return <GuestTopLayout />;

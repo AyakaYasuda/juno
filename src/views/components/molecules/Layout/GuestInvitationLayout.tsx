@@ -9,7 +9,7 @@ import ImgFlower2 from '../../../../assets/images/invitation-flower2.png';
 
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import GuestBaseLayout from './GuestBaseLayout';
-import FormAttendance from '../FormAttendance';
+import FormAttendance from '../../organisms/FormAttendance';
 
 type GuestInvitationLayoutProps = {
   // children: React.ReactNode;

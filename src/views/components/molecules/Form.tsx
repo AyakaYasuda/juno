@@ -1,3 +1,5 @@
+// FIXME: delete me
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../atoms/Button';

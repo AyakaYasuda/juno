@@ -1,4 +1,4 @@
-import TopLayout from 'views/components/organisms/TopLayout';
+import TopLayout from 'views/components/molecules/Layout/AuthPageLayout';
 import AdminLoginForm from 'views/components/organisms/AdminLoginForm';
 
 const AdminLogin = () => {
