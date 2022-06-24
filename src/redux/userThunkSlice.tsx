@@ -89,6 +89,7 @@ export const getUser = createAsyncThunk(
   CreateAsyncThunkActions.GET_USER,
   async (userId: string, { rejectWithValue }) => {
     try {
+      const token = SessionServices.getItem(SessionKeys.USER_ID)
       const result = await axios.get(`${API_URL}/${userId}`);
       return result.data;
     } catch (error: any) {

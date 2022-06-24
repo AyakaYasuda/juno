@@ -9,7 +9,7 @@ const GuestBaseLayout: React.FC<GuestBaseLayoutProps> = ({ children }) => {
   return (
     <>
       {/* FIXME: make flex-flow: column */}
-      <div className="h-full lg:h-screen w-full bg-gradient-to-t from-Green-default to-White-darker flex ">
+      <div className="h-full lg:h-screen w-full bg-gradient-to-t from-Green-default to-White-darker flex">
         {/* FIXME: add flex-row box to children */}
         {children}
       </div>
