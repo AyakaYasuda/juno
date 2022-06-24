@@ -8,7 +8,7 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { RootState } from 'redux/store';
 import { editUser } from 'redux/userThunkSlice';
 import GuestBaseLayout from './GuestBaseLayout';
-import FormAttendance from '../../organisms/FormAttendance';
+// import FormAttendance from '../../organisms/FormAttendance';
 
 interface FormState {
   firstName: string;
@@ -118,7 +118,7 @@ const GuestEditLayout = () => {
           </div>
 
           <div className="w-full">
-            <FormAttendance
+            {/* <FormAttendance
               sectionTitleColor="text-white"
               sectionTitle="Your Reply"
               classInput="InputLight"
@@ -147,7 +147,7 @@ const GuestEditLayout = () => {
               onChangeAllergy={handleChange}
               onInputChange={handleChange}
               onClickCancel={onClickCancel}
-            />
+            /> */}
           </div>
         </div>
       </div>

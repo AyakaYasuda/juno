@@ -36,9 +36,9 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Navigate to="/admin" />} />
         <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/create" element={<AdminEventCreate />} />
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/create" element={<AdminEventCreate />} />
         <Route path="/admin/edit" element={<AdminEventEdit />} />
         <Route path="/admin/event" element={<AdminEventDetail />} />
         <Route

@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
                   <label className="basis-1/2 flex flex-col">Last Name</label>
                   <input className="InputDark" value={user.lastName} />
                 </li>
-                <li className="md:FlexJustify gap-8 mb-4">
+                <li className="md:FlexJustifyCenter gap-8 mb-4">
                   <p className="mb-2 md:mb-0 form-check form-check-inline">
                     <input
                       type="radio"

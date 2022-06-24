@@ -43,7 +43,7 @@ const CreateEventForm = (props: Props) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const result = await dispatch(
@@ -75,7 +75,7 @@ const CreateEventForm = (props: Props) => {
   return (
     <Card className={className}>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={submitHandler}
         className="flex flex-col md:flex-row p-4 md:gap-6"
       >
         <div className="md:basis-1/2 flex flex-col">

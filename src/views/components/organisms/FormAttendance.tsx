@@ -2,8 +2,8 @@ import React from 'react';
 import Title from 'views/components/atoms/Title';
 import Input from 'views/components/atoms/Input';
 import Checker from 'views/components/atoms/Checker';
-import Desc from 'views/components/atoms/Desc';
-import ButtonFlexible from 'views/components/atoms/ButtonFlexible';
+import Desc from 'views/components/molecules/LabeledTextarea';
+import ButtonFlexible from 'views/components/atoms/GreenButton';
 
 type FormAttendanceProps = {
   classInput: string;
@@ -97,7 +97,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               onChangeHandler={onChangeLastName}
             />
           </div>
-          <div className="FlexJustify flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
+          <div className="FlexJustifyCenter flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
             <Checker
               labelChecker="accepts with pleasure"
               valueChecker={true}
@@ -120,10 +120,10 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
             />
           </div>
           <div className="flex flex-col items-center md:items-start">
-            <Desc
-              containerDesc="w-3/5 md:w-full"
+            {/* <Desc
+              className="w-3/5 md:w-full"
               classDesc={classInput}
-              labelName="Message"
+              label="Message"
               nameDesc="message"
               rowsDesc={3}
               valueDesc={message}
@@ -131,15 +131,15 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               onChangeHandler={onChangeMessage}
             />
             <Desc
-              containerDesc="w-3/5 md:w-full"
+              className="w-3/5 md:w-full"
               classDesc={classInput}
-              labelName="If you have food allergy"
+              label="If you have food allergy"
               nameDesc="allergy"
               valueDesc={allergy}
               rowsDesc={2}
               disabledDesc={disabledDesc}
               onChangeHandler={onChangeAllergy}
-            />
+            /> */}
           </div>
           <div className="FlexCenter flex-col md:flex-row md:gap-6">
             <Input
@@ -167,7 +167,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
           </div>
         </div>
         <div className={`flex justify-center ${spacing} gap-12 `}>
-          <ButtonFlexible
+          {/* <ButtonFlexible
             typeButton="submit"
             onClickButton={onClickButton}
             styleButton={styleButton}
@@ -180,7 +180,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
             styleButton={styleButtonCancel}
           >
             {textButtonCancel}
-          </ButtonFlexible>
+          </ButtonFlexible> */}
         </div>
       </form>
     </div>
