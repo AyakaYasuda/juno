@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { getEvent, getGuests } from 'redux/eventThunkSlice';
 import Modal from 'views/components/molecules/Modal';
-import Button from 'views/components/atoms/Button';
-import Paragraph from 'views/components/atoms/Paragraph';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import MobileToggleSectionHeaders from 'views/components/organisms/MobileToggleSectionHeaders';
 import EventInfo from 'views/components/organisms/EventInfo';
+import GuestsList from 'views/components/organisms/GuestsList';
 
 const AdminEventDetail = () => {
   const dispatch = useAppDispatch();
@@ -79,36 +77,11 @@ const AdminEventDetail = () => {
           />
           <div className="w-4/5 h-3/4 flex flex-row gap-14 text-white">
             <EventInfo event={event} showInfoStyle={showInfoStyle} />
-            {
-              <div className={`${showGuestsStyle} md:block md:basis-1/2`}>
-                <h2 className="hidden md:block mb-2">Guests list</h2>
-                <ul className="overflow-y-scroll h-4/5">
-                  {guests &&
-                    guests.map((guest) => {
-                      return (
-                        <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
-                          <span className="basis-3/5">{`${guest.firstName} ${guest.lastName}`}</span>
-                          {guest.isAttending ? (
-                            <Button customStyle="basis-1/5 bg-Green-default text-white drop-shadow-md mr-2">
-                              PRESENT
-                            </Button>
-                          ) : (
-                            <Button customStyle="basis-1/5 text-Green-default border-2 border-Green-default drop-shadow-md mr-2">
-                              ABSENT
-                            </Button>
-                          )}
-                          <button
-                            onClick={() => showModalHandler(guest.userId)}
-                            className="text-Pink-dark basis-1/5"
-                          >
-                            Show Detail
-                          </button>
-                        </li>
-                      );
-                    })}
-                </ul>
-              </div>
-            }
+            <GuestsList
+              guests={guests}
+              showGuestsStyle={showGuestsStyle}
+              showModalHandler={showModalHandler}
+            />
           </div>
         </>
       )}
