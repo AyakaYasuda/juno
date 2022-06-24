@@ -1,13 +1,24 @@
-import { useAppDispatch } from 'hooks/hooks';
 import useForm from 'hooks/useForm';
 import React from 'react';
-import { useNavigate } from 'react-router';
 import Card from '../atoms/Card';
-import { createEvent } from 'redux/eventThunkSlice';
 import Button from '../atoms/Button';
 import LabeledInput from '../molecules/LabeledInput';
+import { IEventRequest } from 'types/EventData.type';
 
-const formInitialValues = {
+export type FormInitialValues = {
+  bride: string;
+  groom: string;
+  dateWedding: string;
+  startingTimeWedding: string;
+  endingTimeWedding: string;
+  dateWeddingReception: string;
+  startingTimeReception: string;
+  endingTimeReception: string;
+  address: string;
+  message: string;
+};
+
+const initialValues: FormInitialValues = {
   bride: '',
   groom: '',
   dateWedding: '',
@@ -21,11 +32,17 @@ const formInitialValues = {
 };
 
 type Props = {
-  className: string;
+  formInitialValues?: FormInitialValues;
+  className?: string;
+  updateButtonText: string;
+  formSubmitLogic: (formInput: IEventRequest) => void;
 };
 
-const CreateEventForm = (props: Props) => {
-  const { values, inputChangeHandler } = useForm(formInitialValues);
+const EditEventForm = (props: Props) => {
+  const { formInitialValues, className, formSubmitLogic } = props;
+  const { values, inputChangeHandler } = useForm(
+    formInitialValues ? formInitialValues : initialValues
+  );
   const {
     bride,
     groom,
@@ -38,38 +55,22 @@ const CreateEventForm = (props: Props) => {
     address,
     message,
   } = values;
-  const { className } = props;
-
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const result = await dispatch(
-      createEvent({
-        bride: bride as string,
-        groom: groom as string,
-        dateWedding: dateWedding as string,
-        startingTimeWedding: startingTimeWedding as string,
-        endingTimeWedding: endingTimeWedding as string,
-        dateWeddingReception: dateWeddingReception as string,
-        startingTimeReception: startingTimeReception as string,
-        endingTimeReception: endingTimeReception as string,
-        address: address as string,
-        message: message as string,
-      })
-    );
-
-    // createEvent success
-    if (createEvent.fulfilled.match(result)) {
-      alert('eventCreate successfully!');
-      navigate('/admin/event');
-    }
-    // createEvent failed
-    if (createEvent.rejected.match(result)) {
-      alert('eventCreate failed...');
-    }
+    formSubmitLogic({
+      bride: bride as string,
+      groom: groom as string,
+      dateWedding: dateWedding as string,
+      startingTimeWedding: startingTimeWedding as string,
+      endingTimeWedding: endingTimeWedding as string,
+      dateWeddingReception: dateWeddingReception as string,
+      startingTimeReception: startingTimeReception as string,
+      endingTimeReception: endingTimeReception as string,
+      address: address as string,
+      message: message as string,
+    });
   };
 
   return (
@@ -201,4 +202,4 @@ const CreateEventForm = (props: Props) => {
   );
 };
 
-export default CreateEventForm;
+export default EditEventForm;
