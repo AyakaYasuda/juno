@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { getEvent, getGuests } from 'redux/eventThunkSlice';
-import { IUser } from 'types/UserData.type';
-import { IEvent } from 'types/EventData.type';
 import Navbar from 'views/components/molecules/Navbar';
 import Modal from 'views/components/molecules/Modal';
 import Button from 'views/components/atoms/Button';
@@ -12,11 +10,13 @@ import Paragraph from 'views/components/atoms/Paragraph';
 const AdminEventDetail = () => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [eventData, setEventData] = useState<IEvent | null | undefined>(null);
-  const [guestsData, setGuestsData] = useState<IUser[] | null>([]);
+
+  // FIXME: do you need it?
   const [showInfoStyle, setShowInfoStyle] = useState('w-full');
   const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
   const [showModal, setShowModal] = useState<boolean>(false);
+
+  // FIXME: do you need it?
   const [guestUserId, setGuestUserId] = useState<string>('');
 
   const { SK: userId } = useAppSelector((state) => state.user.user);
@@ -34,14 +34,9 @@ const AdminEventDetail = () => {
   useEffect(() => {
     setIsLoading(false);
     if (event) {
-      setEventData(event);
       dispatch(getGuests(event.SK));
     }
   }, [event, dispatch]);
-
-  useEffect(() => {
-    setGuestsData(guests);
-  }, [guests]);
 
   const showInfoHandler = () => {
     setShowInfoStyle('block w-full');
@@ -78,7 +73,7 @@ const AdminEventDetail = () => {
       )}
       <section className="w-full h-screen FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default relative">
         {isLoading && <h3 className="text-Pink-dark">Loading....</h3>}
-        {eventData && (
+        {event && (
           <>
             {/* FIXME: set active state to header, so that user can notice it's button */}
             <ul className="pt-16 flex flex-row justify-center gap-14 mb-6 md:hidden">
@@ -97,21 +92,21 @@ const AdminEventDetail = () => {
                     <span className="basis-1/4">Event URL</span>
                     {/* FIXME: create base-style for Paragraph */}
                     <Paragraph
-                      text={`${GUEST_PAGE_ROOT_URL}/guests/invitation/${eventData.SK}`}
+                      text={`${GUEST_PAGE_ROOT_URL}/guests/invitation/${event.SK}`}
                       customClassName="InputLighter basis-3/4 px-2"
                     />
                   </div>
                   <div className="flex flex-row justify-between items-center mb-3">
                     <span className="basis-1/4">Bride</span>
                     <Paragraph
-                      text={eventData.bride}
+                      text={event.bride}
                       customClassName="InputLighter basis-3/4 px-2"
                     />
                   </div>
                   <div className="flex flex-row justify-between items-center mb-3">
                     <span className="basis-1/4">Groom</span>
                     <Paragraph
-                      text={eventData.groom}
+                      text={event.groom}
                       customClassName="InputLighter basis-3/4 px-2"
                     />
                   </div>
@@ -119,17 +114,17 @@ const AdminEventDetail = () => {
                 <div className="flex flex-col mb-8 md:mb-4">
                   <h4 className="mb-1">Date and Time of Wedding Ceremony</h4>
                   <Paragraph
-                    text={eventData.dateWedding}
+                    text={event.dateWedding}
                     customClassName={'InputLighter mb-2 px-2'}
                   />
                   <h4 className="mb-1">Date and Time of Wedding Reception</h4>
                   <Paragraph
-                    text={eventData.dateWeddingReception}
+                    text={event.dateWeddingReception}
                     customClassName={'InputLighter mb-2 px-2'}
                   />
                   <h4 className="mb-1">Message</h4>
                   <Paragraph
-                    text={eventData.message}
+                    text={event.message}
                     customClassName={'InputLighter mb-2 px-2 h-28'}
                   />
                 </div>
@@ -149,8 +144,8 @@ const AdminEventDetail = () => {
               <div className={`${showGuestsStyle} md:block md:basis-1/2`}>
                 <h2 className="hidden md:block mb-2">Guests list</h2>
                 <ul className="overflow-y-scroll h-4/5">
-                  {guestsData &&
-                    guestsData.map((guest) => {
+                  {guests &&
+                    guests.map((guest) => {
                       return (
                         <li className="InputLighter FlexCenter mb-2 rounded-2xl px-4">
                           <span className="basis-3/5">{`${guest.firstName} ${guest.lastName}`}</span>
