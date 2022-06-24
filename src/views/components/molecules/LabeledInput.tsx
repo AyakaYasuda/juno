@@ -14,7 +14,7 @@ const LabeledInput = (props: Props) => {
   const { label, value, onChange, type, name, labelStyle, inputStyle } = props;
 
   return (
-    <>
+    <div className="flex flex-col">
       <label className={labelStyle}>{label}</label>
       <input
         type={type}
@@ -23,7 +23,7 @@ const LabeledInput = (props: Props) => {
         onChange={onChange}
         className={inputStyle}
       />
-    </>
+    </div>
   );
 };
 

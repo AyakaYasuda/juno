@@ -93,7 +93,7 @@ const GuestTopLayout = () => {
               disabledInput={false}
               onChangeHandler={handleChange}
             />
-            <div className="FlexJustify md:flex md:justify-start md: mt-6">
+            <div className="FlexJustifyCenter md:flex md:justify-start md: mt-6">
               <GreenButton
                 type="submit"
                 onClick={() => null}

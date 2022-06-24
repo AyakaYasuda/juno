@@ -77,25 +77,23 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
 
       // success
       if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
-        alert('create attendance data successfully!');
+        alert('created attendance data successfully!');
         navigate('/guests/login');
       }
 
       //  failed
       if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
-        alert('create attendance data failed...');
+        alert('failed to create attendance data');
       }
     } catch (error) {
       console.log(error);
     }
   };
 
-  const cancelHandler = () => {};
-
   return (
     <div>
       <form onSubmit={submitHandler}>
-        <div className="FlexCenter flex-col md:flex-row md:gap-6">
+        <div className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-4">
           <LabeledInput
             label="First Name"
             name="firstName"
@@ -115,12 +113,12 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
             labelStyle="text-Yellow-dark"
           />
         </div>
-        <div className="FlexJustify flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
+        <div className="grid grid-cols-1 gap-0 justify-items-center md:grid-cols-2 md:gap-4 md:justify-items-center mt-2 mb-4">
           <Checker
             labelChecker="accepts with pleasure"
             valueChecker={true}
             containerChecker="gap-1 items-center"
-            classChecker="hidden mr-1"
+            classChecker="hidden"
             typeChecker="radio"
             name="isAttending"
             onChange={inputChangeHandler}
@@ -130,14 +128,14 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
             labelChecker="declines with regret"
             valueChecker={false}
             containerChecker="gap-1 items-center"
-            classChecker="hidden mr-1"
+            classChecker="hidden"
             typeChecker="radio"
             name="isAttending"
             onChange={inputChangeHandler}
             isChecked={!isAttending as boolean}
           />
         </div>
-        <div className="flex flex-col items-center md:items-start">
+        <div className="flexCenter flex-col">
           <LabeledTextarea
             className="InputDark"
             label="Message"
@@ -155,7 +153,7 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
             onChange={inputChangeHandler}
           />
         </div>
-        <div className="FlexCenter flex-col md:flex-row md:gap-6">
+        <div className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-4">
           <LabeledInput
             label="Email"
             name="email"
@@ -176,12 +174,9 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
           />
         </div>
 
-        <div className={`flex justify-center md:w-extraLarge gap-12 `}>
+        <div className="text-center">
           <GreenButton type="submit" className="bg-Green-default text-white">
             Reply
-          </GreenButton>
-          <GreenButton type="button" onClick={cancelHandler} className="hidden">
-            Cancel
           </GreenButton>
         </div>
       </form>

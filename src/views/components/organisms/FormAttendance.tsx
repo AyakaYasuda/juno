@@ -97,7 +97,7 @@ const FormAttendance: React.FC<FormAttendanceProps> = ({
               onChangeHandler={onChangeLastName}
             />
           </div>
-          <div className="FlexJustify flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
+          <div className="FlexJustifyCenter flex-col md:flex-row  items-center md:items-start md:w-96 md:gap-8">
             <Checker
               labelChecker="accepts with pleasure"
               valueChecker={true}

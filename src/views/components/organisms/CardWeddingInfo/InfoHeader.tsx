@@ -3,7 +3,7 @@ import Title from 'views/components/atoms/Title';
 const InfoHeader = () => {
   return (
     <section className="flex flex-col justify-center gap-6">
-      <p className="text-Green-dark FlexJustify">
+      <p className="text-Green-dark FlexJustifyCenter">
         You are cordinally invited to celebrate the marriage of
       </p>
       <div className="FlexCenter gap-4">
