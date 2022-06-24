@@ -1,8 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { IEvent } from 'types/EventData.type';
 import Button from '../atoms/Button';
-import Paragraph from '../atoms/Paragraph';
+import ColumnLabeledParagraph from '../molecules/ColumnLabeledParagraph';
+import RowLabeledParagraph from '../molecules/RowLabeledParagraph';
 
 type Props = {
   event: IEvent;
@@ -18,58 +18,49 @@ const EventInfo = (props: Props) => {
     <div className={`${showInfoStyle} md:block md:basis-1/2`}>
       <h2 className="hidden md:block mb-2">Event info</h2>
       <div className="flex flex-col mb-8 md:mb-4">
-        <div className="flex flex-row justify-between items-center mb-3">
-          <span className="basis-1/4">Event URL</span>
-          {/* FIXME: create base-style for Paragraph */}
-          <Paragraph
-            text={`${GUEST_PAGE_ROOT_URL}/guests/invitation/${event.SK}`}
-            customClassName="InputLighter basis-3/4 px-2"
-          />
-        </div>
-        <div className="flex flex-row justify-between items-center mb-3">
-          <span className="basis-1/4">Bride</span>
-          <Paragraph
-            text={event.bride}
-            customClassName="InputLighter basis-3/4 px-2"
-          />
-        </div>
-        <div className="flex flex-row justify-between items-center mb-3">
-          <span className="basis-1/4">Groom</span>
-          <Paragraph
-            text={event.groom}
-            customClassName="InputLighter basis-3/4 px-2"
-          />
-        </div>
+        <RowLabeledParagraph
+          label="Event URL"
+          text={`${GUEST_PAGE_ROOT_URL}/guests/invitation/${event.SK}`}
+          className="justify-between items-center mb-3"
+        />
+        <RowLabeledParagraph
+          label="Bride"
+          text={event.bride}
+          className="justify-between items-center mb-3"
+        />
+        <RowLabeledParagraph
+          label="Groom"
+          text={event.groom}
+          className="justify-between items-center mb-3"
+        />
       </div>
       <div className="flex flex-col mb-8 md:mb-4">
-        <h4 className="mb-1">Date and Time of Wedding Ceremony</h4>
-        <Paragraph
+        <ColumnLabeledParagraph
+          label="Date and Time of Wedding Ceremony"
           text={event.dateWedding}
-          customClassName={'InputLighter mb-2 px-2'}
         />
-        <h4 className="mb-1">Date and Time of Wedding Reception</h4>
-        <Paragraph
+        <ColumnLabeledParagraph
+          label="Date and Time of Wedding Reception"
           text={event.dateWeddingReception}
-          customClassName={'InputLighter mb-2 px-2'}
         />
-        <h4 className="mb-1">Message</h4>
-        <Paragraph
+        <ColumnLabeledParagraph
+          label="Message"
           text={event.message}
-          customClassName={'InputLighter mb-2 px-2 h-28'}
+          paragraphStyle="h-28"
         />
       </div>
-      <ul className="w-4/5 mx-auto md:flex md:gap-4">
-        <li className="hidden md:block md:basis-1/2">
+      <div className="w-4/5 mx-auto md:flex md:gap-4">
+        <div className="hidden md:block md:basis-1/2">
           <Button customStyle="border-2 border-White-default">
             Set uneditable
           </Button>
-        </li>
-        <li className="md:basis-1/2">
+        </div>
+        <div className="md:basis-1/2">
           <Button customStyle="border-2 border-White-default">
             <Link to="/admin/edit">Edit event info</Link>
           </Button>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   );
 };
