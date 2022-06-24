@@ -6,7 +6,7 @@ import { login } from 'redux/userThunkSlice';
 import Logo from 'views/components/atoms/Logo';
 import Input from 'views/components/atoms/Input';
 import Copyright from 'views/components/atoms/Copyright';
-import ButtonFlexible from 'views/components/atoms/ButtonFlexible';
+import GreenButton from 'views/components/atoms/GreenButton';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
 
@@ -40,7 +40,7 @@ const GuestTopLayout = () => {
 
     // login success
     if (login.fulfilled.match(result)) {
-      alert('login successfuly!');
+      alert('login successfully!');
 
       SessionServices.setItem(SessionKeys.TOKEN, result.payload.token);
       SessionServices.setItem(SessionKeys.USER_ID, result.payload.userId);
@@ -94,13 +94,13 @@ const GuestTopLayout = () => {
               onChangeHandler={handleChange}
             />
             <div className="FlexJustify md:flex md:justify-start md: mt-6">
-              <ButtonFlexible
-                typeButton="submit"
-                onClickButton={() => null}
-                styleButton="bg-Green-default text-white w-2/5"
+              <GreenButton
+                type="submit"
+                onClick={() => null}
+                className="bg-Green-default text-white w-2/5"
               >
                 Login
-              </ButtonFlexible>
+              </GreenButton>
             </div>
           </form>
         </div>
