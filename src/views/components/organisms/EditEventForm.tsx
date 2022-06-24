@@ -56,7 +56,7 @@ const EditEventForm = (props: Props) => {
     message,
   } = values;
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     formSubmitLogic({
@@ -76,7 +76,7 @@ const EditEventForm = (props: Props) => {
   return (
     <Card className={className}>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={submitHandler}
         className="flex flex-col md:flex-row p-4 md:gap-6"
       >
         <div className="md:basis-1/2 flex flex-col">

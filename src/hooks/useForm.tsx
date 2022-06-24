@@ -6,7 +6,7 @@ const useForm = (props: Props) => {
   const initialValues = props;
   const [values, setValues] = useState(initialValues);
 
-  const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const inputChangeHandler = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setValues((prevState) => ({ ...prevState, [name]: value }));
   };

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import TempCopyright from 'views/components/atoms/TempCopyright';
 
-// import Button from '../../atoms/Button';
 import Navbar from '../Navbar';
 
 type Props = {
