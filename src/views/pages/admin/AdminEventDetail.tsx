@@ -2,26 +2,32 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { getEvent, getGuests } from 'redux/eventThunkSlice';
-import Navbar from 'views/components/molecules/Navbar';
 import Modal from 'views/components/molecules/Modal';
 import Button from 'views/components/atoms/Button';
 import Paragraph from 'views/components/atoms/Paragraph';
+import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
+import MobileToggleSectionHeaders from 'views/components/organisms/MobileToggleSectionHeaders';
 
 const AdminEventDetail = () => {
   const dispatch = useAppDispatch();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  // FIXME: do you need it?
-  const [showInfoStyle, setShowInfoStyle] = useState('w-full');
-  const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
-  const [showModal, setShowModal] = useState<boolean>(false);
-
-  // FIXME: do you need it?
-  const [guestUserId, setGuestUserId] = useState<string>('');
 
   const { SK: userId } = useAppSelector((state) => state.user.user);
   const { event } = useAppSelector((state) => state.event);
   const { guests } = useAppSelector((state) => state.event);
+
+  // FIXME:
+  // 1. add mobile first style
+  // 2. toggle style by react, not css props
+
+  // showInfo status
+  // 1. block w-full
+  // 2. hidden
+  const [showInfoStyle, setShowInfoStyle] = useState('w-full');
+  const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedGuestUserId, setSelectedGuestUserId] = useState<string>('');
 
   const GUEST_PAGE_ROOT_URL = process.env.REACT_APP_GUEST_PAGE_ROOT_URL;
 
@@ -29,7 +35,7 @@ const AdminEventDetail = () => {
     if (userId) {
       dispatch(getEvent(userId));
     }
-  }, [userId]);
+  }, [userId, dispatch]);
 
   useEffect(() => {
     setIsLoading(false);
@@ -44,13 +50,13 @@ const AdminEventDetail = () => {
   };
 
   const showGuestsHandler = () => {
-    setShowGuestsStyle('block w-full');
     setShowInfoStyle('hidden');
+    setShowGuestsStyle('block w-full');
   };
 
   const showModalHandler = (userId: string) => {
     setShowModal(true);
-    setGuestUserId(userId);
+    setSelectedGuestUserId(userId);
   };
 
   const closeModalHandler = () => {
@@ -58,33 +64,22 @@ const AdminEventDetail = () => {
   };
 
   return (
-    <>
-      <Navbar
-        bgColor="Pink-default"
-        link={
-          <li className="mr-4 Hover">
-            <Link to="/admin/event">Events</Link>
-          </li>
-        }
-        redirectPath="/admin/login"
-      />
+    <AdminPageLayout>
       {showModal && (
-        <Modal closeHandler={closeModalHandler} guestUserId={guestUserId} />
+        <Modal
+          closeHandler={closeModalHandler}
+          guestUserId={selectedGuestUserId}
+        />
       )}
-      <section className="w-full h-screen FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default relative">
-        {isLoading && <h3 className="text-Pink-dark">Loading....</h3>}
-        {event && (
-          <>
-            {/* FIXME: set active state to header, so that user can notice it's button */}
-            <ul className="pt-16 flex flex-row justify-center gap-14 mb-6 md:hidden">
-              <li onClick={showInfoHandler} className="HoverUnderLine">
-                <h2 className="basis-1/2 text-4xl">Event info</h2>
-              </li>
-              <li onClick={showGuestsHandler} className="HoverUnderLine">
-                <h2 className="basis-1/2 text-4xl">Guests list</h2>
-              </li>
-            </ul>
-            <div className="w-4/5 h-3/4 flex flex-row gap-14 text-white">
+      {isLoading && <h3 className="text-Pink-dark">Loading....</h3>}
+      {event && (
+        <>
+          <MobileToggleSectionHeaders
+            onShowGuests={showGuestsHandler}
+            onShowInfo={showInfoHandler}
+          />
+          <div className="w-4/5 h-3/4 flex flex-row gap-14 text-white">
+            {
               <div className={`${showInfoStyle} md:block md:basis-1/2`}>
                 <h2 className="hidden md:block mb-2">Event info</h2>
                 <div className="flex flex-col mb-8 md:mb-4">
@@ -141,6 +136,8 @@ const AdminEventDetail = () => {
                   </li>
                 </ul>
               </div>
+            }
+            {
               <div className={`${showGuestsStyle} md:block md:basis-1/2`}>
                 <h2 className="hidden md:block mb-2">Guests list</h2>
                 <ul className="overflow-y-scroll h-4/5">
@@ -169,15 +166,11 @@ const AdminEventDetail = () => {
                     })}
                 </ul>
               </div>
-            </div>
-          </>
-        )}
-
-        <small className="absolute bottom-5 text-center">
-          &copy; Sho, Kyosuke, Fumina, Ayaka 2022 / All Rights Reserved
-        </small>
-      </section>
-    </>
+            }
+          </div>
+        </>
+      )}
+    </AdminPageLayout>
   );
 };
 
