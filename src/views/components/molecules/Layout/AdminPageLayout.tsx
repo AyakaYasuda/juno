@@ -11,7 +11,7 @@ type Props = {
 
 const AdminPageLayout: React.FC<Props> = ({ children }) => {
   return (
-    <section className="w-full pt-20 FlexCenter flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default md:min-h-screen relative text-Pink-default">
+    <section className="w-full flex items-center flex-col bg-gradient-to-b from-Pink-lighter to-Pink-default relative min-h-screen text-Pink-default pt-20 ">
       <Navbar
         bgColor="Pink-default"
         link={

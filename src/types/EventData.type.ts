@@ -30,6 +30,6 @@ export interface IEventRequest {
 
 export interface IEventState {
   event: IEvent;
-  guests: IUser[] | [];
+  guests: IUser[];
   status: 'loading' | 'success' | 'failed';
 }
