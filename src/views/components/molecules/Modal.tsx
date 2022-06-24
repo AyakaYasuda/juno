@@ -23,7 +23,10 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
 
   return (
     user && (
-      <div className="absolute top-0 left-0 z-50 bg-Pink-lighter bg-opacity-40 w-screen h-screen FlexCenter text-Pink-default ">
+      <div
+        onClick={closeHandler}
+        className="absolute top-0 left-0 z-50 bg-Pink-lighter bg-opacity-40 w-screen h-screen FlexCenter text-Pink-default "
+      >
         <div className="relative w-3/4 md:w-3/5">
           <Card>
             <button onClick={closeHandler} className="absolute top-7 right-7">

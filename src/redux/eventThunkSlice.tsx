@@ -6,23 +6,53 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/event';
 
+// FIXME: delete dummy data
 // initialize
 const initialState: IEventState = {
   event: {
-    SK: '',
-    bride: '',
-    groom: '',
-    dateWedding: '',
-    startingTimeWedding: '',
-    endingTimeWedding: '',
-    dateWeddingReception: '',
-    startingTimeReception: '',
-    endingTimeReception: '',
-    message: '',
-    address: '',
+    SK: 'dummy SK',
+    bride: 'dummy bride',
+    groom: 'dummy groom',
+    dateWedding: 'dummy dateWedding',
+    startingTimeWedding: 'dummy startingTimeWedding',
+    endingTimeWedding: 'dummy endingTimeWedding',
+    dateWeddingReception: 'dummy dateWeddingReception',
+    startingTimeReception: 'dummy startingTimeReception',
+    endingTimeReception: 'dummy endingTimeReception',
+    message: 'dummy message',
+    address: 'dummy address',
     isEditable: true,
   },
-  guests: [],
+  guests: [
+    {
+      PK: 'dummy PK',
+      SK: 'dummy SK',
+      userId: 'dummy userId',
+      eventId: 'dummy eventId',
+      firstName: 'dummy firstName',
+      lastName: 'dummy lastName',
+      email: 'dummy email',
+      password: 'dummy password',
+      isAdmin: false,
+      message: 'dummy message',
+      allergy: 'dummy allergy',
+      isAttending: true,
+    },
+    {
+      PK: 'dummy PK2',
+      SK: 'dummy SK2',
+      userId: 'dummy userId',
+      eventId: 'dummy eventId',
+      firstName: 'dummy firstName',
+      lastName: 'dummy lastName',
+      email: 'dummy email',
+      password: 'dummy password',
+      isAdmin: false,
+      message: 'dummy message',
+      allergy: 'dummy allergy',
+      isAttending: true,
+    },
+  ],
   status: 'loading',
 };
 

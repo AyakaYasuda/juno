@@ -42,13 +42,7 @@ const GuestInvitationLayout: React.FC<GuestInvitationLayoutProps> = () => {
     isAttending,
   } = formState;
 
-  console.log('formState', formState);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('handleChange');
-    console.log('e.target.name', e.target.name);
-    console.log('e.target.value', e.target.value);
-
     if (e.target.value === 'true') {
       return setFormState((prev) => ({
         ...prev,
