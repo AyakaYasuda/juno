@@ -13,6 +13,7 @@ import { RootState } from 'redux/store';
 import { IUpdateUserReqBody } from 'types/IUpdateUserReqBody.type';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
+import getAuthHttpClient from 'services/authHttpClient.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
@@ -90,8 +91,11 @@ export const getUser = createAsyncThunk(
   CreateAsyncThunkActions.GET_USER,
   async (userId: string, { rejectWithValue }) => {
     try {
-      const token = SessionServices.getItem(SessionKeys.USER_ID)
-      const result = await axios.get(`${API_URL}/${userId}`);
+      const url = `${API_URL}/${userId}`;
+
+      console.log('url', url);
+
+      const result = await getAuthHttpClient().get(url);
       return result.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
