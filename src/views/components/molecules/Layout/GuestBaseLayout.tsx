@@ -1,5 +1,5 @@
 import React from 'react';
-import Copyright from 'views/components/atoms/Copyright';
+import Copyright from 'views/components/atoms/DELETE_ME_Copyright';
 
 type GuestBaseLayoutProps = {
   children: React.ReactNode;

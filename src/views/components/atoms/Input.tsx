@@ -12,6 +12,7 @@ type InputProps = {
   onChangeHandler: (params: any) => any;
 };
 
+// FIXME: delete me, use labeled input instead
 const Input: React.FC<InputProps> = ({
   type,
   containerInput,

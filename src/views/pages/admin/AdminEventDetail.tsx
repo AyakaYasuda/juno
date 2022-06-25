@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { getEvent, getGuests } from 'redux/eventThunkSlice';
-import Modal from 'views/components/molecules/Modal';
+import Modal from 'views/components/organisms/Modal';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import MobileToggleSectionHeaders from 'views/components/organisms/MobileToggleSectionHeaders';
 import EventInfo from 'views/components/organisms/EventInfo';

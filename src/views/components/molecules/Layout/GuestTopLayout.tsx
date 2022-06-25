@@ -5,7 +5,7 @@ import { login } from 'redux/userThunkSlice';
 
 import Logo from 'views/components/atoms/Logo';
 import Input from 'views/components/atoms/Input';
-import Copyright from 'views/components/atoms/Copyright';
+import Copyright from 'views/components/atoms/DELETE_ME_Copyright';
 import GuestButton from 'views/components/atoms/GuestButton';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';

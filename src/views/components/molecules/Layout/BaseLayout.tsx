@@ -2,7 +2,7 @@ import React from 'react';
 import TempCopyright from 'views/components/atoms/TempCopyright';
 
 // import Button from '../../atoms/Button';
-import Navbar from '../Navbar';
+import Navbar from '../../organisms/Navbar';
 
 type Props = {
   bgClassName: string;
