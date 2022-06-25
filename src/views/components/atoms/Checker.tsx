@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 import classes from './Checker.module.css';
 
+// FIXME: rename props to simple names
 type CheckerProps = {
   containerChecker: string;
   valueChecker: boolean;
@@ -8,11 +9,11 @@ type CheckerProps = {
   typeChecker: string;
   labelChecker: string;
   name: string;
-  // FIXME: add type
-  onChange: any;
+  onChange: ChangeEventHandler<HTMLInputElement>;
   isChecked: boolean;
 };
 
+// FIXME: rename to CheckboxRadioButton
 const Checker: React.FC<CheckerProps> = ({
   containerChecker,
   valueChecker,

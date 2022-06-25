@@ -16,20 +16,21 @@ import { SessionKeys } from 'constants/sessionKeys';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
+// FIXME: delete dummy data
 // initialize
 const initialState: IUserState = {
   user: {
-    PK: '',
-    SK: '',
-    userId: '',
-    eventId: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+    PK: 'dummy PK',
+    SK: 'dummy SK',
+    userId: 'dummy userId',
+    eventId: 'dummy eventId',
+    firstName: 'dummy firstName',
+    lastName: 'dummy lastName',
+    email: 'dummy email',
+    password: 'dummy password',
     isAdmin: false,
-    message: '',
-    allergy: '',
+    message: 'dummy message',
+    allergy: 'dummy allergy',
     isAttending: true,
   },
   status: 'pending',
@@ -89,6 +90,7 @@ export const getUser = createAsyncThunk(
   CreateAsyncThunkActions.GET_USER,
   async (userId: string, { rejectWithValue }) => {
     try {
+      const token = SessionServices.getItem(SessionKeys.USER_ID)
       const result = await axios.get(`${API_URL}/${userId}`);
       return result.data;
     } catch (error: any) {

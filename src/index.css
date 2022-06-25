@@ -37,11 +37,14 @@
   .FlexCenter {
     @apply flex items-center justify-center;
   }
-  .FlexAlign {
+  .FlexAlignCenter {
     @apply flex items-center;
   }
-  .FlexJustify {
+  .FlexJustifyCenter {
     @apply flex justify-center;
+  }
+  .FlexJustifyBetween {
+    @apply flex justify-between;
   }
   .NavBase {
     @apply h-16 min-w-full flex items-center justify-between px-8 fixed top-0 left-0 z-30 backdrop-blur bg-white bg-opacity-10;
@@ -53,7 +56,7 @@
     @apply hover:border-b-2 border-white;
   }
   .InputDark {
-    @apply bg-Pink-lighter bg-opacity-50 text-Pink-default p-2 border-none rounded-md mb-3;
+    @apply bg-Pink-lighter bg-opacity-50 text-Pink-default p-2 border-none rounded-md mb-5;
   }
   .InputLighter {
     @apply p-1 rounded-3xl bg-White-lighter text-Pink-default bg-opacity-80 border-none drop-shadow-lg md:p-2 md:rounded-xl;
@@ -67,7 +70,7 @@
   .InputBorder {
     @apply mb-4 border-b-2 border-Pink-default bg-inherit;
   }
-  .buttonWhite {
+  .ButtonWhite {
     @apply rounded-3xl bg-transparent text-white bg-opacity-80 border drop-shadow-lg md:p-2 md:rounded-xl;
   }
 

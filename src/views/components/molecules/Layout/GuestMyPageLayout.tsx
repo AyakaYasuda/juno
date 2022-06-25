@@ -10,8 +10,8 @@ import { getUser } from 'redux/userThunkSlice';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo/index';
 import Title from 'views/components/atoms/Title';
 import GuestBaseLayout from './GuestBaseLayout';
-import Navbar from 'views/components/molecules/Navbar';
-import FormAttendance from '../../organisms/FormAttendance';
+import Navbar from 'views/components/organisms/Navbar';
+// import FormAttendance from '../../organisms/FormAttendance';
 
 const GuestMyPageLayout = () => {
   const navigate = useNavigate();
@@ -53,7 +53,7 @@ const GuestMyPageLayout = () => {
           </div>
 
           <div className="w-full ">
-            <FormAttendance
+            {/* <FormAttendance
               sectionTitleColor="text-white"
               sectionTitle="Your Reply"
               classInput="InputDisabled"
@@ -84,7 +84,7 @@ const GuestMyPageLayout = () => {
               onChangeAllergy={() => null}
               onInputChange={() => null}
               onClickCancel={() => null}
-            />
+            /> */}
           </div>
         </div>
       </div>
