@@ -3,6 +3,8 @@ import { IEventRequest, IEventState } from 'types/EventData.type';
 // try to use createAsyncThunk
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { RootState } from './store';
+import getAuthHttpClient from 'services/authHttpClient.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/event';
 
@@ -77,7 +79,12 @@ export const getEvent = createAsyncThunk(
   'event/get',
   async (userId: string, { rejectWithValue }) => {
     try {
-      const result = await axios.get(`${API_URL}/${userId}`);
+      // const url = `${API_URL}/${userId}`;
+
+      const url = `${API_URL}/f0f9547d-b0f8-4621-824f-b1a3b53c95ad`;
+      console.log('getEvent', url);
+
+      const result = await getAuthHttpClient().get(url);
       return result.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -103,7 +110,7 @@ export const editEvent = createAsyncThunk(
   async (eventData: IEventRequest, { getState, rejectWithValue }) => {
     try {
       // FIXME: fix type
-      const { SK: eventId } = (getState() as any).event.event;
+      const { SK: eventId } = (getState() as RootState).event.event;
       const result = await axios.patch(
         `${API_URL}/edit/${eventId}`,
         JSON.stringify(eventData)
