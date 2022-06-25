@@ -14,7 +14,7 @@ const GuestLoginLayout: React.FC<Props> = ({ children }) => {
         src={GuestTopImg}
         alt="Guest Top"
       />
-      <div className="absolute inset-1/2 left-0 text-center w-full md:w-1/2 md:inset-y-48 md:left-20">
+      <div className="absolute text-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 md:left-40 md:-translate-x-0 md:w-96">
         {children}
       </div>
       <TempCopyright className="text-white bottom-4 absolute" />
