@@ -1,5 +1,5 @@
 import React from 'react';
-import Copyright from 'views/components/atoms/DELETE_ME_Copyright';
+import DeleteMeCopyright from 'views/components/atoms/DeleteMeCopyright';
 
 type GuestBaseLayoutProps = {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ const GuestBaseLayout: React.FC<GuestBaseLayoutProps> = ({ children }) => {
         {children}
       </div>
       {/* FIXME: delete fixed from copyright */}
-      <Copyright textColor="text-Pink-dark" />
+      <DeleteMeCopyright textColor="text-Pink-dark" />
     </>
   );
 };

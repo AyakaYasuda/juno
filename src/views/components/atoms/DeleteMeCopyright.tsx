@@ -5,7 +5,7 @@ type propsContainer = {
 };
 
 // FIXME: delete me, use TempCopyright
-const DELETE_ME_Copyright: React.FC<propsContainer> = ({ textColor }) => {
+const DeleteMeCopyright: React.FC<propsContainer> = ({ textColor }) => {
   return (
     <div className="text-center w-full fixed left-0 bottom-1 ">
       <p className={`text-xs ${textColor}`}>
@@ -15,4 +15,4 @@ const DELETE_ME_Copyright: React.FC<propsContainer> = ({ textColor }) => {
   );
 };
 
-export default DELETE_ME_Copyright;
+export default DeleteMeCopyright;
