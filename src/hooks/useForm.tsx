@@ -6,12 +6,26 @@ const useForm = (props: Props) => {
   const initialValues = props;
   const [values, setValues] = useState(initialValues);
 
+  const toBooleanIfValueIsBoolean = (value: string): string | boolean => {
+    if (value === 'true') {
+      return true;
+    }
+
+    if (value === 'false') {
+      return false;
+    }
+
+    return value;
+  };
+
   // FIXME: using input type textarea instead of textarea tag?
   const inputChangeHandler = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setValues((prevState) => ({ ...prevState, [name]: value }));
+    const convertedValue = toBooleanIfValueIsBoolean(value);
+
+    setValues((prevState) => ({ ...prevState, [name]: convertedValue }));
   };
 
   return { values, inputChangeHandler };
