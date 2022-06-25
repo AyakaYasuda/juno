@@ -10,7 +10,7 @@ import { getUser } from 'redux/userThunkSlice';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo/index';
 import Title from 'views/components/atoms/Title';
 import GuestBaseLayout from './GuestBaseLayout';
-import Navbar from 'views/components/molecules/Navbar';
+import Navbar from 'views/components/organisms/Navbar';
 // import FormAttendance from '../../organisms/FormAttendance';
 
 const GuestMyPageLayout = () => {

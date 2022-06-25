@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import TempCopyright from 'views/components/atoms/TempCopyright';
 
-import Navbar from '../Navbar';
+import Navbar from '../../organisms/Navbar';
 
 type Props = {
   children: React.ReactNode;

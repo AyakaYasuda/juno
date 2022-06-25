@@ -5,7 +5,7 @@ import { login } from 'redux/userThunkSlice';
 
 import Logo from 'views/components/atoms/Logo';
 import Input from 'views/components/atoms/Input';
-import Copyright from 'views/components/atoms/Copyright';
+import DeleteMeCopyright from 'views/components/atoms/DeleteMeCopyright';
 import GuestButton from 'views/components/atoms/GuestButton';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
@@ -106,7 +106,7 @@ const GuestTopLayout = () => {
         </div>
       </div>
 
-      <Copyright textColor="text-white" />
+      <DeleteMeCopyright textColor="text-white" />
     </div>
   );
 };

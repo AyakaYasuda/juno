@@ -5,6 +5,7 @@ import Checker from 'views/components/atoms/Checker';
 import Desc from 'views/components/molecules/LabeledTextarea';
 import ButtonFlexible from 'views/components/atoms/GuestButton';
 
+// FIXME: rename me to AttendanceForm
 type FormAttendanceProps = {
   classInput: string;
   sectionTitle: string;
@@ -36,6 +37,7 @@ type FormAttendanceProps = {
   onClickCancel: (params: any) => any;
 };
 
+// FIXME: rename me to AttendanceForm
 const FormAttendance: React.FC<FormAttendanceProps> = ({
   classInput,
   sectionTitle,

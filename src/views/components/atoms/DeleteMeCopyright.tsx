@@ -4,7 +4,8 @@ type propsContainer = {
   textColor: string;
 };
 
-const Copyright: React.FC<propsContainer> = ({ textColor }) => {
+// FIXME: delete me, use TempCopyright
+const DeleteMeCopyright: React.FC<propsContainer> = ({ textColor }) => {
   return (
     <div className="text-center w-full fixed left-0 bottom-1 ">
       <p className={`text-xs ${textColor}`}>
@@ -14,4 +15,4 @@ const Copyright: React.FC<propsContainer> = ({ textColor }) => {
   );
 };
 
-export default Copyright;
+export default DeleteMeCopyright;
