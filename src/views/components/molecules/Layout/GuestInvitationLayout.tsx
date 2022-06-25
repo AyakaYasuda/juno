@@ -6,15 +6,10 @@ import FlowerB from '../../../../assets/images/invitation-flower2.png';
 
 type Props = {
   bgClassName: string;
-  copyrightClassName: string;
   children: React.ReactNode;
 };
 
-const GuestInvitationLayout: React.FC<Props> = ({
-  bgClassName,
-  copyrightClassName,
-  children,
-}) => {
+const GuestInvitationLayout: React.FC<Props> = ({ bgClassName, children }) => {
   return (
     <section className={bgClassName}>
       <img
@@ -24,7 +19,7 @@ const GuestInvitationLayout: React.FC<Props> = ({
       />
       {children}
       <img src={FlowerB} alt="flower" className="w-1/4 fixed bottom-0 left-0" />
-      <TempCopyright className={copyrightClassName} />
+      <TempCopyright className="text-Pink-dark bottom-4 absolute" />
     </section>
   );
 };

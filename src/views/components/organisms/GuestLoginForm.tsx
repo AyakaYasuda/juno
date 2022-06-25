@@ -2,22 +2,19 @@ import React from 'react';
 import { useAppDispatch } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
 import useForm from 'hooks/useForm';
-import { Link } from 'react-router-dom';
 import { login } from 'redux/userThunkSlice';
 import { SessionKeys } from 'constants/sessionKeys';
 import SessionServices from 'services/session.services';
-
-import Button from '../atoms/Button';
-import Card from '../atoms/Card';
 import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
+import GuestButton from '../atoms/GuestButton';
 
 const initialFormState = {
   email: '',
   password: '',
 };
 
-const AdminLoginForm = () => {
+const GuestLoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -34,14 +31,12 @@ const AdminLoginForm = () => {
       })
     );
 
-    console.log(result);
-
     // login success
     if (login.fulfilled.match(result)) {
       alert('login successfully!');
       SessionServices.setItem(SessionKeys.TOKEN, result.payload.token);
       SessionServices.setItem(SessionKeys.USER_ID, result.payload.userId);
-      navigate('/admin/create');
+      navigate('/guests/mypage');
     }
 
     // login failed
@@ -51,38 +46,37 @@ const AdminLoginForm = () => {
   };
 
   return (
-    <Card>
-      <Form
-        className="flex flex-col text-left mb-8 w-full md:w-4/5 mx-auto pt-12"
-        onSubmit={submitHandler}
-      >
-        <LabeledInput
-          type="email"
-          name="email"
-          label="Email"
-          value={email as string}
-          onChange={inputChangeHandler}
-          labelStyle="text-Pink-default"
-          inputStyle="InputBorder mb-16"
+    <Form
+      className="flex flex-col text-left mb-8 mx-auto pt-12 px-24 w-full"
+      onSubmit={submitHandler}
+    >
+      <LabeledInput
+        type="email"
+        name="email"
+        label="Email"
+        value={email as string}
+        onChange={inputChangeHandler}
+        labelStyle="text-white"
+        inputStyle="InputBorder mb-16 border-white"
+      />
+      <LabeledInput
+        type="password"
+        name="password"
+        label="Password"
+        value={password as string}
+        onChange={inputChangeHandler}
+        labelStyle="text-white"
+        inputStyle="InputBorder mb-20 border-white"
+      />
+      <div className="w-3/4 mx-auto pt-4 text-Pink-default text-center">
+        <GuestButton
+          className="BaseButtonStyle bg-Green-default text-white"
+          children="Log In"
+          type="submit"
         />
-        <LabeledInput
-          type="password"
-          name="password"
-          label="Password"
-          value={password as string}
-          onChange={inputChangeHandler}
-          labelStyle="text-Pink-default"
-          inputStyle="InputBorder mb-20"
-        />
-        <div className="w-3/4 mx-auto pt-4 text-Pink-default text-center">
-          <Button customStyle="bg-Pink-default text-White-default mb-4">
-            Log In
-          </Button>
-          <Link to={'/admin/register'}>You don't have an account yet?</Link>
-        </div>
-      </Form>
-    </Card>
+      </div>
+    </Form>
   );
 };
 
-export default AdminLoginForm;
+export default GuestLoginForm;

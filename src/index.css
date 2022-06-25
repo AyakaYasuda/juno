@@ -70,7 +70,7 @@
   .InputBorder {
     @apply mb-4 border-b-2 border-Pink-default bg-inherit;
   }
-  .buttonWhite {
+  .ButtonWhite {
     @apply rounded-3xl bg-transparent text-white bg-opacity-80 border drop-shadow-lg md:p-2 md:rounded-xl;
   }
 
