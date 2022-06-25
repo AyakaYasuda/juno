@@ -8,7 +8,7 @@ import { signupGuest, createAttendanceData } from 'redux/userThunkSlice';
 import LabeledInput from '../molecules/LabeledInput';
 import Checker from '../atoms/Checker';
 import LabeledTextarea from '../molecules/LabeledTextarea';
-import GreenButton from '../atoms/GreenButton';
+import GuestButton from '../atoms/GuestButton';
 
 const formInitialValues = {
   firstName: '',
@@ -175,9 +175,9 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
         </div>
 
         <div className="text-center">
-          <GreenButton type="submit" className="bg-Green-default text-white">
+          <GuestButton type="submit" className="bg-Green-default text-white">
             Reply
-          </GreenButton>
+          </GuestButton>
         </div>
       </form>
     </div>

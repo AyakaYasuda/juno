@@ -7,7 +7,7 @@ type Props = {
   onClick?: () => void;
 };
 
-const GreenButton: React.FC<Props> = ({
+const GuestButton: React.FC<Props> = ({
   children,
   className,
   type,
@@ -24,4 +24,4 @@ const GreenButton: React.FC<Props> = ({
   );
 };
 
-export default GreenButton;
+export default GuestButton;

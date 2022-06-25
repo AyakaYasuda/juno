@@ -6,7 +6,7 @@ import { login } from 'redux/userThunkSlice';
 import Logo from 'views/components/atoms/Logo';
 import Input from 'views/components/atoms/Input';
 import Copyright from 'views/components/atoms/Copyright';
-import GreenButton from 'views/components/atoms/GreenButton';
+import GuestButton from 'views/components/atoms/GuestButton';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
 
@@ -94,13 +94,13 @@ const GuestTopLayout = () => {
               onChangeHandler={handleChange}
             />
             <div className="FlexJustifyCenter md:flex md:justify-start md: mt-6">
-              <GreenButton
+              <GuestButton
                 type="submit"
                 onClick={() => null}
                 className="bg-Green-default text-white w-2/5"
               >
                 Login
-              </GreenButton>
+              </GuestButton>
             </div>
           </form>
         </div>

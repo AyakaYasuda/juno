@@ -3,7 +3,7 @@ import Title from 'views/components/atoms/Title';
 import Input from 'views/components/atoms/Input';
 import Checker from 'views/components/atoms/Checker';
 import Desc from 'views/components/molecules/LabeledTextarea';
-import ButtonFlexible from 'views/components/atoms/GreenButton';
+import ButtonFlexible from 'views/components/atoms/GuestButton';
 
 type FormAttendanceProps = {
   classInput: string;
