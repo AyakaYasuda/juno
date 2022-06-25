@@ -47,7 +47,7 @@ const GuestLoginForm = () => {
 
   return (
     <Form
-      className="flex flex-col text-left mb-8 mx-auto pt-12 px-24 w-full"
+      className="flex flex-col mt-16 mb-8 w-full px-8"
       onSubmit={submitHandler}
     >
       <LabeledInput
@@ -56,7 +56,7 @@ const GuestLoginForm = () => {
         label="Email"
         value={email as string}
         onChange={inputChangeHandler}
-        labelStyle="text-white"
+        labelStyle="text-white text-left"
         inputStyle="InputBorder mb-16 border-white"
       />
       <LabeledInput
@@ -65,7 +65,7 @@ const GuestLoginForm = () => {
         label="Password"
         value={password as string}
         onChange={inputChangeHandler}
-        labelStyle="text-white"
+        labelStyle="text-white text-left"
         inputStyle="InputBorder mb-20 border-white"
       />
       <div className="w-3/4 mx-auto pt-4 text-Pink-default text-center">
