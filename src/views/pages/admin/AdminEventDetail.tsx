@@ -41,11 +41,13 @@ const AdminEventDetail = () => {
     }
   }, [event, dispatch]);
 
+  // FIXME: change to toggle style, not css props
   const showInfoHandler = () => {
     setShowInfoStyle('block w-full');
     setShowGuestsStyle('hidden');
   };
 
+  // FIXME: change to toggle style, not css props
   const showGuestsHandler = () => {
     setShowInfoStyle('hidden');
     setShowGuestsStyle('block w-full');
