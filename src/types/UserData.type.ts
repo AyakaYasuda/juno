@@ -37,6 +37,14 @@ export interface IGuestSignupRequest {
   isAdmin: boolean;
 }
 
+export interface IUpdateUserRequest {
+  firstName: string;
+  lastName: string;
+  message: string;
+  allergy: string;
+  isAttending: boolean;
+}
+
 export interface IUserState {
   user: IUser;
   status: 'pending' | 'loading' | 'failed';
