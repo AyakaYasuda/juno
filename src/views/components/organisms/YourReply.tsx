@@ -1,13 +1,18 @@
 import React from 'react';
 import { IUser } from 'types/UserData.type';
+
 import ColumnLabeledParagraph from '../molecules/ColumnLabeledParagraph';
 import LabeledTextarea from '../molecules/LabeledTextarea';
+import GuestButton from '../atoms/GuestButton';
+import { useNavigate } from 'react-router';
 
 type Props = {
   user: IUser;
 };
 
 const YourReply: React.FC<Props> = ({ user }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full flex flex-col py-5 px-0 sm:px-10 gap-6">
       <div className="grid grid-cols-2 auto-cols-fr justify-items-center gap-4">
@@ -64,6 +69,13 @@ const YourReply: React.FC<Props> = ({ user }) => {
         rows={4}
         value={user.allergy}
       />
+      <GuestButton
+        className="BaseButtonStyle border border-white text-white drop-shadow-lg w-48 mx-auto"
+        type="button"
+        onClick={() => navigate('/guests/edit')}
+      >
+        Edit your reply
+      </GuestButton>
     </div>
   );
 };

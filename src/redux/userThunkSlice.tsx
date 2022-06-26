@@ -14,6 +14,7 @@ import { IUpdateUserReqBody } from 'types/IUpdateUserReqBody.type';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
 import getAuthHttpClient from 'services/authHttpClient.service';
+import { authHttpClient } from 'services/axios.config.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
@@ -95,7 +96,7 @@ export const getUser = createAsyncThunk(
 
       console.log('url', url);
 
-      const result = await getAuthHttpClient().get(url);
+      const result = await authHttpClient.get(url);
 
       return result.data;
     } catch (error: any) {
