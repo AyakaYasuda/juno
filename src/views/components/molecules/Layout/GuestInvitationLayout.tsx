@@ -5,13 +5,12 @@ import FlowerA from '../../../../assets/images/invitation-flower1.png';
 import FlowerB from '../../../../assets/images/invitation-flower2.png';
 
 type Props = {
-  bgClassName: string;
   children: React.ReactNode;
 };
 
-const GuestInvitationLayout: React.FC<Props> = ({ bgClassName, children }) => {
+const GuestInvitationLayout: React.FC<Props> = ({ children }) => {
   return (
-    <section className={bgClassName}>
+    <section className="w-full pt-20 FlexCenter flex-col bg-gradient-to-t from-Green-default to-White-darker md:min-h-screen relative">
       <img
         src={FlowerA}
         alt="flower"

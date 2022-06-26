@@ -15,8 +15,8 @@ const EventInfo = (props: Props) => {
   const { event, showInfoStyle } = props;
 
   return (
-    <div className={`${showInfoStyle} md:block md:basis-1/2`}>
-      <h2 className="hidden md:block mb-2">Event info</h2>
+    <div className={`${showInfoStyle} md:block lg:basis-1/2`}>
+      <h2 className="hidden lg:block mb-2">Event info</h2>
       <div className="flex flex-col mb-8 md:mb-4">
         <RowLabeledParagraph
           label="Event URL"

@@ -96,8 +96,10 @@ export const getUser = createAsyncThunk(
       console.log('url', url);
 
       const result = await getAuthHttpClient().get(url);
+
       return result.data;
     } catch (error: any) {
+      console.log(error)
       return rejectWithValue(error.response.data);
     }
   }

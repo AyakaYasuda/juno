@@ -10,16 +10,10 @@ const GuestInvitation: React.FC = () => {
   const eventId = params.eventId!;
 
   return (
-    <GuestInvitationLayout
-      bgClassName="w-full pt-20 FlexCenter flex-col bg-gradient-to-t from-Green-default to-White-darker md:min-h-screen relative"
-    >
-      <div className="w-5/6 lg:w-4/5 my-8 md:h-4/5 bg-white FlexCenter rounded-2xl py-10 px-4 md:py-10 md:px-10 flex flex-col md:items-center lg:flex-row gap-8">
-        <div className="w-5/6 lg:w-1/2">
-          <CardWeddingInfo spacing="" />
-        </div>
-        <div className="w-5/6 lg:w-1/2">
-          <RsvpForm eventId={eventId} />
-        </div>
+    <GuestInvitationLayout>
+      <div className="grid grid-cols-1 justify-items-center lg:grid-cols-2 bg-white rounded-2xl mx-20 p-20 gap-12">
+        <CardWeddingInfo />
+        <RsvpForm eventId={eventId} />
       </div>
     </GuestInvitationLayout>
   );

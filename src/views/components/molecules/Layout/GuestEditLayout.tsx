@@ -7,7 +7,7 @@ import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo/index';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { RootState } from 'redux/store';
 import { editUser } from 'redux/userThunkSlice';
-import GuestBaseLayout from './GuestBaseLayout';
+import GuestBaseLayout from './GuestPageLayout';
 // import FormAttendance from '../../organisms/FormAttendance';
 
 interface FormState {
@@ -114,7 +114,7 @@ const GuestEditLayout = () => {
             <Title classTitle="" textColor="text-white">
               Event Info
             </Title>
-            <CardWeddingInfo spacing="mx-4 p-4 md:w-3/4 md:p-10" />
+            <CardWeddingInfo />
           </div>
 
           <div className="w-full">
