@@ -18,7 +18,7 @@ const MobileToggleSectionHeaders = (props: Props) => {
 
   return (
     // FIXME: add active style to header, so that user can notice it's button
-    <div className="pt-16 flex flex-row justify-center gap-14 mb-6 md:hidden">
+    <div className="pt-16 flex flex-row justify-center gap-14 mb-6 lg:hidden">
       <div onClick={eventInfoClickHandler} className="HoverUnderLine">
         <h2 className="basis-1/2 text-4xl">Event info</h2>
       </div>

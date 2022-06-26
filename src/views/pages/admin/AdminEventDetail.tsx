@@ -77,7 +77,7 @@ const AdminEventDetail = () => {
             onShowGuests={showGuestsHandler}
             onShowInfo={showInfoHandler}
           />
-          <div className="w-4/5 h-3/4 flex flex-row gap-14 text-white">
+          <div className="py-10 px-20 grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-12 text-white">
             <EventInfo event={event} showInfoStyle={showInfoStyle} />
             <GuestsList
               guests={guests}

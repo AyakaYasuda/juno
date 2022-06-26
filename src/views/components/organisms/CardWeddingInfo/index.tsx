@@ -3,13 +3,13 @@ import InfoBasic from 'views/components/organisms/CardWeddingInfo/InfoBasic';
 import InfoDetail from 'views/components/organisms/CardWeddingInfo/InfoDetail';
 import SectionDivider from '../SectionDivider';
 
-type CardWeddingProps = {
-  spacing: string;
+type Props = {
+  padding?: string;
 };
 
-const CardWeddingInfo: React.FC<CardWeddingProps> = ({ spacing }) => {
+const CardWeddingInfo: React.FC<Props> = ({ padding }) => {
   return (
-    <div className={`"flex flex-col bg-white rounded-2xl ${spacing}`}>
+    <div className={`flex flex-col bg-white rounded-2xl ${padding}`}>
       <InfoHeader />
       <SectionDivider />
       <InfoBasic />
