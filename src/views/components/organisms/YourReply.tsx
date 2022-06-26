@@ -9,7 +9,7 @@ type Props = {
 
 const YourReply: React.FC<Props> = ({ user }) => {
   return (
-    <div className="w-full flex flex-col py-5 px-10 gap-6">
+    <div className="w-full flex flex-col py-5 px-0 sm:px-10 gap-6">
       <div className="grid grid-cols-2 auto-cols-fr justify-items-center gap-4">
         <div className="w-full">
           <ColumnLabeledParagraph

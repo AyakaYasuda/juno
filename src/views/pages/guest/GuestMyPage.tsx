@@ -41,7 +41,7 @@ const GuestMyPage = () => {
   );
 
   const mobileContent = (
-    <div className="w-full grid grid-cols-1 justify-items-center py-10 px-20 lg:hidden">
+    <div className="w-full grid grid-cols-1 justify-items-center py-10 px-10 sm:px-20 lg:hidden">
       <div className="grid grid-cols-2 justify-items-center gap-10 mb-10">
         <h2 className="HoverUnderLine" onClick={switchContentsHandler}>
           Event Info
