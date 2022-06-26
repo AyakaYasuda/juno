@@ -91,7 +91,8 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col w-full px-10">
+      <h2 className="text-Yellow-dark mb-4 text-center lg:text-start">RSVP</h2>
       <form onSubmit={submitHandler}>
         <div className="grid grid-cols-1 gap-0 md:grid-cols-2 md:gap-4">
           <LabeledInput

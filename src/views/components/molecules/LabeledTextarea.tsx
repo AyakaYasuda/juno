@@ -6,7 +6,7 @@ type Props = {
   className: string;
   rows: number;
   value: string;
-  onChange: ChangeEventHandler<HTMLTextAreaElement>;
+  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 };
 
 const LabeledTextarea = (props: Props) => {

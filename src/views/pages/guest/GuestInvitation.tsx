@@ -11,7 +11,7 @@ const GuestInvitation: React.FC = () => {
 
   return (
     <GuestInvitationLayout>
-      <div className="grid grid-cols-1 justify-items-center lg:grid-cols-2 bg-white rounded-2xl mx-20 p-20 gap-12">
+      <div className="grid grid-cols-1 justify-items-center lg:grid-cols-2 bg-white rounded-2xl mx-20 px-20 py-16 gap-12">
         <CardWeddingInfo />
         <RsvpForm eventId={eventId} />
       </div>
