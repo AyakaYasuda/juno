@@ -71,9 +71,10 @@ const GuestLoginForm = () => {
       <div className="w-3/4 mx-auto pt-4 text-Pink-default text-center">
         <GuestButton
           className="BaseButtonStyle bg-Green-default text-white"
-          children="Log In"
           type="submit"
-        />
+        >
+          Log In
+        </GuestButton>
       </div>
     </Form>
   );

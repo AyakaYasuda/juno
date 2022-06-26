@@ -4,7 +4,7 @@ type Props = {
   className: string;
   children?: React.ReactNode;
   type: 'submit' | 'reset' | 'button';
-  onClick?: () => void;
+  onClick?: (e: React.SyntheticEvent) => void;
 };
 
 const GuestButton: React.FC<Props> = ({

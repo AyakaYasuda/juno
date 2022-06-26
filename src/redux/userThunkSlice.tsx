@@ -10,7 +10,7 @@ import axios from 'axios';
 import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
 import { RootState } from 'redux/store';
-import { IUpdateUserReqBody } from 'types/IUpdateUserReqBody.type';
+import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
 import getAuthHttpClient from 'services/authHttpClient.service';
@@ -109,7 +109,7 @@ export const getUser = createAsyncThunk(
 export const editUser = createAsyncThunk(
   'edit',
   async (
-    updateUserReqBody: IUpdateUserReqBody,
+    updateUserReqBody: IUpdateUserRequest,
     { rejectWithValue, getState }
   ) => {
     const userState = (getState() as RootState).user;
