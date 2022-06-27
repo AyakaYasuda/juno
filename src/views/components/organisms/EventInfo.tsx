@@ -41,15 +41,17 @@ const EventInfo = (props: Props) => {
         <ColumnLabeledParagraph
           label="Date and Time of Wedding Ceremony"
           text={event.dateWedding}
+          textStyle="InputLighter"
         />
         <ColumnLabeledParagraph
           label="Date and Time of Wedding Reception"
           text={event.dateWeddingReception}
+          textStyle="InputLighter"
         />
         <ColumnLabeledParagraph
           label="Message"
           text={event.message}
-          paragraphStyle="h-28"
+          textStyle="InputLighter h-28"
         />
       </div>
       <div className="w-4/5 mx-auto md:flex md:gap-4">

@@ -7,10 +7,12 @@ type CheckerProps = {
   inputType: string;
   className?: string;
   inputStyle?: string;
+  labelStyle?: string;
   name: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   isChecked: boolean;
   readonly?: boolean;
+  isOnAdminPage?: boolean;
 };
 
 // FIXME: rename to CheckboxRadioButton
@@ -25,15 +27,19 @@ const Checker: React.FC<CheckerProps> = (props) => {
     isChecked,
     readonly = false,
     inputStyle,
+    labelStyle,
+    isOnAdminPage = false,
   } = props;
 
   return (
     // FIXME: change to tailwind
     <div className={`flex ${className}`}>
       <label
-        className={`mb-1 pl-2 text-Yellow-dark  ${classes['label']} ${
-          isChecked && classes['checked']
-        }`}
+        className={`mb-1 pl-2 ${
+          isOnAdminPage ? 'text-Pink-default' : 'text-Yellow-dark'
+        }  ${classes['label']} ${isChecked && classes['checked']} ${
+          isOnAdminPage && classes['label-admin']
+        } ${labelStyle}`}
       >
         <input
           type={inputType}

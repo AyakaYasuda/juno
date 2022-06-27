@@ -119,7 +119,7 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
             label="accepts with pleasure"
             value={true}
             className="gap-1 items-center"
-            inputStyle="hidden"
+            labelStyle="cursor-pointer"
             inputType="radio"
             name="isAttending"
             onChange={inputChangeHandler}
@@ -129,7 +129,7 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
             label="declines with regret"
             value={false}
             className="gap-1 items-center"
-            inputStyle="hidden"
+            labelStyle="cursor-pointer"
             inputType="radio"
             name="isAttending"
             onChange={inputChangeHandler}

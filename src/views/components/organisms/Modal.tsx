@@ -4,9 +4,9 @@ import { getUser } from 'redux/userThunkSlice';
 
 import { AiOutlineClose } from 'react-icons/ai';
 import Card from '../atoms/Card';
-import Paragraph from '../atoms/Paragraph';
 import RowLabeledParagraph from '../molecules/RowLabeledParagraph';
 import Checker from '../atoms/Checker';
+import ColumnLabeledParagraph from '../molecules/ColumnLabeledParagraph';
 
 type ModalProps = {
   closeHandler: () => void;
@@ -25,7 +25,7 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
 
   return (
     user && (
-      <div className="absolute top-0 left-0 z-50 bg-Pink-lighter bg-opacity-40 w-screen h-screen FlexCenter text-Pink-default ">
+      <div className="fixed top-0 left-0 z-50 bg-Pink-lighter bg-opacity-40 w-screen min-h-screen h-full FlexCenter text-Pink-default ">
         <div className="relative w-3/4 md:w-3/5">
           <Card>
             <button onClick={closeHandler} className="absolute top-7 right-7">
@@ -56,11 +56,9 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
                   className="gap-1 items-center"
                   inputType="radio"
                   name="isAttending"
-                  onChange={() => {
-                    console.log('clicked');
-                  }}
                   isChecked={user.isAttending as boolean}
-                  readonly={true}
+                  readonly
+                  isOnAdminPage
                 />
                 <Checker
                   label="declines with regret"
@@ -68,50 +66,32 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
                   className="gap-1 items-center"
                   inputType="radio"
                   name="isAttending"
-                  onChange={() => {
-                    console.log('clicked');
-                  }}
                   isChecked={!user.isAttending as boolean}
-                  readonly={true}
+                  readonly
+                  isOnAdminPage
                 />
               </div>
-              {/* <div className="md:FlexJustifyCenter gap-8 mb-4">
-                <p className="mb-2 md:mb-0 form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio1"
-                    className="form-check-input appearance-none h-4 w-4 border border-Pink-default rounded-sm checked:bg-Pink-default focus:outline-none transition duration-200 mt-1 float-left mr-1 cursor-pointer"
-                    checked={user.isAttending}
-                  />
-                  <label>accepts with pleasure</label>
-                </p>
-                <p className="form-check form-check-inline">
-                  <input
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio1"
-                    className="form-check-input appearance-none h-4 w-4 border border-Pink-default rounded-sm checked:bg-Pink-default focus:outline-none transition duration-200 mt-1 float-left mr-1 cursor-pointer"
-                    checked={user.isAttending}
-                  />
-                  <label>declines with regret</label>
-                </p>
-              </div> */}
-              <li className="flex flex-col mb-4">
-                <label>Message</label>
-                <Paragraph
+              <div className="flex flex-col mb-4">
+                <ColumnLabeledParagraph
+                  label="Message"
                   text={user.message}
-                  customClassName="InputDark h-28"
+                  textStyle="InputDark h-28"
                 />
-              </li>
-              <li className="flex flex-col mb-4">
-                <label>If you have food allergy</label>
-                <input className="InputDark h-28" value={user.allergy} />
-              </li>
-              <li className="flex flex-col mb-4">
-                <label>Email</label>
-                <input className="InputDark" value={user.email} />
-              </li>
+              </div>
+              <div className="flex flex-col mb-4">
+                <ColumnLabeledParagraph
+                  label="If you have food allergy"
+                  text={user.allergy}
+                  textStyle="InputDark h-28"
+                />
+              </div>
+              <div className="flex flex-col mb-4">
+                <ColumnLabeledParagraph
+                  label="Email"
+                  text={user.email}
+                  textStyle="InputDark"
+                />
+              </div>
             </form>
           </Card>
         </div>
