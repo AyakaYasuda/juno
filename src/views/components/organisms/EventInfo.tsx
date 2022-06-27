@@ -22,7 +22,7 @@ const EventInfo = (props: Props) => {
           label="Event URL"
           text={`${GUEST_PAGE_ROOT_URL}/guests/invitation/${event.SK}`}
           className="justify-between items-center mb-3"
-          textStyle="InputLighter"
+          textStyle="InputLighter break-all"
         />
         <RowLabeledParagraph
           label="Bride"
