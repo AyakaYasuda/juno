@@ -22,16 +22,19 @@ const EventInfo = (props: Props) => {
           label="Event URL"
           text={`${GUEST_PAGE_ROOT_URL}/guests/invitation/${event.SK}`}
           className="justify-between items-center mb-3"
+          textStyle="InputLighter"
         />
         <RowLabeledParagraph
           label="Bride"
           text={event.bride}
           className="justify-between items-center mb-3"
+          textStyle="InputLighter"
         />
         <RowLabeledParagraph
           label="Groom"
           text={event.groom}
           className="justify-between items-center mb-3"
+          textStyle="InputLighter"
         />
       </div>
       <div className="flex flex-col mb-8 md:mb-4">

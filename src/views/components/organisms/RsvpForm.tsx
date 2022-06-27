@@ -116,21 +116,21 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
         </div>
         <div className="grid grid-cols-1 gap-0 justify-items-center md:grid-cols-2 md:gap-4 md:justify-items-center mt-2 mb-4">
           <Checker
-            labelChecker="accepts with pleasure"
-            valueChecker={true}
-            containerChecker="gap-1 items-center"
-            classChecker="hidden"
-            typeChecker="radio"
+            label="accepts with pleasure"
+            value={true}
+            className="gap-1 items-center"
+            inputStyle="hidden"
+            inputType="radio"
             name="isAttending"
             onChange={inputChangeHandler}
             isChecked={isAttending as boolean}
           />
           <Checker
-            labelChecker="declines with regret"
-            valueChecker={false}
-            containerChecker="gap-1 items-center"
-            classChecker="hidden"
-            typeChecker="radio"
+            label="declines with regret"
+            value={false}
+            className="gap-1 items-center"
+            inputStyle="hidden"
+            inputType="radio"
             name="isAttending"
             onChange={inputChangeHandler}
             isChecked={!isAttending as boolean}

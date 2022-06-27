@@ -5,16 +5,18 @@ type Props = {
   label: string;
   text: string;
   className?: string;
+  textStyle?: string;
+  labelStyle?: string;
 };
 
 const RowLabeledParagraph = (props: Props) => {
-  const { label, text, className } = props;
+  const { label, text, className, textStyle, labelStyle } = props;
 
   return (
     <FlexRowBox className={className ? className : ''}>
-      <span className="basis-1/4">{label}</span>
+      <label className={`basis-1/4 ${labelStyle}`}>{label}</label>
       {/* FIXME: create base-style for Paragraph */}
-      <Paragraph text={text} customClassName="InputLighter basis-3/4 px-2" />
+      <Paragraph text={text} customClassName={`basis-3/4 px-2 ${textStyle}`} />
     </FlexRowBox>
   );
 };
