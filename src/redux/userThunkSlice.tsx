@@ -92,8 +92,6 @@ export const getUser = createAsyncThunk(
     try {
       const url = `${API_URL}/${userId}`;
 
-      console.log('url', url);
-
       const result = await axios.get(url, {
         headers: {
           Authorization: getAuth(),
@@ -111,14 +109,7 @@ export const getUser = createAsyncThunk(
 //PATCH
 export const editUser = createAsyncThunk(
   'edit',
-  async (
-    updateUserReqBody: IUpdateUserRequest,
-    { rejectWithValue, getState }
-  ) => {
-    const userState = (getState() as RootState).user;
-
-    console.log('editUser userState', userState);
-
+  async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
     const userId =
       SessionServices.getItem(SessionKeys.USER_ID) || 'id not found';
 
@@ -172,8 +163,6 @@ export const userSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(editUser.fulfilled, (state, action) => {
-        console.log('state.user', state.user);
-
         state.status = 'pending';
         state.user = action.payload;
       })

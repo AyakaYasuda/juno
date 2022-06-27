@@ -39,7 +39,8 @@ type Props = {
 };
 
 const EditEventForm = (props: Props) => {
-  const { formInitialValues, className, formSubmitLogic } = props;
+  const { formInitialValues, className, formSubmitLogic, updateButtonText } =
+    props;
   const { values, inputChangeHandler } = useForm(
     formInitialValues ? formInitialValues : initialValues
   );
@@ -187,7 +188,7 @@ const EditEventForm = (props: Props) => {
           <div className="w-10/12 mx-auto md:flex">
             <div className="mb-4 md:mb-0 md:mr-4 basis-1/2">
               <Button customStyle="bg-Pink-default text-White-default">
-                Create invitations
+                {updateButtonText}
               </Button>
             </div>
             <div className="basis-1/2">
