@@ -4,57 +4,27 @@ import { IEventRequest, IEventState } from 'types/EventData.type';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from './store';
-import getAuthHttpClient from 'services/authHttpClient.service';
+import { getAuth } from 'services/auth.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/event';
 
-// FIXME: delete dummy data
 // initialize
 const initialState: IEventState = {
   event: {
-    SK: 'dummy SK',
-    bride: 'dummy bride',
-    groom: 'dummy groom',
-    dateWedding: 'dummy dateWedding',
-    startingTimeWedding: 'dummy startingTimeWedding',
-    endingTimeWedding: 'dummy endingTimeWedding',
-    dateWeddingReception: 'dummy dateWeddingReception',
-    startingTimeReception: 'dummy startingTimeReception',
-    endingTimeReception: 'dummy endingTimeReception',
-    message: 'dummy message',
-    address: 'dummy address',
+    SK: '',
+    bride: '',
+    groom: '',
+    dateWedding: '',
+    startingTimeWedding: '',
+    endingTimeWedding: '',
+    dateWeddingReception: '',
+    startingTimeReception: '',
+    endingTimeReception: '',
+    message: '',
+    address: '',
     isEditable: true,
   },
-  guests: [
-    {
-      PK: 'dummy PK',
-      SK: 'dummy SK',
-      userId: 'dummy userId',
-      eventId: 'dummy eventId',
-      firstName: 'dummy firstName',
-      lastName: 'dummy lastName',
-      email: 'dummy email',
-      password: 'dummy password',
-      isAdmin: false,
-      message: 'dummy message',
-      allergy: 'dummy allergy',
-      isAttending: true,
-    },
-    {
-      PK: 'dummy PK2',
-      SK: 'dummy SK2',
-      userId: 'dummy userId',
-      eventId: 'dummy eventId',
-      firstName: 'dummy firstName',
-      lastName: 'dummy lastName',
-      email: 'dummy email',
-      password: 'dummy password',
-      isAdmin: false,
-      message: 'dummy message',
-      allergy: 'dummy allergy',
-      isAttending: true,
-    },
-  ],
+  guests: [],
   status: 'loading',
 };
 
@@ -84,7 +54,11 @@ export const getEvent = createAsyncThunk(
       const url = `${API_URL}/f0f9547d-b0f8-4621-824f-b1a3b53c95ad`;
       console.log('getEvent', url);
 
-      const result = await getAuthHttpClient().get(url);
+      const result = await axios.get(url, {
+        headers: {
+          Authorization: getAuth(),
+        },
+      });
       return result.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -96,7 +70,11 @@ export const getGuests = createAsyncThunk(
   'guests/get',
   async (eventId: string, { rejectWithValue }) => {
     try {
-      const result = await axios.get(`${API_URL}/guests/${eventId}`);
+      const result = await axios.get(`${API_URL}/guests/${eventId}`, {
+        headers: {
+          Authorization: getAuth(),
+        },
+      });
       return result.data.guests;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
