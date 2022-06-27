@@ -30,7 +30,7 @@ const AdminEventEdit = () => {
 
   return (
     <AdminPageLayout>
-      <h2 className="mb-2">Create invitations</h2>
+      <h2 className="mb-2">Edit invitations</h2>
       <EditEventForm
         className="w-4/5"
         updateButtonText="Update invitation"
