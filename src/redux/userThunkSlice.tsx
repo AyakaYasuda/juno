@@ -13,25 +13,24 @@ import { RootState } from 'redux/store';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
-import getAuthHttpClient from 'services/authHttpClient.service';
+import { getAuth } from 'services/auth.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
-// FIXME: delete dummy data
 // initialize
 const initialState: IUserState = {
   user: {
-    PK: 'dummy PK',
-    SK: 'dummy SK',
-    userId: 'dummy userId',
-    eventId: 'dummy eventId',
-    firstName: 'dummy firstName',
-    lastName: 'dummy lastName',
-    email: 'dummy email',
-    password: 'dummy password',
+    PK: '',
+    SK: '',
+    userId: '',
+    eventId: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
     isAdmin: false,
-    message: 'dummy message',
-    allergy: 'dummy allergy',
+    message: '',
+    allergy: '',
     isAttending: true,
   },
   status: 'pending',
@@ -95,11 +94,15 @@ export const getUser = createAsyncThunk(
 
       console.log('url', url);
 
-      const result = await getAuthHttpClient().get(url);
+      const result = await axios.get(url, {
+        headers: {
+          Authorization: getAuth(),
+        },
+      });
 
       return result.data;
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
       return rejectWithValue(error.response.data);
     }
   }
