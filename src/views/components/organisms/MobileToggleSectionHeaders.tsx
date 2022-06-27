@@ -16,13 +16,13 @@ const MobileToggleSectionHeaders = (props: Props) => {
         onClick={toggleHandler}
         className={isEventInfoShown ? 'border-b-2 border-white' : ''}
       >
-        <h2 className="basis-1/2 text-4xl">Event info</h2>
+        <h2 className="basis-1/2 text-4xl cursor-pointer">Event info</h2>
       </div>
       <div
         onClick={toggleHandler}
         className={!isEventInfoShown ? 'border-b-2 border-white' : ''}
       >
-        <h2 className="basis-1/2 text-4xl">Guests list</h2>
+        <h2 className="basis-1/2 text-4xl cursor-pointer">Guests list</h2>
       </div>
     </div>
   );
