@@ -29,7 +29,6 @@
 }
 
 .label {
-  cursor: pointer;
   padding-left: 30px;
   position: relative;
 }
@@ -42,7 +41,7 @@
 }
 
 .label::before {
-  background-color: #fff;
+  background-color: transparent;
   border-radius: 0%;
   border: 1px solid rgb(193 155 81 / var(--tw-text-opacity));
   width: 20px;
@@ -61,6 +60,13 @@
   transform: rotate(-45deg);
   top: 8px;
   left: 10px;
+}
+
+.label-admin::before {
+  border-color: #df9a83;
+}
+.label-admin::after {
+  border-color: #df9a83;
 }
 
 .checked::after {

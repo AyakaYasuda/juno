@@ -5,19 +5,16 @@ type Props = {
   label: string;
   text: string;
   className?: string;
-  paragraphStyle?: string;
+  textStyle?: string;
 };
 
 const ColumnLabeledParagraph = (props: Props) => {
-  const { label, text, className, paragraphStyle } = props;
+  const { label, text, className, textStyle } = props;
 
   return (
     <FlexColumnBox className={className ? className : ''}>
       <h4 className="mb-1">{label}</h4>
-      <Paragraph
-        text={text}
-        customClassName={`InputLighter mb-2 px-2 ${paragraphStyle}`}
-      />
+      <Paragraph text={text} customClassName={`mb-2 px-2 ${textStyle}`} />
     </FlexColumnBox>
   );
 };

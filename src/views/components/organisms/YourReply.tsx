@@ -21,7 +21,7 @@ const YourReply: React.FC<Props> = ({ user }) => {
             label="First Name"
             text={user.firstName}
             className="text-Yellow-dark"
-            paragraphStyle="text-Green-dark"
+            textStyle="text-Green-dark"
           />
         </div>
         <div className="w-full">
@@ -29,7 +29,7 @@ const YourReply: React.FC<Props> = ({ user }) => {
             label="Last Name"
             text={user.lastName}
             className="text-Yellow-dark"
-            paragraphStyle="text-Green-dark"
+            textStyle="text-Green-dark"
           />
         </div>
       </div>

@@ -1,45 +1,55 @@
 import React, { ChangeEventHandler } from 'react';
 import classes from './Checker.module.css';
 
-// FIXME: rename props to simple names
 type CheckerProps = {
-  containerChecker: string;
-  valueChecker: boolean;
-  classChecker: string;
-  typeChecker: string;
-  labelChecker: string;
+  value: boolean;
+  label: string;
+  inputType: string;
+  className?: string;
+  inputStyle?: string;
+  labelStyle?: string;
   name: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   isChecked: boolean;
+  readonly?: boolean;
+  isOnAdminPage?: boolean;
 };
 
 // FIXME: rename to CheckboxRadioButton
-const Checker: React.FC<CheckerProps> = ({
-  containerChecker,
-  valueChecker,
-  classChecker,
-  typeChecker,
-  labelChecker,
-  name,
-  onChange,
-  isChecked,
-}) => {
+const Checker: React.FC<CheckerProps> = (props) => {
+  const {
+    value,
+    className,
+    label,
+    inputType,
+    name,
+    onChange,
+    isChecked,
+    readonly = false,
+    inputStyle,
+    labelStyle,
+    isOnAdminPage = false,
+  } = props;
+
   return (
     // FIXME: change to tailwind
-    <div className={`flex ${containerChecker}`}>
+    <div className={`flex ${className}`}>
       <label
-        className={`mb-1 pl-2 text-Yellow-dark  ${classes['label']} ${
-          isChecked && classes['checked']
-        }`}
+        className={`mb-1 pl-2 ${
+          isOnAdminPage ? 'text-Pink-default' : 'text-Yellow-dark'
+        }  ${classes['label']} ${isChecked && classes['checked']} ${
+          isOnAdminPage && classes['label-admin']
+        } ${labelStyle}`}
       >
         <input
-          type={typeChecker}
-          value={String(valueChecker)}
-          className={classChecker}
-          name={name}
+          type={inputType}
+          value={String(value)}
+          className={`${classes['visually-hidden']} ${inputStyle}`}
           onChange={onChange}
+          name={name}
+          readOnly={readonly}
         />
-        {labelChecker}
+        {label}
       </label>
     </div>
   );
