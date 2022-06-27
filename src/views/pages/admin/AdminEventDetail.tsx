@@ -14,17 +14,8 @@ const AdminEventDetail = () => {
   const { event } = useAppSelector((state) => state.event);
   const { guests } = useAppSelector((state) => state.event);
 
-  // FIXME:
-  // 1. add mobile first style
-  // 2. toggle style by react, not css props
-
-  // showInfo status
-  // 1. block w-full
-  // 2. hidden
-  const [showInfoStyle, setShowInfoStyle] = useState('w-full');
-  const [showGuestsStyle, setShowGuestsStyle] = useState('hidden');
+  const [isEventInfoShown, setIsEventInfoShown] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedGuestUserId, setSelectedGuestUserId] = useState<string>('');
 
@@ -41,16 +32,8 @@ const AdminEventDetail = () => {
     }
   }, [event, dispatch]);
 
-  // FIXME: change to toggle style, not css props
-  const showInfoHandler = () => {
-    setShowInfoStyle('block w-full');
-    setShowGuestsStyle('hidden');
-  };
-
-  // FIXME: change to toggle style, not css props
-  const showGuestsHandler = () => {
-    setShowInfoStyle('hidden');
-    setShowGuestsStyle('block w-full');
+  const toggleShowInfoHandler = () => {
+    setIsEventInfoShown((prevState) => !prevState);
   };
 
   const showModalHandler = (userId: string) => {
@@ -62,6 +45,34 @@ const AdminEventDetail = () => {
     setShowModal(false);
   };
 
+  if (isLoading) {
+    return <h3 className="text-Pink-dark">Loading....</h3>;
+  }
+
+  const mobileContent = (
+    <>
+      <MobileToggleSectionHeaders
+        onToggle={toggleShowInfoHandler}
+        isEventInfoShown={isEventInfoShown}
+      />
+      <div className="lg:hidden w-full py-10 px-10 grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-12 text-white">
+        {isEventInfoShown && <EventInfo event={event} />}
+        {!isEventInfoShown && (
+          <GuestsList guests={guests} showModalHandler={showModalHandler} />
+        )}
+      </div>
+    </>
+  );
+
+  const desktopContent = (
+    <>
+      <div className="hidden py-10 px-20 lg:grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-12 text-white">
+        <EventInfo event={event} />
+        <GuestsList guests={guests} showModalHandler={showModalHandler} />
+      </div>
+    </>
+  );
+
   return (
     <AdminPageLayout>
       {showModal && (
@@ -70,23 +81,8 @@ const AdminEventDetail = () => {
           guestUserId={selectedGuestUserId}
         />
       )}
-      {isLoading && <h3 className="text-Pink-dark">Loading....</h3>}
-      {event && (
-        <>
-          <MobileToggleSectionHeaders
-            onShowGuests={showGuestsHandler}
-            onShowInfo={showInfoHandler}
-          />
-          <div className="py-10 px-20 grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-12 text-white">
-            <EventInfo event={event} showInfoStyle={showInfoStyle} />
-            <GuestsList
-              guests={guests}
-              showGuestsStyle={showGuestsStyle}
-              showModalHandler={showModalHandler}
-            />
-          </div>
-        </>
-      )}
+      {event && mobileContent}
+      {event && desktopContent}
     </AdminPageLayout>
   );
 };
