@@ -3,16 +3,15 @@ import Button from '../atoms/Button';
 
 type Props = {
   guests: IUser[];
-  showGuestsStyle: string;
   showModalHandler: (userId: string) => void;
 };
 
 const GuestsList = (props: Props) => {
-  const { guests, showGuestsStyle, showModalHandler } = props;
+  const { guests, showModalHandler } = props;
 
   return (
-    <div className={`${showGuestsStyle} md:block lg:basis-1/2`}>
-      <h2 className="hidden lg:block mb-2">Guests list</h2>
+    <div className={`md:block lg:basis-1/2 md:w-3/4 w-full`}>
+      <h2 className="hidden lg:block mb-8">Guests list</h2>
       <ul className="h-4/5">
         {guests &&
           guests.map((guest) => {

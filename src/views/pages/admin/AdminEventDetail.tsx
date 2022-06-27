@@ -14,16 +14,8 @@ const AdminEventDetail = () => {
   const { event } = useAppSelector((state) => state.event);
   const { guests } = useAppSelector((state) => state.event);
 
-  // FIXME:
-  // 1. add mobile first style
-  // 2. toggle style by react, not css props
-
-  // showInfo status
-  // 1. block w-full
-  // 2. hidden
   const [isEventInfoShown, setIsEventInfoShown] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedGuestUserId, setSelectedGuestUserId] = useState<string>('');
 
@@ -59,22 +51,14 @@ const AdminEventDetail = () => {
 
   const mobileContent = (
     <>
-      <MobileToggleSectionHeaders onToggle={toggleShowInfoHandler} />
-      <div className="lg:hidden py-10 px-20 grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-12 text-white">
-        {isEventInfoShown && (
-          <EventInfo
-            event={event}
-            // FIXME: delete this
-            showInfoStyle={''}
-          />
-        )}
+      <MobileToggleSectionHeaders
+        onToggle={toggleShowInfoHandler}
+        isEventInfoShown={isEventInfoShown}
+      />
+      <div className="lg:hidden w-full py-10 px-10 grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-12 text-white">
+        {isEventInfoShown && <EventInfo event={event} />}
         {!isEventInfoShown && (
-          <GuestsList
-            guests={guests}
-            // FIXME: delete this
-            showGuestsStyle={''}
-            showModalHandler={showModalHandler}
-          />
+          <GuestsList guests={guests} showModalHandler={showModalHandler} />
         )}
       </div>
     </>
@@ -83,17 +67,8 @@ const AdminEventDetail = () => {
   const desktopContent = (
     <>
       <div className="hidden py-10 px-20 lg:grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-12 text-white">
-        <EventInfo
-          event={event}
-          // FIXME: delete this
-          showInfoStyle={''}
-        />
-        <GuestsList
-          guests={guests}
-          // FIXME: delete this
-          showGuestsStyle={''}
-          showModalHandler={showModalHandler}
-        />
+        <EventInfo event={event} />
+        <GuestsList guests={guests} showModalHandler={showModalHandler} />
       </div>
     </>
   );

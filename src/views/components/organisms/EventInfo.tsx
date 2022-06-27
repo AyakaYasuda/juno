@@ -6,17 +6,16 @@ import RowLabeledParagraph from '../molecules/RowLabeledParagraph';
 
 type Props = {
   event: IEvent;
-  showInfoStyle: string;
 };
 
 const GUEST_PAGE_ROOT_URL = process.env.REACT_APP_GUEST_PAGE_ROOT_URL;
 
 const EventInfo = (props: Props) => {
-  const { event, showInfoStyle } = props;
+  const { event } = props;
 
   return (
-    <div className={`${showInfoStyle} md:block lg:basis-1/2`}>
-      <h2 className="hidden lg:block mb-2">Event info</h2>
+    <div className={`md:block lg:basis-1/2`}>
+      <h2 className="hidden lg:block mb-8">Event info</h2>
       <div className="flex flex-col mb-8 md:mb-4">
         <RowLabeledParagraph
           label="Event URL"
