@@ -56,10 +56,10 @@
     @apply hover:border-b-2 border-white;
   }
   .InputDark {
-    @apply bg-Pink-lighter bg-opacity-50 text-Pink-default p-2 border-none rounded-md mb-5;
+    @apply bg-Pink-lighter bg-opacity-50 text-Pink-default p-2 border-none rounded-md mb-5 drop-shadow-lg;
   }
   .InputLighter {
-    @apply p-1 rounded-3xl bg-White-lighter text-Pink-default bg-opacity-80 border-none drop-shadow-lg md:p-2 md:rounded-xl;
+    @apply bg-White-lighter text-Pink-default bg-opacity-80 border-none p-2 rounded-md drop-shadow-lg mb-5;
   }
   .InputLight {
     @apply bg-white text-Pink-default p-2 border-none rounded-md mb-3;

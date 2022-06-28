@@ -57,7 +57,7 @@ const GuestLoginForm = () => {
         value={email as string}
         onChange={inputChangeHandler}
         labelStyle="text-white text-left"
-        inputStyle="InputBorder mb-16 border-white"
+        inputStyle="InputBorder mb-16 border-white text-white"
       />
       <LabeledInput
         type="password"
@@ -66,7 +66,7 @@ const GuestLoginForm = () => {
         value={password as string}
         onChange={inputChangeHandler}
         labelStyle="text-white text-left"
-        inputStyle="InputBorder mb-20 border-white"
+        inputStyle="InputBorder mb-20 border-white text-white"
       />
       <div className="w-3/4 mx-auto pt-4 text-Pink-default text-center">
         <GuestButton

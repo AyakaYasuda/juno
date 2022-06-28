@@ -4,6 +4,7 @@ import { IUser } from 'types/UserData.type';
 import ColumnLabeledParagraph from '../molecules/ColumnLabeledParagraph';
 import LabeledTextarea from '../molecules/LabeledTextarea';
 import GuestButton from '../atoms/GuestButton';
+import Checker from '../atoms/Checker';
 import { useNavigate } from 'react-router';
 
 type Props = {
@@ -21,7 +22,7 @@ const YourReply: React.FC<Props> = ({ user }) => {
             label="First Name"
             text={user.firstName}
             className="text-Yellow-dark"
-            textStyle="text-Green-dark"
+            textStyle="InputLighter text-Green-dark"
           />
         </div>
         <div className="w-full">
@@ -29,45 +30,39 @@ const YourReply: React.FC<Props> = ({ user }) => {
             label="Last Name"
             text={user.lastName}
             className="text-Yellow-dark"
-            textStyle="text-Green-dark"
+            textStyle="InputLighter text-Green-dark"
           />
         </div>
       </div>
       <div className="grid grid-cols-2 auto-cols-fr justify-items-center gap-4">
-        <p className="mb-2 md:mb-0 form-check form-check-inline">
-          <input
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio1"
-            className="form-check-input appearance-none h-4 w-4 border border-Yellow-dark rounded-sm checked:bg-Yellow-dark focus:outline-none transition duration-200 mt-1 float-left mr-1 cursor-pointer"
-            defaultChecked={user.isAttending}
-          />
-          <label className="text-Yellow-dark">accepts with pleasure</label>
-        </p>
-        <p className="mb-2 md:mb-0 form-check form-check-inline">
-          <input
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio1"
-            className="form-check-input appearance-none h-4 w-4 border border-Yellow-dark rounded-sm checked:bg-Yellow-dark focus:outline-none transition duration-200 mt-1 float-left mr-1 cursor-pointer"
-            defaultChecked={user.isAttending}
-          />
-          <label className="text-Yellow-dark">declines with regret</label>
-        </p>
+        <Checker
+          label="accepts with pleasure"
+          value={true}
+          className="gap-1 items-center"
+          inputType="radio"
+          name="isAttending"
+          isChecked={user.isAttending as boolean}
+          readonly
+        />
+        <Checker
+          label="declines with regret"
+          value={false}
+          className="gap-1 items-center"
+          inputType="radio"
+          name="isAttending"
+          isChecked={!user.isAttending as boolean}
+          readonly
+        />
       </div>
-      <LabeledTextarea
+      <ColumnLabeledParagraph
         label="Message"
-        name="message"
-        className="InputLighter text-Green-dark"
-        rows={7}
-        value={user.message}
+        className="InputLighter text-Green-dark h-28"
+        text={user.message}
       />
-      <LabeledTextarea
+      <ColumnLabeledParagraph
         label="If you have food allergy"
-        name="allergy"
-        className="InputLighter text-Green-dark"
-        rows={4}
-        value={user.allergy}
+        className="InputLighter text-Green-dark h-28"
+        text={user.allergy}
       />
       <GuestButton
         className="BaseButtonStyle border border-white text-white drop-shadow-lg w-48 mx-auto"
