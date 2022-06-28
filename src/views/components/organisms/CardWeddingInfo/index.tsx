@@ -3,13 +3,9 @@ import InfoBasic from 'views/components/organisms/CardWeddingInfo/InfoBasic';
 import InfoDetail from 'views/components/organisms/CardWeddingInfo/InfoDetail';
 import SectionDivider from '../SectionDivider';
 
-type Props = {
-  padding?: string;
-};
-
-const CardWeddingInfo: React.FC<Props> = ({ padding }) => {
+const CardWeddingInfo: React.FC = () => {
   return (
-    <div className={`flex flex-col bg-white rounded-2xl ${padding}`}>
+    <div className="flex flex-col bg-white rounded-2xl px-5 md:px-10 py-10">
       <InfoHeader />
       <SectionDivider />
       <InfoBasic />

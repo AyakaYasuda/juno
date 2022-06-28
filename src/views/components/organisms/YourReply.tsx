@@ -56,12 +56,14 @@ const YourReply: React.FC<Props> = ({ user }) => {
       </div>
       <ColumnLabeledParagraph
         label="Message"
-        className="InputLighter text-Green-dark h-28"
+        className="text-Yellow-dark"
+        textStyle="InputLighter text-Green-dark h-28"
         text={user.message}
       />
       <ColumnLabeledParagraph
         label="If you have food allergy"
-        className="InputLighter text-Green-dark h-28"
+        className="text-Yellow-dark"
+        textStyle="InputLighter text-Green-dark h-28"
         text={user.allergy}
       />
       <GuestButton
