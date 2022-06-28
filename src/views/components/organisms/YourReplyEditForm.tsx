@@ -113,16 +113,16 @@ const YourReplyEditForm: React.FC<Props> = ({
         value={allergy as string}
         onChange={inputChangeHandler}
       />
-      <div className="grid grid-cols-2 justify-items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4">
         <GuestButton
-          className="BaseButtonStyle border border-white text-white drop-shadow-lg w-48 mx-auto"
+          className="BaseButtonStyle border border-white text-white drop-shadow-lg mx-auto"
           type="button"
           onClick={submitHandler}
         >
           Update your reply
         </GuestButton>
         <GuestButton
-          className="BaseButtonStyle border border-white text-white drop-shadow-lg w-48 mx-auto"
+          className="BaseButtonStyle border border-white text-white drop-shadow-lg mx-auto"
           type="button"
           onClick={() => navigate('/guests/mypage')}
         >
