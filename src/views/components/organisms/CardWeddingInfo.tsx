@@ -10,6 +10,7 @@ const CardWeddingInfo: React.FC = () => {
   const { SK: userId } = useAppSelector((state) => state.user.user);
 
   const [weddingSchedule, setWeddingSchedule] = useState<string>();
+  const [receptionSchedule, setReceptionSchedule] = useState<string>();
 
   useEffect(() => {
     console.log(userId);
@@ -34,6 +35,22 @@ const CardWeddingInfo: React.FC = () => {
     }
   }, [event]);
 
+  useEffect(() => {
+    if (
+      event.dateWeddingReception &&
+      event.startingTimeReception &&
+      event.endingTimeReception
+    ) {
+      const receptionDateAndTime = createDateAndTime(
+        event.dateWeddingReception,
+        event.startingTimeReception,
+        event.endingTimeReception
+      );
+
+      setReceptionSchedule(receptionDateAndTime);
+    }
+  });
+
   const createDateAndTime = useCallback(
     (d: string, st: string, et: string): string => {
       const year = new Date(d).getFullYear();
@@ -50,7 +67,7 @@ const CardWeddingInfo: React.FC = () => {
       const day = new Intl.DateTimeFormat('en-US', DayOptions)
         .format(dayOrder)
         .toUpperCase();
-        
+
       const dateAndTime = `${day} ${month} ${date}, ${year}  at ${st}`;
       console.log(dateAndTime);
 
@@ -60,7 +77,7 @@ const CardWeddingInfo: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col bg-white rounded-2xl px-5 md:px-10 py-10">
+    <div className="flex flex-col bg-white text-center rounded-2xl px-5 md:px-10 py-10">
       <section className="flex flex-col justify-center gap-6">
         <p className="text-Green-dark FlexJustifyCenter">
           You are cordially invited to celebrate the marriage of
@@ -76,14 +93,25 @@ const CardWeddingInfo: React.FC = () => {
         </div>
       </section>
       <SectionDivider />
-      <section className="FlexCenter flex-col gap-4">
+      <section className="FlexCenter flex-col gap-4 px-10">
         <h5 className="text-Green-dark">{weddingSchedule}</h5>
         <h5 className="text-center text-Green-dark">{event.address}</h5>
-        <p className="text-Green-dark">reception to follow</p>
+        {event.dateWeddingReception !== event.dateWedding ? (
+          <>
+            <p className="text-Green-dark font-allura text-xl">
+              We will be having the reception on the following date  
+            </p>
+            <h5 className="text-Green-dark">{receptionSchedule}</h5>
+          </>
+        ) : (
+          <p className="text-Green-dark font-allura text-2xl">
+            Reception to follow
+          </p>
+        )}
       </section>
       <SectionDivider />
-      <section className=" flex justify-center">
-        <p className="w-4/5 flex text-Green-dark leading-5">{event.message}</p>
+      <section>
+        <p className="text-Green-dark">{event.message}</p>
       </section>
     </div>
   );
