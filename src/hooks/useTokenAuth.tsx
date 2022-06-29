@@ -36,16 +36,10 @@ const useTokenAuth = () => {
     SessionServices.setTokenWithExpirationDate(token, expiration);
 
     // update state
-    dispatch(setTokenExpirationDate(tokenExpirationDate));
+    dispatch(setTokenExpirationDate(expiration));
     dispatch(setToken(token));
     dispatch(setIsLogin(true));
-  }, [
-    dispatch,
-    setIsLogin,
-    setToken,
-    setTokenExpirationDate,
-    tokenExpirationDate,
-  ]);
+  }, [dispatch, setIsLogin, setToken, setTokenExpirationDate]);
 
   const autoLogout = useCallback(() => {
     if (token && tokenExpirationDate) {
