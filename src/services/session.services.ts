@@ -6,7 +6,7 @@ import { SessionKeys } from '../constants/sessionKeys';
 
 type TokenData = {
   token: string;
-  expiration: Date;
+  expiration: string;
 };
 
 export const generateTokenExpirationTime = () => {
@@ -51,7 +51,7 @@ class SessionServices {
       return null;
     }
 
-    const restoredData = JSON.parse(storedData);
+    const restoredData = JSON.parse(storedData) as TokenData;
 
     return restoredData;
   }
