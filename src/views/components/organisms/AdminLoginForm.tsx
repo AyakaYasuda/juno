@@ -3,8 +3,7 @@ import { useAppDispatch } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
 import useForm from 'hooks/useForm';
 import { Link } from 'react-router-dom';
-import { login } from 'redux/userThunkSlice';
-import { SessionKeys } from 'constants/sessionKeys';
+import { login } from 'redux/authSlice';
 import SessionServices from 'services/session.services';
 
 import Button from '../atoms/Button';
@@ -39,8 +38,12 @@ const AdminLoginForm = () => {
     // login success
     if (login.fulfilled.match(result)) {
       alert('login successfully!');
-      SessionServices.setItem(SessionKeys.TOKEN, result.payload.token);
-      SessionServices.setItem(SessionKeys.USER_ID, result.payload.userId);
+
+      const { userId, token } = result.payload;
+
+      SessionServices.setTokenWithExpirationDate(token);
+      SessionServices.setUserId(userId);
+
       navigate('/admin/create');
     }
 

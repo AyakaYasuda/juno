@@ -3,7 +3,8 @@ import useForm from 'hooks/useForm';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from 'hooks/hooks';
 
-import { signupGuest, createAttendanceData } from 'redux/userThunkSlice';
+import { createAttendanceData } from 'redux/userThunkSlice';
+import { signupGuest } from 'redux/authSlice';
 
 import LabeledInput from '../molecules/LabeledInput';
 import Checker from '../atoms/Checker';

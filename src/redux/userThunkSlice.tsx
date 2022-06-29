@@ -1,18 +1,11 @@
-import {
-  ILoginRequest,
-  ISignupRequest,
-  IGuestSignupRequest,
-  IUserState,
-} from 'types/UserData.type';
+import { IUserState } from 'types/UserData.type';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
-import { RootState } from 'redux/store';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
-import { SessionKeys } from 'constants/sessionKeys';
 import { getAuth } from 'services/auth.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
@@ -35,55 +28,6 @@ const initialState: IUserState = {
   },
   status: 'pending',
 };
-
-//create async payload callback function
-//LOGIN
-export const login = createAsyncThunk(
-  'login',
-  async (loginData: ILoginRequest, { rejectWithValue }) => {
-    try {
-      const result = await axios.post(
-        `${API_URL}/login`,
-        JSON.stringify(loginData)
-      );
-      return result.data;
-    } catch (error: any) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-//SIGNUP
-export const signup = createAsyncThunk(
-  'signup',
-  async (signupData: ISignupRequest, thunkAPI) => {
-    try {
-      const result = await axios.post(
-        `${API_URL}/signup`,
-        JSON.stringify(signupData)
-      );
-      return result.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
-    }
-  }
-);
-
-//GUEST SIGNUP
-export const signupGuest = createAsyncThunk(
-  'signup',
-  async (signupData: IGuestSignupRequest, thunkAPI) => {
-    try {
-      const result = await axios.post(
-        `${API_URL}/signup`,
-        JSON.stringify(signupData)
-      );
-      return result.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
-    }
-  }
-);
 
 //GET
 export const getUser = createAsyncThunk(
@@ -110,8 +54,7 @@ export const getUser = createAsyncThunk(
 export const editUser = createAsyncThunk(
   'edit',
   async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
-    const userId =
-      SessionServices.getItem(SessionKeys.USER_ID) || 'id not found';
+    const userId = SessionServices.getUserId() || 'id not found';
 
     try {
       const result = await axios.patch(
@@ -152,12 +95,6 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(login.fulfilled, (state, action) => {
-        state.status = 'pending';
-      })
-      .addCase(signup.fulfilled, (state, action) => {
-        state.status = 'pending';
-      })
       .addCase(getUser.fulfilled, (state, action) => {
         state.status = 'pending';
         state.user = action.payload;

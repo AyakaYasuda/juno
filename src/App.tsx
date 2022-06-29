@@ -19,11 +19,13 @@ import GuestEdit from 'views/pages/guest/GuestEdit';
 import { useAppDispatch } from 'hooks/hooks';
 import { getUser } from 'redux/userThunkSlice';
 import SessionServices from 'services/session.services';
-import { SessionKeys } from 'constants/sessionKeys';
+import useTokenAuth from './hooks/useTokenAuth';
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const [userId] = useState(SessionServices.getItem(SessionKeys.USER_ID));
+
+  useTokenAuth();
+  const [userId] = useState(SessionServices.getUserId());
 
   useEffect(() => {
     if (userId) {

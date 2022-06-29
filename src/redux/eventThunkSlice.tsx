@@ -111,6 +111,7 @@ export const eventSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    //FIXME: need test
     logout(state) {
       state = initialState;
     },
