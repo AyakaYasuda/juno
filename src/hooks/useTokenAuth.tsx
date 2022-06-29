@@ -33,7 +33,7 @@ const useTokenAuth = () => {
     }
 
     const { token, expiration } = tokenData;
-    SessionServices.setTokenWithExpirationDate(token, expiration);
+    SessionServices.setTokenWithExpirationDate(token, new Date(expiration));
 
     // update state
     dispatch(setTokenExpirationDate(expiration));
@@ -44,7 +44,7 @@ const useTokenAuth = () => {
   const autoLogout = useCallback(() => {
     if (token && tokenExpirationDate) {
       const remainingTime =
-        tokenExpirationDate.getTime() - new Date().getTime();
+        new Date(tokenExpirationDate).getTime() - new Date().getTime();
 
       console.log('remainingTime', remainingTime);
 

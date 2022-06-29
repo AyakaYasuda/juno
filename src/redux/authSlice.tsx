@@ -12,7 +12,7 @@ const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
 type InitialState = {
   isLogin: boolean;
-  tokenExpirationDate: Date | null;
+  tokenExpirationDate: string | null;
   token?: string;
   status?: string;
 };
@@ -22,7 +22,7 @@ type SetIsLoginAction = Action & {
 };
 
 type SetTokenExpirationDateAction = Action & {
-  payload: Date | null;
+  payload: string | null;
 };
 
 type SetTokenAction = Action & {
@@ -124,7 +124,7 @@ const authSlice = createSlice({
         state.status = 'pending';
         state.isLogin = true;
         state.token = token;
-        state.tokenExpirationDate = generateTokenExpirationTime();
+        state.tokenExpirationDate = String(generateTokenExpirationTime());
       })
       .addCase(signup.fulfilled, (state, action: SignupAction) => {
         const { token } = action.payload;
@@ -133,7 +133,7 @@ const authSlice = createSlice({
         state.status = 'pending';
         state.isLogin = true;
         state.token = token;
-        state.tokenExpirationDate = generateTokenExpirationTime();
+        state.tokenExpirationDate = String(generateTokenExpirationTime());
       });
   },
 });
