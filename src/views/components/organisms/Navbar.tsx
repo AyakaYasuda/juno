@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../../../redux/authSlice';
 
 type NavbarProps = {
   bgColor: string;
@@ -11,10 +13,17 @@ type NavbarProps = {
 
 const Navbar: React.FC<NavbarProps> = ({ bgColor, link, redirectPath }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { setIsLogin, setTokenExpirationDate } = authActions;
 
   const logoutHandler = () => {
+    // update state
+    dispatch(setIsLogin(false));
+    dispatch(setTokenExpirationDate(null));
+
     SessionServices.removeItem(SessionKeys.USER_ID);
     SessionServices.removeItem(SessionKeys.TOKEN);
+
     navigate(redirectPath);
   };
 
