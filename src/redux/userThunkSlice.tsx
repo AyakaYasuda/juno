@@ -6,7 +6,6 @@ import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
-import { SessionKeys } from 'constants/sessionKeys';
 import { getAuth } from 'services/auth.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
@@ -55,8 +54,7 @@ export const getUser = createAsyncThunk(
 export const editUser = createAsyncThunk(
   'edit',
   async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
-    const userId =
-      SessionServices.getItem(SessionKeys.USER_ID) || 'id not found';
+    const userId = SessionServices.getUserId() || 'id not found';
 
     try {
       const result = await axios.patch(

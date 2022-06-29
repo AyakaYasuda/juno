@@ -1,12 +1,11 @@
-import { SessionKeys } from 'constants/sessionKeys';
 import SessionServices from 'services/session.services';
 
 export const getAuth = () => {
-  const token = SessionServices.getItem(SessionKeys.TOKEN);
+  const tokenData = SessionServices.getTokenWithExpirationDate();
 
-  if (!token) {
+  if (!tokenData) {
     throw new Error('No token found!');
   }
 
-  return token;
+  return tokenData.token;
 };

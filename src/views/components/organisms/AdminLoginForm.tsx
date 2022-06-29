@@ -13,8 +13,8 @@ import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
 
 const initialFormState = {
-  email: '',
-  password: '',
+  email: 'ayaka@test.com',
+  password: 'ayakayasuda',
 };
 
 const AdminLoginForm = () => {
@@ -39,8 +39,14 @@ const AdminLoginForm = () => {
     // login success
     if (login.fulfilled.match(result)) {
       alert('login successfully!');
-      SessionServices.setItem(SessionKeys.TOKEN, result.payload.token);
-      SessionServices.setItem(SessionKeys.USER_ID, result.payload.userId);
+
+      const { userId, token } = result.payload;
+
+      // FIXME: setToken, getToken
+      // FIXME: setUserId, getUserId
+      SessionServices.setTokenWithExpirationDate(token);
+      SessionServices.setUserId(userId);
+
       navigate('/admin/create');
     }
 

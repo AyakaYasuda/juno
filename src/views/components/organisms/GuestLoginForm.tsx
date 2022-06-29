@@ -34,8 +34,10 @@ const GuestLoginForm = () => {
     // login success
     if (login.fulfilled.match(result)) {
       alert('login successfully!');
-      SessionServices.setItem(SessionKeys.TOKEN, result.payload.token);
-      SessionServices.setItem(SessionKeys.USER_ID, result.payload.userId);
+
+      SessionServices.setTokenWithExpirationDate(result.payload.token);
+      SessionServices.setUserId(result.payload.userId);
+
       navigate('/guests/mypage');
     }
 
