@@ -15,8 +15,6 @@ const GuestMyPage = () => {
     setIsEventInfoShown((prev) => !prev);
     setIsYourReplyShown((prev) => !prev);
   };
-  console.log('EventInfo', isEventInfoShown);
-  console.log('YourReply', isYourReplyShown);
 
   const { SK: userId } = useAppSelector((state) => state.user.user);
   const { user } = useAppSelector((state) => state.user);
