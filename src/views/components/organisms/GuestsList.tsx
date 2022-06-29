@@ -11,7 +11,7 @@ const GuestsList = (props: Props) => {
 
   return (
     <div className={`md:block lg:basis-1/2 md:w-3/4 w-full`}>
-      <h2 className="hidden lg:block mb-8">Guests list</h2>
+      <h2 className="hidden lg:block mb-8">Guests List</h2>
       <ul className="h-4/5">
         {guests &&
           guests.map((guest) => {
