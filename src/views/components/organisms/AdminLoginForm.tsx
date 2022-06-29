@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router';
 import useForm from 'hooks/useForm';
 import { Link } from 'react-router-dom';
 import { login } from 'redux/authSlice';
-import { SessionKeys } from 'constants/sessionKeys';
 import SessionServices from 'services/session.services';
 
 import Button from '../atoms/Button';
@@ -13,8 +12,8 @@ import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
 
 const initialFormState = {
-  email: 'ayaka@test.com',
-  password: 'ayakayasuda',
+  email: '',
+  password: '',
 };
 
 const AdminLoginForm = () => {

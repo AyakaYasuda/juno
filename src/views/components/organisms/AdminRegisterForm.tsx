@@ -8,10 +8,10 @@ import Card from '../atoms/Card';
 import Button from '../atoms/Button';
 
 const initialFormState = {
-  firstName: 'xxx',
-  lastName: 'aaa',
-  email: 'xxxaaa@test.com',
-  password: 'password',
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
 };
 
 const AdminRegisterForm = () => {
