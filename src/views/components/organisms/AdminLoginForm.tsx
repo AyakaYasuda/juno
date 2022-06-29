@@ -41,8 +41,6 @@ const AdminLoginForm = () => {
 
       const { userId, token } = result.payload;
 
-      // FIXME: setToken, getToken
-      // FIXME: setUserId, getUserId
       SessionServices.setTokenWithExpirationDate(token);
       SessionServices.setUserId(userId);
 
