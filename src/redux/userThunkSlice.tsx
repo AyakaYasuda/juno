@@ -9,7 +9,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
-import { RootState } from 'redux/store';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';

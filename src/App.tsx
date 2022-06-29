@@ -20,9 +20,12 @@ import { useAppDispatch } from 'hooks/hooks';
 import { getUser } from 'redux/userThunkSlice';
 import SessionServices from 'services/session.services';
 import { SessionKeys } from 'constants/sessionKeys';
+import useAuth from './hooks/useAuth';
 
 const App = () => {
   const dispatch = useAppDispatch();
+
+  const { isLogin, login, logout } = useAuth();
   const [userId] = useState(SessionServices.getItem(SessionKeys.USER_ID));
 
   useEffect(() => {
@@ -32,24 +35,31 @@ const App = () => {
   }, [dispatch, userId]);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/admin" />} />
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/register" element={<AdminRegister />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/create" element={<AdminEventCreate />} />
-        <Route path="/admin/edit" element={<AdminEventEdit />} />
-        <Route path="/admin/event" element={<AdminEventDetail />} />
-        <Route
-          path="/guests/invitation/:eventId"
-          element={<GuestInvitation />}
-        />
-        <Route path="/guests/login" element={<GuestLogin />} />
-        <Route path="/guests/mypage" element={<GuestMyPage />} />
-        <Route path="/guests/edit" element={<GuestEdit />} />
-      </Routes>
-    </Router>
+    <>
+      <div>
+        {isLogin ? <h1>isLogin</h1> : <p>is not login</p>}
+        <button onClick={() => login()}>Login</button>
+        <button onClick={() => logout()}>Logout</button>
+      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/admin" />} />
+          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin/register" element={<AdminRegister />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/create" element={<AdminEventCreate />} />
+          <Route path="/admin/edit" element={<AdminEventEdit />} />
+          <Route path="/admin/event" element={<AdminEventDetail />} />
+          <Route
+            path="/guests/invitation/:eventId"
+            element={<GuestInvitation />}
+          />
+          <Route path="/guests/login" element={<GuestLogin />} />
+          <Route path="/guests/mypage" element={<GuestMyPage />} />
+          <Route path="/guests/edit" element={<GuestEdit />} />
+        </Routes>
+      </Router>
+    </>
   );
 };
 
