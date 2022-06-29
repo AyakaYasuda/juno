@@ -15,7 +15,7 @@ const YourReply: React.FC<Props> = ({ user }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full flex flex-col py-5 px-0 sm:px-10 gap-6">
+    <div className="w-full flex flex-col px-0 sm:px-10 gap-6">
       <div className="grid grid-cols-2 auto-cols-fr justify-items-center gap-4">
         <div className="w-full">
           <ColumnLabeledParagraph
@@ -56,12 +56,14 @@ const YourReply: React.FC<Props> = ({ user }) => {
       </div>
       <ColumnLabeledParagraph
         label="Message"
-        className="InputLighter text-Green-dark h-28"
+        className="text-Yellow-dark"
+        textStyle="InputLighter text-Green-dark h-28"
         text={user.message}
       />
       <ColumnLabeledParagraph
         label="If you have food allergy"
-        className="InputLighter text-Green-dark h-28"
+        className="text-Yellow-dark"
+        textStyle="InputLighter text-Green-dark h-28"
         text={user.allergy}
       />
       <GuestButton

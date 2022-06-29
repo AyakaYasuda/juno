@@ -39,7 +39,7 @@ const GuestEdit = () => {
     <div className="hidden lg:grid grid-cols-2 justify-items-center py-10 px-20 gap-5">
       <div className="flex flex-col items-center w-full">
         <h2 className="mb-10">Event Info</h2>
-        <CardWeddingInfo padding="p-20" />
+        <CardWeddingInfo />
       </div>
       <div className="flex flex-col items-center w-full">
         <h2 className="mb-10">Your Reply</h2>
@@ -58,7 +58,7 @@ const GuestEdit = () => {
           Your Reply
         </h2>
       </div>
-      {isEventInfoShown && <CardWeddingInfo padding="p-20" />}
+      {isEventInfoShown && <CardWeddingInfo />}
       {isYourReplyShown && (
         <YourReplyEditForm formInitialValues={user} onSubmit={editHandler} />
       )}
