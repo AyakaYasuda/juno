@@ -9,13 +9,14 @@ import SessionServices from 'services/session.services';
 let logoutTimer: NodeJS.Timeout;
 
 const useTokenAuth = () => {
-  const auth = useSelector((state: RootState) => state.auth);
-  const { tokenExpirationDate, token } = auth;
   const dispatch = useDispatch();
-  const { setIsLogin, setToken, setTokenExpirationDate } = authActions;
 
-  // FIXME: to redux
-  const logout = useCallback(() => {
+  const { setIsLogin, setToken, setTokenExpirationDate } = authActions;
+  const { tokenExpirationDate, token } = useSelector(
+    (state: RootState) => state.auth
+  );
+
+  const logoutWithToken = useCallback(() => {
     localStorage.removeItem(SessionKeys.TOKEN);
 
     // update state
@@ -26,7 +27,6 @@ const useTokenAuth = () => {
   const loginWithToken = useCallback(() => {
     console.log('loginWithToken');
 
-    // ask backend to login and get token
     const tokenData = SessionServices.getTokenWithExpirationDate();
     if (!tokenData) {
       return;
@@ -35,7 +35,7 @@ const useTokenAuth = () => {
     const { token, expiration } = tokenData;
     SessionServices.setTokenWithExpirationDate(token, expiration);
 
-    // set to state
+    // update state
     dispatch(setTokenExpirationDate(tokenExpirationDate));
     dispatch(setToken(token));
     dispatch(setIsLogin(true));
@@ -54,12 +54,12 @@ const useTokenAuth = () => {
 
       console.log('remainingTime', remainingTime);
 
-      logoutTimer = setTimeout(logout, remainingTime);
+      logoutTimer = setTimeout(logoutWithToken, remainingTime);
     } else {
       // for manual logout
       clearTimeout(logoutTimer);
     }
-  }, [token, logout, tokenExpirationDate]);
+  }, [token, tokenExpirationDate, logoutWithToken]);
 
   const autoLogin = useCallback(() => {
     const tokenData = SessionServices.getTokenWithExpirationDate();
@@ -68,6 +68,7 @@ const useTokenAuth = () => {
       return;
     }
 
+    // token valid conditions are
     // 1. data is stored
     // 2. data has token
     // 3. token is valid, unexpired

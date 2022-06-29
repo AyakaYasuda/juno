@@ -29,6 +29,14 @@ type SetTokenAction = Action & {
   payload: string;
 };
 
+type LoginAction = Action & {
+  payload: { userId: string; token: string };
+};
+
+type SignupAction = Action & {
+  payload: { userId: string; token: string };
+};
+
 const initialState: InitialState = {
   isLogin: false,
   tokenExpirationDate: null,
@@ -110,16 +118,22 @@ const authSlice = createSlice({
   // maybe replace with RTK query?
   extraReducers: (builder) => {
     builder
-      .addCase(login.fulfilled, (state, action) => {
-        state.status = 'pending';
+      .addCase(login.fulfilled, (state, action: LoginAction) => {
         const { token } = action.payload;
 
+        state.status = 'pending';
         state.isLogin = true;
         state.token = token;
         state.tokenExpirationDate = generateTokenExpirationTime();
       })
-      .addCase(signup.fulfilled, (state, action) => {
+      .addCase(signup.fulfilled, (state, action: SignupAction) => {
+        const { token } = action.payload;
+        console.log('action.payload', action.payload);
+
         state.status = 'pending';
+        state.isLogin = true;
+        state.token = token;
+        state.tokenExpirationDate = generateTokenExpirationTime();
       });
   },
 });

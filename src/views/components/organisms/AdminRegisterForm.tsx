@@ -8,10 +8,10 @@ import Card from '../atoms/Card';
 import Button from '../atoms/Button';
 
 const initialFormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
+  firstName: 'xxx',
+  lastName: 'aaa',
+  email: 'xxxaaa@test.com',
+  password: 'password',
 };
 
 const AdminRegisterForm = () => {
@@ -24,6 +24,8 @@ const AdminRegisterForm = () => {
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+
+    console.log('register submit');
 
     const result = await dispatch(
       signup({
@@ -51,7 +53,7 @@ const AdminRegisterForm = () => {
     <Card>
       <Form
         className="flex flex-col text-left mb-8 w-full md:w-4/5 mx-auto pt-4"
-        submitHandler={submitHandler}
+        onSubmit={submitHandler}
       >
         <LabeledInput
           type="text"

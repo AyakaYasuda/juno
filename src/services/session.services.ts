@@ -39,7 +39,7 @@ class SessionServices {
       SessionKeys.TOKEN,
       JSON.stringify({
         token,
-        expiration: tokenExpirationDate.toISOString(),
+        expiration: new Date(tokenExpirationDate).toISOString(),
       })
     );
   }
