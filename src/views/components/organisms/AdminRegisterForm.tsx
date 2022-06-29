@@ -1,6 +1,6 @@
 import useForm from 'hooks/useForm';
 import { Form } from '../atoms/Form';
-import { signup } from 'redux/userThunkSlice';
+import { signup } from 'redux/authSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/hooks';
 import LabeledInput from '../molecules/LabeledInput';

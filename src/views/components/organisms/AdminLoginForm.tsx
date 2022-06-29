@@ -3,7 +3,7 @@ import { useAppDispatch } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
 import useForm from 'hooks/useForm';
 import { Link } from 'react-router-dom';
-import { login } from 'redux/userThunkSlice';
+import { login } from 'redux/authSlice';
 import { SessionKeys } from 'constants/sessionKeys';
 import SessionServices from 'services/session.services';
 
