@@ -1,24 +1,17 @@
-import { useAppSelector } from 'hooks/hooks';
-import { useState } from 'react';
+import useErrorModal from 'hooks/useErrorModal';
 
 import AuthPageLayout from 'views/components/molecules/Layout/AuthPageLayout';
 import AdminLoginForm from 'views/components/organisms/AdminLoginForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
 
 const AdminLogin = () => {
-  const { status, errorMessage } = useAppSelector((state) => state.auth);
-  const [isModalShown, setIsModalShown] = useState<boolean>(false);
-  console.log('check in page', status, errorMessage);
-
-  const closeModalHandler = () => {
-    setIsModalShown(false);
-  };
-
-  const showModalHandler = () => {
-    setIsModalShown(true);
-  };
-
-  console.log('isModalShown:', isModalShown);
+  const {
+    status,
+    errorMessage,
+    closeModalHandler,
+    showModalHandler,
+    isModalShown,
+  } = useErrorModal();
 
   return (
     <>

@@ -138,14 +138,20 @@ const authSlice = createSlice({
       });
 
     // state1
-    builder.addCase(login.rejected, (state, action) => {
-      console.log('action.payload', action.payload);
-      // FIXME: fix type
-      const { message } = action.payload as { message: string };
+    builder
+      .addCase(login.rejected, (state, action) => {
+        // FIXME: fix type
+        const { message } = action.payload as { message: string };
 
-      state.status = 'rejected';
-      state.errorMessage = message;
-    });
+        state.status = 'rejected';
+        state.errorMessage = message;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        const { message } = action.payload as { message: string };
+
+        state.status = 'rejected';
+        state.errorMessage = message;
+      });
   },
 });
 
