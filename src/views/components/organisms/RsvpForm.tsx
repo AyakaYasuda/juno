@@ -3,7 +3,7 @@ import useForm from 'hooks/useForm';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from 'hooks/hooks';
 
-import { createAttendanceData } from 'redux/userThunkSlice';
+import { createAttendanceData } from 'redux/userSlice';
 import { signupGuest } from 'redux/authSlice';
 
 import LabeledInput from '../molecules/LabeledInput';
@@ -24,9 +24,15 @@ const formInitialValues = {
 type Props = {
   eventId: string;
   onShowModal: () => void;
+  // FIXME: make sure this is necessary to pass
+  createAttendanceError: string[];
 };
 
-const RsvpForm: React.FC<Props> = ({ eventId, onShowModal }) => {
+const RsvpForm: React.FC<Props> = ({
+  eventId,
+  onShowModal,
+  createAttendanceError,
+}) => {
   const { values, inputChangeHandler } = useForm(formInitialValues);
   const {
     firstName,
@@ -60,31 +66,33 @@ const RsvpForm: React.FC<Props> = ({ eventId, onShowModal }) => {
 
       // signup success
       if (signupGuest.fulfilled.match(signUpResult)) {
-        console.log('signUp successfully!');
+        const userId = signUpResult.payload.userId;
+        console.log('userId', userId);
+
+        const createAttendanceDataResult = await dispatch(
+          createAttendanceData({
+            eventId,
+            attendanceReqBody: { userId, isAttending: isAttending as boolean },
+          })
+        );
+
+        // success
+        if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
+          navigate('/guests/login');
+        }
+
+        //  failed
+        if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
+          console.log(
+            'failed to create attendance data: ',
+            createAttendanceError
+          );
+        }
       }
 
       // signUp failed
       if (signupGuest.rejected.match(signUpResult)) {
         onShowModal();
-      }
-
-      const userId = signUpResult.payload.userId;
-
-      const createAttendanceDataResult = await dispatch(
-        createAttendanceData({
-          eventId,
-          attendanceReqBody: { userId, isAttending: isAttending as boolean },
-        })
-      );
-
-      // success
-      if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
-        navigate('/guests/login');
-      }
-
-      //  failed
-      if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
-        console.log('failed to create attendance data');
       }
     } catch (error) {
       console.log(error);

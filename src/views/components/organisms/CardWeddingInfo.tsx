@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'hooks/hooks';
-import { getEvent } from 'redux/eventThunkSlice';
+import { getEvent } from 'redux/eventSlice';
 
 import SectionDivider from './SectionDivider';
 

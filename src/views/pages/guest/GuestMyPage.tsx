@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import YourReply from 'views/components/organisms/YourReply';
-import { getUser } from 'redux/userThunkSlice';
+import { getUser } from 'redux/userSlice';
 
 const GuestMyPage = () => {
   const dispatch = useAppDispatch();

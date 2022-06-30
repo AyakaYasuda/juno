@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
-import { editEvent, getEvent } from 'redux/eventThunkSlice';
+import { editEvent, getEvent } from 'redux/eventSlice';
 import { RootState } from 'redux/store';
 import { IEventRequest } from 'types/EventData.type';
 import useEventErrorModal from 'hooks/useEventErrorModal';

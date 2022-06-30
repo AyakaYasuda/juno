@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { editUser, getUser } from 'redux/userThunkSlice';
+import { editUser, getUser } from 'redux/userSlice';
 import { useNavigate } from 'react-router';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
