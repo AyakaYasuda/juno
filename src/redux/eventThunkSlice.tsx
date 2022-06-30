@@ -142,12 +142,19 @@ export const eventSlice = createSlice({
         state.event = action.payload;
       });
 
-    builder.addCase(createEvent.rejected, (state, action) => {
-      const { message } = action.payload as { message: string[]};
+    builder
+      .addCase(createEvent.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
 
-      state.status = 'rejected';
-      state.errorMessages = message;
-    });
+        state.status = 'rejected';
+        state.errorMessages = message;
+      })
+      .addCase(editEvent.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      });
   },
 });
 

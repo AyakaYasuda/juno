@@ -57,7 +57,7 @@ const AdminEventCreate = () => {
         show={isModalShown}
         onCancel={closeModalHandler}
         messages={errorMessages as string[]}
-        button="Sign Up Again"
+        button="Try Again"
         buttonStyle="bg-Pink-default text-white"
       />
       <AdminPageLayout>{pageContent}</AdminPageLayout>;
