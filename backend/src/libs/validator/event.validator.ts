@@ -1,14 +1,14 @@
+import * as yup from 'yup';
 import { CreateEventReqBody } from '@libs/types/createEventReqBody.type';
 import { UpdateEventReqBody } from '@libs/types/updateEventReqBody.type';
-import * as yup from 'yup';
 
 class EventValidator {
-  private async validate(schema: any, reqBody) {
-    // FIXME : the reference sample was false
-    await schema.validate(reqBody, { abortEarly: true });
-  }
+  // private async validate(schema: any, reqBody) {
+  //   // FIXME : the reference sample was false
+  //   await schema.validate(reqBody, { abortEarly: true });
+  // }
 
-  public validateEventCreateReqBody(reqBody: CreateEventReqBody) {
+  public static async validateEventCreateReqBody(reqBody: CreateEventReqBody) {
     const eventSchema = yup.object().shape({
       bride: yup.string().required(),
       groom: yup.string().required(),
@@ -22,10 +22,10 @@ class EventValidator {
       message: yup.string().required(),
     });
 
-    this.validate(eventSchema, reqBody);
+    await eventSchema.validate(reqBody, { abortEarly: true });
   }
 
-  public validateEventUpdateReqBody(reqBody: UpdateEventReqBody) {
+  public static async validateEventUpdateReqBody(reqBody: UpdateEventReqBody) {
     const eventSchema = yup.object().shape({
       bride: yup.string(),
       groom: yup.string(),
@@ -40,7 +40,7 @@ class EventValidator {
       isEditable: yup.boolean(),
     });
 
-    this.validate(eventSchema, reqBody);
+    await eventSchema.validate(reqBody, { abortEarly: true });
   }
 }
 

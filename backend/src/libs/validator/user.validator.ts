@@ -50,8 +50,8 @@ class UserValidator {
 
   public static async validateLoginUserReqBody(reqBody: ILoginUserReqBody) {
     const userSchema = yup.object().shape({
-      email: yup.string(),
-      password: yup.string(),
+      email: yup.string().required(),
+      password: yup.string().required(),
     });
 
     // FIXME : the reference sample was false

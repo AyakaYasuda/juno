@@ -12,8 +12,8 @@ const updateEvent = async (
     const reqBody = JSON.parse(event.body);
 
     const eventServices = new EventServices();
-    const eventValidator = new EventValidator();
-    eventValidator.validateEventUpdateReqBody(reqBody);
+    
+    await EventValidator.validateEventUpdateReqBody(reqBody);
 
     const eventData = await eventServices.errorIfEventNotExist(
       eventId,

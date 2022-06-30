@@ -7,7 +7,6 @@ import { CreateEventReqBody } from '@libs/types/createEventReqBody.type';
 import EventServices from '@libs/services/event.services';
 import UserServices from '@libs/services/user.services';
 
-const eventValidator = new EventValidator();
 const eventServices = new EventServices();
 const userServices = new UserServices();
 
@@ -18,7 +17,7 @@ export const createEvent = async (
     const userId = event.pathParameters.userId;
     const reqBody: CreateEventReqBody = JSON.parse(event.body);
 
-    await eventValidator.validateEventCreateReqBody(reqBody);
+    await EventValidator.validateEventCreateReqBody(reqBody);
 
     // check data exists
     await userServices.errorIfUserNotExist(userId, 'User not found!');
@@ -37,6 +36,7 @@ export const createEvent = async (
       eventId,
     });
   } catch (err) {
+    console.log(err);
     return handleError(err);
   }
 };
