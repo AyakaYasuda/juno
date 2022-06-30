@@ -140,7 +140,6 @@ const authSlice = createSlice({
     // state1
     builder
       .addCase(login.rejected, (state, action) => {
-        console.log('action.payload in login', action.payload);
         // FIXME: fix type
         const { message } = action.payload as { message: string[] };
 
@@ -148,8 +147,6 @@ const authSlice = createSlice({
         state.errorMessages = message;
       })
       .addCase(signup.rejected, (state, action) => {
-        console.log('action.payload in signup', action.payload);
-
         const { message } = action.payload as { message: string[] };
 
         state.status = 'rejected';

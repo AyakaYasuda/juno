@@ -143,8 +143,6 @@ export const eventSlice = createSlice({
       });
 
     builder.addCase(createEvent.rejected, (state, action) => {
-      console.log('action.payload createEvent', action.payload);
-
       const { message } = action.payload as { message: string[]};
 
       state.status = 'rejected';
