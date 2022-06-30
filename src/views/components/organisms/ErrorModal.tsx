@@ -18,7 +18,7 @@ const ModalContent: React.FC<ContentProps> = ({
   onCancel,
 }) => {
   const content = (
-    <div className="fixed z-20 top-12 left-8 right-8 sm:left-1/4 sm:right-1/4 h-16">
+    <div className="fixed z-20 top-20 left-8 right-8 sm:left-1/4 sm:right-1/4 h-16">
       <Card className="FlexAlignCenter flex-col gap-4 opacity-80">
         <h3 className="text-center">Sorry! Something went wrong...</h3>
         <p className="text-center">{message}</p>

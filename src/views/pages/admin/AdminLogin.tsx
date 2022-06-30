@@ -13,6 +13,8 @@ const AdminLogin = () => {
     isModalShown,
   } = useErrorModal();
 
+  console.log('errorMessage', errorMessage);
+
   return (
     <>
       <ErrorModal

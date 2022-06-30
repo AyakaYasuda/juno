@@ -140,6 +140,7 @@ const authSlice = createSlice({
     // state1
     builder
       .addCase(login.rejected, (state, action) => {
+        console.log('action.payload', action.payload);
         // FIXME: fix type
         const { message } = action.payload as { message: string };
 

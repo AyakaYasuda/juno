@@ -13,15 +13,13 @@ const AdminRegister = () => {
     isModalShown,
   } = useErrorModal();
 
-  console.log(errorMessage);
-
   return (
     <>
       <ErrorModal
         show={isModalShown}
         onCancel={closeModalHandler}
         message={errorMessage as string}
-        button="Sign Up Again"
+        button="Try Again"
         buttonStyle="bg-Pink-default text-white"
       />
       <AuthPageLayout>

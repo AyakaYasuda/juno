@@ -36,7 +36,6 @@ export const createEvent = async (
       eventId,
     });
   } catch (err) {
-    console.log(err);
     return handleError(err);
   }
 };

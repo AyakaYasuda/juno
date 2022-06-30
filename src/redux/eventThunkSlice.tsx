@@ -26,6 +26,7 @@ const initialState: IEventState = {
   },
   guests: [],
   status: 'loading',
+  errorMessage: '',
 };
 
 //create action
@@ -119,7 +120,7 @@ export const eventSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createEvent.pending, (state, action) => {
-        state.status = 'loading';
+        state.status = 'pending';
       })
       .addCase(createEvent.fulfilled, (state, action) => {
         state.status = 'success';
@@ -137,6 +138,15 @@ export const eventSlice = createSlice({
         state.status = 'success';
         state.event = action.payload;
       });
+
+    builder.addCase(createEvent.rejected, (state, action) => {
+      console.log('action.payload', action.payload);
+
+      const { message } = action.payload as { message: string };
+
+      state.status = 'rejected';
+      state.errorMessage = message;
+    });
   },
 });
 

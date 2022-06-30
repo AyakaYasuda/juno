@@ -3,11 +3,6 @@ import { CreateEventReqBody } from '@libs/types/createEventReqBody.type';
 import { UpdateEventReqBody } from '@libs/types/updateEventReqBody.type';
 
 class EventValidator {
-  // private async validate(schema: any, reqBody) {
-  //   // FIXME : the reference sample was false
-  //   await schema.validate(reqBody, { abortEarly: true });
-  // }
-
   public static async validateEventCreateReqBody(reqBody: CreateEventReqBody) {
     const eventSchema = yup.object().shape({
       bride: yup.string().required(),
