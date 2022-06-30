@@ -13,7 +13,6 @@ const CardWeddingInfo: React.FC = () => {
   const [receptionSchedule, setReceptionSchedule] = useState<string>();
 
   useEffect(() => {
-    console.log(userId);
     if (userId) {
       dispatch(getEvent(userId));
     }
@@ -69,7 +68,6 @@ const CardWeddingInfo: React.FC = () => {
         .toUpperCase();
 
       const dateAndTime = `${day} ${month} ${date}, ${year}  at ${st}`;
-      console.log(dateAndTime);
 
       return dateAndTime;
     },

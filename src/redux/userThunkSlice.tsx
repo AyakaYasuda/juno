@@ -27,6 +27,7 @@ const initialState: IUserState = {
     isAttending: true,
   },
   status: 'pending',
+  errorMessages: [],
 };
 
 //GET
@@ -107,6 +108,14 @@ export const userSlice = createSlice({
         state.status = 'pending';
         state.user = action.payload;
       });
+
+    builder.addCase(createAttendanceData.rejected, (state, action) => {
+      const { message } = action.payload as { message: string[] };
+      console.log('error messages in createAttendanceData', action.payload);
+
+      state.status = 'rejected';
+      state.errorMessages = message;
+    });
   },
 });
 

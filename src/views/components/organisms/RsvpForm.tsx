@@ -23,9 +23,10 @@ const formInitialValues = {
 
 type Props = {
   eventId: string;
+  onShowModal: () => void;
 };
 
-const RsvpForm: React.FC<Props> = ({ eventId }) => {
+const RsvpForm: React.FC<Props> = ({ eventId, onShowModal }) => {
   const { values, inputChangeHandler } = useForm(formInitialValues);
   const {
     firstName,
@@ -64,7 +65,7 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
 
       // signUp failed
       if (signupGuest.rejected.match(signUpResult)) {
-        alert('signup failed...');
+        onShowModal();
       }
 
       const userId = signUpResult.payload.userId;
@@ -78,13 +79,12 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
 
       // success
       if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
-        alert('created attendance data successfully!');
         navigate('/guests/login');
       }
 
       //  failed
       if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
-        alert('failed to create attendance data');
+        console.log('failed to create attendance data');
       }
     } catch (error) {
       console.log(error);

@@ -48,10 +48,11 @@ export interface IUpdateUserRequest {
 
 export interface IUserState {
   user: IUser;
-  status: 'pending' | 'loading' | 'failed';
+  status: 'pending' | 'rejected' | 'fulfilled';
+  errorMessages: string[]
 }
 
 export interface IAuthState {
   user: IUserState;
-  status: 'pending' | 'loading' | 'failed';
+  status: 'pending' | 'rejected' | 'fulfilled';
 }

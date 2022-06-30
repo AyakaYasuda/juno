@@ -31,6 +31,6 @@ export interface IEventRequest {
 export interface IEventState {
   event: IEvent;
   guests: IUser[];
-  status: string;
+  status: 'pending' | 'rejected' | 'fulfilled';
   errorMessages: string[];
 }

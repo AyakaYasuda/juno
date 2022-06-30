@@ -22,7 +22,7 @@ const ModalContent: React.FC<ContentProps> = ({
       <Card className="FlexAlignCenter flex-col gap-4 opacity-80">
         <h3 className="text-center">Sorry! Something went wrong...</h3>
         {messages.length !== 0 &&
-          messages.map((message) => <p className="text-center">{message}</p>)}
+          messages.map((message, index) => <p className="text-center" key={index}>{message}</p>)}
         <button
           className={`BaseButtonStyle w-28 sm:w-36 ${buttonStyle}`}
           onClick={onCancel}

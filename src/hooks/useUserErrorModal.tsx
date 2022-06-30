@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useAppSelector } from './hooks';
 
-const useEventErrorModal = () => {
+const useUserErrorModal = () => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
-  const { status, errorMessages } = useAppSelector((state) => state.event);
+  const { status, errorMessages } = useAppSelector((state) => state.user);
 
   const closeModalHandler = () => {
     setIsModalShown(false);
@@ -23,4 +23,4 @@ const useEventErrorModal = () => {
   };
 };
 
-export default useEventErrorModal;
+export default useUserErrorModal;

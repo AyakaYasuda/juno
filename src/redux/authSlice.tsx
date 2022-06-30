@@ -38,6 +38,10 @@ type SignupAction = Action & {
   payload: { userId: string; token: string };
 };
 
+type SignupGuestAction = Action & {
+  payload: { userId: string; token: string };
+};
+
 const initialState: InitialState = {
   isLogin: false,
   tokenExpirationDate: null,
@@ -83,7 +87,7 @@ export const signup = createAsyncThunk(
 
 //GUEST SIGNUP
 export const signupGuest = createAsyncThunk(
-  'signup',
+  'signupGuest',
   async (signupData: IGuestSignupRequest, thunkAPI) => {
     try {
       const result = await axios.post(
@@ -135,9 +139,17 @@ const authSlice = createSlice({
         state.isLogin = true;
         state.token = token;
         state.tokenExpirationDate = String(generateTokenExpirationTime());
+      })
+      .addCase(signupGuest.fulfilled, (state, action: SignupGuestAction) => {
+        const { token } = action.payload;
+        console.log('action.payload', action.payload);
+
+        state.status = 'pending';
+        state.isLogin = true;
+        state.token = token;
+        state.tokenExpirationDate = String(generateTokenExpirationTime());
       });
 
-    // state1
     builder
       .addCase(login.rejected, (state, action) => {
         // FIXME: fix type
@@ -148,6 +160,13 @@ const authSlice = createSlice({
       })
       .addCase(signup.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      })
+      .addCase(signupGuest.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
+        console.log('error messages in signupGuest', action.payload);
 
         state.status = 'rejected';
         state.errorMessages = message;

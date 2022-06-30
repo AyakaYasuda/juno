@@ -25,7 +25,7 @@ const initialState: IEventState = {
     isEditable: true,
   },
   guests: [],
-  status: 'loading',
+  status: 'pending',
   errorMessages: [],
 };
 
@@ -126,19 +126,19 @@ export const eventSlice = createSlice({
         state.status = 'pending';
       })
       .addCase(createEvent.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = 'fulfilled';
         state.event = action.payload;
       })
       .addCase(getEvent.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = 'fulfilled';
         state.event = action.payload;
       })
       .addCase(getGuests.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = 'fulfilled';
         state.guests = action.payload;
       })
       .addCase(editEvent.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = 'fulfilled';
         state.event = action.payload;
       });
 
