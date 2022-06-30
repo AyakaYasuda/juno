@@ -12,8 +12,8 @@ import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
 
 const initialFormState = {
-  email: '',
-  password: '',
+  email: 'ayaka@test.com',
+  password: 'ayakayasuda',
 };
 
 const AdminLoginForm = () => {

@@ -20,9 +20,13 @@ import { useAppDispatch } from 'hooks/hooks';
 import { getUser } from 'redux/userThunkSlice';
 import SessionServices from 'services/session.services';
 import useTokenAuth from './hooks/useTokenAuth';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
+import RedirectToTop from 'views/components/organisms/RedirectToTop';
 
 const App = () => {
   const dispatch = useAppDispatch();
+  const { isLogin } = useSelector((state: RootState) => state.auth);
 
   useTokenAuth();
   const [userId] = useState(SessionServices.getUserId());
@@ -36,20 +40,32 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/admin" />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/create" element={<AdminEventCreate />} />
-        <Route path="/admin/edit" element={<AdminEventEdit />} />
-        <Route path="/admin/event" element={<AdminEventDetail />} />
+        <Route path="/admin" element={<RedirectToTop redirectTo="/admin" />}>
+          {isLogin && (
+            <>
+              <Route path="create" element={<AdminEventCreate />} />
+              <Route path="edit" element={<AdminEventEdit />} />
+              <Route path="event" element={<AdminEventDetail />} />
+            </>
+          )}
+          <Route path="*" element={<Navigate to="/admin" />} />
+        </Route>
+
         <Route
           path="/guests/invitation/:eventId"
           element={<GuestInvitation />}
         />
         <Route path="/guests/login" element={<GuestLogin />} />
-        <Route path="/guests/mypage" element={<GuestMyPage />} />
-        <Route path="/guests/edit" element={<GuestEdit />} />
+        <Route
+          path="/guests"
+          element={<RedirectToTop redirectTo="/guests/login" />}
+        >
+          <Route path="mypage" element={<GuestMyPage />} />
+          <Route path="edit" element={<GuestEdit />} />
+        </Route>
       </Routes>
     </Router>
   );

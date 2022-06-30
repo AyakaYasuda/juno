@@ -10,8 +10,8 @@ import LabeledInput from '../molecules/LabeledInput';
 import GuestButton from '../atoms/GuestButton';
 
 const initialFormState = {
-  email: '',
-  password: '',
+  email: 'ayaka@test.com',
+  password: 'ayakayasuda',
 };
 
 const GuestLoginForm = () => {

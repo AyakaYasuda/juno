@@ -24,6 +24,7 @@ const useTokenAuth = () => {
     dispatch(setIsLogin(false));
   }, [dispatch, setIsLogin, setTokenExpirationDate]);
 
+  // FIXME: adminLogin, guestLogin
   const loginWithToken = useCallback(() => {
     console.log('loginWithToken');
 
