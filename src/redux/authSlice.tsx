@@ -15,6 +15,7 @@ type InitialState = {
   tokenExpirationDate: string | null;
   token?: string;
   status?: string;
+  errorMessage?: string;
 };
 
 type SetIsLoginAction = Action & {
@@ -135,6 +136,16 @@ const authSlice = createSlice({
         state.token = token;
         state.tokenExpirationDate = String(generateTokenExpirationTime());
       });
+
+    // state1
+    builder.addCase(login.rejected, (state, action) => {
+      console.log('action.payload', action.payload);
+      // FIXME: fix type
+      const { message } = action.payload as { message: string };
+
+      state.status = 'rejected';
+      state.errorMessage = message;
+    });
   },
 });
 
