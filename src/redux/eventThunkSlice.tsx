@@ -26,7 +26,7 @@ const initialState: IEventState = {
   },
   guests: [],
   status: 'loading',
-  errorMessage: '',
+  errorMessages: [],
 };
 
 //create action
@@ -37,6 +37,8 @@ export const createEvent = createAsyncThunk(
     try {
       // FIXME: fix type
       const { SK: userId } = (getState() as any).user.user;
+      console.log('token', getAuth());
+
       await axios.post(`${API_URL}/new/${userId}`, JSON.stringify(eventData), {
         headers: {
           Authorization: getAuth(),
@@ -44,6 +46,7 @@ export const createEvent = createAsyncThunk(
       });
       return initialState.event;
     } catch (error: any) {
+      console.log('error');
       return rejectWithValue(error.response.data);
     }
   }
@@ -140,12 +143,12 @@ export const eventSlice = createSlice({
       });
 
     builder.addCase(createEvent.rejected, (state, action) => {
-      console.log('action.payload', action.payload);
+      console.log('action.payload createEvent', action.payload);
 
-      const { message } = action.payload as { message: string };
+      const { message } = action.payload as { message: string[]};
 
       state.status = 'rejected';
-      state.errorMessage = message;
+      state.errorMessages = message;
     });
   },
 });

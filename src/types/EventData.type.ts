@@ -32,5 +32,5 @@ export interface IEventState {
   event: IEvent;
   guests: IUser[];
   status: string;
-  errorMessage: string;
+  errorMessages: string[];
 }

@@ -5,14 +5,14 @@ import Backdrop from '../atoms/Backdrop';
 import Card from '../atoms/Card';
 
 type ContentProps = {
-  message: string;
+  messages: string[];
   button: string;
   buttonStyle?: string;
   onCancel: () => void;
 };
 
 const ModalContent: React.FC<ContentProps> = ({
-  message,
+  messages,
   button,
   buttonStyle,
   onCancel,
@@ -21,7 +21,8 @@ const ModalContent: React.FC<ContentProps> = ({
     <div className="fixed z-20 top-20 left-8 right-8 sm:left-1/4 sm:right-1/4 h-16">
       <Card className="FlexAlignCenter flex-col gap-4 opacity-80">
         <h3 className="text-center">Sorry! Something went wrong...</h3>
-        <p className="text-center">{message}</p>
+        {messages.length !== 0 &&
+          messages.map((message) => <p className="text-center">{message}</p>)}
         <button
           className={`BaseButtonStyle w-28 sm:w-36 ${buttonStyle}`}
           onClick={onCancel}
@@ -40,7 +41,7 @@ const ModalContent: React.FC<ContentProps> = ({
 type Props = {
   show: boolean;
   onCancel: () => void;
-  message: string;
+  messages: string[];
   button: string;
   buttonStyle?: string;
 };
@@ -48,7 +49,7 @@ type Props = {
 const ErrorModal: React.FC<Props> = ({
   show,
   onCancel,
-  message,
+  messages,
   button,
   buttonStyle,
 }) => {
@@ -56,7 +57,7 @@ const ErrorModal: React.FC<Props> = ({
     <>
       <Backdrop onCancel={onCancel} />
       <ModalContent
-        message={message}
+        messages={messages}
         button={button}
         buttonStyle={buttonStyle}
         onCancel={onCancel}

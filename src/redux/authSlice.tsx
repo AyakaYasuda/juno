@@ -15,7 +15,7 @@ type InitialState = {
   tokenExpirationDate: string | null;
   token?: string;
   status?: string;
-  errorMessage?: string;
+  errorMessages?: string[];
 };
 
 type SetIsLoginAction = Action & {
@@ -76,7 +76,7 @@ export const signup = createAsyncThunk(
 
       return result.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -95,7 +95,7 @@ export const signupGuest = createAsyncThunk(
 
       return result.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -140,18 +140,20 @@ const authSlice = createSlice({
     // state1
     builder
       .addCase(login.rejected, (state, action) => {
-        console.log('action.payload', action.payload);
+        console.log('action.payload in login', action.payload);
         // FIXME: fix type
-        const { message } = action.payload as { message: string };
+        const { message } = action.payload as { message: string[] };
 
         state.status = 'rejected';
-        state.errorMessage = message;
+        state.errorMessages = message;
       })
       .addCase(signup.rejected, (state, action) => {
-        const { message } = action.payload as { message: string };
+        console.log('action.payload in signup', action.payload);
+
+        const { message } = action.payload as { message: string[] };
 
         state.status = 'rejected';
-        state.errorMessage = message;
+        state.errorMessages = message;
       });
   },
 });

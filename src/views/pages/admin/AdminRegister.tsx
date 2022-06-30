@@ -1,4 +1,4 @@
-import useErrorModal from 'hooks/useErrorModal';
+import useAuthErrorModal from 'hooks/useAuthErrorModal';
 
 import AuthPageLayout from 'views/components/molecules/Layout/AuthPageLayout';
 import AdminRegisterForm from 'views/components/organisms/AdminRegisterForm';
@@ -7,18 +7,18 @@ import ErrorModal from 'views/components/organisms/ErrorModal';
 const AdminRegister = () => {
   const {
     status,
-    errorMessage,
+    errorMessages,
     closeModalHandler,
     showModalHandler,
     isModalShown,
-  } = useErrorModal();
+  } = useAuthErrorModal();
 
   return (
     <>
       <ErrorModal
         show={isModalShown}
         onCancel={closeModalHandler}
-        message={errorMessage as string}
+        messages={errorMessages as string[]}
         button="Try Again"
         buttonStyle="bg-Pink-default text-white"
       />

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import useErrorModal from 'hooks/useErrorModal';
+import useEventErrorModal from 'hooks/useEventErrorModal';
 import { IEventRequest } from 'types/EventData.type';
 import { createEvent } from 'redux/eventThunkSlice';
 
@@ -17,11 +17,11 @@ const AdminEventCreate = () => {
 
   const {
     status,
-    errorMessage,
+    errorMessages,
     closeModalHandler,
     showModalHandler,
     isModalShown,
-  } = useErrorModal();
+  } = useEventErrorModal();
 
   const formSubmitLogic = async (formInput: IEventRequest) => {
     const result = await dispatch(createEvent(formInput));
@@ -56,7 +56,7 @@ const AdminEventCreate = () => {
       <ErrorModal
         show={isModalShown}
         onCancel={closeModalHandler}
-        message={errorMessage as string}
+        messages={errorMessages as string[]}
         button="Sign Up Again"
         buttonStyle="bg-Pink-default text-white"
       />

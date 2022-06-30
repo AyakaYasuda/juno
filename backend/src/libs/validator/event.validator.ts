@@ -17,7 +17,7 @@ class EventValidator {
       message: yup.string().required(),
     });
 
-    await eventSchema.validate(reqBody, { abortEarly: true });
+    await eventSchema.validate(reqBody, { abortEarly: false });
   }
 
   public static async validateEventUpdateReqBody(reqBody: UpdateEventReqBody) {
@@ -35,7 +35,7 @@ class EventValidator {
       isEditable: yup.boolean(),
     });
 
-    await eventSchema.validate(reqBody, { abortEarly: true });
+    await eventSchema.validate(reqBody, { abortEarly: false });
   }
 }
 

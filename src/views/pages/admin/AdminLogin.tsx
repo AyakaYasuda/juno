@@ -1,4 +1,4 @@
-import useErrorModal from 'hooks/useErrorModal';
+import useAuthErrorModal from 'hooks/useAuthErrorModal';
 
 import AuthPageLayout from 'views/components/molecules/Layout/AuthPageLayout';
 import AdminLoginForm from 'views/components/organisms/AdminLoginForm';
@@ -7,20 +7,18 @@ import ErrorModal from 'views/components/organisms/ErrorModal';
 const AdminLogin = () => {
   const {
     status,
-    errorMessage,
+    errorMessages,
     closeModalHandler,
     showModalHandler,
     isModalShown,
-  } = useErrorModal();
-
-  console.log('errorMessage', errorMessage);
+  } = useAuthErrorModal();
 
   return (
     <>
       <ErrorModal
         show={isModalShown}
         onCancel={closeModalHandler}
-        message={errorMessage as string}
+        messages={errorMessages as string[]}
         button="Login Again"
         buttonStyle="bg-Pink-default text-white"
       />

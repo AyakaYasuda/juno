@@ -29,7 +29,7 @@ class UserValidator {
     });
 
     // FIXME : the reference sample was false
-    await userSchema.validate(reqBody, { abortEarly: true });
+    await userSchema.validate(reqBody, { abortEarly: false });
   }
 
   public static async validateUpdateUserReqBody(reqBody: IUpdateUserReqBody) {
@@ -45,7 +45,7 @@ class UserValidator {
     });
 
     // FIXME : the reference sample was false
-    await userSchema.validate(reqBody, { abortEarly: true });
+    await userSchema.validate(reqBody, { abortEarly: false });
   }
 
   public static async validateLoginUserReqBody(reqBody: ILoginUserReqBody) {
@@ -55,7 +55,7 @@ class UserValidator {
     });
 
     // FIXME : the reference sample was false
-    await userSchema.validate(reqBody, { abortEarly: true });
+    await userSchema.validate(reqBody, { abortEarly: false });
   }
 }
 
