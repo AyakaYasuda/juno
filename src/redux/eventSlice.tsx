@@ -50,7 +50,7 @@ export const createEvent = createAsyncThunk(
 
 //GET
 export const getEvent = createAsyncThunk(
-  'event/get',
+  'event/getEvent',
   async (userId: string, { rejectWithValue }) => {
     try {
       const url = `${API_URL}/${userId}`;
@@ -68,7 +68,7 @@ export const getEvent = createAsyncThunk(
 );
 
 export const getGuests = createAsyncThunk(
-  'guests/get',
+  'event/getGuests',
   async (eventId: string, { rejectWithValue }) => {
     try {
       const result = await axios.get(`${API_URL}/guests/${eventId}`, {
@@ -108,7 +108,7 @@ export const editEvent = createAsyncThunk(
 
 //create slice
 export const eventSlice = createSlice({
-  name: 'auth',
+  name: 'event',
   initialState,
   reducers: {
     //FIXME: need test

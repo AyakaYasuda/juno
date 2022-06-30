@@ -1,11 +1,7 @@
 import { Action, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { generateTokenExpirationTime } from 'services/session.services';
-import {
-  IGuestSignupRequest,
-  ILoginRequest,
-  ISignupRequest,
-} from 'types/UserData.type';
+import { IGuestSignupRequest, ILoginRequest } from 'types/UserData.type';
 
 // FIXME: fix api url to auth?
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
@@ -43,7 +39,7 @@ const initialState: InitialState = {
 };
 
 export const login = createAsyncThunk(
-  'login',
+  'guestAuth/login',
   async (loginData: ILoginRequest, { rejectWithValue }) => {
     try {
       const result = await axios.post(
@@ -61,28 +57,7 @@ export const login = createAsyncThunk(
 );
 
 export const signup = createAsyncThunk(
-  'signup',
-  async (signupData: ISignupRequest, thunkAPI) => {
-    console.log('signupData', signupData);
-
-    try {
-      const result = await axios.post(
-        `${API_URL}/signup`,
-        JSON.stringify(signupData)
-      );
-
-      console.log('signup result.data', result.data);
-
-      return result.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
-    }
-  }
-);
-
-//GUEST SIGNUP
-export const signupGuest = createAsyncThunk(
-  'signup',
+  'guestAuth/signup',
   async (signupData: IGuestSignupRequest, thunkAPI) => {
     try {
       const result = await axios.post(
@@ -99,8 +74,8 @@ export const signupGuest = createAsyncThunk(
   }
 );
 
-const authSlice = createSlice({
-  name: 'auth',
+const guestAuthSlice = createSlice({
+  name: 'guestAuth',
   initialState,
   reducers: {
     setIsLogin(state, action: SetIsLoginAction) {
@@ -128,7 +103,7 @@ const authSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state, action: SignupAction) => {
         const { token } = action.payload;
-        console.log('action.payload', action.payload);
+        console.log('signup action.payload', action.payload);
 
         state.status = 'pending';
         state.isLogin = true;
@@ -138,5 +113,5 @@ const authSlice = createSlice({
   },
 });
 
-export const authActions = authSlice.actions;
-export const authReducer = authSlice.reducer;
+export const guestAuthActions = guestAuthSlice.actions;
+export const guestAuthReducer = guestAuthSlice.reducer;

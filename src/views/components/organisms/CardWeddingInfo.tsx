@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'hooks/hooks';
-import { getEvent } from 'redux/eventThunkSlice';
+import { getEvent } from 'redux/eventSlice';
 
 import SectionDivider from './SectionDivider';
 
@@ -99,7 +99,7 @@ const CardWeddingInfo: React.FC = () => {
         {event.dateWeddingReception !== event.dateWedding ? (
           <>
             <p className="text-Green-dark font-allura text-xl">
-              We will be having the reception on the following date  
+              We will be having the reception on the following date
             </p>
             <h5 className="text-Green-dark">{receptionSchedule}</h5>
           </>

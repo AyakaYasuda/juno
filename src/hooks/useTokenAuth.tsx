@@ -1,7 +1,7 @@
 import { SessionKeys } from 'constants/sessionKeys';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from 'redux/authSlice';
+import { adminAuthActions } from 'redux/adminAuthSlice';
 import { RootState } from 'redux/store';
 import SessionServices from 'services/session.services';
 
@@ -11,9 +11,9 @@ let logoutTimer: NodeJS.Timeout;
 const useTokenAuth = () => {
   const dispatch = useDispatch();
 
-  const { setIsLogin, setToken, setTokenExpirationDate } = authActions;
+  const { setIsLogin, setToken, setTokenExpirationDate } = adminAuthActions;
   const { tokenExpirationDate, token } = useSelector(
-    (state: RootState) => state.auth
+    (state: RootState) => state.adminAuth
   );
 
   const logoutWithToken = useCallback(() => {

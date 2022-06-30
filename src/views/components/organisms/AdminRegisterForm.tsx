@@ -1,6 +1,6 @@
 import useForm from 'hooks/useForm';
 import { Form } from '../atoms/Form';
-import { signup } from 'redux/authSlice';
+import { signup } from 'redux/adminAuthSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/hooks';
 import LabeledInput from '../molecules/LabeledInput';
@@ -8,10 +8,10 @@ import Card from '../atoms/Card';
 import Button from '../atoms/Button';
 
 const initialFormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
+  firstName: 'ttt',
+  lastName: 'ttt',
+  email: 'ttt@test.com',
+  password: 'password',
 };
 
 const AdminRegisterForm = () => {

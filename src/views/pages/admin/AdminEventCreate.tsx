@@ -3,7 +3,7 @@ import AlreadyHaveEvent from 'views/components/organisms/AlreadyHaveEvent';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import EditEventForm from 'views/components/organisms/EditEventForm';
 import { IEventRequest } from 'types/EventData.type';
-import { createEvent } from 'redux/eventThunkSlice';
+import { createEvent } from 'redux/eventSlice';
 import { useNavigate } from 'react-router';
 
 const AdminEventCreate = () => {

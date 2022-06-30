@@ -52,7 +52,7 @@ export const getUser = createAsyncThunk(
 
 //PATCH
 export const editUser = createAsyncThunk(
-  'edit',
+  'user/edit',
   async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
     const userId = SessionServices.getUserId() || 'id not found';
 

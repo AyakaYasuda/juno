@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { editUser, getUser } from 'redux/userThunkSlice';
+import { editUser, getUser } from 'redux/userSlice';
 import { useNavigate } from 'react-router';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
@@ -51,10 +51,16 @@ const GuestEdit = () => {
   const mobileContent = (
     <div className="w-full grid grid-cols-1 justify-items-center py-10 px-10 sm:px-20 lg:hidden">
       <div className="grid grid-cols-2 justify-items-center gap-10 mb-10">
-        <h2 className="HoverUnderLine cursor-pointer" onClick={switchContentsHandler}>
+        <h2
+          className="HoverUnderLine cursor-pointer"
+          onClick={switchContentsHandler}
+        >
           Event Info
         </h2>
-        <h2 className="HoverUnderLine cursor-pointer" onClick={switchContentsHandler}>
+        <h2
+          className="HoverUnderLine cursor-pointer"
+          onClick={switchContentsHandler}
+        >
           Your Reply
         </h2>
       </div>

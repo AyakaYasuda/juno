@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
-import { editEvent, getEvent } from 'redux/eventThunkSlice';
+import { editEvent, getEvent } from 'redux/eventSlice';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import { RootState } from 'redux/store';
 import EditEventForm from 'views/components/organisms/EditEventForm';

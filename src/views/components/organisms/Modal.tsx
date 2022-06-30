@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { getUser } from 'redux/userThunkSlice';
+import { getUser } from 'redux/userSlice';
 
 import { AiOutlineClose } from 'react-icons/ai';
 import Card from '../atoms/Card';

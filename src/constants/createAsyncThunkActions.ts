@@ -1,5 +1,5 @@
 const CreateAsyncThunkActions = {
-  GET_USER: 'get',
+  GET_USER: 'user/getUser',
   CREATE_ATTENDANCE_DATA: 'createAttendanceData',
 };
 
