@@ -12,7 +12,6 @@ const loginUser = async (
     const reqBody = JSON.parse(event.body);
 
     const userServices = new UserServices();
-    const authServices = new AuthServices();
 
     await UserValidator.validateLoginUserReqBody(reqBody);
 
@@ -22,7 +21,7 @@ const loginUser = async (
 
     await userServices.verifyPassword(password, existingUser.password);
 
-    const token = await authServices.generateToken(existingUser.SK);
+    const token = await AuthServices.generateToken(existingUser.SK);
 
     return formatJSONResponse(200, {
       userId: existingUser.SK,
