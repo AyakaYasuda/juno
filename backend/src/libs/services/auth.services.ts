@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 class AuthServices {
-  public async generateToken(userId: string) {
+  public static async generateToken(userId: string) {
     if (!userId) {
       return null;
     }
