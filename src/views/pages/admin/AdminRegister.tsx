@@ -2,6 +2,7 @@ import useErrorModal from 'hooks/useErrorModal';
 
 import AuthPageLayout from 'views/components/molecules/Layout/AuthPageLayout';
 import AdminRegisterForm from 'views/components/organisms/AdminRegisterForm';
+import ErrorModal from 'views/components/organisms/ErrorModal';
 
 const AdminRegister = () => {
   const {
@@ -12,11 +13,22 @@ const AdminRegister = () => {
     isModalShown,
   } = useErrorModal();
 
+  console.log(errorMessage);
+
   return (
-    <AuthPageLayout>
-      <h2 className="mb-4">Create your account</h2>
-      <AdminRegisterForm />
-    </AuthPageLayout>
+    <>
+      <ErrorModal
+        show={isModalShown}
+        onCancel={closeModalHandler}
+        message={errorMessage as string}
+        button="Sign Up Again"
+        buttonStyle="bg-Pink-default text-white"
+      />
+      <AuthPageLayout>
+        <h2 className="mb-4">Create your account</h2>
+        <AdminRegisterForm onShowModal={showModalHandler} />
+      </AuthPageLayout>
+    </>
   );
 };
 
