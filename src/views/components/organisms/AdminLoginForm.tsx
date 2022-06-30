@@ -49,6 +49,7 @@ const AdminLoginForm = () => {
 
     // login failed
     if (login.rejected.match(result)) {
+      console.log("error : ", result.payload)
       alert('login failed...');
     }
   };
