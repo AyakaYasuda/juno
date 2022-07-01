@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router';
-import { RootState } from 'redux/store';
 
 type Props = {
+  isLogin: boolean;
   redirectTo: string;
 };
 
 const RedirectToTop = (props: Props) => {
-  const { redirectTo } = props;
-  const { isLogin } = useSelector((state: RootState) => state.auth);
+  const { redirectTo, isLogin } = props;
   const navigate = useNavigate();
 
   useEffect(() => {

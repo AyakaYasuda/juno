@@ -19,7 +19,6 @@ import useAdminTokenAuth from './hooks/useAdminTokenAuth';
 import useGuestTokenAuth from 'hooks/useGuestTokenAuth';
 import { useEffect, useState } from 'react';
 import SessionServices from 'services/session.services';
-import useTokenAuth from './hooks/useTokenAuth';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import RedirectToTop from 'views/components/organisms/RedirectToTop';
@@ -64,7 +63,10 @@ const App = () => {
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<RedirectToTop redirectTo="/admin" />}>
+        <Route
+          path="/admin"
+          element={<RedirectToTop redirectTo="/admin" isLogin={adminIsLogin} />}
+        >
           {adminIsLogin && (
             <>
               <Route path="create" element={<AdminEventCreate />} />
@@ -82,7 +84,9 @@ const App = () => {
         <Route path="/guests/login" element={<GuestLogin />} />
         <Route
           path="/guests"
-          element={<RedirectToTop redirectTo="/guests/login" />}
+          element={
+            <RedirectToTop redirectTo="/guests/login" isLogin={guestIsLogin} />
+          }
         >
           <Route path="mypage" element={<GuestMyPage />} />
           <Route path="edit" element={<GuestEdit />} />
