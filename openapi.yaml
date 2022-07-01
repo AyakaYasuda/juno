@@ -363,6 +363,10 @@ definitions:
         type: 'string'
         example: '5fccdd92-14fd-473e-8e55-db93eb96ccd2'
         description: 'A unique user id'
+      token:
+        type: 'string'
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNob29rYXdhIiwibmFtZSI6IlNobyIsImlhdCI6MTY1NTE1ODQzNSwiZXhwIjoxNjU1MTYyMDM1fQ.CZGLJ-gKfOzid4vROn2DWNtbDsRX4sJqfzRXq7M89YU'
+        description: 'JWT'
   UserId:
     type: 'object'
     description: 'A unique user id'
