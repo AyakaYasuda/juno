@@ -34,10 +34,6 @@ type SignupAction = Action & {
   payload: { userId: string; token: string };
 };
 
-type SignupGuestAction = Action & {
-  payload: { userId: string; token: string };
-};
-
 const initialState: InitialState = {
   isLogin: false,
   tokenExpirationDate: null,

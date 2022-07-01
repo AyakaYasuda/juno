@@ -2,7 +2,6 @@ import React from 'react';
 import { IUser } from 'types/UserData.type';
 
 import ColumnLabeledParagraph from '../molecules/ColumnLabeledParagraph';
-import LabeledTextarea from '../molecules/LabeledTextarea';
 import GuestButton from '../atoms/GuestButton';
 import Checker from '../atoms/Checker';
 import { useNavigate } from 'react-router';
