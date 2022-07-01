@@ -13,7 +13,7 @@ const ColumnLabeledParagraph = (props: Props) => {
 
   return (
     <FlexColumnBox className={className ? className : ''}>
-      <h4 className="mb-1">{label}</h4>
+      <h4 className="mb-2">{label}</h4>
       <Paragraph text={text} customClassName={`mb-2 px-2 ${textStyle}`} />
     </FlexColumnBox>
   );

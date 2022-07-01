@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -16,26 +15,48 @@ import GuestInvitation from 'views/pages/guest/GuestInvitation';
 import GuestLogin from 'views/pages/guest/GuestLogin';
 import GuestMyPage from 'views/pages/guest/GuestMyPage';
 import GuestEdit from 'views/pages/guest/GuestEdit';
-import { useAppDispatch } from 'hooks/hooks';
-import { getUser } from 'redux/userThunkSlice';
+import useAdminTokenAuth from './hooks/useAdminTokenAuth';
+import useGuestTokenAuth from 'hooks/useGuestTokenAuth';
+import { useEffect, useState } from 'react';
 import SessionServices from 'services/session.services';
 import useTokenAuth from './hooks/useTokenAuth';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import RedirectToTop from 'views/components/organisms/RedirectToTop';
+import { getUserById } from 'redux/adminUserSlice';
+import { getAdminAuth, getGuestAuth } from 'services/auth.service';
+import { useAppDispatch } from 'hooks/hooks';
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const { isLogin } = useSelector((state: RootState) => state.auth);
+  const { isLogin: adminIsLogin } = useSelector(
+    (state: RootState) => state.adminAuth
+  );
+  const { isLogin: guestIsLogin } = useSelector(
+    (state: RootState) => state.guestAuth
+  );
 
-  useTokenAuth();
-  const [userId] = useState(SessionServices.getUserId());
+  useAdminTokenAuth();
+  useGuestTokenAuth();
 
+  // FIXME: do you need this?
+  const [adminUserId] = useState(SessionServices.getAdminUserId());
   useEffect(() => {
-    if (userId) {
-      dispatch(getUser(userId));
+    const token = getAdminAuth();
+
+    if (adminUserId && token) {
+      dispatch(getUserById({ userId: adminUserId, token }));
     }
-  }, [dispatch, userId]);
+  }, [dispatch, adminUserId]);
+
+  const [guestUserId] = useState(SessionServices.getAdminUserId());
+  useEffect(() => {
+    const token = getGuestAuth();
+
+    if (guestUserId && token) {
+      dispatch(getUserById({ userId: guestUserId, token }));
+    }
+  }, [dispatch, guestUserId]);
 
   return (
     <Router>
@@ -44,7 +65,7 @@ const App = () => {
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<RedirectToTop redirectTo="/admin" />}>
-          {isLogin && (
+          {adminIsLogin && (
             <>
               <Route path="create" element={<AdminEventCreate />} />
               <Route path="edit" element={<AdminEventEdit />} />

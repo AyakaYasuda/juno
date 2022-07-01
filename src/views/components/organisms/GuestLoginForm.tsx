@@ -2,19 +2,22 @@ import React from 'react';
 import { useAppDispatch } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
 import useForm from 'hooks/useForm';
-import { login } from 'redux/authSlice';
-import { SessionKeys } from 'constants/sessionKeys';
+import { login } from 'redux/guestAuthSlice';
 import SessionServices from 'services/session.services';
 import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
 import GuestButton from '../atoms/GuestButton';
+
+type Props = {
+  onShowModal: () => void;
+};
 
 const initialFormState = {
   email: 'ayaka@test.com',
   password: 'ayakayasuda',
 };
 
-const GuestLoginForm = () => {
+const GuestLoginForm: React.FC<Props> = ({ onShowModal }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -35,15 +38,15 @@ const GuestLoginForm = () => {
     if (login.fulfilled.match(result)) {
       alert('login successfully!');
 
-      SessionServices.setTokenWithExpirationDate(result.payload.token);
-      SessionServices.setUserId(result.payload.userId);
+      SessionServices.setGuestTokenWithExpirationDate(result.payload.token);
+      SessionServices.setGuestUserId(result.payload.userId);
 
       navigate('/guests/mypage');
     }
 
     // login failed
     if (login.rejected.match(result)) {
-      alert('login failed...');
+      onShowModal();
     }
   };
 

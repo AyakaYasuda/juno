@@ -3,8 +3,8 @@ import useForm from 'hooks/useForm';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from 'hooks/hooks';
 
-import { createAttendanceData } from 'redux/userThunkSlice';
-import { signupGuest } from 'redux/authSlice';
+import { createAttendanceData } from 'redux/guestUserSlice';
+import { signup } from 'redux/guestAuthSlice';
 
 import LabeledInput from '../molecules/LabeledInput';
 import Checker from '../atoms/Checker';
@@ -12,20 +12,27 @@ import LabeledTextarea from '../molecules/LabeledTextarea';
 import GuestButton from '../atoms/GuestButton';
 
 const formInitialValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  message: '',
-  allergy: '',
+  firstName: 'ttt',
+  lastName: 'ttt',
+  email: 'new-guest@test.com',
+  password: 'password',
+  message: 'message',
+  allergy: 'aaa',
   isAttending: false,
 };
 
 type Props = {
   eventId: string;
+  onShowModal: () => void;
+  // FIXME: make sure this is necessary to pass
+  createAttendanceError: string[];
 };
 
-const RsvpForm: React.FC<Props> = ({ eventId }) => {
+const RsvpForm: React.FC<Props> = ({
+  eventId,
+  onShowModal,
+  createAttendanceError,
+}) => {
   const { values, inputChangeHandler } = useForm(formInitialValues);
   const {
     firstName,
@@ -45,7 +52,7 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
 
     try {
       const signUpResult = await dispatch(
-        signupGuest({
+        signup({
           firstName: firstName as string,
           lastName: lastName as string,
           email: email as string,
@@ -58,13 +65,36 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
       );
 
       // signup success
-      if (signupGuest.fulfilled.match(signUpResult)) {
+      if (signup.fulfilled.match(signUpResult)) {
         console.log('signUp successfully!');
+
+        const userId = signUpResult.payload.userId;
+        console.log('userId', userId);
+
+        const createAttendanceDataResult = await dispatch(
+          createAttendanceData({
+            eventId,
+            attendanceReqBody: { userId, isAttending: isAttending as boolean },
+          })
+        );
+
+        // success
+        if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
+          navigate('/guests/login');
+        }
+
+        //  failed
+        if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
+          console.log(
+            'failed to create attendance data: ',
+            createAttendanceError
+          );
+        }
       }
 
       // signUp failed
-      if (signupGuest.rejected.match(signUpResult)) {
-        alert('signup failed...');
+      if (signup.rejected.match(signUpResult)) {
+        onShowModal();
       }
 
       const userId = signUpResult.payload.userId;

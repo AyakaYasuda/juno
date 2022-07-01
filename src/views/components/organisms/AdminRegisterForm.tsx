@@ -1,20 +1,24 @@
 import useForm from 'hooks/useForm';
 import { Form } from '../atoms/Form';
-import { signup } from 'redux/authSlice';
+import { signup } from 'redux/adminAuthSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/hooks';
 import LabeledInput from '../molecules/LabeledInput';
 import Card from '../atoms/Card';
 import Button from '../atoms/Button';
 
-const initialFormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
+type Props = {
+  onShowModal: () => void;
 };
 
-const AdminRegisterForm = () => {
+const initialFormState = {
+  firstName: 'ttt',
+  lastName: 'ttt',
+  email: 'ttt@test.com',
+  password: 'password',
+};
+
+const AdminRegisterForm: React.FC<Props> = ({ onShowModal }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -39,13 +43,12 @@ const AdminRegisterForm = () => {
 
     // signup success
     if (signup.fulfilled.match(result)) {
-      alert('signup successfully!');
       navigate('/admin/login');
     }
 
     // signup failed
     if (signup.rejected.match(result)) {
-      alert('signup failed...');
+      onShowModal();
     }
   };
 

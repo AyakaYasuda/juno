@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { editUser, getUser } from 'redux/userThunkSlice';
+import { editUser, getUserById } from 'redux/adminUserSlice';
 import { useNavigate } from 'react-router';
+import useUserErrorModal from 'hooks/useUserErrorModal';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import YourReplyEditForm from 'views/components/organisms/YourReplyEditForm';
 import { IUpdateUserRequest } from 'types/UserData.type';
+import { getGuestAuth } from 'services/auth.service';
+import ErrorModal from 'views/components/organisms/ErrorModal';
 
 const GuestEdit = () => {
   const dispatch = useAppDispatch();
@@ -14,25 +17,40 @@ const GuestEdit = () => {
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(false);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(true);
 
+  const {
+    status,
+    errorMessages,
+    closeModalHandler,
+    showModalHandler,
+    isModalShown,
+  } = useUserErrorModal();
+
   const switchContentsHandler = () => {
     setIsEventInfoShown((prev) => !prev);
     setIsYourReplyShown((prev) => !prev);
   };
-  console.log('EventInfo', isEventInfoShown);
-  console.log('YourReply', isYourReplyShown);
 
-  const { SK: userId } = useAppSelector((state) => state.user.user);
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.guestUser);
+  const { SK: userId } = user;
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getUser(userId));
+    const token = getGuestAuth();
+    if (userId && token) {
+      dispatch(getUserById({ userId: userId, token }));
     }
   }, [userId, dispatch]);
 
   const editHandler = async (updatedUser: IUpdateUserRequest) => {
-    await dispatch(editUser(updatedUser));
-    navigate('/guests/mypage');
+    const result = await dispatch(editUser(updatedUser));
+
+    if (editUser.fulfilled.match(result)) {
+      navigate('/guests/mypage');
+    }
+
+    // login failed
+    if (editUser.rejected.match(result)) {
+      showModalHandler();
+    }
   };
 
   const desktopContent = (
@@ -51,10 +69,16 @@ const GuestEdit = () => {
   const mobileContent = (
     <div className="w-full grid grid-cols-1 justify-items-center py-10 px-10 sm:px-20 lg:hidden">
       <div className="grid grid-cols-2 justify-items-center gap-10 mb-10">
-        <h2 className="HoverUnderLine cursor-pointer" onClick={switchContentsHandler}>
+        <h2
+          className="HoverUnderLine cursor-pointer"
+          onClick={switchContentsHandler}
+        >
           Event Info
         </h2>
-        <h2 className="HoverUnderLine cursor-pointer" onClick={switchContentsHandler}>
+        <h2
+          className="HoverUnderLine cursor-pointer"
+          onClick={switchContentsHandler}
+        >
           Your Reply
         </h2>
       </div>
@@ -67,6 +91,13 @@ const GuestEdit = () => {
 
   return (
     <div>
+      <ErrorModal
+        show={isModalShown}
+        onCancel={closeModalHandler}
+        messages={errorMessages as string[]}
+        button="Try Again"
+        buttonStyle="bg-Green-default text-white"
+      />
       <GuestPageLayout>
         {desktopContent}
         {mobileContent}

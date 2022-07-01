@@ -1,11 +1,7 @@
 import { Action, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { generateTokenExpirationTime } from 'services/session.services';
-import {
-  IGuestSignupRequest,
-  ILoginRequest,
-  ISignupRequest,
-} from 'types/UserData.type';
+import { ILoginRequest, ISignupRequest } from 'types/UserData.type';
 
 // FIXME: fix api url to auth?
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
@@ -15,6 +11,7 @@ type InitialState = {
   tokenExpirationDate: string | null;
   token?: string;
   status?: string;
+  errorMessages?: string[];
 };
 
 type SetIsLoginAction = Action & {
@@ -43,7 +40,7 @@ const initialState: InitialState = {
 };
 
 export const login = createAsyncThunk(
-  'login',
+  'adminAuth/login',
   async (loginData: ILoginRequest, { rejectWithValue }) => {
     try {
       const result = await axios.post(
@@ -61,7 +58,7 @@ export const login = createAsyncThunk(
 );
 
 export const signup = createAsyncThunk(
-  'signup',
+  'adminAuth/signup',
   async (signupData: ISignupRequest, thunkAPI) => {
     console.log('signupData', signupData);
 
@@ -75,32 +72,13 @@ export const signup = createAsyncThunk(
 
       return result.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
 
-//GUEST SIGNUP
-export const signupGuest = createAsyncThunk(
-  'signup',
-  async (signupData: IGuestSignupRequest, thunkAPI) => {
-    try {
-      const result = await axios.post(
-        `${API_URL}/signup`,
-        JSON.stringify(signupData)
-      );
-
-      console.log('guest signup result.data', result.data);
-
-      return result.data;
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
-    }
-  }
-);
-
-const authSlice = createSlice({
-  name: 'auth',
+const adminAuthSlice = createSlice({
+  name: 'adminAuth',
   initialState,
   reducers: {
     setIsLogin(state, action: SetIsLoginAction) {
@@ -128,15 +106,30 @@ const authSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state, action: SignupAction) => {
         const { token } = action.payload;
-        console.log('action.payload', action.payload);
+        console.log('signup action.payload', action.payload);
 
         state.status = 'pending';
         state.isLogin = true;
         state.token = token;
         state.tokenExpirationDate = String(generateTokenExpirationTime());
       });
+
+    builder
+      .addCase(login.rejected, (state, action) => {
+        // FIXME: fix type
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      });
   },
 });
 
-export const authActions = authSlice.actions;
-export const authReducer = authSlice.reducer;
+export const adminAuthActions = adminAuthSlice.actions;
+export const adminAuthReducer = adminAuthSlice.reducer;

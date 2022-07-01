@@ -1,40 +1,43 @@
 import { SessionKeys } from 'constants/sessionKeys';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { authActions } from 'redux/authSlice';
+import { guestAuthActions } from 'redux/guestAuthSlice';
 import { RootState } from 'redux/store';
 import SessionServices from 'services/session.services';
 
 // this stay outside of component because not related to re-render
 let logoutTimer: NodeJS.Timeout;
 
-const useTokenAuth = () => {
+// FIXME: delete duplicate code
+const useGuestTokenAuth = () => {
   const dispatch = useDispatch();
 
-  const { setIsLogin, setToken, setTokenExpirationDate } = authActions;
+  const { setIsLogin, setToken, setTokenExpirationDate } = guestAuthActions;
   const { tokenExpirationDate, token } = useSelector(
-    (state: RootState) => state.auth
+    (state: RootState) => state.guestAuth
   );
 
   const logoutWithToken = useCallback(() => {
-    localStorage.removeItem(SessionKeys.TOKEN);
+    localStorage.removeItem(SessionKeys.GUEST_TOKEN);
 
     // update state
     dispatch(setTokenExpirationDate(null));
     dispatch(setIsLogin(false));
   }, [dispatch, setIsLogin, setTokenExpirationDate]);
 
-  // FIXME: adminLogin, guestLogin
   const loginWithToken = useCallback(() => {
     console.log('loginWithToken');
 
-    const tokenData = SessionServices.getTokenWithExpirationDate();
+    const tokenData = SessionServices.getGuestTokenWithExpirationDate();
     if (!tokenData) {
       return;
     }
 
     const { token, expiration } = tokenData;
-    SessionServices.setTokenWithExpirationDate(token, new Date(expiration));
+    SessionServices.setGuestTokenWithExpirationDate(
+      token,
+      new Date(expiration)
+    );
 
     // update state
     dispatch(setTokenExpirationDate(expiration));
@@ -57,7 +60,7 @@ const useTokenAuth = () => {
   }, [token, tokenExpirationDate, logoutWithToken]);
 
   const autoLogin = useCallback(() => {
-    const tokenData = SessionServices.getTokenWithExpirationDate();
+    const tokenData = SessionServices.getGuestTokenWithExpirationDate();
 
     if (!tokenData) {
       return;
@@ -86,4 +89,4 @@ const useTokenAuth = () => {
   }, [autoLogin]);
 };
 
-export default useTokenAuth;
+export default useGuestTokenAuth;

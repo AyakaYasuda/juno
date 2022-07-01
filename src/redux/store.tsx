@@ -1,13 +1,17 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import userReducer from './userThunkSlice';
-import eventReducer from './eventThunkSlice';
-import { authReducer } from './authSlice';
+import adminUserReducer from './adminUserSlice';
+import eventReducer from './eventSlice';
+import { adminAuthReducer } from './adminAuthSlice';
+import { guestAuthReducer } from './guestAuthSlice';
+import guestUserReducer from './guestUserSlice';
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
+    adminUser: adminUserReducer,
+    guestUser: guestUserReducer,
     event: eventReducer,
-    auth: authReducer,
+    adminAuth: adminAuthReducer,
+    guestAuth: guestAuthReducer,
   },
 });
 

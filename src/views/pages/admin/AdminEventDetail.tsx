@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { getEvent, getGuests } from 'redux/eventThunkSlice';
+import { getEventByUserId, getGuestsByEventId } from 'redux/eventSlice';
 import Modal from 'views/components/organisms/Modal';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import MobileToggleSectionHeaders from 'views/components/organisms/MobileToggleSectionHeaders';
@@ -10,7 +10,7 @@ import GuestsList from 'views/components/organisms/GuestsList';
 const AdminEventDetail = () => {
   const dispatch = useAppDispatch();
 
-  const { SK: userId } = useAppSelector((state) => state.user.user);
+  const { SK: userId } = useAppSelector((state) => state.adminUser.user);
   const { event } = useAppSelector((state) => state.event);
   const { guests } = useAppSelector((state) => state.event);
 
@@ -21,14 +21,14 @@ const AdminEventDetail = () => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getEvent(userId));
+      dispatch(getEventByUserId(userId));
     }
   }, [userId, dispatch]);
 
   useEffect(() => {
     setIsLoading(false);
     if (event) {
-      dispatch(getGuests(event.SK));
+      dispatch(getGuestsByEventId(event.SK));
     }
   }, [event, dispatch]);
 
