@@ -16,8 +16,8 @@ type Props = {
 };
 
 const initialFormState = {
-  email: 'ayaka@test.com',
-  password: 'ayakayasuda',
+  email: '',
+  password: '',
 };
 
 const AdminLoginForm: React.FC<Props> = ({ onShowModal }) => {
