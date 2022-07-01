@@ -1,15 +1,34 @@
+import useAuthErrorModal from 'hooks/useAuthErrorModal';
+
 import GuestLoginLayout from 'views/components/molecules/Layout/GuestLoginLayout';
 import Logo from 'views/components/atoms/Logo';
 import GuestLoginForm from 'views/components/organisms/GuestLoginForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
 
 const GuestLogin = () => {
+  const {
+    status,
+    errorMessages,
+    closeModalHandler,
+    showModalHandler,
+    isModalShown,
+  } = useAuthErrorModal();
+
   return (
-    <GuestLoginLayout>
-      <Logo />
-      <h3 className="text-white">Guests Log In</h3>
-      <GuestLoginForm />
-    </GuestLoginLayout>
+    <>
+      <ErrorModal
+        show={isModalShown}
+        onCancel={closeModalHandler}
+        messages={errorMessages as string[]}
+        button="Login Again"
+        buttonStyle="bg-Green-default text-white"
+      />
+      <GuestLoginLayout>
+        <Logo />
+        <h3 className="text-white">Guests Log In</h3>
+        <GuestLoginForm onShowModal={showModalHandler} />
+      </GuestLoginLayout>
+    </>
   );
 };
 

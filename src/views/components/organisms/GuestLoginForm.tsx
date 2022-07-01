@@ -9,12 +9,16 @@ import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
 import GuestButton from '../atoms/GuestButton';
 
+type Props = {
+  onShowModal: () => void;
+};
+
 const initialFormState = {
   email: '',
   password: '',
 };
 
-const GuestLoginForm = () => {
+const GuestLoginForm: React.FC<Props> = ({ onShowModal }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -33,8 +37,6 @@ const GuestLoginForm = () => {
 
     // login success
     if (login.fulfilled.match(result)) {
-      alert('login successfully!');
-
       SessionServices.setTokenWithExpirationDate(result.payload.token);
       SessionServices.setUserId(result.payload.userId);
 
@@ -43,7 +45,7 @@ const GuestLoginForm = () => {
 
     // login failed
     if (login.rejected.match(result)) {
-      alert('login failed...');
+      onShowModal();
     }
   };
 

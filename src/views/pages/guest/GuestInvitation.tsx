@@ -37,7 +37,11 @@ const GuestInvitation: React.FC = () => {
       <GuestInvitationLayout>
         <div className="grid grid-cols-1 justify-items-center lg:grid-cols-2 bg-white rounded-2xl mx-4 sm:mx-20 px-0 md:px-20 py-16 gap-4">
           <CardWeddingInfo />
-          <RsvpForm eventId={eventId} onShowModal={showModalHandler} createAttendanceError={userErrorMessages} />
+          <RsvpForm
+            eventId={eventId}
+            onShowModal={showModalHandler}
+            createAttendanceError={userErrorMessages}
+          />
         </div>
       </GuestInvitationLayout>
     </>
