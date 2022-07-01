@@ -46,6 +46,11 @@ export interface IUpdateUserRequest {
   isAttending: boolean;
 }
 
+export interface IGetUserByIdRequest {
+  userId: string;
+  token: string;
+}
+
 export interface IUserState {
   user: IUser;
   status: 'pending' | 'rejected' | 'fulfilled';

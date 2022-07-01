@@ -1,14 +1,15 @@
-import { IUserState } from 'types/UserData.type';
+import { IGetUserByIdRequest, IUserState } from 'types/UserData.type';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { IAttendanceData } from 'types/AttendanceData.type';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
-import { getAuth } from 'services/auth.service';
+import { getGuestAuth } from 'services/auth.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
+// FIXME: delete duplicate code
 // initialize
 const initialState: IUserState = {
   user: {
@@ -30,15 +31,17 @@ const initialState: IUserState = {
 };
 
 //GET
-export const getUser = createAsyncThunk(
-  'get',
-  async (userId: string, { rejectWithValue }) => {
+export const getUserById = createAsyncThunk(
+  'guestUser/getUserById',
+  async (getUserByIdRequest: IGetUserByIdRequest, { rejectWithValue }) => {
+    const { userId, token } = getUserByIdRequest;
+
     try {
       const url = `${API_URL}/${userId}`;
 
       const result = await axios.get(url, {
         headers: {
-          Authorization: getAuth(),
+          Authorization: token,
         },
       });
 
@@ -52,21 +55,26 @@ export const getUser = createAsyncThunk(
 
 //PATCH
 export const editUser = createAsyncThunk(
-  'edit',
+  'guestUser/edit',
   async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
-    const userId = SessionServices.getUserId() || 'id not found';
+    const userId = SessionServices.getGuestUserId() || 'id not found';
 
     const url = `${API_URL}/edit/${userId}`;
 
     try {
+      const token = getGuestAuth();
+      if (!token) {
+        throw new Error('Token not found');
+      }
+
       const result = await axios.patch(url, JSON.stringify(updateUserReqBody), {
         headers: {
-          Authorization: getAuth(),
+          Authorization: token,
         },
       });
       return result.data;
     } catch (error: any) {
-      console.log(error.response.data)
+      console.log(error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
@@ -76,13 +84,18 @@ export const createAttendanceData = createAsyncThunk(
   'createAttendanceData',
   async (attendanceData: IAttendanceData, { rejectWithValue }) => {
     try {
+      const token = getGuestAuth();
+      if (!token) {
+        throw new Error('Token not found');
+      }
+
       const url = `${API_URL}/event/${attendanceData.eventId}`;
       const result = await axios.post(
         url,
         JSON.stringify(attendanceData.attendanceReqBody),
         {
           headers: {
-            Authorization: getAuth(),
+            Authorization: token,
           },
         }
       );
@@ -94,8 +107,8 @@ export const createAttendanceData = createAsyncThunk(
 );
 
 //create slice
-export const userSlice = createSlice({
-  name: 'user',
+export const guestUserSlice = createSlice({
+  name: 'guestUser',
   initialState,
   reducers: {
     //FIXME: need test
@@ -105,7 +118,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.fulfilled, (state, action) => {
+      .addCase(getUserById.fulfilled, (state, action) => {
         state.status = 'pending';
         state.user = action.payload;
       })
@@ -134,4 +147,4 @@ export const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export default guestUserSlice.reducer;

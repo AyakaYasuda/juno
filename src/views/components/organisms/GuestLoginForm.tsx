@@ -2,8 +2,7 @@ import React from 'react';
 import { useAppDispatch } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
 import useForm from 'hooks/useForm';
-import { login } from 'redux/authSlice';
-import { SessionKeys } from 'constants/sessionKeys';
+import { login } from 'redux/adminAuthSlice';
 import SessionServices from 'services/session.services';
 import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
@@ -37,8 +36,10 @@ const GuestLoginForm: React.FC<Props> = ({ onShowModal }) => {
 
     // login success
     if (login.fulfilled.match(result)) {
-      SessionServices.setTokenWithExpirationDate(result.payload.token);
-      SessionServices.setUserId(result.payload.userId);
+      alert('login successfully!');
+
+      SessionServices.setGuestTokenWithExpirationDate(result.payload.token);
+      SessionServices.setGuestUserId(result.payload.userId);
 
       navigate('/guests/mypage');
     }

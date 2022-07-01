@@ -1,6 +1,6 @@
 import useForm from 'hooks/useForm';
 import { Form } from '../atoms/Form';
-import { signup } from 'redux/authSlice';
+import { signup } from 'redux/adminAuthSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from 'hooks/hooks';
 import LabeledInput from '../molecules/LabeledInput';
@@ -12,10 +12,10 @@ type Props = {
 };
 
 const initialFormState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
+  firstName: 'ttt',
+  lastName: 'ttt',
+  email: 'ttt@test.com',
+  password: 'password',
 };
 
 const AdminRegisterForm: React.FC<Props> = ({ onShowModal }) => {

@@ -4,7 +4,8 @@ import { useAppSelector } from './hooks';
 const useAuthErrorModal = () => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
-  const { status, errorMessages } = useAppSelector((state) => state.auth);
+  // FIXME: admin or guest
+  const { status, errorMessages } = useAppSelector((state) => state.adminAuth);
 
   const closeModalHandler = () => {
     setIsModalShown(false);

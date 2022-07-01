@@ -3,8 +3,8 @@ import useForm from 'hooks/useForm';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from 'hooks/hooks';
 
-import { createAttendanceData } from 'redux/userSlice';
-import { signupGuest } from 'redux/authSlice';
+import { createAttendanceData } from 'redux/guestUserSlice';
+import { signup } from 'redux/guestAuthSlice';
 
 import LabeledInput from '../molecules/LabeledInput';
 import Checker from '../atoms/Checker';
@@ -12,12 +12,12 @@ import LabeledTextarea from '../molecules/LabeledTextarea';
 import GuestButton from '../atoms/GuestButton';
 
 const formInitialValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  message: '',
-  allergy: '',
+  firstName: 'ttt',
+  lastName: 'ttt',
+  email: 'new-guest@test.com',
+  password: 'password',
+  message: 'message',
+  allergy: 'aaa',
   isAttending: false,
 };
 
@@ -52,7 +52,7 @@ const RsvpForm: React.FC<Props> = ({
 
     try {
       const signUpResult = await dispatch(
-        signupGuest({
+        signup({
           firstName: firstName as string,
           lastName: lastName as string,
           email: email as string,
@@ -65,7 +65,9 @@ const RsvpForm: React.FC<Props> = ({
       );
 
       // signup success
-      if (signupGuest.fulfilled.match(signUpResult)) {
+      if (signup.fulfilled.match(signUpResult)) {
+        console.log('signUp successfully!');
+
         const userId = signUpResult.payload.userId;
         console.log('userId', userId);
 
@@ -91,8 +93,28 @@ const RsvpForm: React.FC<Props> = ({
       }
 
       // signUp failed
-      if (signupGuest.rejected.match(signUpResult)) {
+      if (signup.rejected.match(signUpResult)) {
         onShowModal();
+      }
+
+      const userId = signUpResult.payload.userId;
+
+      const createAttendanceDataResult = await dispatch(
+        createAttendanceData({
+          eventId,
+          attendanceReqBody: { userId, isAttending: isAttending as boolean },
+        })
+      );
+
+      // success
+      if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
+        alert('created attendance data successfully!');
+        navigate('/guests/login');
+      }
+
+      //  failed
+      if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
+        alert('failed to create attendance data');
       }
     } catch (error) {
       console.log(error);

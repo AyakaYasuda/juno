@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { getUser } from 'redux/userSlice';
+import { getUserById } from 'redux/adminUserSlice';
 
 import { AiOutlineClose } from 'react-icons/ai';
 import Card from '../atoms/Card';
 import RowLabeledParagraph from '../molecules/RowLabeledParagraph';
 import Checker from '../atoms/Checker';
 import ColumnLabeledParagraph from '../molecules/ColumnLabeledParagraph';
+import { getAdminAuth } from 'services/auth.service';
 
 type ModalProps = {
   closeHandler: () => void;
@@ -15,11 +16,13 @@ type ModalProps = {
 
 const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.adminUser);
 
   useEffect(() => {
-    if (guestUserId) {
-      dispatch(getUser(guestUserId));
+    const token = getAdminAuth();
+
+    if (guestUserId && token) {
+      dispatch(getUserById({ userId: guestUserId, token }));
     }
   }, [guestUserId, dispatch]);
 

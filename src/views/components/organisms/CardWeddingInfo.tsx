@@ -1,20 +1,20 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'hooks/hooks';
-import { getEvent } from 'redux/eventSlice';
+import { getEventByUserId } from 'redux/eventSlice';
 
 import SectionDivider from './SectionDivider';
 
 const CardWeddingInfo: React.FC = () => {
   const dispatch = useAppDispatch();
   const { event } = useAppSelector((state) => state.event);
-  const { SK: userId } = useAppSelector((state) => state.user.user);
+  const { SK: userId } = useAppSelector((state) => state.guestUser.user);
 
   const [weddingSchedule, setWeddingSchedule] = useState<string>();
   const [receptionSchedule, setReceptionSchedule] = useState<string>();
 
   useEffect(() => {
     if (userId) {
-      dispatch(getEvent(userId));
+      dispatch(getEventByUserId(userId));
     }
   }, [userId, dispatch]);
 
@@ -97,7 +97,7 @@ const CardWeddingInfo: React.FC = () => {
         {event.dateWeddingReception !== event.dateWedding ? (
           <>
             <p className="text-Green-dark font-allura text-xl">
-              We will be having the reception on the following date  
+              We will be having the reception on the following date
             </p>
             <h5 className="text-Green-dark">{receptionSchedule}</h5>
           </>

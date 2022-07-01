@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { editUser, getUser } from 'redux/userSlice';
+import { editUser, getUserById } from 'redux/adminUserSlice';
 import { useNavigate } from 'react-router';
 import useUserErrorModal from 'hooks/useUserErrorModal';
-import { IUpdateUserRequest } from 'types/UserData.type';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import YourReplyEditForm from 'views/components/organisms/YourReplyEditForm';
+import { IUpdateUserRequest } from 'types/UserData.type';
+import { getGuestAuth } from 'services/auth.service';
 import ErrorModal from 'views/components/organisms/ErrorModal';
 
 const GuestEdit = () => {
@@ -29,12 +30,13 @@ const GuestEdit = () => {
     setIsYourReplyShown((prev) => !prev);
   };
 
-  const { SK: userId } = useAppSelector((state) => state.user.user);
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.guestUser);
+  const { SK: userId } = user;
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getUser(userId));
+    const token = getGuestAuth();
+    if (userId && token) {
+      dispatch(getUserById({ userId: userId, token }));
     }
   }, [userId, dispatch]);
 

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -16,22 +15,38 @@ import GuestInvitation from 'views/pages/guest/GuestInvitation';
 import GuestLogin from 'views/pages/guest/GuestLogin';
 import GuestMyPage from 'views/pages/guest/GuestMyPage';
 import GuestEdit from 'views/pages/guest/GuestEdit';
-import { useAppDispatch } from 'hooks/hooks';
-import { getUser } from 'redux/userSlice';
+import useAdminTokenAuth from './hooks/useAdminTokenAuth';
+import useGuestTokenAuth from 'hooks/useGuestTokenAuth';
+import { useEffect, useState } from 'react';
 import SessionServices from 'services/session.services';
-import useTokenAuth from './hooks/useTokenAuth';
+import { getUserById } from 'redux/adminUserSlice';
+import { getAdminAuth, getGuestAuth } from 'services/auth.service';
+import { useAppDispatch } from 'hooks/hooks';
 
 const App = () => {
   const dispatch = useAppDispatch();
 
-  useTokenAuth();
-  const [userId] = useState(SessionServices.getUserId());
+  useAdminTokenAuth();
+  useGuestTokenAuth();
 
+  // FIXME: do you need this?
+  const [adminUserId] = useState(SessionServices.getAdminUserId());
   useEffect(() => {
-    if (userId) {
-      dispatch(getUser(userId));
+    const token = getAdminAuth();
+
+    if (adminUserId && token) {
+      dispatch(getUserById({ userId: adminUserId, token }));
     }
-  }, [dispatch, userId]);
+  }, [dispatch, adminUserId]);
+
+  const [guestUserId] = useState(SessionServices.getAdminUserId());
+  useEffect(() => {
+    const token = getGuestAuth();
+
+    if (guestUserId && token) {
+      dispatch(getUserById({ userId: guestUserId, token }));
+    }
+  }, [dispatch, guestUserId]);
 
   return (
     <Router>

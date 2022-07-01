@@ -3,7 +3,7 @@ import { useAppDispatch } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
 import useForm from 'hooks/useForm';
 import { Link } from 'react-router-dom';
-import { login } from 'redux/authSlice';
+import { login } from 'redux/adminAuthSlice';
 import SessionServices from 'services/session.services';
 
 import Button from '../atoms/Button';
@@ -16,8 +16,8 @@ type Props = {
 };
 
 const initialFormState = {
-  email: '',
-  password: '',
+  email: 'ayaka@test.com',
+  password: 'ayakayasuda',
 };
 
 const AdminLoginForm: React.FC<Props> = ({ onShowModal }) => {
@@ -43,8 +43,8 @@ const AdminLoginForm: React.FC<Props> = ({ onShowModal }) => {
     if (login.fulfilled.match(result)) {
       const { userId, token } = result.payload;
 
-      SessionServices.setTokenWithExpirationDate(token);
-      SessionServices.setUserId(userId);
+      SessionServices.setAdminTokenWithExpirationDate(token);
+      SessionServices.setAdminUserId(userId);
 
       navigate('/admin/create');
     }

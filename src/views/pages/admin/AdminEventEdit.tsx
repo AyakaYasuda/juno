@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
-import { editEvent, getEvent } from 'redux/eventSlice';
+import { editEvent, getEventByUserId } from 'redux/eventSlice';
 import { RootState } from 'redux/store';
 import { IEventRequest } from 'types/EventData.type';
 import useEventErrorModal from 'hooks/useEventErrorModal';
@@ -22,7 +22,9 @@ const AdminEventEdit = () => {
     isModalShown,
   } = useEventErrorModal();
 
-  const { SK: userId } = useAppSelector((state: RootState) => state.user.user);
+  const { SK: userId } = useAppSelector(
+    (state: RootState) => state.adminUser.user
+  );
   const { event } = useAppSelector((state: RootState) => state.event);
 
   const formSubmitLogic = async (formInput: IEventRequest) => {
@@ -42,7 +44,7 @@ const AdminEventEdit = () => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getEvent(userId));
+      dispatch(getEventByUserId(userId));
     }
   }, [dispatch, userId]);
 
