@@ -166,7 +166,6 @@ const authSlice = createSlice({
       })
       .addCase(signupGuest.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
-        console.log('error messages in signupGuest', action.payload);
 
         state.status = 'rejected';
         state.errorMessages = message;

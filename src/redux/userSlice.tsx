@@ -66,6 +66,7 @@ export const editUser = createAsyncThunk(
       });
       return result.data;
     } catch (error: any) {
+      console.log(error.response.data)
       return rejectWithValue(error.response.data);
     }
   }
@@ -117,13 +118,19 @@ export const userSlice = createSlice({
         state.user = action.payload;
       });
 
-    builder.addCase(createAttendanceData.rejected, (state, action) => {
-      const { message } = action.payload as { message: string };
-      console.log('error messages in createAttendanceData', action.payload);
+    builder
+      .addCase(editUser.rejected, (state, action) => {
+        const { message } = action.payload as { message: string };
 
-      state.status = 'rejected';
-      state.errorMessages = [message];
-    });
+        state.status = 'rejected';
+        state.errorMessages = [message];
+      })
+      .addCase(createAttendanceData.rejected, (state, action) => {
+        const { message } = action.payload as { message: string };
+
+        state.status = 'rejected';
+        state.errorMessages = [message];
+      });
   },
 });
 

@@ -3,7 +3,6 @@ import { IUpdateUserRequest } from 'types/UserData.type';
 import useForm from 'hooks/useForm';
 import { useNavigate } from 'react-router';
 
-import ColumnLabeledParagraph from '../molecules/ColumnLabeledParagraph';
 import LabeledTextarea from '../molecules/LabeledTextarea';
 import GuestButton from '../atoms/GuestButton';
 import LabeledInput from '../molecules/LabeledInput';
@@ -50,7 +49,7 @@ const YourReplyEditForm: React.FC<Props> = ({
   };
 
   return (
-    <div className="w-full flex flex-col py-5 px-0 sm:px-10 gap-6">
+    <div className="w-full flex flex-col px-0 sm:px-10 gap-6">
       <div className="grid grid-cols-2 auto-cols-fr justify-items-center gap-4">
         <div className="w-full">
           <LabeledInput
@@ -101,7 +100,7 @@ const YourReplyEditForm: React.FC<Props> = ({
         label="Message"
         name="message"
         className="InputLighter text-Green-dark"
-        rows={7}
+        rows={4}
         value={message as string}
         onChange={inputChangeHandler}
       />

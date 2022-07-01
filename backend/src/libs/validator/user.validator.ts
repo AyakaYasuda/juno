@@ -34,14 +34,14 @@ class UserValidator {
 
   public static async validateUpdateUserReqBody(reqBody: IUpdateUserReqBody) {
     const userSchema = yup.object().shape({
-      firstName: yup.string(),
-      lastName: yup.string(),
+      firstName: yup.string().required(),
+      lastName: yup.string().required(),
       email: yup.string(),
       password: yup.string(),
       isAdmin: yup.boolean(),
       message: yup.string(),
       allergy: yup.string(),
-      isAttending: yup.boolean(),
+      isAttending: yup.boolean().required(),
     });
 
     // FIXME : the reference sample was false
