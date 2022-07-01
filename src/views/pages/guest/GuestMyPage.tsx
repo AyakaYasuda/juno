@@ -21,8 +21,10 @@ const GuestMyPage = () => {
   const { SK: userId } = user;
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getUserById({ userId, token: getGuestAuth() }));
+    const token = getGuestAuth();
+
+    if (userId && token) {
+      dispatch(getUserById({ userId, token }));
     }
   }, [userId, dispatch]);
 

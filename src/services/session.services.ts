@@ -89,12 +89,20 @@ class SessionServices {
     return this.getTokenWithExpirationDate(SessionKeys.GUEST_TOKEN);
   }
 
-  public static getUserId() {
-    return this.getItem(SessionKeys.USER_ID);
+  public static getAdminUserId() {
+    return this.getItem(SessionKeys.ADMIN_USER_ID);
   }
 
-  public static setUserId(userId: string) {
-    this.setItem(SessionKeys.USER_ID, userId);
+  public static setAdminUserId(userId: string) {
+    this.setItem(SessionKeys.ADMIN_USER_ID, userId);
+  }
+
+  public static getGuestUserId() {
+    return this.getItem(SessionKeys.GUEST_USER_ID);
+  }
+
+  public static setGuestUserId(userId: string) {
+    this.setItem(SessionKeys.GUEST_USER_ID, userId);
   }
 }
 

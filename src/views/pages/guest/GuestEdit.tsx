@@ -26,8 +26,9 @@ const GuestEdit = () => {
   const { SK: userId } = user;
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getUserById({ userId: userId, token: getGuestAuth() }));
+    const token = getGuestAuth();
+    if (userId && token) {
+      dispatch(getUserById({ userId: userId, token }));
     }
   }, [userId, dispatch]);
 

@@ -19,8 +19,10 @@ const Modal: React.FC<ModalProps> = ({ closeHandler, guestUserId }) => {
   const { user } = useAppSelector((state) => state.adminUser);
 
   useEffect(() => {
-    if (guestUserId) {
-      dispatch(getUserById({ userId: guestUserId, token: getAdminAuth() }));
+    const token = getAdminAuth();
+
+    if (guestUserId && token) {
+      dispatch(getUserById({ userId: guestUserId, token }));
     }
   }, [guestUserId, dispatch]);
 

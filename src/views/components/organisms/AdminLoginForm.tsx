@@ -12,8 +12,8 @@ import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
 
 const initialFormState = {
-  email: '',
-  password: '',
+  email: 'ayaka@test.com',
+  password: 'ayakayasuda',
 };
 
 const AdminLoginForm = () => {
@@ -42,7 +42,7 @@ const AdminLoginForm = () => {
       const { userId, token } = result.payload;
 
       SessionServices.setAdminTokenWithExpirationDate(token);
-      SessionServices.setUserId(userId);
+      SessionServices.setAdminUserId(userId);
 
       navigate('/admin/create');
     }

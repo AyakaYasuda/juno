@@ -31,7 +31,7 @@ const initialState: IUserState = {
 
 //GET
 export const getUserById = createAsyncThunk(
-  'user/getUserById',
+  'guestUser/getUserById',
   async (getUserByIdRequest: IGetUserByIdRequest, { rejectWithValue }) => {
     const { userId, token } = getUserByIdRequest;
     try {
@@ -53,9 +53,9 @@ export const getUserById = createAsyncThunk(
 
 //PATCH
 export const editUser = createAsyncThunk(
-  'user/edit',
+  'guestUser/edit',
   async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
-    const userId = SessionServices.getUserId() || 'id not found';
+    const userId = SessionServices.getGuestUserId() || 'id not found';
 
     try {
       const result = await axios.patch(

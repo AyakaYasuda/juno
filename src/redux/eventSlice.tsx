@@ -34,11 +34,16 @@ export const createEvent = createAsyncThunk(
   'event/create',
   async (eventData: IEventRequest, { getState, rejectWithValue }) => {
     try {
-      // FIXME: fix type
-      const { SK: userId } = (getState() as any).user.user;
+      const token = getAdminAuth();
+
+      if (!token) {
+        throw new Error('No token found');
+      }
+
+      const { SK: userId } = (getState() as RootState).adminUser.user;
       await axios.post(`${API_URL}/new/${userId}`, JSON.stringify(eventData), {
         headers: {
-          Authorization: getAdminAuth(),
+          Authorization: token,
         },
       });
       return initialState.event;
@@ -53,11 +58,16 @@ export const getEventByUserId = createAsyncThunk(
   'event/getEventByUserId',
   async (userId: string, { rejectWithValue }) => {
     try {
+      const token = getAdminAuth();
+      if (!token) {
+        throw new Error('Token not found!');
+      }
+
       const url = `${API_URL}/${userId}`;
 
       const result = await axios.get(url, {
         headers: {
-          Authorization: getAdminAuth(),
+          Authorization: token,
         },
       });
       return result.data;
@@ -71,9 +81,14 @@ export const getGuestsByEventId = createAsyncThunk(
   'event/getGuestsByEventId',
   async (eventId: string, { rejectWithValue }) => {
     try {
+      const token = getAdminAuth();
+      if (!token) {
+        throw new Error('Token not found');
+      }
+
       const result = await axios.get(`${API_URL}/guests/${eventId}`, {
         headers: {
-          Authorization: getAdminAuth(),
+          Authorization: token,
         },
       });
       return result.data.guests;
@@ -88,6 +103,11 @@ export const editEvent = createAsyncThunk(
   'event/edit',
   async (eventData: IEventRequest, { getState, rejectWithValue }) => {
     try {
+      const token = getAdminAuth();
+      if (!token) {
+        throw new Error('Token not found');
+      }
+
       // FIXME: fix type
       const { SK: eventId } = (getState() as RootState).event.event;
       const result = await axios.patch(
@@ -95,7 +115,7 @@ export const editEvent = createAsyncThunk(
         JSON.stringify(eventData),
         {
           headers: {
-            Authorization: getAdminAuth(),
+            Authorization: token,
           },
         }
       );

@@ -31,7 +31,7 @@ const initialState: IUserState = {
 
 //GET
 export const getUserById = createAsyncThunk(
-  'user/getUserById',
+  'adminUser/getUserById',
   async (getUserByIdRequest: IGetUserByIdRequest, { rejectWithValue }) => {
     const { userId, token } = getUserByIdRequest;
     try {
@@ -51,11 +51,12 @@ export const getUserById = createAsyncThunk(
   }
 );
 
+// FIXME, no logic to edit user in admin?
 //PATCH
 export const editUser = createAsyncThunk(
-  'user/edit',
+  'adminUser/edit',
   async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
-    const userId = SessionServices.getUserId() || 'id not found';
+    const userId = SessionServices.getAdminUserId() || 'id not found';
 
     try {
       const result = await axios.patch(

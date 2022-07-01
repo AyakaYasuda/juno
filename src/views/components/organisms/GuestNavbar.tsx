@@ -16,7 +16,7 @@ const GuestNavbar = () => {
     dispatch(setIsLogin(false));
     dispatch(setTokenExpirationDate(null));
 
-    SessionServices.removeItem(SessionKeys.USER_ID);
+    SessionServices.removeItem(SessionKeys.GUEST_USER_ID);
     SessionServices.removeItem(SessionKeys.GUEST_TOKEN);
 
     navigate('/guests/login');

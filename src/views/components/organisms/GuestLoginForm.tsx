@@ -36,7 +36,7 @@ const GuestLoginForm = () => {
       alert('login successfully!');
 
       SessionServices.setGuestTokenWithExpirationDate(result.payload.token);
-      SessionServices.setUserId(result.payload.userId);
+      SessionServices.setGuestUserId(result.payload.userId);
 
       navigate('/guests/mypage');
     }

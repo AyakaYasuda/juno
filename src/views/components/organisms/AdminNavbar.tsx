@@ -16,7 +16,7 @@ const AdminNavbar = () => {
     dispatch(setIsLogin(false));
     dispatch(setTokenExpirationDate(null));
 
-    SessionServices.removeItem(SessionKeys.USER_ID);
+    SessionServices.removeItem(SessionKeys.ADMIN_USER_ID);
     SessionServices.removeItem(SessionKeys.ADMIN_TOKEN);
 
     navigate('/admin/login');
