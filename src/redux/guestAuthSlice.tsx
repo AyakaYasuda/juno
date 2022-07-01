@@ -11,6 +11,7 @@ type InitialState = {
   tokenExpirationDate: string | null;
   token?: string;
   status?: string;
+  errorMessages?: string[];
 };
 
 type SetIsLoginAction = Action & {
@@ -69,7 +70,7 @@ export const signup = createAsyncThunk(
 
       return result.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -109,6 +110,23 @@ const guestAuthSlice = createSlice({
         state.isLogin = true;
         state.token = token;
         state.tokenExpirationDate = String(generateTokenExpirationTime());
+      });
+
+    builder
+      .addCase(login.rejected, (state, action) => {
+        // FIXME: fix type
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        console.log(action.payload);
+        
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
       });
   },
 });

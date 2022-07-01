@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import useAuthErrorModal from 'hooks/useAuthErrorModal';
-import useUserErrorModal from 'hooks/useUserErrorModal';
+import useGuestAuthErrorModal from 'hooks/useGuestAuthErrorModal';
+import useGuestUserErrorModal from 'hooks/useGuestUserErrorModal';
 
 import GuestInvitationLayout from 'views/components/molecules/Layout/GuestInvitationLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
@@ -18,10 +18,10 @@ const GuestInvitation: React.FC = () => {
     closeModalHandler,
     showModalHandler,
     isModalShown,
-  } = useAuthErrorModal();
+  } = useGuestAuthErrorModal();
 
   const { status: userStatus, errorMessages: userErrorMessages } =
-    useUserErrorModal();
+    useGuestUserErrorModal();
 
   return (
     <>

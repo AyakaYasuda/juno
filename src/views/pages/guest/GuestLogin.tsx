@@ -1,4 +1,4 @@
-import useAuthErrorModal from 'hooks/useAuthErrorModal';
+import useGuestAuthErrorModal from 'hooks/useGuestAuthErrorModal';
 
 import GuestLoginLayout from 'views/components/molecules/Layout/GuestLoginLayout';
 import Logo from 'views/components/atoms/Logo';
@@ -12,7 +12,7 @@ const GuestLogin = () => {
     closeModalHandler,
     showModalHandler,
     isModalShown,
-  } = useAuthErrorModal();
+  } = useGuestAuthErrorModal();
 
   return (
     <>

@@ -1,4 +1,4 @@
-import useAuthErrorModal from 'hooks/useAuthErrorModal';
+import useAdminAuthErrorModal from 'hooks/useAdminAuthErrorModal';
 
 import AuthPageLayout from 'views/components/molecules/Layout/AuthPageLayout';
 import AdminLoginForm from 'views/components/organisms/AdminLoginForm';
@@ -11,7 +11,7 @@ const AdminLogin = () => {
     closeModalHandler,
     showModalHandler,
     isModalShown,
-  } = useAuthErrorModal();
+  } = useAdminAuthErrorModal();
 
   return (
     <>

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useAppSelector } from './hooks';
 
-const useAuthErrorModal = () => {
+const useGuestUserErrorModal = () => {
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
-  // FIXME: admin or guest
-  const { status, errorMessages } = useAppSelector((state) => state.adminAuth);
+  // FIXME: set admin temporary to avoid error
+  const { status, errorMessages } = useAppSelector((state) => state.guestUser);
 
   const closeModalHandler = () => {
     setIsModalShown(false);
@@ -24,4 +24,4 @@ const useAuthErrorModal = () => {
   };
 };
 
-export default useAuthErrorModal;
+export default useGuestUserErrorModal;
