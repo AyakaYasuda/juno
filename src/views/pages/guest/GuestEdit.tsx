@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { editUser, getUserById } from 'redux/adminUserSlice';
 import { useNavigate } from 'react-router';
+import useUserErrorModal from 'hooks/useUserErrorModal';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import YourReplyEditForm from 'views/components/organisms/YourReplyEditForm';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import { getGuestAuth } from 'services/auth.service';
+import ErrorModal from 'views/components/organisms/ErrorModal';
 
 const GuestEdit = () => {
   const dispatch = useAppDispatch();
@@ -15,12 +17,18 @@ const GuestEdit = () => {
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(false);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(true);
 
+  const {
+    status,
+    errorMessages,
+    closeModalHandler,
+    showModalHandler,
+    isModalShown,
+  } = useUserErrorModal();
+
   const switchContentsHandler = () => {
     setIsEventInfoShown((prev) => !prev);
     setIsYourReplyShown((prev) => !prev);
   };
-  console.log('EventInfo', isEventInfoShown);
-  console.log('YourReply', isYourReplyShown);
 
   const { user } = useAppSelector((state) => state.guestUser);
   const { SK: userId } = user;
@@ -33,8 +41,16 @@ const GuestEdit = () => {
   }, [userId, dispatch]);
 
   const editHandler = async (updatedUser: IUpdateUserRequest) => {
-    await dispatch(editUser(updatedUser));
-    navigate('/guests/mypage');
+    const result = await dispatch(editUser(updatedUser));
+
+    if (editUser.fulfilled.match(result)) {
+      navigate('/guests/mypage');
+    }
+
+    // login failed
+    if (editUser.rejected.match(result)) {
+      showModalHandler();
+    }
   };
 
   const desktopContent = (
@@ -75,6 +91,13 @@ const GuestEdit = () => {
 
   return (
     <div>
+      <ErrorModal
+        show={isModalShown}
+        onCancel={closeModalHandler}
+        messages={errorMessages as string[]}
+        button="Try Again"
+        buttonStyle="bg-Green-default text-white"
+      />
       <GuestPageLayout>
         {desktopContent}
         {mobileContent}

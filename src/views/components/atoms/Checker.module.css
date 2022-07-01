@@ -31,6 +31,7 @@
 .label {
   padding-left: 30px;
   position: relative;
+  cursor: pointer;
 }
 
 .label::before,
@@ -38,6 +39,7 @@
   content: '';
   display: block;
   position: absolute;
+  cursor: pointer;
 }
 
 .label::before {

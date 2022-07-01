@@ -2,7 +2,6 @@ import { IGetUserByIdRequest, IUserState } from 'types/UserData.type';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
@@ -27,6 +26,7 @@ const initialState: IUserState = {
     isAttending: true,
   },
   status: 'pending',
+  errorMessages: [],
 };
 
 //GET
@@ -71,7 +71,7 @@ export const editUser = createAsyncThunk(
 );
 
 export const createAttendanceData = createAsyncThunk(
-  CreateAsyncThunkActions.CREATE_ATTENDANCE_DATA,
+  'adminUser/createAttendanceData',
   async (attendanceData: IAttendanceData, { rejectWithValue }) => {
     try {
       const result = await axios.post(
@@ -108,6 +108,20 @@ export const adminUserSlice = createSlice({
       .addCase(createAttendanceData.fulfilled, (state, action) => {
         state.status = 'pending';
         state.user = action.payload;
+      });
+
+    builder
+      .addCase(editUser.rejected, (state, action) => {
+        const { message } = action.payload as { message: string };
+
+        state.status = 'rejected';
+        state.errorMessages = [message];
+      })
+      .addCase(createAttendanceData.rejected, (state, action) => {
+        const { message } = action.payload as { message: string };
+
+        state.status = 'rejected';
+        state.errorMessages = [message];
       });
   },
 });

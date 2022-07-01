@@ -11,6 +11,7 @@ type InitialState = {
   tokenExpirationDate: string | null;
   token?: string;
   status?: string;
+  errorMessages?: string[];
 };
 
 type SetIsLoginAction = Action & {
@@ -30,6 +31,10 @@ type LoginAction = Action & {
 };
 
 type SignupAction = Action & {
+  payload: { userId: string; token: string };
+};
+
+type SignupGuestAction = Action & {
   payload: { userId: string; token: string };
 };
 
@@ -71,7 +76,7 @@ export const signup = createAsyncThunk(
 
       return result.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -111,6 +116,21 @@ const adminAuthSlice = createSlice({
         state.isLogin = true;
         state.token = token;
         state.tokenExpirationDate = String(generateTokenExpirationTime());
+      });
+
+    builder
+      .addCase(login.rejected, (state, action) => {
+        // FIXME: fix type
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
       });
   },
 });

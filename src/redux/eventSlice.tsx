@@ -25,7 +25,8 @@ const initialState: IEventState = {
     isEditable: true,
   },
   guests: [],
-  status: 'loading',
+  status: 'pending',
+  errorMessages: [],
 };
 
 //create action
@@ -48,6 +49,7 @@ export const createEvent = createAsyncThunk(
       });
       return initialState.event;
     } catch (error: any) {
+      console.log('error');
       return rejectWithValue(error.response.data);
     }
   }
@@ -139,23 +141,37 @@ export const eventSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createEvent.pending, (state, action) => {
-        state.status = 'loading';
+        state.status = 'pending';
       })
       .addCase(createEvent.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = 'fulfilled';
         state.event = action.payload;
       })
       .addCase(getEventByUserId.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = 'fulfilled';
         state.event = action.payload;
       })
       .addCase(getGuestsByEventId.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = 'fulfilled';
         state.guests = action.payload;
       })
       .addCase(editEvent.fulfilled, (state, action) => {
-        state.status = 'success';
+        state.status = 'fulfilled';
         state.event = action.payload;
+      });
+
+    builder
+      .addCase(createEvent.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      })
+      .addCase(editEvent.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
       });
   },
 });

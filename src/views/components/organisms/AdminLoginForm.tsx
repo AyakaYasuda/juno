@@ -11,12 +11,16 @@ import Card from '../atoms/Card';
 import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
 
+type Props = {
+  onShowModal: () => void;
+};
+
 const initialFormState = {
   email: 'ayaka@test.com',
   password: 'ayakayasuda',
 };
 
-const AdminLoginForm = () => {
+const AdminLoginForm: React.FC<Props> = ({ onShowModal }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -37,8 +41,6 @@ const AdminLoginForm = () => {
 
     // login success
     if (login.fulfilled.match(result)) {
-      alert('login successfully!');
-
       const { userId, token } = result.payload;
 
       SessionServices.setAdminTokenWithExpirationDate(token);
@@ -49,7 +51,7 @@ const AdminLoginForm = () => {
 
     // login failed
     if (login.rejected.match(result)) {
-      alert('login failed...');
+      onShowModal();
     }
   };
 

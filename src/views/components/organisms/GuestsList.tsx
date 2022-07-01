@@ -10,7 +10,7 @@ const GuestsList = (props: Props) => {
   const { guests, showModalHandler } = props;
 
   return (
-    <div className={`md:block lg:basis-1/2 md:w-3/4 w-full`}>
+    <div className="w-5/6 lg:w-full">
       <h2 className="hidden lg:block mb-8">Guests List</h2>
       <ul className="h-4/5">
         {guests &&

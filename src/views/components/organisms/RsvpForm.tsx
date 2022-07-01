@@ -23,9 +23,16 @@ const formInitialValues = {
 
 type Props = {
   eventId: string;
+  onShowModal: () => void;
+  // FIXME: make sure this is necessary to pass
+  createAttendanceError: string[];
 };
 
-const RsvpForm: React.FC<Props> = ({ eventId }) => {
+const RsvpForm: React.FC<Props> = ({
+  eventId,
+  onShowModal,
+  createAttendanceError,
+}) => {
   const { values, inputChangeHandler } = useForm(formInitialValues);
   const {
     firstName,
@@ -60,11 +67,34 @@ const RsvpForm: React.FC<Props> = ({ eventId }) => {
       // signup success
       if (signup.fulfilled.match(signUpResult)) {
         console.log('signUp successfully!');
+
+        const userId = signUpResult.payload.userId;
+        console.log('userId', userId);
+
+        const createAttendanceDataResult = await dispatch(
+          createAttendanceData({
+            eventId,
+            attendanceReqBody: { userId, isAttending: isAttending as boolean },
+          })
+        );
+
+        // success
+        if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
+          navigate('/guests/login');
+        }
+
+        //  failed
+        if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
+          console.log(
+            'failed to create attendance data: ',
+            createAttendanceError
+          );
+        }
       }
 
       // signUp failed
       if (signup.rejected.match(signUpResult)) {
-        alert('signup failed...');
+        onShowModal();
       }
 
       const userId = signUpResult.payload.userId;

@@ -7,6 +7,10 @@ import LabeledInput from '../molecules/LabeledInput';
 import Card from '../atoms/Card';
 import Button from '../atoms/Button';
 
+type Props = {
+  onShowModal: () => void;
+};
+
 const initialFormState = {
   firstName: 'ttt',
   lastName: 'ttt',
@@ -14,7 +18,7 @@ const initialFormState = {
   password: 'password',
 };
 
-const AdminRegisterForm = () => {
+const AdminRegisterForm: React.FC<Props> = ({ onShowModal }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -39,13 +43,12 @@ const AdminRegisterForm = () => {
 
     // signup success
     if (signup.fulfilled.match(result)) {
-      alert('signup successfully!');
       navigate('/admin/login');
     }
 
     // signup failed
     if (signup.rejected.match(result)) {
-      alert('signup failed...');
+      onShowModal();
     }
   };
 
