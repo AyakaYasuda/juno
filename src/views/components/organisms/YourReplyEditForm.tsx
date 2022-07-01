@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import LabeledTextarea from '../molecules/LabeledTextarea';
 import GuestButton from '../atoms/GuestButton';
 import LabeledInput from '../molecules/LabeledInput';
+import Checker from '../atoms/Checker';
 
 type UserEditFormInitialValues = {
   PK: string;
@@ -35,6 +36,7 @@ const YourReplyEditForm: React.FC<Props> = ({
   const navigate = useNavigate();
 
   const { firstName, lastName, isAttending, message, allergy } = values;
+  console.log('isAttending: ', isAttending);
 
   const submitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -75,26 +77,24 @@ const YourReplyEditForm: React.FC<Props> = ({
         </div>
       </div>
       <div className="grid grid-cols-2 auto-cols-fr justify-items-center gap-4">
-        <p className="mb-2 md:mb-0 form-check form-check-inline">
-          <input
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio1"
-            className="form-check-input appearance-none h-4 w-4 border border-Yellow-dark rounded-sm checked:bg-Yellow-dark focus:outline-none transition duration-200 mt-1 float-left mr-1 cursor-pointer"
-            checked={isAttending as boolean}
-          />
-          <label className="text-Yellow-dark">accepts with pleasure</label>
-        </p>
-        <p className="mb-2 md:mb-0 form-check form-check-inline">
-          <input
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio1"
-            className="form-check-input appearance-none h-4 w-4 border border-Yellow-dark rounded-sm checked:bg-Yellow-dark focus:outline-none transition duration-200 mt-1 float-left mr-1 cursor-pointer"
-            checked={isAttending as boolean}
-          />
-          <label className="text-Yellow-dark">declines with regret</label>
-        </p>
+        <Checker
+          label="accepts with pleasure"
+          value={true}
+          className="gap-1 items-center"
+          inputType="radio"
+          name="isAttending"
+          isChecked={isAttending as boolean}
+          onChange={inputChangeHandler}
+        />
+        <Checker
+          label="declines with regret"
+          value={false}
+          className="gap-1 items-center"
+          inputType="radio"
+          name="isAttending"
+          isChecked={!isAttending as boolean}
+          onChange={inputChangeHandler}
+        />
       </div>
       <LabeledTextarea
         label="Message"
