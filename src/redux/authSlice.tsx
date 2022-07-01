@@ -15,6 +15,7 @@ type InitialState = {
   tokenExpirationDate: string | null;
   token?: string;
   status?: string;
+  errorMessages?: string[];
 };
 
 type SetIsLoginAction = Action & {
@@ -34,6 +35,10 @@ type LoginAction = Action & {
 };
 
 type SignupAction = Action & {
+  payload: { userId: string; token: string };
+};
+
+type SignupGuestAction = Action & {
   payload: { userId: string; token: string };
 };
 
@@ -75,14 +80,14 @@ export const signup = createAsyncThunk(
 
       return result.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
 
 //GUEST SIGNUP
 export const signupGuest = createAsyncThunk(
-  'signup',
+  'signupGuest',
   async (signupData: IGuestSignupRequest, thunkAPI) => {
     try {
       const result = await axios.post(
@@ -94,7 +99,7 @@ export const signupGuest = createAsyncThunk(
 
       return result.data;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );
@@ -134,6 +139,36 @@ const authSlice = createSlice({
         state.isLogin = true;
         state.token = token;
         state.tokenExpirationDate = String(generateTokenExpirationTime());
+      })
+      .addCase(signupGuest.fulfilled, (state, action: SignupGuestAction) => {
+        const { token } = action.payload;
+        console.log('action.payload', action.payload);
+
+        state.status = 'pending';
+        state.isLogin = true;
+        state.token = token;
+        state.tokenExpirationDate = String(generateTokenExpirationTime());
+      });
+
+    builder
+      .addCase(login.rejected, (state, action) => {
+        // FIXME: fix type
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      })
+      .addCase(signup.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
+      })
+      .addCase(signupGuest.rejected, (state, action) => {
+        const { message } = action.payload as { message: string[] };
+
+        state.status = 'rejected';
+        state.errorMessages = message;
       });
   },
 });

@@ -2,7 +2,6 @@ import { IUserState } from 'types/UserData.type';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
@@ -27,11 +26,12 @@ const initialState: IUserState = {
     isAttending: true,
   },
   status: 'pending',
+  errorMessages: [],
 };
 
 //GET
 export const getUser = createAsyncThunk(
-  CreateAsyncThunkActions.GET_USER,
+  'get',
   async (userId: string, { rejectWithValue }) => {
     try {
       const url = `${API_URL}/${userId}`;
@@ -56,25 +56,35 @@ export const editUser = createAsyncThunk(
   async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
     const userId = SessionServices.getUserId() || 'id not found';
 
+    const url = `${API_URL}/edit/${userId}`;
+
     try {
-      const result = await axios.patch(
-        `${API_URL}/edit/${userId}`,
-        JSON.stringify(updateUserReqBody)
-      );
+      const result = await axios.patch(url, JSON.stringify(updateUserReqBody), {
+        headers: {
+          Authorization: getAuth(),
+        },
+      });
       return result.data;
     } catch (error: any) {
+      console.log(error.response.data)
       return rejectWithValue(error.response.data);
     }
   }
 );
 
 export const createAttendanceData = createAsyncThunk(
-  CreateAsyncThunkActions.CREATE_ATTENDANCE_DATA,
+  'createAttendanceData',
   async (attendanceData: IAttendanceData, { rejectWithValue }) => {
     try {
+      const url = `${API_URL}/event/${attendanceData.eventId}`;
       const result = await axios.post(
-        `${API_URL}/event/${attendanceData.eventId}`,
-        JSON.stringify(attendanceData.attendanceReqBody)
+        url,
+        JSON.stringify(attendanceData.attendanceReqBody),
+        {
+          headers: {
+            Authorization: getAuth(),
+          },
+        }
       );
       return result.data;
     } catch (error: any) {
@@ -106,6 +116,20 @@ export const userSlice = createSlice({
       .addCase(createAttendanceData.fulfilled, (state, action) => {
         state.status = 'pending';
         state.user = action.payload;
+      });
+
+    builder
+      .addCase(editUser.rejected, (state, action) => {
+        const { message } = action.payload as { message: string };
+
+        state.status = 'rejected';
+        state.errorMessages = [message];
+      })
+      .addCase(createAttendanceData.rejected, (state, action) => {
+        const { message } = action.payload as { message: string };
+
+        state.status = 'rejected';
+        state.errorMessages = [message];
       });
   },
 });

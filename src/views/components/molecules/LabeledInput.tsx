@@ -15,7 +15,7 @@ const LabeledInput = (props: Props) => {
 
   return (
     <div className="flex flex-col">
-      <label className={labelStyle}>{label}</label>
+      <label className={`mb-2 ${labelStyle}`}>{label}</label>
       <input
         type={type}
         name={name}

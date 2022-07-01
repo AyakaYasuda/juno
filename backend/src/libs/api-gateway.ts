@@ -49,13 +49,13 @@ export const handleError = (e: Error) => {
 
   if (e instanceof SyntaxError) {
     return formatJSONResponse(400, {
-      message: `invalid request body format : "${e.message}"`,
+      message: [`invalid request body format : "${e.message}"`],
     });
   }
 
   if (e instanceof HttpError) {
     return formatJSONResponse(e.statusCode, {
-      message: e.message,
+      message: [e.message],
     });
   }
 

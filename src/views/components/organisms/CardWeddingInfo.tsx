@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'hooks/hooks';
-import { getEvent } from 'redux/eventThunkSlice';
+import { getEvent } from 'redux/eventSlice';
 
 import SectionDivider from './SectionDivider';
 
@@ -13,7 +13,6 @@ const CardWeddingInfo: React.FC = () => {
   const [receptionSchedule, setReceptionSchedule] = useState<string>();
 
   useEffect(() => {
-    console.log(userId);
     if (userId) {
       dispatch(getEvent(userId));
     }
@@ -69,7 +68,6 @@ const CardWeddingInfo: React.FC = () => {
         .toUpperCase();
 
       const dateAndTime = `${day} ${month} ${date}, ${year}  at ${st}`;
-      console.log(dateAndTime);
 
       return dateAndTime;
     },

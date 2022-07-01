@@ -17,7 +17,7 @@ import GuestLogin from 'views/pages/guest/GuestLogin';
 import GuestMyPage from 'views/pages/guest/GuestMyPage';
 import GuestEdit from 'views/pages/guest/GuestEdit';
 import { useAppDispatch } from 'hooks/hooks';
-import { getUser } from 'redux/userThunkSlice';
+import { getUser } from 'redux/userSlice';
 import SessionServices from 'services/session.services';
 import useTokenAuth from './hooks/useTokenAuth';
 

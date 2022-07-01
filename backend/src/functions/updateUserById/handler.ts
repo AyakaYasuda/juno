@@ -12,7 +12,7 @@ const updateUserById = async (
     const reqBody = JSON.parse(event.body);
 
     const userServices = new UserServices();
-    UserValidator.validateUpdateUserReqBody(reqBody);
+    await UserValidator.validateUpdateUserReqBody(reqBody);
 
     await userServices.errorIfUserNotExist(userId, 'User not found');
 
