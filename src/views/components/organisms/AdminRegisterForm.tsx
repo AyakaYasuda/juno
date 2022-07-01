@@ -43,7 +43,7 @@ const AdminRegisterForm: React.FC<Props> = ({ onShowModal }) => {
 
     // signup success
     if (signup.fulfilled.match(result)) {
-      navigate('/admin/login');
+      navigate('/admin/create');
     }
 
     // signup failed
