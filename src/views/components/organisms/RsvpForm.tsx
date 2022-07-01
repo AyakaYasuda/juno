@@ -3,7 +3,7 @@ import useForm from 'hooks/useForm';
 import { useNavigate } from 'react-router';
 import { useAppDispatch } from 'hooks/hooks';
 
-import { createAttendanceData } from 'redux/userSlice';
+import { createAttendanceData } from 'redux/adminUserSlice';
 import { signup } from 'redux/guestAuthSlice';
 
 import LabeledInput from '../molecules/LabeledInput';

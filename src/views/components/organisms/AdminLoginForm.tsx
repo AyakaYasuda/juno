@@ -41,7 +41,7 @@ const AdminLoginForm = () => {
 
       const { userId, token } = result.payload;
 
-      SessionServices.setTokenWithExpirationDate(token);
+      SessionServices.setAdminTokenWithExpirationDate(token);
       SessionServices.setUserId(userId);
 
       navigate('/admin/create');

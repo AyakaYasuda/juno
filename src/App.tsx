@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -16,22 +15,12 @@ import GuestInvitation from 'views/pages/guest/GuestInvitation';
 import GuestLogin from 'views/pages/guest/GuestLogin';
 import GuestMyPage from 'views/pages/guest/GuestMyPage';
 import GuestEdit from 'views/pages/guest/GuestEdit';
-import { useAppDispatch } from 'hooks/hooks';
-import { getUser } from 'redux/userSlice';
-import SessionServices from 'services/session.services';
-import useTokenAuth from './hooks/useTokenAuth';
+import useAdminTokenAuth from './hooks/useAdminTokenAuth';
+import useGuestTokenAuth from 'hooks/useGuestTokenAuth';
 
 const App = () => {
-  const dispatch = useAppDispatch();
-
-  useTokenAuth();
-  const [userId] = useState(SessionServices.getUserId());
-
-  useEffect(() => {
-    if (userId) {
-      dispatch(getUser(userId));
-    }
-  }, [dispatch, userId]);
+  useAdminTokenAuth();
+  useGuestTokenAuth();
 
   return (
     <Router>

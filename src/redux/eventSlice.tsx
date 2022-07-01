@@ -4,7 +4,7 @@ import { IEventRequest, IEventState } from 'types/EventData.type';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from './store';
-import { getAuth } from 'services/auth.service';
+import { getAdminAuth } from 'services/auth.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/event';
 
@@ -38,7 +38,7 @@ export const createEvent = createAsyncThunk(
       const { SK: userId } = (getState() as any).user.user;
       await axios.post(`${API_URL}/new/${userId}`, JSON.stringify(eventData), {
         headers: {
-          Authorization: getAuth(),
+          Authorization: getAdminAuth(),
         },
       });
       return initialState.event;
@@ -49,15 +49,15 @@ export const createEvent = createAsyncThunk(
 );
 
 //GET
-export const getEvent = createAsyncThunk(
-  'event/getEvent',
+export const getEventByUserId = createAsyncThunk(
+  'event/getEventByUserId',
   async (userId: string, { rejectWithValue }) => {
     try {
       const url = `${API_URL}/${userId}`;
 
       const result = await axios.get(url, {
         headers: {
-          Authorization: getAuth(),
+          Authorization: getAdminAuth(),
         },
       });
       return result.data;
@@ -67,13 +67,13 @@ export const getEvent = createAsyncThunk(
   }
 );
 
-export const getGuests = createAsyncThunk(
-  'event/getGuests',
+export const getGuestsByEventId = createAsyncThunk(
+  'event/getGuestsByEventId',
   async (eventId: string, { rejectWithValue }) => {
     try {
       const result = await axios.get(`${API_URL}/guests/${eventId}`, {
         headers: {
-          Authorization: getAuth(),
+          Authorization: getAdminAuth(),
         },
       });
       return result.data.guests;
@@ -95,7 +95,7 @@ export const editEvent = createAsyncThunk(
         JSON.stringify(eventData),
         {
           headers: {
-            Authorization: getAuth(),
+            Authorization: getAdminAuth(),
           },
         }
       );
@@ -125,11 +125,11 @@ export const eventSlice = createSlice({
         state.status = 'success';
         state.event = action.payload;
       })
-      .addCase(getEvent.fulfilled, (state, action) => {
+      .addCase(getEventByUserId.fulfilled, (state, action) => {
         state.status = 'success';
         state.event = action.payload;
       })
-      .addCase(getGuests.fulfilled, (state, action) => {
+      .addCase(getGuestsByEventId.fulfilled, (state, action) => {
         state.status = 'success';
         state.guests = action.payload;
       })

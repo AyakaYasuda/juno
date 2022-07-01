@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useNavigate } from 'react-router';
-import { editEvent, getEvent } from 'redux/eventSlice';
+import { editEvent, getEventByUserId } from 'redux/eventSlice';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import { RootState } from 'redux/store';
 import EditEventForm from 'views/components/organisms/EditEventForm';
@@ -11,7 +11,9 @@ const AdminEventEdit = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { SK: userId } = useAppSelector((state: RootState) => state.user.user);
+  const { SK: userId } = useAppSelector(
+    (state: RootState) => state.adminUser.user
+  );
   const { event } = useAppSelector((state: RootState) => state.event);
 
   const formSubmitLogic = async (formInput: IEventRequest) => {
@@ -24,7 +26,7 @@ const AdminEventEdit = () => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getEvent(userId));
+      dispatch(getEventByUserId(userId));
     }
   }, [dispatch, userId]);
 

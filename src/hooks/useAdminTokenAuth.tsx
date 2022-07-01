@@ -8,7 +8,8 @@ import SessionServices from 'services/session.services';
 // this stay outside of component because not related to re-render
 let logoutTimer: NodeJS.Timeout;
 
-const useTokenAuth = () => {
+// FIXME: delete duplicate code
+const useAdminTokenAuth = () => {
   const dispatch = useDispatch();
 
   const { setIsLogin, setToken, setTokenExpirationDate } = adminAuthActions;
@@ -17,7 +18,7 @@ const useTokenAuth = () => {
   );
 
   const logoutWithToken = useCallback(() => {
-    localStorage.removeItem(SessionKeys.TOKEN);
+    localStorage.removeItem(SessionKeys.ADMIN_TOKEN);
 
     // update state
     dispatch(setTokenExpirationDate(null));
@@ -27,13 +28,16 @@ const useTokenAuth = () => {
   const loginWithToken = useCallback(() => {
     console.log('loginWithToken');
 
-    const tokenData = SessionServices.getTokenWithExpirationDate();
+    const tokenData = SessionServices.getAdminTokenWithExpirationDate();
     if (!tokenData) {
       return;
     }
 
     const { token, expiration } = tokenData;
-    SessionServices.setTokenWithExpirationDate(token, new Date(expiration));
+    SessionServices.setAdminTokenWithExpirationDate(
+      token,
+      new Date(expiration)
+    );
 
     // update state
     dispatch(setTokenExpirationDate(expiration));
@@ -56,7 +60,7 @@ const useTokenAuth = () => {
   }, [token, tokenExpirationDate, logoutWithToken]);
 
   const autoLogin = useCallback(() => {
-    const tokenData = SessionServices.getTokenWithExpirationDate();
+    const tokenData = SessionServices.getAdminTokenWithExpirationDate();
 
     if (!tokenData) {
       return;
@@ -85,4 +89,4 @@ const useTokenAuth = () => {
   }, [autoLogin]);
 };
 
-export default useTokenAuth;
+export default useAdminTokenAuth;

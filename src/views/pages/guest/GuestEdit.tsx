@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { editUser, getUser } from 'redux/userSlice';
+import { editUser, getUserById } from 'redux/adminUserSlice';
 import { useNavigate } from 'react-router';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import YourReplyEditForm from 'views/components/organisms/YourReplyEditForm';
 import { IUpdateUserRequest } from 'types/UserData.type';
+import { getGuestAuth } from 'services/auth.service';
 
 const GuestEdit = () => {
   const dispatch = useAppDispatch();
@@ -21,12 +22,12 @@ const GuestEdit = () => {
   console.log('EventInfo', isEventInfoShown);
   console.log('YourReply', isYourReplyShown);
 
-  const { SK: userId } = useAppSelector((state) => state.user.user);
-  const { user } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.guestUser);
+  const { SK: userId } = user;
 
   useEffect(() => {
     if (userId) {
-      dispatch(getUser(userId));
+      dispatch(getUserById({ userId: userId, token: getGuestAuth() }));
     }
   }, [userId, dispatch]);
 

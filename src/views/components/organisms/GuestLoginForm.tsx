@@ -35,7 +35,7 @@ const GuestLoginForm = () => {
     if (login.fulfilled.match(result)) {
       alert('login successfully!');
 
-      SessionServices.setTokenWithExpirationDate(result.payload.token);
+      SessionServices.setGuestTokenWithExpirationDate(result.payload.token);
       SessionServices.setUserId(result.payload.userId);
 
       navigate('/guests/mypage');

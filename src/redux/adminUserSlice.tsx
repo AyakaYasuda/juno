@@ -1,0 +1,114 @@
+import { IGetUserByIdRequest, IUserState } from 'types/UserData.type';
+
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
+import { IAttendanceData } from 'types/AttendanceData.type';
+import { IUpdateUserRequest } from 'types/UserData.type';
+import SessionServices from 'services/session.services';
+
+const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
+
+// FIXME: delete duplicate code
+// initialize
+const initialState: IUserState = {
+  user: {
+    PK: '',
+    SK: '',
+    userId: '',
+    eventId: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    isAdmin: false,
+    message: '',
+    allergy: '',
+    isAttending: true,
+  },
+  status: 'pending',
+};
+
+//GET
+export const getUserById = createAsyncThunk(
+  'user/getUserById',
+  async (getUserByIdRequest: IGetUserByIdRequest, { rejectWithValue }) => {
+    const { userId, token } = getUserByIdRequest;
+    try {
+      const url = `${API_URL}/${userId}`;
+
+      const result = await axios.get(url, {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      return result.data;
+    } catch (error: any) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//PATCH
+export const editUser = createAsyncThunk(
+  'user/edit',
+  async (updateUserReqBody: IUpdateUserRequest, { rejectWithValue }) => {
+    const userId = SessionServices.getUserId() || 'id not found';
+
+    try {
+      const result = await axios.patch(
+        `${API_URL}/edit/${userId}`,
+        JSON.stringify(updateUserReqBody)
+      );
+      return result.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const createAttendanceData = createAsyncThunk(
+  CreateAsyncThunkActions.CREATE_ATTENDANCE_DATA,
+  async (attendanceData: IAttendanceData, { rejectWithValue }) => {
+    try {
+      const result = await axios.post(
+        `${API_URL}/event/${attendanceData.eventId}`,
+        JSON.stringify(attendanceData.attendanceReqBody)
+      );
+      return result.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+//create slice
+export const adminUserSlice = createSlice({
+  name: 'adminUser',
+  initialState,
+  reducers: {
+    //FIXME: need test
+    logout(state) {
+      state = initialState;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUserById.fulfilled, (state, action) => {
+        state.status = 'pending';
+        state.user = action.payload;
+      })
+      .addCase(editUser.fulfilled, (state, action) => {
+        state.status = 'pending';
+        state.user = action.payload;
+      })
+      .addCase(createAttendanceData.fulfilled, (state, action) => {
+        state.status = 'pending';
+        state.user = action.payload;
+      });
+  },
+});
+
+export default adminUserSlice.reducer;

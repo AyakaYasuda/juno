@@ -1,4 +1,4 @@
-import { IUserState } from 'types/UserData.type';
+import { IGetUserByIdRequest, IUserState } from 'types/UserData.type';
 
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -6,10 +6,10 @@ import CreateAsyncThunkActions from 'constants/createAsyncThunkActions';
 import { IAttendanceData } from 'types/AttendanceData.type';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
-import { getAuth } from 'services/auth.service';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
+// FIXME: delete duplicate code
 // initialize
 const initialState: IUserState = {
   user: {
@@ -30,15 +30,16 @@ const initialState: IUserState = {
 };
 
 //GET
-export const getUser = createAsyncThunk(
-  CreateAsyncThunkActions.GET_USER,
-  async (userId: string, { rejectWithValue }) => {
+export const getUserById = createAsyncThunk(
+  'user/getUserById',
+  async (getUserByIdRequest: IGetUserByIdRequest, { rejectWithValue }) => {
+    const { userId, token } = getUserByIdRequest;
     try {
       const url = `${API_URL}/${userId}`;
 
       const result = await axios.get(url, {
         headers: {
-          Authorization: getAuth(),
+          Authorization: token,
         },
       });
 
@@ -84,8 +85,8 @@ export const createAttendanceData = createAsyncThunk(
 );
 
 //create slice
-export const userSlice = createSlice({
-  name: 'user',
+export const guestUserSlice = createSlice({
+  name: 'guestUser',
   initialState,
   reducers: {
     //FIXME: need test
@@ -95,7 +96,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.fulfilled, (state, action) => {
+      .addCase(getUserById.fulfilled, (state, action) => {
         state.status = 'pending';
         state.user = action.payload;
       })
@@ -110,4 +111,4 @@ export const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export default guestUserSlice.reducer;

@@ -27,7 +27,8 @@ class SessionServices {
     localStorage.removeItem(key);
   }
 
-  public static setTokenWithExpirationDate(
+  private static setTokenWithExpirationDate(
+    key: SessionKeys,
     token: string,
     expirationDate?: Date
   ): void {
@@ -36,7 +37,7 @@ class SessionServices {
 
     // save to storage
     this.setItem(
-      SessionKeys.TOKEN,
+      key,
       JSON.stringify({
         token,
         expiration: new Date(tokenExpirationDate).toISOString(),
@@ -44,8 +45,10 @@ class SessionServices {
     );
   }
 
-  public static getTokenWithExpirationDate(): TokenData | null {
-    const storedData = this.getItem(SessionKeys.TOKEN);
+  private static getTokenWithExpirationDate(
+    key: SessionKeys
+  ): TokenData | null {
+    const storedData = this.getItem(key);
 
     if (!storedData) {
       return null;
@@ -54,6 +57,36 @@ class SessionServices {
     const restoredData = JSON.parse(storedData) as TokenData;
 
     return restoredData;
+  }
+
+  public static setAdminTokenWithExpirationDate(
+    token: string,
+    expirationDate?: Date
+  ): void {
+    this.setTokenWithExpirationDate(
+      SessionKeys.ADMIN_TOKEN,
+      token,
+      expirationDate
+    );
+  }
+
+  public static getAdminTokenWithExpirationDate(): TokenData | null {
+    return this.getTokenWithExpirationDate(SessionKeys.ADMIN_TOKEN);
+  }
+
+  public static setGuestTokenWithExpirationDate(
+    token: string,
+    expirationDate?: Date
+  ): void {
+    this.setTokenWithExpirationDate(
+      SessionKeys.GUEST_TOKEN,
+      token,
+      expirationDate
+    );
+  }
+
+  public static getGuestTokenWithExpirationDate(): TokenData | null {
+    return this.getTokenWithExpirationDate(SessionKeys.GUEST_TOKEN);
   }
 
   public static getUserId() {

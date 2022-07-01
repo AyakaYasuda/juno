@@ -1,30 +1,17 @@
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import SessionServices from 'services/session.services';
-import { SessionKeys } from 'constants/sessionKeys';
-import { useDispatch } from 'react-redux';
-import { adminAuthActions } from '../../../redux/adminAuthSlice';
+import { Link } from 'react-router-dom';
 
 type NavbarProps = {
   bgColor: string;
-  link: JSX.Element;
-  redirectPath: string;
+  link?: JSX.Element;
+  onLogout: () => void;
 };
 
-const Navbar: React.FC<NavbarProps> = ({ bgColor, link, redirectPath }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { setIsLogin, setTokenExpirationDate } = adminAuthActions;
+const Navbar: React.FC<NavbarProps> = (props) => {
+  const { bgColor, link, onLogout } = props;
 
   const logoutHandler = () => {
-    // update state
-    dispatch(setIsLogin(false));
-    dispatch(setTokenExpirationDate(null));
-
-    SessionServices.removeItem(SessionKeys.USER_ID);
-    SessionServices.removeItem(SessionKeys.TOKEN);
-
-    navigate(redirectPath);
+    onLogout();
   };
 
   return (
