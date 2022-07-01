@@ -66,8 +66,6 @@ const RsvpForm: React.FC<Props> = ({
 
       // signup success
       if (signup.fulfilled.match(signUpResult)) {
-        console.log('signUp successfully!');
-
         const userId = signUpResult.payload.userId;
         console.log('userId', userId);
 

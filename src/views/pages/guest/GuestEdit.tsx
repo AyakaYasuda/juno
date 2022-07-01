@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { editUser, getUserById } from 'redux/adminUserSlice';
 import { useNavigate } from 'react-router';
-import useUserErrorModal from 'hooks/useUserErrorModal';
+import useGuestUserErrorModal from 'hooks/useGuestUserErrorModal';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
@@ -23,7 +23,7 @@ const GuestEdit = () => {
     closeModalHandler,
     showModalHandler,
     isModalShown,
-  } = useUserErrorModal();
+  } = useGuestUserErrorModal();
 
   const switchContentsHandler = () => {
     setIsEventInfoShown((prev) => !prev);
