@@ -25,6 +25,7 @@ import RedirectToTop from 'views/components/organisms/RedirectToTop';
 import { getUserById } from 'redux/adminUserSlice';
 import { getAdminAuth, getGuestAuth } from 'services/auth.service';
 import { useAppDispatch } from 'hooks/hooks';
+import RedirectToHome from 'views/components/organisms/RedirectToHome';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -60,9 +61,21 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/admin" element={<AdminHome />} />
-        <Route path="/admin/register" element={<AdminRegister />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route
+          path="/admin"
+          element={
+            <RedirectToHome redirectTo="/admin/create" isLogin={adminIsLogin} />
+          }
+        >
+          {!adminIsLogin && (
+            <>
+              <Route index element={<AdminHome />} />
+              <Route path="register" element={<AdminRegister />} />
+              <Route path="login" element={<AdminLogin />} />
+            </>
+          )}
+        </Route>
+
         <Route
           path="/admin"
           element={<RedirectToTop redirectTo="/admin" isLogin={adminIsLogin} />}
@@ -85,7 +98,7 @@ const App = () => {
         <Route
           path="/guests"
           element={
-            <RedirectToTop redirectTo="/guests/login" isLogin={guestIsLogin} />
+            <RedirectToTop redirectTo="/guests" isLogin={guestIsLogin} />
           }
         >
           <Route path="mypage" element={<GuestMyPage />} />

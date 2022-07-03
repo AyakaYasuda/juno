@@ -7,12 +7,12 @@ type Props = {
 };
 
 // FIXME: delete duplicate code
-const RedirectToTop = (props: Props) => {
+const RedirectToHome = (props: Props) => {
   const { redirectTo, isLogin } = props;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLogin) {
+    if (isLogin) {
       navigate(redirectTo);
     }
   }, [isLogin, redirectTo, navigate]);
@@ -24,4 +24,4 @@ const RedirectToTop = (props: Props) => {
   );
 };
 
-export default RedirectToTop;
+export default RedirectToHome;
