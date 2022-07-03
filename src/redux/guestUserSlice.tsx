@@ -74,7 +74,6 @@ export const editUser = createAsyncThunk(
       });
       return result.data;
     } catch (error: any) {
-      console.log(error.response.data);
       return rejectWithValue(error.response.data);
     }
   }
@@ -133,12 +132,13 @@ export const guestUserSlice = createSlice({
 
     builder
       .addCase(editUser.rejected, (state, action) => {
-        const { message } = action.payload as { message: string };
+        const { message } = action.payload as { message: string[] };
 
         state.status = 'rejected';
-        state.errorMessages = [message];
+        state.errorMessages = message;
       })
       .addCase(createAttendanceData.rejected, (state, action) => {
+        console.log("action.payload", action.payload)
         const { message } = action.payload as { message: string };
 
         state.status = 'rejected';

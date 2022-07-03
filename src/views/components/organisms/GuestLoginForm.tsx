@@ -36,8 +36,6 @@ const GuestLoginForm: React.FC<Props> = ({ onShowModal }) => {
 
     // login success
     if (login.fulfilled.match(result)) {
-      alert('login successfully!');
-
       SessionServices.setGuestTokenWithExpirationDate(result.payload.token);
       SessionServices.setGuestUserId(result.payload.userId);
 

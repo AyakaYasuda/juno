@@ -112,10 +112,10 @@ export const adminUserSlice = createSlice({
 
     builder
       .addCase(editUser.rejected, (state, action) => {
-        const { message } = action.payload as { message: string };
+        const { message } = action.payload as { message: string[] };
 
         state.status = 'rejected';
-        state.errorMessages = [message];
+        state.errorMessages = message;
       })
       .addCase(createAttendanceData.rejected, (state, action) => {
         const { message } = action.payload as { message: string };
