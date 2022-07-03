@@ -13,8 +13,8 @@ type Props = {
 };
 
 const initialFormState = {
-  email: 'ayaka@test.com',
-  password: 'ayakayasuda',
+  email: '',
+  password: '',
 };
 
 const GuestLoginForm: React.FC<Props> = ({ onShowModal }) => {
