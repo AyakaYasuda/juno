@@ -1,5 +1,3 @@
-// FIXME
-// separate token, userId
 export enum SessionKeys {
   ADMIN_TOKEN = 'juno-admin-token',
   GUEST_TOKEN = 'juno-guest-token',
