@@ -6,19 +6,18 @@ import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import YourReply from 'views/components/organisms/YourReply';
 import { getUserById } from 'redux/adminUserSlice';
 import { getGuestAuth } from 'services/auth.service';
+import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
 
 const GuestMyPage = () => {
   const dispatch = useAppDispatch();
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(true);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(false);
 
-  const switchContentsHandler = () => {
-    setIsEventInfoShown((prev) => !prev);
-    setIsYourReplyShown((prev) => !prev);
-  };
-
   const { user } = useAppSelector((state) => state.guestUser);
   const { SK: userId } = user;
+  const { isLogin } = useAppSelector((state) => state.guestAuth);
+
+  useRedirectIfNotLogin(isLogin, '/guests/login');
 
   useEffect(() => {
     const token = getGuestAuth();
@@ -27,6 +26,11 @@ const GuestMyPage = () => {
       dispatch(getUserById({ userId, token }));
     }
   }, [userId, dispatch]);
+
+  const switchContentsHandler = () => {
+    setIsEventInfoShown((prev) => !prev);
+    setIsYourReplyShown((prev) => !prev);
+  };
 
   const desktopContent = (
     <div className="hidden lg:grid grid-cols-2 justify-items-center py-10 px-20 gap-5">

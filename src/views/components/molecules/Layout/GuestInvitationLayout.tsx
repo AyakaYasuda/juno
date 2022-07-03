@@ -8,7 +8,9 @@ type Props = {
   children: React.ReactNode;
 };
 
-const GuestInvitationLayout: React.FC<Props> = ({ children }) => {
+const GuestInvitationLayout: React.FC<Props> = (props) => {
+  const { children } = props;
+
   return (
     <section className="w-full pt-20 bg-gradient-to-t from-Green-default to-White-darker md:min-h-screen relative">
       <img
@@ -16,7 +18,7 @@ const GuestInvitationLayout: React.FC<Props> = ({ children }) => {
         alt="flower"
         className="w-medium fixed top-0 right-0"
       />
-      <div className='flex flex-col justify-center'>
+      <div className="flex flex-col justify-center">
         {children}
         <TempCopyright className="text-Pink-dark text-center my-4" />
       </div>
