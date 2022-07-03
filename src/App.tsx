@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import AdminEventCreate from 'views/pages/admin/AdminEventCreate';
 import AdminEventEdit from 'views/pages/admin/AdminEventEdit';
@@ -29,7 +24,8 @@ const App = () => {
   useAdminTokenAuth();
   useGuestTokenAuth();
 
-  // FIXME: do you need this?
+  // FIXME:
+  // fetch user data here, do you need this in here? or should fetch user in each page?
   const [adminUserId] = useState(SessionServices.getAdminUserId());
   useEffect(() => {
     const token = getAdminAuth();
@@ -51,7 +47,6 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/admin" />} />
         <Route path="/admin" element={<AdminHome />} />
         <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/admin/login" element={<AdminLogin />} />

@@ -24,6 +24,7 @@ const AdminNavbar = () => {
 
   return (
     <Navbar
+      logoLink="/admin"
       bgColor="Pink-default"
       link={
         <div className="mr-4 Hover">

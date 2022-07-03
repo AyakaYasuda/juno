@@ -1,4 +1,7 @@
+import useRedirectIfLogin from 'hooks/useRedirectIfLogin';
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
 import TempCopyright from 'views/components/atoms/TempCopyright';
 import topImg from '../../../../assets/images/top-image.png';
 
@@ -6,7 +9,12 @@ type Props = {
   children?: React.ReactNode;
 };
 
-const AuthPageLayout: React.FC<Props> = ({ children }) => {
+const AuthPageLayout: React.FC<Props> = (props) => {
+  const { children } = props;
+  const { isLogin } = useSelector((state: RootState) => state.adminAuth);
+
+  useRedirectIfLogin(isLogin, '/admin/event');
+
   return (
     <section className="flex flex-col h-full relative  md:bg-gradient-to-b md:from-Pink-lighter md:to-Pink-default">
       <div className="flex sm:relative">

@@ -4,8 +4,11 @@ import GuestLoginLayout from 'views/components/molecules/Layout/GuestLoginLayout
 import Logo from 'views/components/atoms/Logo';
 import GuestLoginForm from 'views/components/organisms/GuestLoginForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
+import useRedirectIfLogin from 'hooks/useRedirectIfLogin';
+import { useAppSelector } from 'hooks/hooks';
 
 const GuestLogin = () => {
+  const { isLogin } = useAppSelector((state) => state.guestAuth);
   const {
     status,
     errorMessages,
@@ -13,6 +16,8 @@ const GuestLogin = () => {
     showModalHandler,
     isModalShown,
   } = useGuestAuthErrorModal();
+
+  useRedirectIfLogin(isLogin, '/guests/mypage');
 
   return (
     <>

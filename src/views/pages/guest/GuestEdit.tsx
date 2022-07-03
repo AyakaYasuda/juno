@@ -10,13 +10,18 @@ import YourReplyEditForm from 'views/components/organisms/YourReplyEditForm';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import { getGuestAuth } from 'services/auth.service';
 import ErrorModal from 'views/components/organisms/ErrorModal';
+import { RootState } from 'redux/store';
+import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
 
 const GuestEdit = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(false);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(true);
-
+  const { isLogin } = useAppSelector((state: RootState) => state.guestAuth);
+  const { user } = useAppSelector((state: RootState) => state.guestUser);
+  const { SK: userId } = user;
   const {
     status,
     errorMessages,
@@ -25,13 +30,7 @@ const GuestEdit = () => {
     isModalShown,
   } = useGuestUserErrorModal();
 
-  const switchContentsHandler = () => {
-    setIsEventInfoShown((prev) => !prev);
-    setIsYourReplyShown((prev) => !prev);
-  };
-
-  const { user } = useAppSelector((state) => state.guestUser);
-  const { SK: userId } = user;
+  useRedirectIfNotLogin(isLogin, '/guests/login');
 
   useEffect(() => {
     const token = getGuestAuth();
@@ -39,6 +38,11 @@ const GuestEdit = () => {
       dispatch(getUserById({ userId: userId, token }));
     }
   }, [userId, dispatch]);
+
+  const switchContentsHandler = () => {
+    setIsEventInfoShown((prev) => !prev);
+    setIsYourReplyShown((prev) => !prev);
+  };
 
   const editHandler = async (updatedUser: IUpdateUserRequest) => {
     const result = await dispatch(editUser(updatedUser));

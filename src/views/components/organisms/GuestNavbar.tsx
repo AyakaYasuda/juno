@@ -22,7 +22,13 @@ const GuestNavbar = () => {
     navigate('/guests/login');
   };
 
-  return <Navbar bgColor="Green-default" onLogout={logoutHandler} />;
+  return (
+    <Navbar
+      logoLink="/guests/mypage"
+      bgColor="Green-default"
+      onLogout={logoutHandler}
+    />
+  );
 };
 
 export default GuestNavbar;

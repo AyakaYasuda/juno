@@ -6,6 +6,7 @@ import { useAppDispatch } from 'hooks/hooks';
 import LabeledInput from '../molecules/LabeledInput';
 import Card from '../atoms/Card';
 import Button from '../atoms/Button';
+import SessionServices from 'services/session.services';
 
 type Props = {
   onShowModal: () => void;
@@ -43,7 +44,12 @@ const AdminRegisterForm: React.FC<Props> = ({ onShowModal }) => {
 
     // signup success
     if (signup.fulfilled.match(result)) {
-      navigate('/admin/login');
+      const { userId, token } = result.payload;
+
+      SessionServices.setAdminTokenWithExpirationDate(token);
+      SessionServices.setAdminUserId(userId);
+
+      navigate('/admin/create');
     }
 
     // signup failed

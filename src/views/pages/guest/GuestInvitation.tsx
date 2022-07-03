@@ -7,11 +7,14 @@ import GuestInvitationLayout from 'views/components/molecules/Layout/GuestInvita
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import RsvpForm from 'views/components/organisms/RsvpForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
+import { useAppSelector } from 'hooks/hooks';
+import useRedirectIfLogin from 'hooks/useRedirectIfLogin';
 
 const GuestInvitation: React.FC = () => {
   const params = useParams();
   const eventId = params.eventId!;
 
+  const { isLogin } = useAppSelector((state) => state.guestAuth);
   const {
     status,
     errorMessages,
@@ -19,9 +22,10 @@ const GuestInvitation: React.FC = () => {
     showModalHandler,
     isModalShown,
   } = useGuestAuthErrorModal();
-
   const { status: userStatus, errorMessages: userErrorMessages } =
     useGuestUserErrorModal();
+
+  useRedirectIfLogin(isLogin, '/guests/mypage');
 
   return (
     <>

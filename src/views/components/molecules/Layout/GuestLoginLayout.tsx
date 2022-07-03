@@ -6,7 +6,9 @@ type Props = {
   children?: React.ReactNode;
 };
 
-const GuestLoginLayout: React.FC<Props> = ({ children }) => {
+const GuestLoginLayout: React.FC<Props> = (props) => {
+  const { children } = props;
+
   return (
     <section className="w-full h-screen relative">
       <img

@@ -25,6 +25,7 @@ const useAdminTokenAuth = () => {
     dispatch(setIsLogin(false));
   }, [dispatch, setIsLogin, setTokenExpirationDate]);
 
+  // FIXME: adminLogin, guestLogin
   const loginWithToken = useCallback(() => {
     console.log('loginWithToken');
 
@@ -77,6 +78,9 @@ const useAdminTokenAuth = () => {
 
     if (isStoredTokenValid) {
       loginWithToken();
+    } else {
+      SessionServices.removeItem(SessionKeys.ADMIN_TOKEN);
+      SessionServices.removeItem(SessionKeys.ADMIN_USER_ID);
     }
   }, [loginWithToken]);
 
