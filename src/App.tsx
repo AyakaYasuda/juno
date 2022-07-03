@@ -1,9 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import AdminEventCreate from 'views/pages/admin/AdminEventCreate';
 import AdminEventEdit from 'views/pages/admin/AdminEventEdit';
@@ -19,27 +14,18 @@ import useAdminTokenAuth from './hooks/useAdminTokenAuth';
 import useGuestTokenAuth from 'hooks/useGuestTokenAuth';
 import { useEffect, useState } from 'react';
 import SessionServices from 'services/session.services';
-import { useSelector } from 'react-redux';
-import { RootState } from 'redux/store';
-import RedirectToTop from 'views/components/organisms/RedirectToTop';
 import { getUserById } from 'redux/adminUserSlice';
 import { getAdminAuth, getGuestAuth } from 'services/auth.service';
 import { useAppDispatch } from 'hooks/hooks';
-import RedirectToHome from 'views/components/organisms/RedirectToHome';
 
 const App = () => {
   const dispatch = useAppDispatch();
-  const { isLogin: adminIsLogin } = useSelector(
-    (state: RootState) => state.adminAuth
-  );
-  const { isLogin: guestIsLogin } = useSelector(
-    (state: RootState) => state.guestAuth
-  );
 
   useAdminTokenAuth();
   useGuestTokenAuth();
 
-  // FIXME: do you need this?
+  // FIXME:
+  // fetch user data here, do you need this in here? or should fetch user in each page?
   const [adminUserId] = useState(SessionServices.getAdminUserId());
   useEffect(() => {
     const token = getAdminAuth();
@@ -61,49 +47,19 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/admin"
-          element={
-            <RedirectToHome redirectTo="/admin/create" isLogin={adminIsLogin} />
-          }
-        >
-          {!adminIsLogin && (
-            <>
-              <Route index element={<AdminHome />} />
-              <Route path="register" element={<AdminRegister />} />
-              <Route path="login" element={<AdminLogin />} />
-            </>
-          )}
-        </Route>
-
-        <Route
-          path="/admin"
-          element={<RedirectToTop redirectTo="/admin" isLogin={adminIsLogin} />}
-        >
-          {adminIsLogin && (
-            <>
-              <Route path="create" element={<AdminEventCreate />} />
-              <Route path="edit" element={<AdminEventEdit />} />
-              <Route path="event" element={<AdminEventDetail />} />
-            </>
-          )}
-          <Route path="*" element={<Navigate to="/admin" />} />
-        </Route>
-
+        <Route path="/admin" element={<AdminHome />} />
+        <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/create" element={<AdminEventCreate />} />
+        <Route path="/admin/edit" element={<AdminEventEdit />} />
+        <Route path="/admin/event" element={<AdminEventDetail />} />
         <Route
           path="/guests/invitation/:eventId"
           element={<GuestInvitation />}
         />
         <Route path="/guests/login" element={<GuestLogin />} />
-        <Route
-          path="/guests"
-          element={
-            <RedirectToTop redirectTo="/guests" isLogin={guestIsLogin} />
-          }
-        >
-          <Route path="mypage" element={<GuestMyPage />} />
-          <Route path="edit" element={<GuestEdit />} />
-        </Route>
+        <Route path="/guests/mypage" element={<GuestMyPage />} />
+        <Route path="/guests/edit" element={<GuestEdit />} />
       </Routes>
     </Router>
   );

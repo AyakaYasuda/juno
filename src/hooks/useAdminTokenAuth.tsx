@@ -78,6 +78,9 @@ const useAdminTokenAuth = () => {
 
     if (isStoredTokenValid) {
       loginWithToken();
+    } else {
+      SessionServices.removeItem(SessionKeys.ADMIN_TOKEN);
+      SessionServices.removeItem(SessionKeys.ADMIN_USER_ID);
     }
   }, [loginWithToken]);
 

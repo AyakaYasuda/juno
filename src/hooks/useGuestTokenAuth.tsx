@@ -77,6 +77,9 @@ const useGuestTokenAuth = () => {
 
     if (isStoredTokenValid) {
       loginWithToken();
+    } else {
+      SessionServices.removeItem(SessionKeys.GUEST_TOKEN);
+      SessionServices.removeItem(SessionKeys.GUEST_USER_ID);
     }
   }, [loginWithToken]);
 
