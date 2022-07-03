@@ -10,6 +10,7 @@ import LabeledInput from '../molecules/LabeledInput';
 import Checker from '../atoms/Checker';
 import LabeledTextarea from '../molecules/LabeledTextarea';
 import GuestButton from '../atoms/GuestButton';
+import SessionServices from 'services/session.services';
 
 const formInitialValues = {
   firstName: 'ttt',
@@ -66,8 +67,12 @@ const RsvpForm: React.FC<Props> = ({
 
       // signup success
       if (signup.fulfilled.match(signUpResult)) {
+        SessionServices.setGuestTokenWithExpirationDate(
+          signUpResult.payload.token
+        );
+        SessionServices.setGuestUserId(signUpResult.payload.userId);
+
         const userId = signUpResult.payload.userId;
-        console.log('userId', userId);
 
         const createAttendanceDataResult = await dispatch(
           createAttendanceData({
@@ -93,26 +98,6 @@ const RsvpForm: React.FC<Props> = ({
       // signUp failed
       if (signup.rejected.match(signUpResult)) {
         onShowModal();
-      }
-
-      const userId = signUpResult.payload.userId;
-
-      const createAttendanceDataResult = await dispatch(
-        createAttendanceData({
-          eventId,
-          attendanceReqBody: { userId, isAttending: isAttending as boolean },
-        })
-      );
-
-      // success
-      if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
-        alert('created attendance data successfully!');
-        navigate('/guests/login');
-      }
-
-      //  failed
-      if (createAttendanceData.rejected.match(createAttendanceDataResult)) {
-        alert('failed to create attendance data');
       }
     } catch (error) {
       console.log(error);

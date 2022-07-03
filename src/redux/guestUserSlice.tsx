@@ -82,22 +82,21 @@ export const editUser = createAsyncThunk(
 export const createAttendanceData = createAsyncThunk(
   'createAttendanceData',
   async (attendanceData: IAttendanceData, { rejectWithValue }) => {
+    const { eventId, attendanceReqBody } = attendanceData;
+
     try {
       const token = getGuestAuth();
       if (!token) {
         throw new Error('Token not found');
       }
 
-      const url = `${API_URL}/event/${attendanceData.eventId}`;
-      const result = await axios.post(
-        url,
-        JSON.stringify(attendanceData.attendanceReqBody),
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      const url = `${API_URL}/event/${eventId}`;
+      const result = await axios.post(url, JSON.stringify(attendanceReqBody), {
+        headers: {
+          Authorization: token,
+        },
+      });
+
       return result.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -138,7 +137,6 @@ export const guestUserSlice = createSlice({
         state.errorMessages = message;
       })
       .addCase(createAttendanceData.rejected, (state, action) => {
-        console.log("action.payload", action.payload)
         const { message } = action.payload as { message: string };
 
         state.status = 'rejected';
