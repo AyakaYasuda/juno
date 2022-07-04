@@ -66,7 +66,6 @@ const AdminEventCreate = () => {
           formSubmitLogic={formSubmitLogic}
         />
       </AdminPageLayout>
-      ;
     </>
   );
 };
