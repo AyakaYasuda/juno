@@ -26,7 +26,7 @@ const initialState: IEventState = {
     isEditable: true,
   },
   guests: [],
-  status: null,
+  status: { event: null, guests: null },
   errorMessages: [],
 };
 
@@ -136,42 +136,42 @@ export const eventSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createEvent.pending, (state, action) => {
-        state.status = StateStatus.pending;
+        state.status.event = StateStatus.pending;
       })
       .addCase(createEvent.fulfilled, (state, action) => {
-        state.status = StateStatus.fulfilled;
+        state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
       })
       .addCase(getEventByUserId.fulfilled, (state, action) => {
-        state.status = StateStatus.fulfilled;
+        state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
       })
       .addCase(getGuestsByEventId.pending, (state, action) => {
-        state.status = StateStatus.pending;
+        state.status.guests = StateStatus.pending;
       })
       .addCase(getGuestsByEventId.fulfilled, (state, action) => {
-        state.status = StateStatus.fulfilled;
+        state.status.guests = StateStatus.fulfilled;
         state.guests = action.payload;
       })
       .addCase(editEvent.fulfilled, (state, action) => {
-        state.status = StateStatus.fulfilled;
+        state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
       });
 
     builder
       .addCase(getGuestsByEventId.rejected, (state, action) => {
-        state.status = StateStatus.rejected;
+        state.status.guests = StateStatus.rejected;
       })
       .addCase(createEvent.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
-        state.status = StateStatus.rejected;
+        state.status.event = StateStatus.rejected;
         state.errorMessages = message;
       })
       .addCase(editEvent.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
-        state.status = StateStatus.rejected;
+        state.status.event = StateStatus.rejected;
         state.errorMessages = message;
       });
   },

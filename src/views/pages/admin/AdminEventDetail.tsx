@@ -15,6 +15,7 @@ const AdminEventDetail = () => {
 
   const { SK: userId } = useAppSelector((state) => state.adminUser.user);
   const { event, status } = useAppSelector((state) => state.event);
+  const { event: eventStateStatus } = status;
   const { SK: eventId } = event;
   const { guests } = useAppSelector((state) => state.event);
 
@@ -38,12 +39,13 @@ const AdminEventDetail = () => {
 
   useEffect(() => {
     if (
-      (status === StateStatus.rejected || status === StateStatus.fulfilled) &&
+      (eventStateStatus === StateStatus.rejected ||
+        eventStateStatus === StateStatus.fulfilled) &&
       !eventId
     ) {
       navigate('/admin/create');
     }
-  }, [eventId, status, navigate]);
+  }, [eventId, eventStateStatus, navigate]);
 
   useEffect(() => {
     if (userId) {

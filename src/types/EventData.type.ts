@@ -32,6 +32,6 @@ export interface IEventRequest {
 export interface IEventState {
   event: IEvent;
   guests: IUser[];
-  status: StateStatus | null;
+  status: { event: StateStatus | null; guests: StateStatus | null };
   errorMessages: string[];
 }
