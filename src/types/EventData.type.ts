@@ -1,3 +1,4 @@
+import { StateStatus } from './StateStatus.type';
 import { IUser } from './UserData.type';
 
 export interface IEvent {
@@ -31,6 +32,6 @@ export interface IEventRequest {
 export interface IEventState {
   event: IEvent;
   guests: IUser[];
-  status: 'pending' | 'rejected' | 'fulfilled';
+  status: StateStatus | null;
   errorMessages: string[];
 }
