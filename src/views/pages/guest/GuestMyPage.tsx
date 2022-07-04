@@ -8,6 +8,7 @@ import YourReply from 'views/components/organisms/YourReply';
 import { getUserById } from 'redux/adminUserSlice';
 import { getGuestAuth } from 'services/auth.service';
 import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
+import { StateStatus } from 'types/StateStatus.type';
 
 const GuestMyPage = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,9 @@ const GuestMyPage = () => {
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(true);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(false);
 
-  const { user } = useAppSelector((state) => state.guestUser);
+  const { user, status: guestsStatus } = useAppSelector(
+    (state) => state.guestUser
+  );
   const { SK: userId } = user;
   const { isLogin } = useAppSelector((state) => state.guestAuth);
 
@@ -70,12 +73,20 @@ const GuestMyPage = () => {
     </div>
   );
 
+  let content = (
+    <>
+      {desktopContent}
+      {mobileContent}
+    </>
+  );
+
+  if (guestsStatus === StateStatus.pending) {
+    content = <div>Loading...</div>;
+  }
+
   return (
     <div>
-      <GuestPageLayout eventId={eventId}>
-        {desktopContent}
-        {mobileContent}
-      </GuestPageLayout>
+      <GuestPageLayout eventId={eventId}>{content}</GuestPageLayout>
     </div>
   );
 };
