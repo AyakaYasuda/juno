@@ -9,6 +9,7 @@ import RsvpForm from 'views/components/organisms/RsvpForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
 import { useAppSelector } from 'hooks/hooks';
 import useRedirectIfLogin from 'hooks/useRedirectIfLogin';
+import { Link } from 'react-router-dom';
 
 const GuestInvitation: React.FC = () => {
   const params = useParams();
@@ -47,7 +48,6 @@ const GuestInvitation: React.FC = () => {
             createAttendanceError={userErrorMessages}
           />
         </div>
-        <p>You've already replied? Login</p>
       </GuestInvitationLayout>
     </>
   );
