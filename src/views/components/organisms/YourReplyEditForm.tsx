@@ -26,18 +26,19 @@ type UserEditFormInitialValues = {
 type Props = {
   formInitialValues: UserEditFormInitialValues;
   onSubmit: (formInput: IUpdateUserRequest) => void;
+  eventId: string;
 };
 
 const YourReplyEditForm: React.FC<Props> = ({
   formInitialValues,
   onSubmit,
+  eventId,
 }) => {
   const { values, inputChangeHandler } = useForm(formInitialValues);
   const navigate = useNavigate();
 
   const { firstName, lastName, isAttending, message, allergy } = values;
-  console.log('isAttending: ', isAttending);
-
+  
   const submitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
@@ -123,7 +124,7 @@ const YourReplyEditForm: React.FC<Props> = ({
         <GuestButton
           className="BaseButtonStyle border border-white text-white drop-shadow-lg mx-auto"
           type="button"
-          onClick={() => navigate('/guests/mypage')}
+          onClick={() => navigate(`/guests/events/${eventId}/mypage`)}
         >
           Cancel
         </GuestButton>
