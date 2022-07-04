@@ -4,16 +4,17 @@ import useEventErrorModal from 'hooks/useEventErrorModal';
 import { IEventRequest } from 'types/EventData.type';
 import { createEvent } from 'redux/eventSlice';
 
-import AlreadyHaveEvent from 'views/components/organisms/AlreadyHaveEvent';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import EditEventForm from 'views/components/organisms/EditEventForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
+import { useCallback, useEffect } from 'react';
 
 const AdminEventCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const { event } = useAppSelector((state) => state.event);
+  const { SK: eventId } = event;
 
   const {
     status,
@@ -22,6 +23,12 @@ const AdminEventCreate = () => {
     showModalHandler,
     isModalShown,
   } = useEventErrorModal();
+
+  const navigateToEventDetailIfEventExist = useCallback(() => {
+    if (eventId) {
+      navigate('/admin/event');
+    }
+  }, [eventId, navigate]);
 
   const formSubmitLogic = async (formInput: IEventRequest) => {
     const result = await dispatch(createEvent(formInput));
@@ -36,20 +43,9 @@ const AdminEventCreate = () => {
     }
   };
 
-  let pageContent = (
-    <>
-      <h2 className="mb-2">Create invitations</h2>
-      <EditEventForm
-        className="w-4/5"
-        updateButtonText="Create invitations"
-        formSubmitLogic={formSubmitLogic}
-      />
-    </>
-  );
-
-  if (event.SK) {
-    pageContent = <AlreadyHaveEvent />;
-  }
+  useEffect(() => {
+    navigateToEventDetailIfEventExist();
+  }, [navigateToEventDetailIfEventExist]);
 
   return (
     <>
@@ -60,7 +56,15 @@ const AdminEventCreate = () => {
         button="Try Again"
         buttonStyle="bg-Pink-default text-white"
       />
-      <AdminPageLayout>{pageContent}</AdminPageLayout>;
+      <AdminPageLayout>
+        <h2 className="mb-2">Create invitations</h2>
+        <EditEventForm
+          className="w-4/5"
+          updateButtonText="Create invitations"
+          formSubmitLogic={formSubmitLogic}
+        />
+      </AdminPageLayout>
+      ;
     </>
   );
 };
