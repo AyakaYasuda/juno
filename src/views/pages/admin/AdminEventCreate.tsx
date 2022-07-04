@@ -8,12 +8,14 @@ import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import EditEventForm from 'views/components/organisms/EditEventForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
 import { useCallback, useEffect } from 'react';
+import { StateStatus } from 'types/StateStatus.type';
 
 const AdminEventCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { event } = useAppSelector((state) => state.event);
+  const { event, status: stateStatus } = useAppSelector((state) => state.event);
+  const { event: EventStateStatus } = stateStatus;
   const { SK: eventId } = event;
 
   const {
@@ -25,10 +27,10 @@ const AdminEventCreate = () => {
   } = useEventErrorModal();
 
   const navigateToEventDetailIfEventExist = useCallback(() => {
-    if (eventId) {
+    if (EventStateStatus === StateStatus.fulfilled && eventId) {
       navigate('/admin/event');
     }
-  }, [eventId, navigate]);
+  }, [eventId, navigate, EventStateStatus]);
 
   const formSubmitLogic = async (formInput: IEventRequest) => {
     const result = await dispatch(createEvent(formInput));
@@ -64,7 +66,6 @@ const AdminEventCreate = () => {
           formSubmitLogic={formSubmitLogic}
         />
       </AdminPageLayout>
-      ;
     </>
   );
 };

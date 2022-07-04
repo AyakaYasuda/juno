@@ -6,31 +6,23 @@ import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import MobileToggleSectionHeaders from 'views/components/organisms/MobileToggleSectionHeaders';
 import EventInfo from 'views/components/organisms/EventInfo';
 import GuestsList from 'views/components/organisms/GuestsList';
+import { useNavigate } from 'react-router';
+import { StateStatus } from 'types/StateStatus.type';
 
 const AdminEventDetail = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { SK: userId } = useAppSelector((state) => state.adminUser.user);
-  const { event } = useAppSelector((state) => state.event);
+  const { event, status } = useAppSelector((state) => state.event);
+  const { event: eventStateStatus } = status;
+  const { SK: eventId } = event;
   const { guests } = useAppSelector((state) => state.event);
 
   const [isEventInfoShown, setIsEventInfoShown] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedGuestUserId, setSelectedGuestUserId] = useState<string>('');
-
-  useEffect(() => {
-    if (userId) {
-      dispatch(getEventByUserId(userId));
-    }
-  }, [userId, dispatch]);
-
-  useEffect(() => {
-    setIsLoading(false);
-    if (event) {
-      dispatch(getGuestsByEventId(event.SK));
-    }
-  }, [event, dispatch]);
 
   const toggleShowInfoHandler = () => {
     setIsEventInfoShown((prevState) => !prevState);
@@ -44,6 +36,29 @@ const AdminEventDetail = () => {
   const closeModalHandler = () => {
     setShowModal(false);
   };
+
+  useEffect(() => {
+    if (
+      (eventStateStatus === StateStatus.rejected ||
+        eventStateStatus === StateStatus.fulfilled) &&
+      !eventId
+    ) {
+      navigate('/admin/create');
+    }
+  }, [eventId, eventStateStatus, navigate]);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(getEventByUserId(userId));
+    }
+  }, [userId, dispatch]);
+
+  useEffect(() => {
+    setIsLoading(false);
+    if (event) {
+      dispatch(getGuestsByEventId(event.SK));
+    }
+  }, [event, dispatch]);
 
   if (isLoading) {
     return <h3 className="text-Pink-dark">Loading....</h3>;

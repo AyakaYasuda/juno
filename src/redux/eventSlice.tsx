@@ -5,6 +5,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from './store';
 import { getAdminAuth } from 'services/auth.service';
+import { StateStatus } from 'types/StateStatus.type';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/event';
 
@@ -25,12 +26,10 @@ const initialState: IEventState = {
     isEditable: true,
   },
   guests: [],
-  status: 'pending',
+  status: { event: null, guests: null },
   errorMessages: [],
 };
 
-//create action
-//CREATE
 export const createEvent = createAsyncThunk(
   'event/create',
   async (eventData: IEventRequest, { getState, rejectWithValue }) => {
@@ -55,7 +54,6 @@ export const createEvent = createAsyncThunk(
   }
 );
 
-//GET
 export const getEventByUserId = createAsyncThunk(
   'event/getEventByUserId',
   async (userId: string, { rejectWithValue }) => {
@@ -115,7 +113,6 @@ export const getGuestsByEventId = createAsyncThunk(
   }
 );
 
-//EDIT
 export const editEvent = createAsyncThunk(
   'event/edit',
   async (eventData: IEventRequest, { getState, rejectWithValue }) => {
@@ -125,7 +122,6 @@ export const editEvent = createAsyncThunk(
         throw new Error('Token not found');
       }
 
-      // FIXME: fix type
       const { SK: eventId } = (getState() as RootState).event.event;
       const result = await axios.patch(
         `${API_URL}/edit/${eventId}`,
@@ -143,7 +139,6 @@ export const editEvent = createAsyncThunk(
   }
 );
 
-//create slice
 export const eventSlice = createSlice({
   name: 'event',
   initialState,
@@ -156,40 +151,49 @@ export const eventSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createEvent.pending, (state, action) => {
-        state.status = 'pending';
+        state.status.event = StateStatus.pending;
       })
       .addCase(createEvent.fulfilled, (state, action) => {
-        state.status = 'fulfilled';
+        state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
       })
       .addCase(getEventByUserId.fulfilled, (state, action) => {
-        state.status = 'fulfilled';
+        state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
       })
+      .addCase(getGuestsByEventId.pending, (state, action) => {
+        state.status.guests = StateStatus.pending;
+      })
       .addCase(getEventByEventId.fulfilled, (state, action) => {
-        state.status = 'fulfilled';
+        state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
       })
       .addCase(getGuestsByEventId.fulfilled, (state, action) => {
-        state.status = 'fulfilled';
+        state.status.guests = StateStatus.fulfilled;
         state.guests = action.payload;
       })
       .addCase(editEvent.fulfilled, (state, action) => {
-        state.status = 'fulfilled';
+        state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
       });
 
     builder
+      .addCase(getGuestsByEventId.rejected, (state, action) => {
+        state.status.guests = StateStatus.rejected;
+      })
+      .addCase(getEventByUserId.rejected, (state, action) => {
+        state.status.event = StateStatus.rejected;
+      })
       .addCase(createEvent.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
-        state.status = 'rejected';
+        state.status.event = StateStatus.rejected;
         state.errorMessages = message;
       })
       .addCase(editEvent.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
-        state.status = 'rejected';
+        state.status.event = StateStatus.rejected;
         state.errorMessages = message;
       });
   },
