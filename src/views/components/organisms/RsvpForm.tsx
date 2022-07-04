@@ -197,8 +197,9 @@ const RsvpForm: React.FC<Props> = ({
         </div>
 
         <p className="text-center text-Yellow-dark mt-10 mb-0">
-          You've already replied?{' '}
-          <Link to={`/guests/events/${eventId}/login`}>Login</Link>
+          <Link to={`/guests/events/${eventId}/login`}>
+            You've already replied? Login
+          </Link>
         </p>
       </form>
     </div>
