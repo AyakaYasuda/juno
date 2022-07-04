@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { editUser, getUserById } from 'redux/adminUserSlice';
+import { editUser, getUserById } from 'redux/guestUserSlice';
 import { useNavigate } from 'react-router';
 import useGuestUserErrorModal from 'hooks/useGuestUserErrorModal';
 
@@ -16,6 +17,8 @@ import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
 const GuestEdit = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const params = useParams();
+  const eventId = params.eventId!;
 
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(false);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(true);
@@ -29,8 +32,9 @@ const GuestEdit = () => {
     showModalHandler,
     isModalShown,
   } = useGuestUserErrorModal();
+  console.log("error", errorMessages)
 
-  useRedirectIfNotLogin(isLogin, '/guests/login');
+  useRedirectIfNotLogin(isLogin, `/guests/events/${eventId}/login`);
 
   useEffect(() => {
     const token = getGuestAuth();
@@ -48,7 +52,7 @@ const GuestEdit = () => {
     const result = await dispatch(editUser(updatedUser));
 
     if (editUser.fulfilled.match(result)) {
-      navigate('/guests/mypage');
+      navigate(`/guests/events/${eventId}/mypage`);
     }
 
     // login failed
@@ -65,7 +69,11 @@ const GuestEdit = () => {
       </div>
       <div className="flex flex-col items-center w-full">
         <h2 className="mb-10">Your Reply</h2>
-        <YourReplyEditForm formInitialValues={user} onSubmit={editHandler} />
+        <YourReplyEditForm
+          formInitialValues={user}
+          onSubmit={editHandler}
+          eventId={eventId}
+        />
       </div>
     </div>
   );
@@ -88,7 +96,11 @@ const GuestEdit = () => {
       </div>
       {isEventInfoShown && <CardWeddingInfo />}
       {isYourReplyShown && (
-        <YourReplyEditForm formInitialValues={user} onSubmit={editHandler} />
+        <YourReplyEditForm
+          formInitialValues={user}
+          onSubmit={editHandler}
+          eventId={eventId}
+        />
       )}
     </div>
   );
@@ -102,7 +114,7 @@ const GuestEdit = () => {
         button="Try Again"
         buttonStyle="bg-Green-default text-white"
       />
-      <GuestPageLayout>
+      <GuestPageLayout eventId={eventId}>
         {desktopContent}
         {mobileContent}
       </GuestPageLayout>

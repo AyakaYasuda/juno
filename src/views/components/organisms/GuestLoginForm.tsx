@@ -10,6 +10,7 @@ import GuestButton from '../atoms/GuestButton';
 
 type Props = {
   onShowModal: () => void;
+  eventId: string
 };
 
 const initialFormState = {
@@ -17,7 +18,7 @@ const initialFormState = {
   password: '',
 };
 
-const GuestLoginForm: React.FC<Props> = ({ onShowModal }) => {
+const GuestLoginForm: React.FC<Props> = ({ onShowModal, eventId }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -39,7 +40,7 @@ const GuestLoginForm: React.FC<Props> = ({ onShowModal }) => {
       SessionServices.setGuestTokenWithExpirationDate(result.payload.token);
       SessionServices.setGuestUserId(result.payload.userId);
 
-      navigate('/guests/mypage');
+      navigate(`/guests/events/${eventId}/mypage`);
     }
 
     // login failed

@@ -77,6 +77,21 @@ export const getEventByUserId = createAsyncThunk(
   }
 );
 
+export const getEventByEventId = createAsyncThunk(
+  'event/getEventByEventId',
+  async (eventId: string, { rejectWithValue }) => {
+    try {
+      const url = `${API_URL}/invitations/${eventId}`;
+
+      const result = await axios.get(url);
+
+      return result.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const getGuestsByEventId = createAsyncThunk(
   'event/getGuestsByEventId',
   async (eventId: string, { rejectWithValue }) => {
@@ -148,6 +163,10 @@ export const eventSlice = createSlice({
       })
       .addCase(getGuestsByEventId.pending, (state, action) => {
         state.status.guests = StateStatus.pending;
+      })
+      .addCase(getEventByEventId.fulfilled, (state, action) => {
+        state.status.event = StateStatus.fulfilled;
+        state.event = action.payload;
       })
       .addCase(getGuestsByEventId.fulfilled, (state, action) => {
         state.status.guests = StateStatus.fulfilled;

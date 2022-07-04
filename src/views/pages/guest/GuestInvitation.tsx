@@ -25,7 +25,7 @@ const GuestInvitation: React.FC = () => {
   const { status: userStatus, errorMessages: userErrorMessages } =
     useGuestUserErrorModal();
 
-  useRedirectIfLogin(isLogin, '/guests/mypage');
+  useRedirectIfLogin(isLogin, `/guests/events/${eventId}/mypage`);
 
   return (
     <>
@@ -47,6 +47,7 @@ const GuestInvitation: React.FC = () => {
             createAttendanceError={userErrorMessages}
           />
         </div>
+        <p>You've already replied? Login</p>
       </GuestInvitationLayout>
     </>
   );

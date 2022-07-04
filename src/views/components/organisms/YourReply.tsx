@@ -8,9 +8,10 @@ import { useNavigate } from 'react-router';
 
 type Props = {
   user: IUser;
+  eventId: string;
 };
 
-const YourReply: React.FC<Props> = ({ user }) => {
+const YourReply: React.FC<Props> = ({ user, eventId }) => {
   const navigate = useNavigate();
 
   return (
@@ -68,7 +69,7 @@ const YourReply: React.FC<Props> = ({ user }) => {
       <GuestButton
         className="BaseButtonStyle border border-white text-white drop-shadow-lg w-48 mx-auto"
         type="button"
-        onClick={() => navigate('/guests/edit')}
+        onClick={() => navigate(`/guests/events/${eventId}/edit`)}
       >
         Edit your reply
       </GuestButton>
