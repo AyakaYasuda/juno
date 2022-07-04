@@ -38,8 +38,7 @@ const YourReplyEditForm: React.FC<Props> = ({
   const navigate = useNavigate();
 
   const { firstName, lastName, isAttending, message, allergy } = values;
-  console.log('isAttending: ', isAttending);
-
+  
   const submitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
 

@@ -10,7 +10,6 @@ const CardWeddingInfo: React.FC = () => {
   const params = useParams();
   const eventId = params.eventId!;
   const { event } = useAppSelector((state) => state.event);
-  console.log('event', event);
 
   const [weddingSchedule, setWeddingSchedule] = useState<string>();
   const [receptionSchedule, setReceptionSchedule] = useState<string>();

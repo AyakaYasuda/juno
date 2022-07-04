@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
-import { editUser, getUserById } from 'redux/adminUserSlice';
+import { editUser, getUserById } from 'redux/guestUserSlice';
 import { useNavigate } from 'react-router';
 import useGuestUserErrorModal from 'hooks/useGuestUserErrorModal';
 
@@ -32,6 +32,7 @@ const GuestEdit = () => {
     showModalHandler,
     isModalShown,
   } = useGuestUserErrorModal();
+  console.log("error", errorMessages)
 
   useRedirectIfNotLogin(isLogin, `/guests/events/${eventId}/login`);
 
