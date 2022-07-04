@@ -83,7 +83,7 @@ const RsvpForm: React.FC<Props> = ({
 
         // success
         if (createAttendanceData.fulfilled.match(createAttendanceDataResult)) {
-          navigate('/guests/login');
+          navigate(`/guests/events/${eventId}/login`);
         }
 
         //  failed

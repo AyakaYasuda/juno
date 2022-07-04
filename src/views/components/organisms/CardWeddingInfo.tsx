@@ -1,22 +1,25 @@
 import { useEffect, useCallback, useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'hooks/hooks';
-import { getEventByUserId } from 'redux/eventSlice';
+import { useParams } from 'react-router';
+import { getEventByEventId } from 'redux/eventSlice';
 
 import SectionDivider from './SectionDivider';
 
 const CardWeddingInfo: React.FC = () => {
   const dispatch = useAppDispatch();
+  const params = useParams();
+  const eventId = params.eventId!;
   const { event } = useAppSelector((state) => state.event);
-  const { SK: userId } = useAppSelector((state) => state.guestUser.user);
+  console.log('event', event);
 
   const [weddingSchedule, setWeddingSchedule] = useState<string>();
   const [receptionSchedule, setReceptionSchedule] = useState<string>();
 
   useEffect(() => {
-    if (userId) {
-      dispatch(getEventByUserId(userId));
+    if (eventId) {
+      dispatch(getEventByEventId(eventId));
     }
-  }, [userId, dispatch]);
+  }, [eventId, dispatch]);
 
   useEffect(() => {
     if (

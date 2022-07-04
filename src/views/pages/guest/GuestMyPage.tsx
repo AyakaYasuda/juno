@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import { useParams } from 'react-router';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
@@ -10,6 +11,9 @@ import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
 
 const GuestMyPage = () => {
   const dispatch = useAppDispatch();
+  const params = useParams();
+  const eventId = params.eventId!;
+
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(true);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(false);
 
@@ -17,7 +21,7 @@ const GuestMyPage = () => {
   const { SK: userId } = user;
   const { isLogin } = useAppSelector((state) => state.guestAuth);
 
-  useRedirectIfNotLogin(isLogin, '/guests/login');
+  useRedirectIfNotLogin(isLogin, `/guests/events/${eventId}/login`);
 
   useEffect(() => {
     const token = getGuestAuth();
@@ -40,7 +44,7 @@ const GuestMyPage = () => {
       </div>
       <div className="flex flex-col items-center w-full">
         <h2 className="mb-10">Your Reply</h2>
-        <YourReply user={user} />
+        <YourReply user={user} eventId={eventId} />
       </div>
     </div>
   );
@@ -62,13 +66,13 @@ const GuestMyPage = () => {
         </h2>
       </div>
       {isEventInfoShown && <CardWeddingInfo />}
-      {isYourReplyShown && <YourReply user={user} />}
+      {isYourReplyShown && <YourReply user={user} eventId={eventId} />}
     </div>
   );
 
   return (
     <div>
-      <GuestPageLayout>
+      <GuestPageLayout eventId={eventId}>
         {desktopContent}
         {mobileContent}
       </GuestPageLayout>

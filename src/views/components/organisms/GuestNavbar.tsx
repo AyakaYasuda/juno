@@ -5,7 +5,11 @@ import { guestAuthActions } from 'redux/guestAuthSlice';
 import SessionServices from 'services/session.services';
 import Navbar from './Navbar';
 
-const GuestNavbar = () => {
+type Props = {
+  eventId: string;
+};
+
+const GuestNavbar: React.FC<Props> = ({ eventId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -19,12 +23,12 @@ const GuestNavbar = () => {
     SessionServices.removeItem(SessionKeys.GUEST_USER_ID);
     SessionServices.removeItem(SessionKeys.GUEST_TOKEN);
 
-    navigate('/guests/login');
+    navigate(`/guests/events/${eventId}/login`);
   };
 
   return (
     <Navbar
-      logoLink="/guests/mypage"
+      logoLink={`/guests/events/${eventId}/mypage`}
       bgColor="Green-default"
       onLogout={logoutHandler}
     />

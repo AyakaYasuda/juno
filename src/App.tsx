@@ -14,6 +14,8 @@ import useAdminTokenAuth from './hooks/useAdminTokenAuth';
 import useGuestTokenAuth from 'hooks/useGuestTokenAuth';
 import { useEffect, useState } from 'react';
 import SessionServices from 'services/session.services';
+import { getUserById as getAdminUserById } from 'redux/adminUserSlice';
+import { getUserById as getGuestUserById } from 'redux/guestUserSlice';
 import { getUserById } from 'redux/adminUserSlice';
 import { getAdminAuth, getGuestAuth } from 'services/auth.service';
 import { useAppDispatch } from 'hooks/hooks';
@@ -31,16 +33,16 @@ const App = () => {
     const token = getAdminAuth();
 
     if (adminUserId && token) {
-      dispatch(getUserById({ userId: adminUserId, token }));
+      dispatch(getAdminUserById({ userId: adminUserId, token }));
     }
   }, [dispatch, adminUserId]);
 
-  const [guestUserId] = useState(SessionServices.getAdminUserId());
+  const [guestUserId] = useState(SessionServices.getGuestUserId());
   useEffect(() => {
     const token = getGuestAuth();
 
     if (guestUserId && token) {
-      dispatch(getUserById({ userId: guestUserId, token }));
+      dispatch(getGuestUserById({ userId: guestUserId, token }));
     }
   }, [dispatch, guestUserId]);
 
@@ -57,9 +59,9 @@ const App = () => {
           path="/guests/invitation/:eventId"
           element={<GuestInvitation />}
         />
-        <Route path="/guests/login" element={<GuestLogin />} />
-        <Route path="/guests/mypage" element={<GuestMyPage />} />
-        <Route path="/guests/edit" element={<GuestEdit />} />
+        <Route path="/guests/events/:eventId/login" element={<GuestLogin />} />
+        <Route path="/guests/events/:eventId/mypage" element={<GuestMyPage />} />
+        <Route path="/guests/events/:eventId/edit" element={<GuestEdit />} />
       </Routes>
     </Router>
   );
