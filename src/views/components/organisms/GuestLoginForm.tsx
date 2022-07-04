@@ -7,10 +7,11 @@ import SessionServices from 'services/session.services';
 import { Form } from '../atoms/Form';
 import LabeledInput from '../molecules/LabeledInput';
 import GuestButton from '../atoms/GuestButton';
+import { Link } from 'react-router-dom';
 
 type Props = {
   onShowModal: () => void;
-  eventId: string
+  eventId: string;
 };
 
 const initialFormState = {
@@ -80,6 +81,9 @@ const GuestLoginForm: React.FC<Props> = ({ onShowModal, eventId }) => {
           Log In
         </GuestButton>
       </div>
+      <Link className="text-white mt-5" to={`/guests/invitation/${eventId}`}>
+        Do not have any account yet? Invitation
+      </Link>
     </Form>
   );
 };
