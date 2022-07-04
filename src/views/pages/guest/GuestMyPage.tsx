@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useParams } from 'react-router';
+import { Rings } from 'react-loader-spinner';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
@@ -9,6 +10,7 @@ import { getUserById } from 'redux/adminUserSlice';
 import { getGuestAuth } from 'services/auth.service';
 import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
 import { StateStatus } from 'types/StateStatus.type';
+import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 
 const GuestMyPage = () => {
   const dispatch = useAppDispatch();
@@ -81,7 +83,7 @@ const GuestMyPage = () => {
   );
 
   if (guestsStatus === StateStatus.pending) {
-    content = <div>Loading...</div>;
+    content = <LoadingSpinner />;
   }
 
   return (
