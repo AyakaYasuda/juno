@@ -13,10 +13,10 @@ type Props = {
 };
 
 const initialFormState = {
-  firstName: 'test firstName',
-  lastName: 'test lastName',
-  email: 'test@test.com',
-  password: 'password',
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
 };
 
 const AdminRegisterForm: React.FC<Props> = ({ onShowModal }) => {
