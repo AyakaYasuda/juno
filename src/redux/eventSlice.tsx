@@ -162,6 +162,9 @@ export const eventSlice = createSlice({
       .addCase(getGuestsByEventId.rejected, (state, action) => {
         state.status.guests = StateStatus.rejected;
       })
+      .addCase(getEventByUserId.rejected, (state, action) => {
+        state.status.event = StateStatus.rejected;
+      })
       .addCase(createEvent.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
