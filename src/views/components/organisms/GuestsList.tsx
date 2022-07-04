@@ -39,6 +39,9 @@ const GuestsList = (props: Props) => {
               </li>
             );
           })}
+        {(!guests || guests.length === 0) && (
+          <h3 className="text-Pink-dark text-center">No guests yet!</h3>
+        )}
       </ul>
     </div>
   );

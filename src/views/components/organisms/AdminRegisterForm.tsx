@@ -13,9 +13,9 @@ type Props = {
 };
 
 const initialFormState = {
-  firstName: 'ttt',
-  lastName: 'ttt',
-  email: 'ttt@test.com',
+  firstName: 'test firstName',
+  lastName: 'test lastName',
+  email: 'test@test.com',
   password: 'password',
 };
 
