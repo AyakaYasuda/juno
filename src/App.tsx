@@ -14,9 +14,8 @@ import useAdminTokenAuth from './hooks/useAdminTokenAuth';
 import useGuestTokenAuth from 'hooks/useGuestTokenAuth';
 import { useEffect, useState } from 'react';
 import SessionServices from 'services/session.services';
-import { getUserById as getAdminUserById } from 'redux/adminUserSlice';
 import { getUserById as getGuestUserById } from 'redux/guestUserSlice';
-import { getAdminAuth, getGuestAuth } from 'services/auth.service';
+import { getGuestAuth } from 'services/auth.service';
 import { useAppDispatch } from 'hooks/hooks';
 
 const App = () => {

@@ -74,7 +74,7 @@ const AdminEventCreate = () => {
         buttonStyle="bg-Pink-default text-white"
       />
       <AdminPageLayout>
-        {(!EventStateStatus || EventStateStatus === StateStatus.pending) &&
+        {(!EventStateStatus || EventStateStatus !== StateStatus.fulfilled) &&
           !eventId && <LoadingSpinner />}
         {EventStateStatus === StateStatus.fulfilled && !eventId && (
           <>
