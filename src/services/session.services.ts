@@ -1,7 +1,7 @@
 // FIXME: check and search best practice
 // https://stackoverflow.com/questions/42420531/what-is-the-best-way-to-manage-a-users-session-in-react
 
-import { ONE_HOUR, ONE_SECOND } from 'constants/time';
+import { ONE_HOUR } from 'constants/time';
 import { SessionKeys } from '../constants/sessionKeys';
 
 type TokenData = {
@@ -11,7 +11,7 @@ type TokenData = {
 
 export const generateTokenExpirationTime = () => {
   const currentTime = new Date().getTime();
-  return new Date(currentTime + ONE_SECOND * 3);
+  return new Date(currentTime + ONE_HOUR);
 };
 
 class SessionServices {

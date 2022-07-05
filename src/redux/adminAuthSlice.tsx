@@ -94,9 +94,9 @@ const adminAuthSlice = createSlice({
       // FIXME: any easy way to reset?
       state.isLogin = false;
       state.tokenExpirationDate = null;
+      state.errorMessages = [];
       // FIXME: avoid using undefined
       state.token = undefined;
-      state.errorMessages = undefined;
     },
   },
 

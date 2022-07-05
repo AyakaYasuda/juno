@@ -2,6 +2,8 @@ import { SessionKeys } from 'constants/sessionKeys';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { adminAuthActions } from 'redux/adminAuthSlice';
+import { adminUserActions } from 'redux/adminUserSlice';
+import { eventActions } from 'redux/eventSlice';
 import SessionServices from 'services/session.services';
 import Navbar from './Navbar';
 
@@ -9,22 +11,23 @@ const AdminNavbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { initState } = adminAuthActions;
+  const { initState: initAdminAuthState } = adminAuthActions;
+  const { initState: initAdminUserState } = adminUserActions;
+  const { initState: initEventState } = eventActions;
 
   const logoutHandler = () => {
-    console.log('logoutHandler --- start');
+    // FIXME: refactor to init data function
 
     // init state
-    dispatch(initState());
-    console.log('init state --- end');
+    dispatch(initAdminAuthState());
+    dispatch(initAdminUserState());
+    dispatch(initEventState());
 
+    // init token
     SessionServices.removeItem(SessionKeys.ADMIN_USER_ID);
     SessionServices.removeItem(SessionKeys.ADMIN_TOKEN);
 
     navigate('/admin/login');
-    console.log('navigate end');
-
-    console.log('logoutHandler --- end');
   };
 
   return (

@@ -1,3 +1,5 @@
+import { StateStatus } from './StateStatus.type';
+
 export interface IUser {
   PK: string;
   SK: string;
@@ -53,11 +55,11 @@ export interface IGetUserByIdRequest {
 
 export interface IUserState {
   user: IUser;
-  status: 'pending' | 'rejected' | 'fulfilled';
-  errorMessages: string[]
+  status: StateStatus;
+  errorMessages: string[];
 }
 
 export interface IAuthState {
   user: IUserState;
-  status: 'pending' | 'rejected' | 'fulfilled';
+  status: StateStatus;
 }
