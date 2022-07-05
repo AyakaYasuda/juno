@@ -58,6 +58,8 @@ const AdminEventCreate = () => {
     navigateToEventDetailIfEventExist();
   }, [navigateToEventDetailIfEventExist]);
 
+  console.log(EventStateStatus, eventId)
+
   return (
     <>
       <ErrorModal
@@ -68,9 +70,9 @@ const AdminEventCreate = () => {
         buttonStyle="bg-Pink-default text-white"
       />
       <AdminPageLayout>
-        {(!EventStateStatus || EventStateStatus !== StateStatus.fulfilled) &&
+        {(!EventStateStatus || EventStateStatus === StateStatus.pending) &&
           !eventId && <LoadingSpinner />}
-        {EventStateStatus === StateStatus.fulfilled && !eventId && (
+        {EventStateStatus === StateStatus.rejected && !eventId && (
           <>
             <h2 className="mb-2">Create invitations</h2>
             <EditEventForm
