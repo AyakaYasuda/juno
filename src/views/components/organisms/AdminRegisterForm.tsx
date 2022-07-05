@@ -59,7 +59,7 @@ const AdminRegisterForm: React.FC<Props> = ({ onShowModal }) => {
   };
 
   return (
-    <Card>
+    <Card className="opacity-90">
       <Form
         className="flex flex-col text-left mb-8 w-full md:w-4/5 mx-auto pt-4"
         onSubmit={submitHandler}
