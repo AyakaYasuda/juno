@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { guestAuthActions } from 'redux/guestAuthSlice';
 import { RootState } from 'redux/store';
 import SessionServices from 'services/session.services';
+import useLogout from './useLogout';
 
 // this stay outside of component because not related to re-render
 let logoutTimer: NodeJS.Timeout;
@@ -11,6 +12,7 @@ let logoutTimer: NodeJS.Timeout;
 // FIXME: delete duplicate code
 const useGuestTokenAuth = () => {
   const dispatch = useDispatch();
+  const { initGuestStateForLogout, deleteGuestLocalStorageData } = useLogout();
 
   const { setIsLogin, setToken, setTokenExpirationDate } = guestAuthActions;
   const { tokenExpirationDate, token } = useSelector(
@@ -18,12 +20,9 @@ const useGuestTokenAuth = () => {
   );
 
   const logoutWithToken = useCallback(() => {
-    localStorage.removeItem(SessionKeys.GUEST_TOKEN);
-
-    // update state
-    dispatch(setTokenExpirationDate(null));
-    dispatch(setIsLogin(false));
-  }, [dispatch, setIsLogin, setTokenExpirationDate]);
+    initGuestStateForLogout();
+    deleteGuestLocalStorageData();
+  }, [initGuestStateForLogout, deleteGuestLocalStorageData]);
 
   const loginWithToken = useCallback(() => {
     console.log('loginWithToken');

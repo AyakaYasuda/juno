@@ -110,9 +110,23 @@ export const guestUserSlice = createSlice({
   name: 'guestUser',
   initialState,
   reducers: {
-    //FIXME: need test
-    logout(state) {
-      state = initialState;
+    initState(state) {
+      state.user = {
+        PK: '',
+        SK: '',
+        userId: '',
+        eventId: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        isAdmin: false,
+        message: '',
+        allergy: '',
+        isAttending: true,
+      };
+      state.status = StateStatus.pending;
+      state.errorMessages = [];
     },
   },
   extraReducers: (builder) => {
@@ -161,3 +175,4 @@ export const guestUserSlice = createSlice({
 });
 
 export default guestUserSlice.reducer;
+export const guestUserActions = guestUserSlice.actions;

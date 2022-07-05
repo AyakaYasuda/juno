@@ -12,20 +12,17 @@ let logoutTimer: NodeJS.Timeout;
 // FIXME: delete duplicate code
 const useAdminTokenAuth = () => {
   const dispatch = useDispatch();
-  const { initAdminStateForLogout } = useLogout();
+  const { initAdminStateForLogout, deleteAdminLocalStorageData } = useLogout();
 
-  const { setIsLogin, setToken, setTokenExpirationDate, initState } =
-    adminAuthActions;
+  const { setIsLogin, setToken, setTokenExpirationDate } = adminAuthActions;
   const { tokenExpirationDate, token } = useSelector(
     (state: RootState) => state.adminAuth
   );
 
   const logoutWithToken = useCallback(() => {
-    localStorage.removeItem(SessionKeys.ADMIN_TOKEN);
-
-    // update state
     initAdminStateForLogout();
-  }, [initAdminStateForLogout]);
+    deleteAdminLocalStorageData();
+  }, [initAdminStateForLogout, deleteAdminLocalStorageData]);
 
   // FIXME: adminLogin, guestLogin
   const loginWithToken = useCallback(() => {

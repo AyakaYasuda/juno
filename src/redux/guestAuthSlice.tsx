@@ -89,6 +89,12 @@ const guestAuthSlice = createSlice({
     setToken(state, action: SetTokenAction) {
       state.token = action.payload;
     },
+    initState(state) {
+      state.token = undefined;
+      state.isLogin = false;
+      state.errorMessages = [];
+      state.tokenExpirationDate = null;
+    },
   },
 
   // FIXME: search best practice of createAsyncThunk
@@ -121,7 +127,7 @@ const guestAuthSlice = createSlice({
         state.status = StateStatus.rejected;
         state.errorMessages = message;
       })
-      .addCase(signup.rejected, (state, action) => {  
+      .addCase(signup.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
         state.status = StateStatus.rejected;
