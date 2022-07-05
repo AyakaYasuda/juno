@@ -9,17 +9,22 @@ const AdminNavbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { setIsLogin, setTokenExpirationDate } = adminAuthActions;
+  const { initState } = adminAuthActions;
 
   const logoutHandler = () => {
-    // update state
-    dispatch(setIsLogin(false));
-    dispatch(setTokenExpirationDate(null));
+    console.log('logoutHandler --- start');
+
+    // init state
+    dispatch(initState());
+    console.log('init state --- end');
 
     SessionServices.removeItem(SessionKeys.ADMIN_USER_ID);
     SessionServices.removeItem(SessionKeys.ADMIN_TOKEN);
 
     navigate('/admin/login');
+    console.log('navigate end');
+
+    console.log('logoutHandler --- end');
   };
 
   return (
