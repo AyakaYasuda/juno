@@ -131,6 +131,9 @@ export const guestUserSlice = createSlice({
       });
 
     builder
+      .addCase(getUserById.rejected, (state, action) => {
+        state.status = StateStatus.rejected;
+      })
       .addCase(editUser.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
