@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import { useState } from 'react';
+import { useAppSelector } from 'hooks/hooks';
 import { useParams } from 'react-router';
-import { getGuestAuth } from 'services/auth.service';
 import SessionServices from 'services/session.services';
-import { getUserById } from 'redux/adminUserSlice';
 import { StateStatus } from 'types/StateStatus.type';
 import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
 import useGuestUser from 'hooks/useGuestUser';
@@ -14,7 +12,6 @@ import YourReply from 'views/components/organisms/YourReply';
 import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 
 const GuestMyPage = () => {
-  const dispatch = useAppDispatch();
   const params = useParams();
   const eventId = params.eventId!;
 
@@ -25,12 +22,11 @@ const GuestMyPage = () => {
   const { user, status: guestsStatus } = useAppSelector(
     (state) => state.guestUser
   );
-  const { SK: userId } = user;
   const { isLogin } = useAppSelector((state) => state.guestAuth);
 
   useRedirectIfNotLogin(isLogin, `/guests/events/${eventId}/login`);
 
-  useGuestUser(guestUserId as string)
+  useGuestUser(guestUserId as string);
 
   const showEventInfoHandler = () => {
     setIsEventInfoShown(true);
@@ -83,7 +79,9 @@ const GuestMyPage = () => {
     </>
   );
 
-  if (guestsStatus === StateStatus.pending) {
+  console.log('guestsStatus', guestsStatus);
+
+  if (!guestsStatus || guestsStatus !== StateStatus.fulfilled) {
     content = <LoadingSpinner />;
   }
 

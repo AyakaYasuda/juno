@@ -9,7 +9,6 @@ import RsvpForm from 'views/components/organisms/RsvpForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
 import { useAppSelector } from 'hooks/hooks';
 import useRedirectIfLogin from 'hooks/useRedirectIfLogin';
-import { Link } from 'react-router-dom';
 
 const GuestInvitation: React.FC = () => {
   const params = useParams();
@@ -17,13 +16,12 @@ const GuestInvitation: React.FC = () => {
 
   const { isLogin } = useAppSelector((state) => state.guestAuth);
   const {
-    status,
     errorMessages,
     closeModalHandler,
     showModalHandler,
     isModalShown,
   } = useGuestAuthErrorModal();
-  const { status: userStatus, errorMessages: userErrorMessages } =
+  const { errorMessages: userErrorMessages } =
     useGuestUserErrorModal();
 
   useRedirectIfLogin(isLogin, `/guests/events/${eventId}/mypage`);

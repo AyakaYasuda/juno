@@ -5,6 +5,7 @@ import axios from 'axios';
 import { IAttendanceData } from 'types/AttendanceData.type';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
+import { StateStatus } from 'types/StateStatus.type';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
@@ -97,16 +98,27 @@ export const adminUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getUserById.pending, (state, action) => {
+        state.status = StateStatus.pending;
+      })
+      .addCase(editUser.pending, (state, action) => {
+        state.status = StateStatus.pending;
+      })
+      .addCase(createAttendanceData.pending, (state, action) => {
+        state.status = StateStatus.pending;
+      });
+
+    builder
       .addCase(getUserById.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       })
       .addCase(editUser.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       })
       .addCase(createAttendanceData.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       });
 
@@ -114,13 +126,13 @@ export const adminUserSlice = createSlice({
       .addCase(editUser.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
-        state.status = 'rejected';
+        state.status = StateStatus.rejected;
         state.errorMessages = message;
       })
       .addCase(createAttendanceData.rejected, (state, action) => {
         const { message } = action.payload as { message: string };
 
-        state.status = 'rejected';
+        state.status = StateStatus.rejected;
         state.errorMessages = [message];
       });
   },

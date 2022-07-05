@@ -117,6 +117,17 @@ export const guestUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getUserById.pending, (state, action) => {
+        state.status = StateStatus.pending;
+      })
+      .addCase(editUser.pending, (state, action) => {
+        state.status = StateStatus.pending;
+      })
+      .addCase(createAttendanceData.pending, (state, action) => {
+        state.status = StateStatus.pending;
+      });
+
+    builder
       .addCase(getUserById.fulfilled, (state, action) => {
         state.status = StateStatus.fulfilled;
         state.user = action.payload;

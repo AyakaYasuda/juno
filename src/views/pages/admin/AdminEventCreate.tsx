@@ -52,7 +52,7 @@ const AdminEventCreate = () => {
     if (userId) {
       dispatch(getEventByUserId(userId));
     }
-  }, [userId]);
+  }, [userId, dispatch]);
 
   useEffect(() => {
     navigateToEventDetailIfEventExist();

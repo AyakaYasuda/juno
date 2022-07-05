@@ -48,7 +48,7 @@ const AdminEventDetail = () => {
     if (userId) {
       dispatch(getEventByUserId(userId));
     }
-  }, [userId]);
+  }, [userId, dispatch]);
 
   useEffect(() => {
     if (
