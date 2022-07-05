@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useParams } from 'react-router';
+import { Rings } from 'react-loader-spinner';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
@@ -8,6 +9,8 @@ import YourReply from 'views/components/organisms/YourReply';
 import { getUserById } from 'redux/adminUserSlice';
 import { getGuestAuth } from 'services/auth.service';
 import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
+import { StateStatus } from 'types/StateStatus.type';
+import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 
 const GuestMyPage = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +20,9 @@ const GuestMyPage = () => {
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(true);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(false);
 
-  const { user } = useAppSelector((state) => state.guestUser);
+  const { user, status: guestsStatus } = useAppSelector(
+    (state) => state.guestUser
+  );
   const { SK: userId } = user;
   const { isLogin } = useAppSelector((state) => state.guestAuth);
 
@@ -70,12 +75,20 @@ const GuestMyPage = () => {
     </div>
   );
 
+  let content = (
+    <>
+      {desktopContent}
+      {mobileContent}
+    </>
+  );
+
+  if (guestsStatus === StateStatus.pending) {
+    content = <LoadingSpinner />;
+  }
+
   return (
     <div>
-      <GuestPageLayout eventId={eventId}>
-        {desktopContent}
-        {mobileContent}
-      </GuestPageLayout>
+      <GuestPageLayout eventId={eventId}>{content}</GuestPageLayout>
     </div>
   );
 };
