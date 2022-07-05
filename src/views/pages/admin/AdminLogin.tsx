@@ -6,7 +6,6 @@ import ErrorModal from 'views/components/organisms/ErrorModal';
 
 const AdminLogin = () => {
   const {
-    status,
     errorMessages,
     closeModalHandler,
     showModalHandler,

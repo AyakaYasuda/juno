@@ -1,26 +1,31 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { getEventByUserId, getGuestsByEventId } from 'redux/eventSlice';
+import { getUserById as getAdminUserById } from 'redux/adminUserSlice';
+import { StateStatus } from 'types/StateStatus.type';
+import SessionServices from 'services/session.services';
+import { getAdminAuth } from 'services/auth.service';
+
 import Modal from 'views/components/organisms/Modal';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import MobileToggleSectionHeaders from 'views/components/organisms/MobileToggleSectionHeaders';
 import EventInfo from 'views/components/organisms/EventInfo';
 import GuestsList from 'views/components/organisms/GuestsList';
-import { useNavigate } from 'react-router';
-import { StateStatus } from 'types/StateStatus.type';
+import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 
 const AdminEventDetail = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [adminUserId] = useState(SessionServices.getAdminUserId());
 
   const { SK: userId } = useAppSelector((state) => state.adminUser.user);
   const { event, status } = useAppSelector((state) => state.event);
-  const { event: eventStateStatus } = status;
+  const { event: eventStateStatus, guests: guestsStateStatus } = status;
   const { SK: eventId } = event;
   const { guests } = useAppSelector((state) => state.event);
 
   const [isEventInfoShown, setIsEventInfoShown] = useState(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedGuestUserId, setSelectedGuestUserId] = useState<string>('');
 
@@ -36,6 +41,20 @@ const AdminEventDetail = () => {
   const closeModalHandler = () => {
     setShowModal(false);
   };
+
+  useEffect(() => {
+    const token = getAdminAuth();
+
+    if (adminUserId && token) {
+      dispatch(getAdminUserById({ userId: adminUserId, token }));
+    }
+  }, [dispatch, adminUserId]);
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(getEventByUserId(userId));
+    }
+  }, [userId]);
 
   useEffect(() => {
     if (
@@ -54,15 +73,10 @@ const AdminEventDetail = () => {
   }, [userId, dispatch]);
 
   useEffect(() => {
-    setIsLoading(false);
-    if (event) {
-      dispatch(getGuestsByEventId(event.SK));
+    if (eventId) {
+      dispatch(getGuestsByEventId(eventId));
     }
-  }, [event, dispatch]);
-
-  if (isLoading) {
-    return <h3 className="text-Pink-dark">Loading....</h3>;
-  }
+  }, [eventId, dispatch]);
 
   const mobileContent = (
     <>
@@ -88,6 +102,12 @@ const AdminEventDetail = () => {
     </>
   );
 
+  const isDataReady =
+    eventStateStatus &&
+    guestsStateStatus &&
+    eventStateStatus === StateStatus.fulfilled &&
+    guestsStateStatus === StateStatus.fulfilled;
+
   return (
     <AdminPageLayout>
       {showModal && (
@@ -96,8 +116,13 @@ const AdminEventDetail = () => {
           guestUserId={selectedGuestUserId}
         />
       )}
-      {event && mobileContent}
-      {event && desktopContent}
+      {!isDataReady && <LoadingSpinner />}
+      {isDataReady && (
+        <>
+          {mobileContent}
+          {desktopContent}
+        </>
+      )}
     </AdminPageLayout>
   );
 };

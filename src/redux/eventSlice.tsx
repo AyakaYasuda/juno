@@ -153,6 +153,20 @@ export const eventSlice = createSlice({
       .addCase(createEvent.pending, (state, action) => {
         state.status.event = StateStatus.pending;
       })
+      .addCase(getEventByUserId.pending, (state, action) => {
+        state.status.event = StateStatus.pending;
+      })
+      .addCase(getEventByEventId.pending, (state, action) => {
+        state.status.event = StateStatus.pending;
+      })
+      .addCase(getGuestsByEventId.pending, (state, action) => {
+        state.status.guests = StateStatus.pending;
+      })
+      .addCase(editEvent.pending, (state, action) => {
+        state.status.event = StateStatus.pending;
+      });
+
+    builder
       .addCase(createEvent.fulfilled, (state, action) => {
         state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
@@ -160,9 +174,6 @@ export const eventSlice = createSlice({
       .addCase(getEventByUserId.fulfilled, (state, action) => {
         state.status.event = StateStatus.fulfilled;
         state.event = action.payload;
-      })
-      .addCase(getGuestsByEventId.pending, (state, action) => {
-        state.status.guests = StateStatus.pending;
       })
       .addCase(getEventByEventId.fulfilled, (state, action) => {
         state.status.event = StateStatus.fulfilled;
