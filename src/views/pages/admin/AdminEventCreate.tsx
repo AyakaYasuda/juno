@@ -3,11 +3,10 @@ import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import useEventErrorModal from 'hooks/useEventErrorModal';
 import { createEvent, getEventByUserId } from 'redux/eventSlice';
-import { getUserById as getAdminUserById } from 'redux/adminUserSlice';
-import { getAdminAuth } from 'services/auth.service';
 import SessionServices from 'services/session.services';
 import { IEventRequest } from 'types/EventData.type';
 import { StateStatus } from 'types/StateStatus.type';
+import useAdminUser from 'hooks/useAdminUser';
 
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import EditEventForm from 'views/components/organisms/EditEventForm';
@@ -17,16 +16,18 @@ import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 const AdminEventCreate = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [adminUserId] = useState(SessionServices.getAdminUserId());
-
+  
   const { SK: userId } = useAppSelector((state) => state.adminUser.user);
   const { event, status: stateStatus } = useAppSelector((state) => state.event);
   const { event: EventStateStatus } = stateStatus;
   const { SK: eventId } = event;
-
+  const [adminUserId] = useState(SessionServices.getAdminUserId());
+  
   const { errorMessages, closeModalHandler, showModalHandler, isModalShown } =
-    useEventErrorModal();
+  useEventErrorModal();
 
+  useAdminUser(adminUserId as string);
+  
   const navigateToEventDetailIfEventExist = useCallback(() => {
     if (EventStateStatus === StateStatus.fulfilled && eventId) {
       navigate('/admin/event');
@@ -46,13 +47,6 @@ const AdminEventCreate = () => {
     }
   };
 
-  useEffect(() => {
-    const token = getAdminAuth();
-
-    if (adminUserId && token) {
-      dispatch(getAdminUserById({ userId: adminUserId, token }));
-    }
-  }, [dispatch, adminUserId]);
 
   useEffect(() => {
     if (userId) {

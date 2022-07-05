@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { getEventByUserId, getGuestsByEventId } from 'redux/eventSlice';
-import { getUserById as getAdminUserById } from 'redux/adminUserSlice';
 import { StateStatus } from 'types/StateStatus.type';
 import SessionServices from 'services/session.services';
-import { getAdminAuth } from 'services/auth.service';
+import useAdminUser from 'hooks/useAdminUser';
 
 import Modal from 'views/components/organisms/Modal';
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
@@ -17,17 +16,19 @@ import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 const AdminEventDetail = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [adminUserId] = useState(SessionServices.getAdminUserId());
-
+  
   const { SK: userId } = useAppSelector((state) => state.adminUser.user);
   const { event, status } = useAppSelector((state) => state.event);
   const { event: eventStateStatus, guests: guestsStateStatus } = status;
   const { SK: eventId } = event;
   const { guests } = useAppSelector((state) => state.event);
-
+  
+  const [adminUserId] = useState(SessionServices.getAdminUserId());
   const [isEventInfoShown, setIsEventInfoShown] = useState(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedGuestUserId, setSelectedGuestUserId] = useState<string>('');
+  
+  useAdminUser(adminUserId as string);
 
   const toggleShowInfoHandler = () => {
     setIsEventInfoShown((prevState) => !prevState);
@@ -42,13 +43,6 @@ const AdminEventDetail = () => {
     setShowModal(false);
   };
 
-  useEffect(() => {
-    const token = getAdminAuth();
-
-    if (adminUserId && token) {
-      dispatch(getAdminUserById({ userId: adminUserId, token }));
-    }
-  }, [dispatch, adminUserId]);
 
   useEffect(() => {
     if (userId) {
