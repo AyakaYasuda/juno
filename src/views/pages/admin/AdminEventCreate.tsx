@@ -58,8 +58,6 @@ const AdminEventCreate = () => {
     navigateToEventDetailIfEventExist();
   }, [navigateToEventDetailIfEventExist]);
 
-  console.log(EventStateStatus, eventId)
-
   return (
     <>
       <ErrorModal
