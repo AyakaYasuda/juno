@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { adminAuthActions } from 'redux/adminAuthSlice';
 import { RootState } from 'redux/store';
 import SessionServices from 'services/session.services';
+import useLogout from './useLogout';
 
 // this stay outside of component because not related to re-render
 let logoutTimer: NodeJS.Timeout;
@@ -11,6 +12,7 @@ let logoutTimer: NodeJS.Timeout;
 // FIXME: delete duplicate code
 const useAdminTokenAuth = () => {
   const dispatch = useDispatch();
+  const { initAdminStateForLogout } = useLogout();
 
   const { setIsLogin, setToken, setTokenExpirationDate, initState } =
     adminAuthActions;
@@ -22,8 +24,8 @@ const useAdminTokenAuth = () => {
     localStorage.removeItem(SessionKeys.ADMIN_TOKEN);
 
     // update state
-    dispatch(initState());
-  }, [dispatch, initState]);
+    initAdminStateForLogout();
+  }, [initAdminStateForLogout]);
 
   // FIXME: adminLogin, guestLogin
   const loginWithToken = useCallback(() => {
