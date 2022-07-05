@@ -2,16 +2,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import useEventErrorModal from 'hooks/useEventErrorModal';
-import { IEventRequest } from 'types/EventData.type';
 import { createEvent, getEventByUserId } from 'redux/eventSlice';
-import { getAdminAuth } from 'services/auth.service';
 import { getUserById as getAdminUserById } from 'redux/adminUserSlice';
+import { getAdminAuth } from 'services/auth.service';
 import SessionServices from 'services/session.services';
+import { IEventRequest } from 'types/EventData.type';
+import { StateStatus } from 'types/StateStatus.type';
 
 import AdminPageLayout from 'views/components/molecules/Layout/AdminPageLayout';
 import EditEventForm from 'views/components/organisms/EditEventForm';
 import ErrorModal from 'views/components/organisms/ErrorModal';
-import { StateStatus } from 'types/StateStatus.type';
+import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 
 const AdminEventCreate = () => {
   const navigate = useNavigate();
@@ -22,9 +23,6 @@ const AdminEventCreate = () => {
   const { event, status: stateStatus } = useAppSelector((state) => state.event);
   const { event: EventStateStatus } = stateStatus;
   const { SK: eventId } = event;
-
-  console.log('status:', EventStateStatus);
-  console.log('eventId:', eventId);
 
   const { errorMessages, closeModalHandler, showModalHandler, isModalShown } =
     useEventErrorModal();
@@ -77,7 +75,7 @@ const AdminEventCreate = () => {
       />
       <AdminPageLayout>
         {(!EventStateStatus || EventStateStatus === StateStatus.pending) &&
-          !eventId && <div>Loading...</div>}
+          !eventId && <LoadingSpinner />}
         {EventStateStatus === StateStatus.fulfilled && !eventId && (
           <>
             <h2 className="mb-2">Create invitations</h2>

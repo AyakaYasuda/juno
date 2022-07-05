@@ -28,17 +28,6 @@ const App = () => {
   // FIXME:
   // fetch user data here, do you need this in here? or should fetch user in each page?
 
-  // const [adminUserId] = useState(SessionServices.getAdminUserId());
-  // useEffect(() => {
-  //   console.log("getUserById is running")
-  //   const token = getAdminAuth();
-
-  //   if (adminUserId && token) {
-  //     dispatch(getAdminUserById({ userId: adminUserId, token }));
-  //   }
-  // }, [dispatch, adminUserId]);
-
-
   const [guestUserId] = useState(SessionServices.getGuestUserId());
   useEffect(() => {
     const token = getGuestAuth();
