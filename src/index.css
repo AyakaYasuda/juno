@@ -58,6 +58,9 @@
   .InputDark {
     @apply bg-Pink-lighter bg-opacity-50 text-Pink-default p-2 border-none rounded-md mb-5 drop-shadow-lg;
   }
+  .GuestInputDark {
+    @apply bg-Pink-lighter bg-opacity-50 text-Green-dark p-2 border-none rounded-md mb-5 drop-shadow-lg;
+  }
   .InputLighter {
     @apply bg-White-lighter text-Pink-default bg-opacity-80 border-none p-2 rounded-md drop-shadow-lg;
   }

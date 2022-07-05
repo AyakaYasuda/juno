@@ -6,6 +6,7 @@ import { IAttendanceData } from 'types/AttendanceData.type';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
 import { getGuestAuth } from 'services/auth.service';
+import { StateStatus } from 'types/StateStatus.type';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
@@ -117,15 +118,15 @@ export const guestUserSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getUserById.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       })
       .addCase(editUser.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       })
       .addCase(createAttendanceData.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       });
 
@@ -133,13 +134,13 @@ export const guestUserSlice = createSlice({
       .addCase(editUser.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
-        state.status = 'rejected';
+        state.status = StateStatus.rejected;
         state.errorMessages = message;
       })
       .addCase(createAttendanceData.rejected, (state, action) => {
         const { message } = action.payload as { message: string };
 
-        state.status = 'rejected';
+        state.status = StateStatus.rejected;
         state.errorMessages = [message];
       });
   },

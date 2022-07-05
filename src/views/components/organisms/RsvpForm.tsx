@@ -11,6 +11,7 @@ import Checker from '../atoms/Checker';
 import LabeledTextarea from '../molecules/LabeledTextarea';
 import GuestButton from '../atoms/GuestButton';
 import SessionServices from 'services/session.services';
+import { Link } from 'react-router-dom';
 
 const formInitialValues = {
   firstName: 'ttt',
@@ -115,7 +116,7 @@ const RsvpForm: React.FC<Props> = ({
             type="text"
             value={firstName as string}
             onChange={inputChangeHandler}
-            inputStyle="InputDark"
+            inputStyle="GuestInputDark"
             labelStyle="text-Yellow-dark"
           />
           <LabeledInput
@@ -124,7 +125,7 @@ const RsvpForm: React.FC<Props> = ({
             type="text"
             value={lastName as string}
             onChange={inputChangeHandler}
-            inputStyle="InputDark"
+            inputStyle="GuestInputDark"
             labelStyle="text-Yellow-dark"
           />
         </div>
@@ -152,7 +153,7 @@ const RsvpForm: React.FC<Props> = ({
         </div>
         <div className="flexCenter flex-col">
           <LabeledTextarea
-            className="InputDark"
+            className="GuestInputDark"
             label="Message"
             name="message"
             value={message as string}
@@ -160,7 +161,7 @@ const RsvpForm: React.FC<Props> = ({
             onChange={inputChangeHandler}
           />
           <LabeledTextarea
-            className="InputDark"
+            className="GuestInputDark"
             label="If you have food allergy"
             name="allergy"
             value={allergy as string}
@@ -175,7 +176,7 @@ const RsvpForm: React.FC<Props> = ({
             type="email"
             value={email as string}
             onChange={inputChangeHandler}
-            inputStyle="InputDark"
+            inputStyle="GuestInputDark"
             labelStyle="text-Yellow-dark"
           />
           <LabeledInput
@@ -184,7 +185,7 @@ const RsvpForm: React.FC<Props> = ({
             type="password"
             value={password as string}
             onChange={inputChangeHandler}
-            inputStyle="InputDark"
+            inputStyle="GuestInputDark"
             labelStyle="text-Yellow-dark"
           />
         </div>
@@ -194,6 +195,12 @@ const RsvpForm: React.FC<Props> = ({
             Reply
           </GuestButton>
         </div>
+
+        <p className="text-center text-Yellow-dark mt-10 mb-0">
+          <Link to={`/guests/events/${eventId}/login`}>
+            You've already replied? Login
+          </Link>
+        </p>
       </form>
     </div>
   );
