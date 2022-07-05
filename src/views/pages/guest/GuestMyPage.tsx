@@ -36,9 +36,14 @@ const GuestMyPage = () => {
     }
   }, [userId, dispatch]);
 
-  const switchContentsHandler = () => {
-    setIsEventInfoShown((prev) => !prev);
-    setIsYourReplyShown((prev) => !prev);
+  const showEventInfoHandler = () => {
+    setIsEventInfoShown(true);
+    setIsYourReplyShown(false);
+  };
+
+  const showReplyHandler = () => {
+    setIsEventInfoShown(false);
+    setIsYourReplyShown(true);
   };
 
   const desktopContent = (
@@ -59,13 +64,13 @@ const GuestMyPage = () => {
       <div className="grid grid-cols-2 justify-items-center gap-10 mb-10">
         <h2
           className="HoverUnderLine cursor-pointer"
-          onClick={switchContentsHandler}
+          onClick={showEventInfoHandler}
         >
           Event Info
         </h2>
         <h2
           className="HoverUnderLine cursor-pointer"
-          onClick={switchContentsHandler}
+          onClick={showReplyHandler}
         >
           Your Reply
         </h2>
