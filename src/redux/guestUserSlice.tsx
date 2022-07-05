@@ -27,7 +27,7 @@ const initialState: IUserState = {
     allergy: '',
     isAttending: true,
   },
-  status: 'pending',
+  status: StateStatus.pending,
   errorMessages: [],
 };
 

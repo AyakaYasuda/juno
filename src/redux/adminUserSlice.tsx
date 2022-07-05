@@ -26,7 +26,7 @@ const initialState: IUserState = {
     allergy: '',
     isAttending: true,
   },
-  status: 'pending',
+  status: StateStatus.pending,
   errorMessages: [],
 };
 
@@ -91,9 +91,25 @@ export const adminUserSlice = createSlice({
   name: 'adminUser',
   initialState,
   reducers: {
-    //FIXME: need test
-    logout(state) {
-      state = initialState;
+    initState(state) {
+      console.log('adminUser initState');
+
+      state.user = {
+        PK: '',
+        SK: '',
+        userId: '',
+        eventId: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        isAdmin: false,
+        message: '',
+        allergy: '',
+        isAttending: true,
+      };
+      state.status = StateStatus.pending;
+      state.errorMessages = [];
     },
   },
   extraReducers: (builder) => {
@@ -139,3 +155,4 @@ export const adminUserSlice = createSlice({
 });
 
 export default adminUserSlice.reducer;
+export const adminUserActions = adminUserSlice.actions;
