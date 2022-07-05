@@ -1,23 +1,13 @@
-import { SessionKeys } from 'constants/sessionKeys';
-import { useDispatch } from 'react-redux';
+import useLogout from 'hooks/useLogout';
 import { Link, useNavigate } from 'react-router-dom';
-import { adminAuthActions } from 'redux/adminAuthSlice';
-import SessionServices from 'services/session.services';
 import Navbar from './Navbar';
 
 const AdminNavbar = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const { setIsLogin, setTokenExpirationDate } = adminAuthActions;
+  const { initAdminStateForLogout } = useLogout();
 
   const logoutHandler = () => {
-    // update state
-    dispatch(setIsLogin(false));
-    dispatch(setTokenExpirationDate(null));
-
-    SessionServices.removeItem(SessionKeys.ADMIN_USER_ID);
-    SessionServices.removeItem(SessionKeys.ADMIN_TOKEN);
+    initAdminStateForLogout();
 
     navigate('/admin/login');
   };

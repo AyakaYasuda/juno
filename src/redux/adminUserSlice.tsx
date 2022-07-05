@@ -5,6 +5,7 @@ import axios from 'axios';
 import { IAttendanceData } from 'types/AttendanceData.type';
 import { IUpdateUserRequest } from 'types/UserData.type';
 import SessionServices from 'services/session.services';
+import { StateStatus } from 'types/StateStatus.type';
 
 const API_URL = process.env.REACT_APP_API_ENDPOINT + '/user';
 
@@ -25,7 +26,7 @@ const initialState: IUserState = {
     allergy: '',
     isAttending: true,
   },
-  status: 'pending',
+  status: StateStatus.pending,
   errorMessages: [],
 };
 
@@ -90,23 +91,39 @@ export const adminUserSlice = createSlice({
   name: 'adminUser',
   initialState,
   reducers: {
-    //FIXME: need test
-    logout(state) {
-      state = initialState;
+    initState(state) {
+      console.log('adminUser initState');
+
+      state.user = {
+        PK: '',
+        SK: '',
+        userId: '',
+        eventId: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        isAdmin: false,
+        message: '',
+        allergy: '',
+        isAttending: true,
+      };
+      state.status = StateStatus.pending;
+      state.errorMessages = [];
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getUserById.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.pending;
         state.user = action.payload;
       })
       .addCase(editUser.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.pending;
         state.user = action.payload;
       })
       .addCase(createAttendanceData.fulfilled, (state, action) => {
-        state.status = 'pending';
+        state.status = StateStatus.pending;
         state.user = action.payload;
       });
 
@@ -114,16 +131,17 @@ export const adminUserSlice = createSlice({
       .addCase(editUser.rejected, (state, action) => {
         const { message } = action.payload as { message: string[] };
 
-        state.status = 'rejected';
+        state.status = StateStatus.rejected;
         state.errorMessages = message;
       })
       .addCase(createAttendanceData.rejected, (state, action) => {
         const { message } = action.payload as { message: string };
 
-        state.status = 'rejected';
+        state.status = StateStatus.rejected;
         state.errorMessages = [message];
       });
   },
 });
 
 export default adminUserSlice.reducer;
+export const adminUserActions = adminUserSlice.actions;

@@ -90,6 +90,14 @@ const adminAuthSlice = createSlice({
     setToken(state, action: SetTokenAction) {
       state.token = action.payload;
     },
+    initState(state) {
+      // FIXME: any easy way to reset?
+      state.isLogin = false;
+      state.tokenExpirationDate = null;
+      state.errorMessages = [];
+      // FIXME: avoid using undefined
+      state.token = undefined;
+    },
   },
 
   // FIXME: search best practice of createAsyncThunk

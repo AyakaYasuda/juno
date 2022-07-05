@@ -143,9 +143,24 @@ export const eventSlice = createSlice({
   name: 'event',
   initialState,
   reducers: {
-    //FIXME: need test
-    logout(state) {
-      state = initialState;
+    initState(state) {
+      state.event = {
+        SK: '',
+        bride: '',
+        groom: '',
+        dateWedding: '',
+        startingTimeWedding: '',
+        endingTimeWedding: '',
+        dateWeddingReception: '',
+        startingTimeReception: '',
+        endingTimeReception: '',
+        message: '',
+        address: '',
+        isEditable: true,
+      };
+      state.guests = [];
+      state.status = { event: null, guests: null };
+      state.errorMessages = [];
     },
   },
   extraReducers: (builder) => {
@@ -211,3 +226,4 @@ export const eventSlice = createSlice({
 });
 
 export default eventSlice.reducer;
+export const eventActions = eventSlice.actions;
