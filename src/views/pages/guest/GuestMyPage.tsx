@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { useParams } from 'react-router';
+import { getGuestAuth } from 'services/auth.service';
+import SessionServices from 'services/session.services';
+import { getUserById } from 'redux/adminUserSlice';
+import { StateStatus } from 'types/StateStatus.type';
+import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
+import useGuestUser from 'hooks/useGuestUser';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import YourReply from 'views/components/organisms/YourReply';
-import { getUserById } from 'redux/adminUserSlice';
-import { getGuestAuth } from 'services/auth.service';
-import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
-import { StateStatus } from 'types/StateStatus.type';
 import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 
 const GuestMyPage = () => {
@@ -18,6 +20,7 @@ const GuestMyPage = () => {
 
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(true);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(false);
+  const [guestUserId] = useState(SessionServices.getGuestUserId());
 
   const { user, status: guestsStatus } = useAppSelector(
     (state) => state.guestUser
@@ -27,13 +30,7 @@ const GuestMyPage = () => {
 
   useRedirectIfNotLogin(isLogin, `/guests/events/${eventId}/login`);
 
-  useEffect(() => {
-    const token = getGuestAuth();
-
-    if (userId && token) {
-      dispatch(getUserById({ userId, token }));
-    }
-  }, [userId, dispatch]);
+  useGuestUser(guestUserId as string)
 
   const showEventInfoHandler = () => {
     setIsEventInfoShown(true);
