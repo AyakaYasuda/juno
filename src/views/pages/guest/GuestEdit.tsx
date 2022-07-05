@@ -26,13 +26,11 @@ const GuestEdit = () => {
   const { user } = useAppSelector((state: RootState) => state.guestUser);
   const { SK: userId } = user;
   const {
-    status,
     errorMessages,
     closeModalHandler,
     showModalHandler,
     isModalShown,
   } = useGuestUserErrorModal();
-  console.log("error", errorMessages)
 
   useRedirectIfNotLogin(isLogin, `/guests/events/${eventId}/login`);
 

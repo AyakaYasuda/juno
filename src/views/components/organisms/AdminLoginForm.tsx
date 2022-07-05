@@ -37,8 +37,6 @@ const AdminLoginForm: React.FC<Props> = ({ onShowModal }) => {
       })
     );
 
-    console.log(result);
-
     // login success
     if (login.fulfilled.match(result)) {
       const { userId, token } = result.payload;

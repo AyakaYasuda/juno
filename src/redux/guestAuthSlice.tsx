@@ -1,6 +1,7 @@
 import { Action, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { generateTokenExpirationTime } from 'services/session.services';
+import { StateStatus } from 'types/StateStatus.type';
 import { IGuestSignupRequest, ILoginRequest } from 'types/UserData.type';
 
 // FIXME: fix api url to auth?
@@ -103,7 +104,7 @@ const guestAuthSlice = createSlice({
       .addCase(login.fulfilled, (state, action: LoginAction) => {
         const { token } = action.payload;
 
-        state.status = 'pending';
+        state.status = StateStatus.fulfilled;
         state.isLogin = true;
         state.token = token;
         state.tokenExpirationDate = String(generateTokenExpirationTime());
@@ -112,7 +113,7 @@ const guestAuthSlice = createSlice({
         const { token } = action.payload;
         console.log('signup action.payload', action.payload);
 
-        state.status = 'pending';
+        state.status = StateStatus.fulfilled;
         state.isLogin = true;
         state.token = token;
         state.tokenExpirationDate = String(generateTokenExpirationTime());
@@ -123,15 +124,13 @@ const guestAuthSlice = createSlice({
         // FIXME: fix type
         const { message } = action.payload as { message: string[] };
 
-        state.status = 'rejected';
+        state.status = StateStatus.rejected;
         state.errorMessages = message;
       })
       .addCase(signup.rejected, (state, action) => {
-        console.log(action.payload);
-
         const { message } = action.payload as { message: string[] };
 
-        state.status = 'rejected';
+        state.status = StateStatus.rejected;
         state.errorMessages = message;
       });
   },
