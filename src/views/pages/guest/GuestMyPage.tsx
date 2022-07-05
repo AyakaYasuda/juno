@@ -79,8 +79,6 @@ const GuestMyPage = () => {
     </>
   );
 
-  console.log('guestsStatus', guestsStatus);
-
   if (!guestsStatus || guestsStatus !== StateStatus.fulfilled) {
     content = <LoadingSpinner />;
   }
