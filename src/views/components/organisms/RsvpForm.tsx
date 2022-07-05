@@ -14,13 +14,13 @@ import SessionServices from 'services/session.services';
 import { Link } from 'react-router-dom';
 
 const formInitialValues = {
-  firstName: 'ttt',
-  lastName: 'ttt',
-  email: 'new-guest@test.com',
-  password: 'password',
-  message: 'message',
-  allergy: 'aaa',
-  isAttending: false,
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  message: '',
+  allergy: '',
+  isAttending: true,
 };
 
 type Props = {

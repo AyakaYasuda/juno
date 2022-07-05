@@ -114,16 +114,27 @@ export const adminUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUserById.fulfilled, (state, action) => {
+      .addCase(getUserById.pending, (state, action) => {
         state.status = StateStatus.pending;
+      })
+      .addCase(editUser.pending, (state, action) => {
+        state.status = StateStatus.pending;
+      })
+      .addCase(createAttendanceData.pending, (state, action) => {
+        state.status = StateStatus.pending;
+      });
+
+    builder
+      .addCase(getUserById.fulfilled, (state, action) => {
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       })
       .addCase(editUser.fulfilled, (state, action) => {
-        state.status = StateStatus.pending;
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       })
       .addCase(createAttendanceData.fulfilled, (state, action) => {
-        state.status = StateStatus.pending;
+        state.status = StateStatus.fulfilled;
         state.user = action.payload;
       });
 

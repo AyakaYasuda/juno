@@ -15,7 +15,6 @@ const AdminEventEdit = () => {
   const navigate = useNavigate();
 
   const {
-    status,
     errorMessages,
     closeModalHandler,
     showModalHandler,

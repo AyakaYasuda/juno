@@ -12,29 +12,10 @@ import GuestMyPage from 'views/pages/guest/GuestMyPage';
 import GuestEdit from 'views/pages/guest/GuestEdit';
 import useAdminTokenAuth from './hooks/useAdminTokenAuth';
 import useGuestTokenAuth from 'hooks/useGuestTokenAuth';
-import { useEffect, useState } from 'react';
-import SessionServices from 'services/session.services';
-import { getUserById as getGuestUserById } from 'redux/guestUserSlice';
-import { getGuestAuth } from 'services/auth.service';
-import { useAppDispatch } from 'hooks/hooks';
 
 const App = () => {
-  const dispatch = useAppDispatch();
-
   useAdminTokenAuth();
   useGuestTokenAuth();
-
-  // FIXME:
-  // fetch user data here, do you need this in here? or should fetch user in each page?
-
-  const [guestUserId] = useState(SessionServices.getGuestUserId());
-  useEffect(() => {
-    const token = getGuestAuth();
-
-    if (guestUserId && token) {
-      dispatch(getGuestUserById({ userId: guestUserId, token }));
-    }
-  }, [dispatch, guestUserId]);
 
   return (
     <Router>

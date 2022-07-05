@@ -1,39 +1,32 @@
-import { useState, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import { useState } from 'react';
+import { useAppSelector } from 'hooks/hooks';
 import { useParams } from 'react-router';
+import SessionServices from 'services/session.services';
+import { StateStatus } from 'types/StateStatus.type';
+import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
+import useGuestUser from 'hooks/useGuestUser';
 
 import GuestPageLayout from 'views/components/molecules/Layout/GuestPageLayout';
 import CardWeddingInfo from 'views/components/organisms/CardWeddingInfo';
 import YourReply from 'views/components/organisms/YourReply';
-import { getUserById } from 'redux/adminUserSlice';
-import { getGuestAuth } from 'services/auth.service';
-import useRedirectIfNotLogin from 'hooks/useRedirectIfNotLogin';
-import { StateStatus } from 'types/StateStatus.type';
 import LoadingSpinner from 'views/components/organisms/LoadingSpinner';
 
 const GuestMyPage = () => {
-  const dispatch = useAppDispatch();
   const params = useParams();
   const eventId = params.eventId!;
 
   const [isEventInfoShown, setIsEventInfoShown] = useState<boolean>(true);
   const [isYourReplyShown, setIsYourReplyShown] = useState<boolean>(false);
+  const [guestUserId] = useState(SessionServices.getGuestUserId());
 
   const { user, status: guestsStatus } = useAppSelector(
     (state) => state.guestUser
   );
-  const { SK: userId } = user;
   const { isLogin } = useAppSelector((state) => state.guestAuth);
 
   useRedirectIfNotLogin(isLogin, `/guests/events/${eventId}/login`);
 
-  useEffect(() => {
-    const token = getGuestAuth();
-
-    if (userId && token) {
-      dispatch(getUserById({ userId, token }));
-    }
-  }, [userId, dispatch]);
+  useGuestUser(guestUserId as string);
 
   const showEventInfoHandler = () => {
     setIsEventInfoShown(true);
@@ -86,7 +79,7 @@ const GuestMyPage = () => {
     </>
   );
 
-  if (guestsStatus === StateStatus.pending) {
+  if (!guestsStatus || guestsStatus !== StateStatus.fulfilled) {
     content = <LoadingSpinner />;
   }
 

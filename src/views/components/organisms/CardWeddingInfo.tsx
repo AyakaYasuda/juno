@@ -2,14 +2,17 @@ import { useEffect, useCallback, useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'hooks/hooks';
 import { useParams } from 'react-router';
 import { getEventByEventId } from 'redux/eventSlice';
+import { StateStatus } from 'types/StateStatus.type';
 
 import SectionDivider from './SectionDivider';
+import LoadingSpinner from './LoadingSpinner';
 
 const CardWeddingInfo: React.FC = () => {
   const dispatch = useAppDispatch();
   const params = useParams();
   const eventId = params.eventId!;
-  const { event } = useAppSelector((state) => state.event);
+  const { event, status } = useAppSelector((state) => state.event);
+  const { event: eventStateStatus } = status;
 
   const [weddingSchedule, setWeddingSchedule] = useState<string>();
   const [receptionSchedule, setReceptionSchedule] = useState<string>();
@@ -76,7 +79,9 @@ const CardWeddingInfo: React.FC = () => {
     [event]
   );
 
-  return (
+  return (!eventStateStatus || eventStateStatus !== StateStatus.fulfilled) ? (
+    <LoadingSpinner />
+  ) : (
     <div className="flex flex-col bg-white text-center rounded-2xl px-5 md:px-10 py-10">
       <section className="flex flex-col justify-center gap-6">
         <p className="text-Green-dark FlexJustifyCenter">
