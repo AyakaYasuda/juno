@@ -20,7 +20,6 @@ const AdminEventDetail = () => {
   const { guests } = useAppSelector((state) => state.event);
 
   const [isEventInfoShown, setIsEventInfoShown] = useState(true);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [showModal, setShowModal] = useState<boolean>(false);
   const [selectedGuestUserId, setSelectedGuestUserId] = useState<string>('');
 
@@ -54,15 +53,10 @@ const AdminEventDetail = () => {
   }, [userId, dispatch]);
 
   useEffect(() => {
-    setIsLoading(false);
     if (event) {
       dispatch(getGuestsByEventId(event.SK));
     }
   }, [event, dispatch]);
-
-  if (isLoading) {
-    return <h3 className="text-Pink-dark">Loading....</h3>;
-  }
 
   const mobileContent = (
     <>

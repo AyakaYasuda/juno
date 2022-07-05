@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react';
 import SessionServices from 'services/session.services';
 import { getUserById as getAdminUserById } from 'redux/adminUserSlice';
 import { getUserById as getGuestUserById } from 'redux/guestUserSlice';
-import { getUserById } from 'redux/adminUserSlice';
 import { getAdminAuth, getGuestAuth } from 'services/auth.service';
 import { useAppDispatch } from 'hooks/hooks';
 
@@ -28,14 +27,17 @@ const App = () => {
 
   // FIXME:
   // fetch user data here, do you need this in here? or should fetch user in each page?
-  const [adminUserId] = useState(SessionServices.getAdminUserId());
-  useEffect(() => {
-    const token = getAdminAuth();
 
-    if (adminUserId && token) {
-      dispatch(getAdminUserById({ userId: adminUserId, token }));
-    }
-  }, [dispatch, adminUserId]);
+  // const [adminUserId] = useState(SessionServices.getAdminUserId());
+  // useEffect(() => {
+  //   console.log("getUserById is running")
+  //   const token = getAdminAuth();
+
+  //   if (adminUserId && token) {
+  //     dispatch(getAdminUserById({ userId: adminUserId, token }));
+  //   }
+  // }, [dispatch, adminUserId]);
+
 
   const [guestUserId] = useState(SessionServices.getGuestUserId());
   useEffect(() => {
@@ -60,7 +62,10 @@ const App = () => {
           element={<GuestInvitation />}
         />
         <Route path="/guests/events/:eventId/login" element={<GuestLogin />} />
-        <Route path="/guests/events/:eventId/mypage" element={<GuestMyPage />} />
+        <Route
+          path="/guests/events/:eventId/mypage"
+          element={<GuestMyPage />}
+        />
         <Route path="/guests/events/:eventId/edit" element={<GuestEdit />} />
       </Routes>
     </Router>
