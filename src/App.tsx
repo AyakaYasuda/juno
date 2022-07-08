@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from 'react-router-dom';
 
 import AdminEventCreate from 'views/pages/admin/AdminEventCreate';
 import AdminEventEdit from 'views/pages/admin/AdminEventEdit';
@@ -36,6 +41,7 @@ const App = () => {
           element={<GuestMyPage />}
         />
         <Route path="/guests/events/:eventId/edit" element={<GuestEdit />} />
+        <Route path="*" element={<Navigate to={'/admin'} />} />
       </Routes>
     </Router>
   );
